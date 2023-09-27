@@ -25,3 +25,23 @@ If you are developing a production application, we recommend updating the config
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+
+## Dev notes
+
+npm create vite@latest hasura-base-react -- --template react-ts
+
+Why was https://primereact.org/ selected
+- lots of components (free)
+- flexible icons
+- Figma Support (not free, but that's ok)
+- Decent appearance
+
+Note, also uses https://reactrouter.com/
+
+TODO Why was mobx selected?
+
+TODO : https://tanstack.com/query/v3/
+https://formidable.com/open-source/urql/
+
+TODO : Run as an app with https://capacitorjs.com/solution/react

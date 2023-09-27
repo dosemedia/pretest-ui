@@ -8,10 +8,11 @@ const HomePage = observer(() => {
   const auth = useContext(AuthContext)
   return (
     <>
-      <div>Home Page</div>
+      <div>Home Page -{auth.token}-</div>
       {
         auth.isAuthenticated ? <Button label="Logout" onClick={() => auth.logout()} /> : <Link to={`auth/login`}>Login</Link>
       }
+      <Link to={`auth/login`}>Bad Login</Link>
     </>
   )
 })

@@ -1,16 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import RootLayout from './layouts/RootLayout.tsx'
-import ErrorPage from './ErrorPage.tsx'
-import HomePage from './pages/HomePage.tsx'
 import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom'
 import { PrimeReactProvider } from 'primereact/api'
 import { Navigate } from "react-router-dom"
-
 import { authStore, AuthContext } from './stores/stores'
+import { Provider as URQLProvider } from 'urql'
+import { client as urqlClient } from './graphql'
+
+import RootLayout from './layouts/RootLayout.tsx'
+import ErrorPage from './ErrorPage.tsx'
+import HomePage from './pages/HomePage.tsx'
+import LoginExcludedRoute from './components/LoginExcludedRoute';
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"
 import "primereact/resources/primereact.min.css"
@@ -47,7 +50,13 @@ const router = createBrowserRouter([
           }
           const LoginPage = await import('./pages/LoginPage.tsx')
           return {
-            Component: LoginPage.default,
+            Component: () => {
+              return (
+                <LoginExcludedRoute>
+                  <LoginPage.default />
+                </LoginExcludedRoute>
+              );
+            },
           }
         }
       },
@@ -58,9 +67,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <PrimeReactProvider>
-      <AuthContext.Provider value={authStore}>
-        <RouterProvider router={router} />
-      </AuthContext.Provider>
+      <URQLProvider value={urqlClient}>
+        <AuthContext.Provider value={authStore}>
+          <RouterProvider router={router} />
+        </AuthContext.Provider>
+      </URQLProvider>
     </PrimeReactProvider>
   </React.StrictMode>,
 )

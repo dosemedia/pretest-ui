@@ -1,15 +1,29 @@
 import { makeAutoObservable, observe, runInAction } from 'mobx'
+import { gql } from 'urql'
+import { client } from '../graphql'
+
+const loginQuery = gql`
+  mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    id
+    token
+  }
+}
+`
 
 export class Auth {
-  token = localStorage.getItem('authToken') || ''
+  token = localStorage.getItem('auth.token') || ''
+  id = localStorage.getItem('auth.id') || ''
   loginWait = false
   loginError = ''
 
   constructor() {
     makeAutoObservable(this)
     observe(this, 'token', () => {
-      // watch the token and save it to localStorage
-      localStorage.setItem('authToken', this.token)
+      localStorage.setItem('auth.token', this.token)
+    })
+    observe(this, 'id', () => {
+      localStorage.setItem('auth.id', this.id)
     })
   }
 
@@ -19,13 +33,14 @@ export class Auth {
       this.loginError = ''
     })
     try {
-      if (email || password) {
-        throw new Error('Not implemented')
+      console.log({ email, password })
+      const result = await client.mutation(loginQuery, { email, password })
+      if (result.error) {
+        throw result.error
       }
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      // In Async functions, use runInAction to update state to prevent strict mode warnings from MobX
       runInAction(() => {
-        this.token = 'foobar'
+        this.token = result.data.login.token
+        this.id = result.data.login.id
       })
     } catch (error) {
       runInAction(() => {
@@ -44,6 +59,7 @@ export class Auth {
 
   logout () {
     this.token = ''
+    this.id = ''
   }
 
   get isAuthenticated() {

@@ -30,7 +30,7 @@ const LoginForm = observer(() => {
           <div>Login</div>
           { auth.loginError && <Message severity="error" text={auth.loginError} /> }
           <InputText value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
-          <Password value={password} onChange={(e) => setPassword(e.currentTarget.value)} />
+          <Password value={password} onChange={(e) => setPassword(e.target.value)} feedback={false} />
           <Button label="Login" onClick={handleLogin} loading={auth.loginWait} />  
       </>
   )
