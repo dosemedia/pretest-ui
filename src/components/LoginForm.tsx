@@ -30,7 +30,7 @@ const LoginForm = observer(() => {
           <div>Login</div>
           { auth.loginError && <Message severity="error" text={auth.loginError} /> }
           <InputText value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
-          <Password value={password} onChange={(e) => setPassword(e.target.value)} feedback={false} />
+          <Password value={password} onChange={(e) => setPassword(e.target.value)} feedback={false} onKeyDown={(e) => {if(e.key === 'Enter'){handleLogin()}}} />
           <Button label="Login" onClick={handleLogin} loading={auth.loginWait} />  
       </>
   )

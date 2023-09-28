@@ -45,3 +45,10 @@ TODO : https://tanstack.com/query/v3/
 https://formidable.com/open-source/urql/
 
 TODO : Run as an app with https://capacitorjs.com/solution/react
+
+TODO add note about running this when api changes AND when queries are added to code:
+```
+yarn codegen
+```
+
+Note, edited codegen.ts from urql docs to include .ts and .tsx files.

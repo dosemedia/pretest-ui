@@ -1,15 +1,16 @@
 import { makeAutoObservable, observe, runInAction } from 'mobx'
-import { gql } from 'urql'
+import { graphql } from '../gql'
 import { client } from '../graphql'
+import _ from 'lodash'
 
-const loginQuery = gql`
+const loginMutation = graphql(`
   mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
-    id
     token
+    id
   }
 }
-`
+`)
 
 export class Auth {
   token = localStorage.getItem('auth.token') || ''
@@ -34,14 +35,18 @@ export class Auth {
     })
     try {
       console.log({ email, password })
-      const result = await client.mutation(loginQuery, { email, password })
+      const result = await client.mutation(loginMutation, { email, password })
       if (result.error) {
         throw result.error
       }
-      runInAction(() => {
-        this.token = result.data.login.token
-        this.id = result.data.login.id
-      })
+      if (_.has(result, 'data.login.token') && _.has(result, 'data.login.id')) {
+        runInAction(() => {
+          this.token = result.data?.login?.token || ''
+          this.id = result.data?.login?.id || ''
+        })
+      } else {
+        throw new Error('Invalid response from server - missing token')
+      }
     } catch (error) {
       runInAction(() => {
         if (error instanceof Error) {
