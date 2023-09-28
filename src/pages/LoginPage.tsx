@@ -1,14 +1,13 @@
+import { Link } from "react-router-dom"
 import LoginForm from "../components/LoginForm"
-import { observer } from "mobx-react-lite"
-import { Link } from 'react-router-dom'
 
-const LoginPage = observer(() => {
+export default function LoginPage() {
   return (
     <>
-      <Link to={`/`}>Home</Link>
       <LoginForm />
+      <div style={{textAlign: 'center', marginTop: '1em'}}>
+        <Link to='/auth/register'>Register</Link>
+      </div>
     </>
   )
-})
-
-export default LoginPage
+}

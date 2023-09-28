@@ -36,6 +36,9 @@ Why was https://primereact.org/ selected
 - flexible icons
 - Figma Support (not free, but that's ok)
 - Decent appearance
+- Tailwind (soon?) : tried this but vite wouldn't load it : https://primereact.org/tailwind/
+
+Note primereact 10, broke buttons, so adding this to all to fix bg color : style={{backgroundColor: 'var(--primary-color)'}}
 
 Note, also uses https://reactrouter.com/
 

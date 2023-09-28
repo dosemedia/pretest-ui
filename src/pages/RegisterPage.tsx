@@ -1,7 +1,7 @@
-export default function RegisterPage () {
-    return (
-        <>
-            <div>Login Page</div>
-        </>
-    )
+import RegisterForm from "../components/RegisterForm"
+
+export default function LoginPage() {
+  return (
+    <RegisterForm />
+  )
 }

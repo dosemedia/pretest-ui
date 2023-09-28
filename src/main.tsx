@@ -5,7 +5,6 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 import { PrimeReactProvider } from 'primereact/api'
-import { Navigate } from "react-router-dom"
 import { authStore, AuthContext } from './stores/stores'
 import { Provider as URQLProvider } from 'urql'
 import { client as urqlClient } from './graphql'
@@ -32,22 +31,19 @@ const router = createBrowserRouter([
         async lazy() {
           const RegisterPage = await import('./pages/RegisterPage.tsx')
           return {
-            Component: RegisterPage.default,
+            Component: () => {
+              return (
+                <LoginExcludedRoute>
+                  <RegisterPage.default />
+                </LoginExcludedRoute>
+              );
+            },
           }
         }
       },
       {
         path: "/auth/login",
         async lazy() {
-          // Protected route (could also return Navigate from LoginPage):
-          const auth = authStore
-          if (auth.isAuthenticated) {
-            return {
-              Component: () => {
-              return <Navigate to="/" replace />
-              }
-            }
-          }
           const LoginPage = await import('./pages/LoginPage.tsx')
           return {
             Component: () => {
@@ -66,7 +62,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <PrimeReactProvider>
+    <PrimeReactProvider>{ /*value={{ unstyled: true }} */ }
       <URQLProvider value={urqlClient}>
         <AuthContext.Provider value={authStore}>
           <RouterProvider router={router} />

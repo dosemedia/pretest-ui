@@ -26,13 +26,29 @@ const LoginForm = observer(() => {
   }
 
   return (
-      <>
-          <div>Login</div>
-          { auth.loginError && <Message severity="error" text={auth.loginError} /> }
-          <InputText value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
-          <Password value={password} onChange={(e) => setPassword(e.target.value)} feedback={false} onKeyDown={(e) => {if(e.key === 'Enter'){handleLogin()}}} />
-          <Button label="Login" onClick={handleLogin} loading={auth.loginWait} />  
-      </>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <div>
+        <h1>Login</h1>
+      </div>
+
+      <div style={{marginTop: '1em'}}>
+        <InputText placeholder="Email" value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
+      </div>
+      
+      <div style={{marginTop: '1em'}}>
+        <Password placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} feedback={false} onKeyUp={(e) => {if(e.key === 'Enter'){handleLogin()}}} />
+      </div>
+
+      { auth.loginError && 
+        <div style={{marginTop: '1em'}}>
+          <Message severity="error" text={auth.loginError} />
+        </div>
+      }
+
+      <div style={{marginTop: '1em'}}>
+        <Button style={{backgroundColor: 'var(--primary-color)'}} label="Login" onClick={handleLogin} disabled={auth.loginWait} loading={auth.loginWait} />  
+      </div>
+    </div>
   )
 })
 
