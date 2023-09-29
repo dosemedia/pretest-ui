@@ -3,6 +3,9 @@ import { AuthContext } from '../stores/stores'
 import { observer } from "mobx-react-lite"
 import { useNavigate } from 'react-router-dom'
 import validator from 'validator'
+import {
+  useMutation,
+} from '@tanstack/react-query'
 
 import { Button } from 'primereact/button'
 import { Message } from 'primereact/message'
@@ -26,16 +29,15 @@ const RegisterForm = observer(() => {
     }
   }, [auth.isAuthenticated, navigate])
 
-  useEffect(() => {
-    // reset wait and error on mount
-    auth.resetRegister()
-  }, [])
-
   const handleRegister = async () => {
     if (termsAccepted && emailValid && passwordValid) {
-      await auth.register(email, password)
+      handleRegisterMutation.mutate()
     }
   }
+
+  const handleRegisterMutation = useMutation({
+    mutationFn: () => auth.register(email, password),
+  })
 
   const handleEmailChange = (e: React.FormEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value)
@@ -75,14 +77,14 @@ const RegisterForm = observer(() => {
         <Checkbox onChange={e => setTermsAccepted(e.checked)} checked={termsAccepted}></Checkbox> I accept the legal stuff!
       </div>
 
-      { auth.registerError && 
+      { handleRegisterMutation.isError && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="error" text={auth.registerError} />
+          <Message severity="error" text={(handleRegisterMutation.error as Error).message} />
         </div>
       }
 
       <div style={{marginTop: '1em'}}>
-        <Button style={{backgroundColor: 'var(--primary-color)'}} label="Register" onClick={handleRegister} disabled={auth.registerWait || !termsAccepted || !email || !password} loading={auth.registerWait} />  
+        <Button style={{backgroundColor: 'var(--primary-color)'}} label="Register" onClick={handleRegister} disabled={handleRegisterMutation.isLoading || !termsAccepted || !email || !password} loading={handleRegisterMutation.isLoading} />  
       </div>
     </div>
   )

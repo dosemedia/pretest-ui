@@ -11,6 +11,7 @@
     "codegen": "graphql-codegen"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.35.3",
     "lodash": "^4.17.21",
     "mobx": "^6.10.2",
     "mobx-react-lite": "^4.0.5",

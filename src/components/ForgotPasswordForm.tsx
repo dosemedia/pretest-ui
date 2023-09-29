@@ -1,6 +1,9 @@
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import { AuthContext } from '../stores/stores'
 import { observer } from "mobx-react-lite"
+import {
+  useMutation,
+} from '@tanstack/react-query'
 
 import { Button } from 'primereact/button'
 import { Message } from 'primereact/message';
@@ -8,21 +11,16 @@ import { InputText } from 'primereact/inputtext'
 
 const ForgotPasswordForm = observer(() => {
   const auth = useContext(AuthContext)
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   const [email, setEmail] = useState('')
 
   const requestResetEmail = async () => {
-    await auth.sendPasswordResetEmail(email)
-    if (!auth.sendPasswordResetEmailError) {
-      setShowSuccessMessage(true)
-    }
+    await requestResetEmailMutation.mutateAsync()
   }
 
-  useEffect(() => {
-    // reset wait and error on mount
-    auth.resetSendPasswordResetEmail()
-  }, [])
+  const requestResetEmailMutation = useMutation({
+    mutationFn: () => auth.sendPasswordResetEmail(email),
+  })
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -31,24 +29,24 @@ const ForgotPasswordForm = observer(() => {
       </div>
 
       <div style={{marginTop: '1em'}}>
-        <InputText placeholder="Email" value={email} onChange={(e) => setEmail(e.currentTarget.value)} readOnly={showSuccessMessage} />
+        <InputText placeholder="Email" value={email} onChange={(e) => setEmail(e.currentTarget.value)} readOnly={requestResetEmailMutation.isSuccess} onKeyUp={(e) => {if(e.key === 'Enter'){requestResetEmail()}}} />
       </div>
 
-      { auth.sendPasswordResetEmailError && 
+      { requestResetEmailMutation.isError && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="error" text={auth.sendPasswordResetEmailError} />
+          <Message severity="error" text={(requestResetEmailMutation.error as Error).message} />
         </div>
       }
 
-      { showSuccessMessage && 
+      { requestResetEmailMutation.isSuccess && 
         <div style={{marginTop: '1em'}}>
           <Message severity="success" text="Password reset email sent." />
         </div>
       }
 
-      { !showSuccessMessage &&
+      { !requestResetEmailMutation.isSuccess &&
         <div style={{marginTop: '1em'}}>
-          <Button style={{backgroundColor: 'var(--primary-color)'}} label="Submit" onClick={requestResetEmail} disabled={auth.sendPasswordResetEmailWait} loading={auth.sendPasswordResetEmailWait} />  
+          <Button style={{backgroundColor: 'var(--primary-color)'}} label="Submit" onClick={requestResetEmail} disabled={requestResetEmailMutation.isLoading} loading={requestResetEmailMutation.isLoading} />  
         </div>
       }
     </div>

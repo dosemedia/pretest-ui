@@ -3,6 +3,9 @@ import { observer } from "mobx-react-lite"
 import { AuthContext } from '../stores/stores'
 import { useParams, useNavigate } from 'react-router-dom'
 import validator from 'validator'
+import {
+  useMutation,
+} from '@tanstack/react-query'
 
 import { Message } from 'primereact/message'
 import { InputText } from 'primereact/inputtext'
@@ -19,20 +22,21 @@ const ResetPasswordPage = observer(() => {
   const [passwordValid, setPasswordValid] = useState(true)
   const [password, setPassword] = useState('')
 
-  useEffect(() => {
-    // reset wait and error on mount
-    auth.resetResetPassword()
-  }, [])
+  const handleCompletePasswordResetMutation = useMutation({
+    mutationFn: () => auth.resetPassword(code, email, password),
+  })
 
   const handleCompletePasswordReset = async () => {
     if (passwordValid) {
-      await auth.resetPassword(code, email, password)
-      console.log('~~ handleCompletePasswordReset', code, email, password)
-      if (!auth.resetPasswordError) {
-        navigate("/auth/login")
-      }
+      await handleCompletePasswordResetMutation.mutateAsync()
     }
   }
+
+  useEffect(() => {
+    if (handleCompletePasswordResetMutation.isSuccess) {
+      navigate("/auth/login")
+    }
+  }, [handleCompletePasswordResetMutation])
 
   const handleEmailChange = (e: React.FormEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value)
@@ -68,14 +72,14 @@ const ResetPasswordPage = observer(() => {
         <Password className={passwordValid ? '' : 'p-invalid'} placeholder="Password" value={password} onChange={handlePasswordChange} feedback={false} onKeyUp={(e) => {if(e.key === 'Enter'){handleCompletePasswordReset()}}} />
       </div>
 
-      { auth.resetPasswordError && 
+      { handleCompletePasswordResetMutation.isError && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="error" text={auth.resetPasswordError} />
+          <Message severity="error" text={(handleCompletePasswordResetMutation.error as Error).message} />
         </div>
       }
 
       <div style={{marginTop: '1em'}}>
-        <Button style={{backgroundColor: 'var(--primary-color)'}} label="Complete Password Reset" onClick={handleCompletePasswordReset} disabled={auth.resetPasswordWait || !email || !password} loading={auth.resetPasswordWait} />  
+        <Button style={{backgroundColor: 'var(--primary-color)'}} label="Complete Password Reset" onClick={handleCompletePasswordReset} disabled={handleCompletePasswordResetMutation.isLoading || !email || !password} loading={handleCompletePasswordResetMutation.isLoading} />  
       </div>
 
     </div>

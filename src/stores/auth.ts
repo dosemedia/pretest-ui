@@ -37,16 +37,6 @@ const resetPasswordMutation = graphql(`
 export class Auth {
   token = localStorage.getItem('auth.token') || ''
   id = localStorage.getItem('auth.id') || ''
-  loginWait = false
-  loginError = ''
-  registerWait = false
-  registerError = ''
-  sendPasswordResetEmailWait = false
-  sendPasswordResetEmailError = ''
-  verifyEmailWait = false
-  verifyEmailError = ''
-  resetPasswordWait = false
-  resetPasswordError = ''
 
   constructor() {
     makeAutoObservable(this)
@@ -58,79 +48,33 @@ export class Auth {
     })
   }
 
-  resetRegister () {
-    this.registerWait = false
-    this.registerError = ''
-  }
-
-  async register (email: string, password: string) {
-    runInAction(() => {
-      this.registerWait = true
-      this.registerError = ''
-    })
-    try {
-      const result = await client.mutation(registerMutation, { email, password })
-      if (result.error) {
-        throw result.error
-      }
-      if (_.has(result, 'data.register.token') && _.has(result, 'data.register.id')) {
-        runInAction(() => {
-          this.token = result.data?.register?.token || ''
-          this.id = result.data?.register?.id || ''
-        })
-      } else {
-        throw new Error('Invalid response from server - missing token')
-      }
-    } catch (error) {
+  async register (email: string, password: string) : Promise<void> {
+    const result = await client.mutation(registerMutation, { email, password })
+    if (result.error) {
+      throw result.error
+    }
+    if (_.has(result, 'data.register.token') && _.has(result, 'data.register.id')) {
       runInAction(() => {
-        if (error instanceof Error) {
-          this.registerError = error.message
-        } else {
-          this.registerError = error + ''
-        }
+        this.token = result.data?.register?.token || ''
+        this.id = result.data?.register?.id || ''
       })
-    } finally {
-      runInAction(() => {
-        this.registerWait = false
-      })
+    } else {
+      throw new Error('Invalid response from server - missing token')
     }
   }
 
-  resetLogin () {
-    this.loginWait = false
-    this.loginError = ''
-  }
-
-  async login (email: string, password: string) {
-    runInAction(() => {
-      this.loginWait = true
-      this.loginError = ''
-    })
-    try {
-      const result = await client.mutation(loginMutation, { email, password })
-      if (result.error) {
-        throw result.error
-      }
-      if (_.has(result, 'data.login.token') && _.has(result, 'data.login.id')) {
-        runInAction(() => {
-          this.token = result.data?.login?.token || ''
-          this.id = result.data?.login?.id || ''
-        })
-      } else {
-        throw new Error('Invalid response from server - missing token')
-      }
-    } catch (error) {
+  async login (email: string, password: string) : Promise<void> {
+    const result = await client.mutation(loginMutation, { email, password })
+    if (result.error) {
+      throw result.error
+    }
+    if (_.has(result, 'data.login.token') && _.has(result, 'data.login.id')) {
       runInAction(() => {
-        if (error instanceof Error) {
-          this.loginError = error.message
-        } else {
-          this.loginError = error + ''
-        }
+        this.token = result.data?.login?.token || ''
+        this.id = result.data?.login?.id || ''
       })
-    } finally {
-      runInAction(() => {
-        this.loginWait = false
-      })
+    } else {
+      throw new Error('Invalid response from server - missing token')
     }
   }
 
@@ -139,101 +83,30 @@ export class Auth {
     this.id = ''
   }
 
-  resetSendPasswordResetEmail () {
-    this.sendPasswordResetEmailWait = false
-    this.sendPasswordResetEmailError = ''
-  }
-
-  async sendPasswordResetEmail (email: string) {
-    runInAction(() => {
-      this.sendPasswordResetEmailWait = true
-      this.sendPasswordResetEmailError = ''
-    })
-    try {
-      const result = await client.mutation(sendPasswordResetEmailMutation, { email })
-      if (result.error) {
-        throw result.error
-      }
-    } catch (error) {
-      runInAction(() => {
-        if (error instanceof Error) {
-          this.sendPasswordResetEmailError = error.message
-        } else {
-          this.sendPasswordResetEmailError = error + ''
-        }
-      })
-    } finally {
-      runInAction(() => {
-        this.sendPasswordResetEmailWait = false
-      })
+  async sendPasswordResetEmail (email: string) : Promise<void> {
+    const result = await client.mutation(sendPasswordResetEmailMutation, { email })
+    if (result.error) {
+      throw result.error
     }
   }
 
-  resetVerifyEmail () {
-    this.verifyEmailWait = false
-    this.verifyEmailError = ''
-  }
-
-  async verifyEmail (code: string) {
-    runInAction(() => {
-      this.verifyEmailWait = true
-      this.verifyEmailError = ''
-    })
-    try {
-      if (!code) {
-        throw new Error('Invalid code')
-      }
-      const result = await client.mutation(verifyEmailMutation, { code })
-      console.log(result)
-      if (result.error) {
-        throw result.error
-      }
-    } catch (error) {
-      runInAction(() => {
-        if (error instanceof Error) {
-          this.verifyEmailError = error.message
-        } else {
-          this.verifyEmailError = error + ''
-        }
-      })
-    } finally {
-      runInAction(() => {
-        this.verifyEmailWait = false
-      })
+  async verifyEmail (code: string) : Promise<void> {
+    if (!code) {
+      throw new Error('Invalid code')
+    }
+    const result = await client.mutation(verifyEmailMutation, { code })
+    if (result.error) {
+      throw result.error
     }
   }
 
-  resetResetPassword () {
-    this.resetPasswordWait = false
-    this.resetPasswordError = ''
-  }
-
-  async resetPassword (code: string, email: string, newPassword: string) {
-    runInAction(() => {
-      this.resetPasswordWait = true
-      this.resetPasswordError = ''
-    })
-    try {
-      if (!code) {
-        throw new Error('Invalid code')
-      }
-      const result = await client.mutation(resetPasswordMutation, { code, email, newPassword })
-      console.log(result)
-      if (result.error) {
-        throw result.error
-      }
-    } catch (error) {
-      runInAction(() => {
-        if (error instanceof Error) {
-          this.resetPasswordError = error.message
-        } else {
-          this.resetPasswordError = error + ''
-        }
-      })
-    } finally {
-      runInAction(() => {
-        this.resetPasswordWait = false
-      })
+  async resetPassword (code: string, email: string, newPassword: string) : Promise<void> {
+    if (!code) {
+      throw new Error('Invalid code')
+    }
+    const result = await client.mutation(resetPasswordMutation, { code, email, newPassword })
+    if (result.error) {
+      throw result.error
     }
   }
 

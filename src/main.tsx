@@ -13,7 +13,10 @@ import RootLayout from './layouts/RootLayout.tsx'
 import ErrorPage from './ErrorPage.tsx'
 import HomePage from './pages/HomePage.tsx'
 import LoginExcludedRoute from './components/LoginExcludedRoute';
-import { verifyEmailLandingPageLoader } from './pages/VerifyEmailLandingPage.tsx'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"
 import "primereact/resources/primereact.min.css"
@@ -74,7 +77,6 @@ const router = createBrowserRouter([
       },
       {
         path: "/verify-email/:code",
-        loader: verifyEmailLandingPageLoader,
         async lazy() {
           const VerifyEmailLandingPage = await import('./pages/VerifyEmailLandingPage.tsx')
           return {
@@ -95,14 +97,18 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <PrimeReactProvider>{ /*value={{ unstyled: true }} */ }
-      <URQLProvider value={urqlClient}>
-        <AuthContext.Provider value={authStore}>
-          <RouterProvider router={router} />
-        </AuthContext.Provider>
-      </URQLProvider>
+      <QueryClientProvider client={queryClient}>
+        <URQLProvider value={urqlClient}>
+          <AuthContext.Provider value={authStore}>
+            <RouterProvider router={router} />
+          </AuthContext.Provider>
+        </URQLProvider>
+      </QueryClientProvider>
     </PrimeReactProvider>
   </React.StrictMode>,
 )
