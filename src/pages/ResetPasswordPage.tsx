@@ -1,39 +1,36 @@
-import { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../stores/stores'
+import { useContext, useState, useEffect } from 'react'
 import { observer } from "mobx-react-lite"
-import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../stores/stores'
+import { useParams, useNavigate } from 'react-router-dom'
 import validator from 'validator'
 
-import { Button } from 'primereact/button'
 import { Message } from 'primereact/message'
 import { InputText } from 'primereact/inputtext'
 import { Password } from 'primereact/password'
-import { Checkbox } from 'primereact/checkbox'
+import { Button } from 'primereact/button'
 
-const RegisterForm = observer(() => {
+const ResetPasswordPage = observer(() => {
   const auth = useContext(AuthContext)
+  const { code } = useParams() as { code: string }
   const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [emailValid, setEmailValid] = useState(true)
   const [passwordValid, setPasswordValid] = useState(true)
   const [password, setPassword] = useState('')
-  const [termsAccepted, setTermsAccepted] = useState(false)
-
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      navigate("/")
-    }
-  }, [auth.isAuthenticated, navigate])
 
   useEffect(() => {
     // reset wait and error on mount
-    auth.resetRegister()
+    auth.resetResetPassword()
   }, [])
 
-  const handleRegister = async () => {
-    if (termsAccepted && emailValid && passwordValid) {
-      await auth.register(email, password)
+  const handleCompletePasswordReset = async () => {
+    if (passwordValid) {
+      await auth.resetPassword(code, email, password)
+      console.log('~~ handleCompletePasswordReset', code, email, password)
+      if (!auth.resetPasswordError) {
+        navigate("/auth/login")
+      }
     }
   }
 
@@ -60,7 +57,7 @@ const RegisterForm = observer(() => {
   return (
     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
       <div>
-        <h1>Register</h1>
+        <h1>Reset Password</h1>
       </div>
 
       <div style={{marginTop: '1em'}}>
@@ -68,24 +65,21 @@ const RegisterForm = observer(() => {
       </div>
       
       <div style={{marginTop: '1em'}}>
-        <Password className={passwordValid ? '' : 'p-invalid'} placeholder="Password" value={password} onChange={handlePasswordChange} feedback={false} onKeyUp={(e) => {if(e.key === 'Enter'){handleRegister()}}} />
+        <Password className={passwordValid ? '' : 'p-invalid'} placeholder="Password" value={password} onChange={handlePasswordChange} feedback={false} onKeyUp={(e) => {if(e.key === 'Enter'){handleCompletePasswordReset()}}} />
       </div>
 
-      <div style={{marginTop: '1em'}}>
-        <Checkbox onChange={e => setTermsAccepted(e.checked)} checked={termsAccepted}></Checkbox> I accept the legal stuff!
-      </div>
-
-      { auth.registerError && 
+      { auth.resetPasswordError && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="error" text={auth.registerError} />
+          <Message severity="error" text={auth.resetPasswordError} />
         </div>
       }
 
       <div style={{marginTop: '1em'}}>
-        <Button style={{backgroundColor: 'var(--primary-color)'}} label="Register" onClick={handleRegister} disabled={auth.registerWait || !termsAccepted || !email || !password} loading={auth.registerWait} />  
+        <Button style={{backgroundColor: 'var(--primary-color)'}} label="Complete Password Reset" onClick={handleCompletePasswordReset} disabled={auth.resetPasswordWait || !email || !password} loading={auth.resetPasswordWait} />  
       </div>
+
     </div>
   )
 })
 
-export default RegisterForm
+export default ResetPasswordPage

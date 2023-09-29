@@ -21,6 +21,11 @@ const LoginForm = observer(() => {
     }
   }, [auth.isAuthenticated, navigate])
 
+  useEffect(() => {
+    // reset wait and error on mount
+    auth.resetLogin()
+  }, [])
+
   const handleLogin = async () => {
     await auth.login(email, password)
   }

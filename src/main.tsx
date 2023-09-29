@@ -13,6 +13,7 @@ import RootLayout from './layouts/RootLayout.tsx'
 import ErrorPage from './ErrorPage.tsx'
 import HomePage from './pages/HomePage.tsx'
 import LoginExcludedRoute from './components/LoginExcludedRoute';
+import { verifyEmailLandingPageLoader } from './pages/VerifyEmailLandingPage.tsx'
 
 import "primereact/resources/themes/lara-light-indigo/theme.css"
 import "primereact/resources/primereact.min.css"
@@ -53,6 +54,40 @@ const router = createBrowserRouter([
                 </LoginExcludedRoute>
               );
             },
+          }
+        }
+      },
+      {
+        path: "/auth/forgot",
+        async lazy() {
+          const ForgotPasswordPage = await import('./pages/ForgotPasswordPage.tsx')
+          return {
+            Component: () => {
+              return (
+                <LoginExcludedRoute>
+                  <ForgotPasswordPage.default />
+                </LoginExcludedRoute>
+              );
+            },
+          }
+        }
+      },
+      {
+        path: "/verify-email/:code",
+        loader: verifyEmailLandingPageLoader,
+        async lazy() {
+          const VerifyEmailLandingPage = await import('./pages/VerifyEmailLandingPage.tsx')
+          return {
+            Component: VerifyEmailLandingPage.default
+          }
+        }
+      },
+      {
+        path: "/reset-password/:code",
+        async lazy() {
+          const ResetPasswordPage = await import('./pages/ResetPasswordPage.tsx')
+          return {
+            Component: ResetPasswordPage.default
           }
         }
       },

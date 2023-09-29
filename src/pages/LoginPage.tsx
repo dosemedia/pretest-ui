@@ -6,7 +6,8 @@ export default function LoginPage() {
     <>
       <LoginForm />
       <div style={{textAlign: 'center', marginTop: '1em'}}>
-        <Link to='/auth/register'>Register</Link>
+        <Link to='/auth/register'>Register</Link> |&nbsp;
+        <Link to='/auth/forgot'>Forgot Password</Link>
       </div>
     </>
   )

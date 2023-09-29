@@ -53,5 +53,7 @@ TODO add note about running this when api changes AND when queries are added to 
 ```
 yarn codegen
 ```
+Note, you may need to restart ts server in VSCode after running codegen.
+
 
 Note, edited codegen.ts from urql docs to include .ts and .tsx files.
