@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { AuthContext } from '../stores/stores'
 import { observer } from "mobx-react-lite"
 import { useNavigate } from 'react-router-dom'
@@ -23,12 +23,6 @@ const RegisterForm = observer(() => {
   const [password, setPassword] = useState('')
   const [termsAccepted, setTermsAccepted] = useState(false)
 
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      navigate("/")
-    }
-  }, [auth.isAuthenticated, navigate])
-
   const handleRegister = async () => {
     if (termsAccepted && emailValid && passwordValid) {
       handleRegisterMutation.mutate()
@@ -37,6 +31,9 @@ const RegisterForm = observer(() => {
 
   const handleRegisterMutation = useMutation({
     mutationFn: () => auth.register(email, password),
+    onSuccess: () => { 
+      navigate("/")
+    }
   })
 
   const handleEmailChange = (e: React.FormEvent<HTMLInputElement>) => {
