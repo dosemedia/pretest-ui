@@ -26,13 +26,24 @@ export class Auth {
     })
   }
 
+  async changePassword (oldPassword: string, newPassword: string) : Promise<void> {
+    const result = await client.mutation(graphql(`
+    mutation ChangePassword($oldPassword: String!, $newPassword: String!) {
+      changePassword(oldPassword: $oldPassword, newPassword: $newPassword)
+    }
+    `), { oldPassword, newPassword })
+    this.logout()
+    if (result.error) {
+      throw result.error
+    }
+  }
+
   async changeEmail (newEmail: string, password: string) : Promise<void> {
     const result = await client.mutation(graphql(`
     mutation ChangeEmail($newEmail: String!, $password: String!) {
       changeEmail(newEmail: $newEmail, password: $password)
     }
     `), { newEmail, password })
-    console.log(result)
     if (result.error) {
       throw result.error
     }
