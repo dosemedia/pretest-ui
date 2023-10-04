@@ -6,15 +6,67 @@ import _ from 'lodash'
 export class Auth {
   token = localStorage.getItem('auth.token') || ''
   id = localStorage.getItem('auth.id') || ''
+  user = localStorage.getItem('auth.user') ? JSON.parse(localStorage.getItem('auth.user') as string) : null
 
   constructor() {
     makeAutoObservable(this)
     observe(this, 'token', () => {
+      console.log(this.token)
       localStorage.setItem('auth.token', this.token)
     })
-    observe(this, 'id', () => {
-      localStorage.setItem('auth.id', this.id)
+    observe(this, 'user', () => {
+      localStorage.setItem('auth.user', JSON.stringify(this.user))
+
     })
+    observe(this, 'id', async () => {
+      localStorage.setItem('auth.id', this.id)
+      if (this.id) {
+        await this.getUser()
+      }
+    })
+  }
+
+  async changeEmail (newEmail: string, password: string) : Promise<void> {
+    const result = await client.mutation(graphql(`
+    mutation ChangeEmail($newEmail: String!, $password: String!) {
+      changeEmail(newEmail: $newEmail, password: $password)
+    }
+    `), { newEmail, password })
+    console.log(result)
+    if (result.error) {
+      throw result.error
+    }
+  }
+
+  async updateDisplayName (display_name: string) : Promise<void> {
+    const result = await client.mutation(graphql(`
+    mutation UpdateUser($display_name: String!, $id: uuid!) {
+      update_users_by_pk(pk_columns: {id: $id}, _set: {display_name: $display_name}) {
+        display_name
+      }
+    }
+    `), { id: this.id, display_name })
+    if (result.error) {
+      throw result.error
+    } else if (result?.data?.update_users_by_pk) {
+      this.user = result?.data?.update_users_by_pk
+    }
+  }
+
+  async getUser() : Promise<void> {
+    const result = await client.query(`
+    query GetUser($id: uuid!) {
+      users_by_pk(id: $id) {
+        display_name
+        email
+      }
+    }
+    `, { id: this.id })
+    if (result.error) {
+      throw result.error
+    } else if (result?.data?.users_by_pk) {
+      this.user = result?.data?.users_by_pk
+    }
   }
 
   async register (email: string, password: string) : Promise<void> {
@@ -62,6 +114,7 @@ export class Auth {
   logout () {
     this.token = ''
     this.id = ''
+    this.user = ''
   }
 
   async sendPasswordResetEmail (email: string) : Promise<void> {
