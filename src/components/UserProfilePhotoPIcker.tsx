@@ -70,14 +70,14 @@ const UserProfilePhotoPicker = observer(() => {
         !image64 && !auth.user?.avatar_file_key && <FileUpload style={{ marginTop: 10 }} mode="basic" auto accept="image/*" maxFileSize={1000000} multiple={false} onSelect={photoSelected} />
       }
       {
-        profilePic && 
+        profilePic &&
         <div>
           <Button label="Save" style={{ backgroundColor: 'var(--primary-color)', marginRight: 10 }} onClick={() => save.mutate()} loading={save.isLoading} />
           <Button label="Reset" style={{ backgroundColor: 'var(--primary-color)' }} disabled={save.isLoading} onClick={resetPhoto} />
         </div>
       }
       {
-        auth.user?.avatar_file_key && <Button label="Remove" style={{ backgroundColor: 'var(--red-500)' }} disabled={removePhoto.isLoading} onClick={() => removePhoto.mutate() } />
+        auth.user?.avatar_file_key && <Button label="Remove" style={{ backgroundColor: 'var(--red-500)', marginTop: 5 }} disabled={removePhoto.isLoading} onClick={() => removePhoto.mutate() } />
       }
     </>
   )
