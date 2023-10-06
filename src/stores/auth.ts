@@ -41,7 +41,7 @@ export class Auth {
         }`)
         , { id: this.id, avatar_file_key: null })
         if (!result.error) {
-          this.user = result?.data?.update_users_by_pk 
+          this.syncUser()
         }
       } else {
         throw new Error('Authentication required.')
@@ -59,10 +59,18 @@ export class Auth {
         }
       })
       if (response?.data && this.user) {
-        this.user = { ...this.user, avatar_file_key: response.data?.key }
+        this.syncUser()
       }
     } else {
       throw new Error('Authentication required.')
+    }
+  }
+
+  async syncUser () {
+    if (this.id && this.token) {
+      await this.getUser()
+    } else {
+      this.user = ''
     }
   }
 
@@ -121,7 +129,7 @@ export class Auth {
     if (result.error) {
       throw result.error
     } else if (result?.data?.update_users_by_pk) {
-      this.user = result?.data?.update_users_by_pk
+      this.syncUser()
     }
   }
 
