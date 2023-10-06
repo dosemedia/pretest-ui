@@ -106,6 +106,15 @@ const router = createBrowserRouter([
           }
         }
       },
+      {
+        path: "/contact",
+        async lazy() {
+          const ContactPage = await import('./pages/ContactPage.tsx')
+          return {
+            Component: ContactPage.default
+          }
+        }
+      },
     ]
   },
 ]);

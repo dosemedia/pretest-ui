@@ -4,12 +4,14 @@ import { client } from '../graphql'
 import _ from 'lodash'
 import axios from 'axios'
 
+// TODO - when using capacitor, use the Preferences plugin instead of localStorage
+
 export class Auth {
   token = localStorage.getItem('auth.token') || ''
   id = localStorage.getItem('auth.id') || ''
   user = localStorage.getItem('auth.user') ? JSON.parse(localStorage.getItem('auth.user') as string) : null
-  filesBaseUrl = import.meta.env.VITE_HASURA_BASE_URL || 'http://localhost:8080'
-  serverUrl = import.meta.env.SERVER_URL || 'http://localhost:3000'
+  // hasuraBaseUrl = import.meta.env.VITE_HASURA_BASE_URL || 'http://localhost:8080'
+  filesBaseUrl = import.meta.env.VITE_NODE_BASE_URL || 'http://localhost:3000'
 
   constructor() {
     makeAutoObservable(this)
@@ -32,7 +34,7 @@ export class Auth {
   async removeProfilePicture () : Promise<void> {
       if (this.token) {
         // Update avatar_file_key
-        const result = await client.mutation(graphql(`mutation UpdateDisplayName($id: uuid!, $avatar_file_key: String!) {
+        const result = await client.mutation(graphql(`mutation UpdateDisplayName($id: uuid!, $avatar_file_key: String) {
           update_users_by_pk(pk_columns: {id: $id}, _set: {avatar_file_key: $avatar_file_key}) {
             avatar_file_key
             email
@@ -53,7 +55,7 @@ export class Auth {
       // post multipart/form-data to /files/user-avatar
       const form = new FormData()
       form.append('avatar', photoFile)
-      const response = await axios.post(this.serverUrl + '/files/user-avatar', form, {
+      const response = await axios.post(this.filesBaseUrl + '/files/user-avatar', form, {
         headers: {
           Authorization: 'Bearer ' + this.token
         }
@@ -76,7 +78,7 @@ export class Auth {
 
 
   userAvatarKeyToUrl (key: string) : string {
-    return this.serverUrl + '/files/user-avatar/' + key
+    return this.filesBaseUrl + '/files/user-avatar/' + key
   }
 
   async destroyUser (password: string) : Promise<void> {

@@ -1,5 +1,3 @@
-// import { Link }  from "react-router-dom"
-
 import { observer } from "mobx-react-lite"
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react"
@@ -88,7 +86,9 @@ const ProfilePage = observer(() => {
                 <Dialog header="Change Password" visible={showChangePasswordDialog} style={{ width: '50vw' }} onHide={() => setShowChangePasswordDialog(false)} dismissableMask={true}>
                   <div>
                     <Password value={oldPassword} placeholder="Old Password" onChange={(e) => setOldPassword(e.target.value)} toggleMask />
-                    <Password value={newPassword} style={{ marginLeft: 5 }} placeholder="New Password" onKeyUp={(e) => e.key === 'Enter' ? changePassword.mutate() : null} onChange={(e) => setNewPassword(e.target.value)} toggleMask />
+                  </div>
+                  <div>
+                    <Password value={newPassword} placeholder="New Password" onKeyUp={(e) => e.key === 'Enter' ? changePassword.mutate() : null} onChange={(e) => setNewPassword(e.target.value)} toggleMask />
                   </div>
                   <div>
                   <Button style={{backgroundColor: 'var(--primary-color)', marginTop: 10}} label="Save" onClick={() => changePassword.mutate()} loading={changePassword.isLoading} disabled={changePassword.isLoading} />
