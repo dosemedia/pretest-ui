@@ -18,11 +18,11 @@ const RootLayout = observer(() => {
   )
   const toolbarEnd = (
     <>
-    <Link to={`/contact`}>Contact</Link>
+    <Link to={`/contact`} style={{marginRight: 25}}>Contact</Link>
     {
       auth.isAuthenticated ?
         <>
-          <Button style={{backgroundColor: 'var(--primary-color)', marginLeft: 25}} label="Logout" onClick={() => auth.logout()} />
+          <Button style={{backgroundColor: 'var(--primary-color)'}} label="Logout" onClick={() => auth.logout()} />
           <Link style={{ marginLeft: 25 }} to={`me/profile`}>Profile</Link>
         </>
         :
