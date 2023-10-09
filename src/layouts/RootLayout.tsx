@@ -2,10 +2,7 @@ import { Outlet, useLocation } from "react-router-dom"
 import { AuthContext } from '../stores/stores'
 import { useContext } from 'react'
 import { observer } from "mobx-react-lite"
-
-import { Toolbar } from 'primereact/toolbar'
 import { Link } from 'react-router-dom'
-import { Button } from 'primereact/button'
 
 const RootLayout = observer(() => {
   const auth = useContext(AuthContext)
@@ -13,7 +10,7 @@ const RootLayout = observer(() => {
 
   const toolbarStart = (
     <>
-      <Link to={`/`}>App Name</Link>
+      <Link to={`/`}>pretest</Link>
     </>
   )
   const toolbarEnd = (
@@ -22,7 +19,7 @@ const RootLayout = observer(() => {
     {
       auth.isAuthenticated ?
         <>
-          <Button style={{backgroundColor: 'var(--primary-color)'}} label="Logout" onClick={() => auth.logout()} />
+          <button onClick={() => auth.logout()}>Logout</button>
           <Link style={{ marginLeft: 25 }} to={`me/profile`}>Profile</Link>
         </>
         :
@@ -33,7 +30,10 @@ const RootLayout = observer(() => {
 
   return (
     <>
-      <Toolbar className="app-toolbar" style={{width: '100%'}} start={toolbarStart} end={toolbarEnd} />
+      <div>
+        {toolbarStart}
+        {toolbarEnd}
+      </div>
       <div id="detail">
           <Outlet />
       </div>

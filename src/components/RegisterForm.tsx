@@ -7,12 +7,6 @@ import {
   useMutation,
 } from '@tanstack/react-query'
 
-import { Button } from 'primereact/button'
-import { Message } from 'primereact/message'
-import { InputText } from 'primereact/inputtext'
-import { Password } from 'primereact/password'
-import { Checkbox } from 'primereact/checkbox'
-
 const RegisterForm = observer(() => {
   const auth = useContext(AuthContext)
   const navigate = useNavigate()
@@ -63,25 +57,26 @@ const RegisterForm = observer(() => {
       </div>
 
       <div style={{marginTop: '1em'}}>
-        <InputText className={emailValid ? '' : 'p-invalid'} placeholder="Email" value={email} onChange={handleEmailChange} />
+        <input type="text" className={emailValid ? '' : 'p-invalid'} placeholder="Email" value={email} onChange={handleEmailChange} />
       </div>
       
       <div style={{marginTop: '1em'}}>
-        <Password className={passwordValid ? '' : 'p-invalid'} placeholder="Password" value={password} onChange={handlePasswordChange} feedback={false} onKeyUp={(e) => {if(e.key === 'Enter'){handleRegister()}}} />
+        <input type="password" className={passwordValid ? '' : 'p-invalid'} placeholder="Password" value={password} onChange={handlePasswordChange} onKeyUp={(e) => {if(e.key === 'Enter'){handleRegister()}}} />
       </div>
 
       <div style={{marginTop: '1em'}}>
-        <Checkbox onChange={e => setTermsAccepted(e.checked)} checked={termsAccepted}></Checkbox> I accept the legal stuff!
+        <input type="checkbox" onChange={() => setTermsAccepted(!termsAccepted)} checked={termsAccepted} />
+        I accept the legal stuff!
       </div>
 
       { handleRegisterMutation.isError && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="error" text={(handleRegisterMutation.error as Error).message} />
+          <div className="messageError">{ (handleRegisterMutation.error as Error).message }</div>
         </div>
       }
 
       <div style={{marginTop: '1em'}}>
-        <Button style={{backgroundColor: 'var(--primary-color)'}} label="Register" onClick={handleRegister} disabled={handleRegisterMutation.isLoading || !termsAccepted || !email || !password || !emailValid} loading={handleRegisterMutation.isLoading} />  
+        <button onClick={handleRegister} disabled={handleRegisterMutation.isLoading || !termsAccepted || !email || !password || !emailValid}>Register</button>
       </div>
     </div>
   )

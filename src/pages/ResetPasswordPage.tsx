@@ -7,11 +7,6 @@ import {
   useMutation,
 } from '@tanstack/react-query'
 
-import { Message } from 'primereact/message'
-import { InputText } from 'primereact/inputtext'
-import { Password } from 'primereact/password'
-import { Button } from 'primereact/button'
-
 const ResetPasswordPage = observer(() => {
   const auth = useContext(AuthContext)
   const { code } = useParams() as { code: string }
@@ -65,21 +60,21 @@ const ResetPasswordPage = observer(() => {
       </div>
 
       <div style={{marginTop: '1em'}}>
-        <InputText className={emailValid ? '' : 'p-invalid'} placeholder="Email" value={email} onChange={handleEmailChange} />
+        <input type="text" className={emailValid ? '' : 'p-invalid'} placeholder="Email" value={email} onChange={handleEmailChange} />
       </div>
       
       <div style={{marginTop: '1em'}}>
-        <Password className={passwordValid ? '' : 'p-invalid'} placeholder="Password" value={password} onChange={handlePasswordChange} feedback={false} onKeyUp={(e) => {if(e.key === 'Enter'){handleCompletePasswordReset()}}} />
+        <input type="password" className={passwordValid ? '' : 'p-invalid'} placeholder="Password" value={password} onChange={handlePasswordChange} onKeyUp={(e) => {if(e.key === 'Enter'){handleCompletePasswordReset()}}} />
       </div>
 
       { handleCompletePasswordResetMutation.isError && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="error" text={(handleCompletePasswordResetMutation.error as Error).message} />
+          <div className="messageError">{ (handleCompletePasswordResetMutation.error as Error).message }</div>
         </div>
       }
 
       <div style={{marginTop: '1em'}}>
-        <Button style={{backgroundColor: 'var(--primary-color)'}} label="Complete Password Reset" onClick={handleCompletePasswordReset} disabled={handleCompletePasswordResetMutation.isLoading || !email || !password} loading={handleCompletePasswordResetMutation.isLoading} />  
+        <button onClick={handleCompletePasswordReset} disabled={handleCompletePasswordResetMutation.isLoading || !email || !password}>Complete Password Reset</button>
       </div>
 
     </div>

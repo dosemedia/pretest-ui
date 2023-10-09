@@ -1,19 +1,15 @@
 import { observer } from "mobx-react-lite"
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react"
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { AuthContext } from "../stores/stores"
-import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password'
-import { Button } from 'primereact/button';
-import { Toast } from 'primereact/toast';
-import { Dialog } from 'primereact/dialog';
 import { useMutation } from "@tanstack/react-query";
 import UserProfilePhotoPicker from "../components/UserProfilePhotoPIcker";
 
 const ProfilePage = observer(() => {
   const auth = useContext(AuthContext)
-  const toast = useRef<Toast>(null);
+  const [toast, setToast] = useState('')
+  const [toastClass, setToastClass] = useState('')
   const navigate = useNavigate()
   const [displayName, setDisplayName] = useState(auth.user?.display_name || '')
   const [email, setEmail] = useState('')
@@ -38,25 +34,43 @@ const ProfilePage = observer(() => {
   const destroyAccount = useMutation({
     mutationFn: () => auth.destroyUser(destroyPassword),
     onSuccess: () => navigate('/'), 
-    onError: (error) => toast.current?.show({ severity: 'error', summary: 'Error', detail: error!.toString() })
+    onError: (error) => {
+      setToast('Error: ' + error!.toString())
+      setToastClass('toastError')
+    }
   })
 
   const updateDisplayName = useMutation({
     mutationFn: () =>  auth.updateDisplayName(displayName),
-    onSuccess: () => toast.current?.show({ severity: 'success', summary: 'Success', detail: 'You have successfully updated your display name' }), 
-    onError: (error) => toast.current?.show({ severity: 'error', summary: 'Error', detail: error!.toString() })
+    onSuccess: () => { 
+      setToast('You have successfully updated your display name')
+      setToastClass('toastSuccess')
+    },
+    onError: (error) => {
+      setToast('Error: ' + error!.toString())
+      setToastClass('toastError')
+    }
   })
 
   const changePassword = useMutation({
     mutationFn: () =>  auth.changePassword(oldPassword, newPassword),
     onSuccess: () => { navigate('/auth/login'); setShowChangePasswordDialog(false) }, 
-    onError: (error) => toast.current?.show({ severity: 'error', summary: 'Error', detail: error!.toString() })
+    onError: (error) => {
+      setToast('Error: ' + error!.toString())
+      setToastClass('toastError')
+    }
   })
 
   const changeEmail = useMutation({
     mutationFn: () => auth.changeEmail(email, changeEmailPassword),
-    onSuccess: () => toast.current?.show({ severity: 'success', summary: 'Success', detail: 'You have successfully changed your email' }),
-    onError: (error) => toast.current?.show({ severity: 'error', summary: 'Error', detail: error!.toString() })
+    onSuccess: () => {
+      setToast('You have successfully changed your email')
+      setToastClass('toastSuccess')
+    },
+    onError: (error) => {
+      setToast('Error: ' + error!.toString())
+      setToastClass('toastError')
+    }
   })
 
   return (
@@ -65,50 +79,60 @@ const ProfilePage = observer(() => {
         auth.isAuthenticated ?
           <div style={{marginTop: '1em'}}>
             <div>
-              <Toast ref={toast} position="top-center" />
+              { toast &&
+                <div className={toastClass}>{ toast }</div>
+              }
               <h2 className="text-h1">Profile</h2>
-              <InputText style={{ marginTop: 20 }} value={displayName} placeholder="Display Name" onChange={(e) => setDisplayName(e.target.value)} />
-              <Button style={{backgroundColor: 'var(--primary-color)', marginLeft: 5 }} label="Save" loading={updateDisplayName.isLoading} onClick={() => updateDisplayName.mutate()} disabled={updateDisplayName.isLoading || !displayNameChanged} />
+              <input type="text" style={{ marginTop: 20 }} value={displayName} placeholder="Display Name" onChange={(e) => setDisplayName(e.target.value)} />
+              <button style={{ marginLeft: 5 }} onClick={() => updateDisplayName.mutate()} disabled={updateDisplayName.isLoading || !displayNameChanged}>Save</button>
               <div style={{ marginTop: 20 }}>
                 <h4>
                   Change Email
                 </h4>
-                <InputText value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                <Password style={{ marginLeft: 20 }} value={changeEmailPassword} placeholder="Password (Required to Change Email)" onChange={(e) => setChangeEmailPassword(e.target.value)} />
-                <Button style={{backgroundColor: 'var(--primary-color)', marginLeft: 5}} label="Save" onClick={() => changeEmail.mutate()} loading={changeEmail.isLoading} disabled={changeEmail.isLoading || !emailChanged || !email || !changeEmailPassword} />
+                <input type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                <input type="password" style={{ marginLeft: 20 }} value={changeEmailPassword} placeholder="Password (Required to Change Email)" onChange={(e) => setChangeEmailPassword(e.target.value)} />
+                <button style={{ marginLeft: 5}} onClick={() => changeEmail.mutate()} disabled={changeEmail.isLoading || !emailChanged || !email || !changeEmailPassword}>Save</button>
               </div>
               <div style={{marginTop: 30}}>
                 <h4>Profile Picture</h4>
                 <UserProfilePhotoPicker />
               </div>
               <div>
-                <Button style={{backgroundColor: 'var(--primary-color)', marginTop: 35 }} label="Change Password" onClick={() => setShowChangePasswordDialog(true)} />
-                <Dialog header="Change Password" visible={showChangePasswordDialog} style={{ width: '50vw' }} onHide={() => setShowChangePasswordDialog(false)} dismissableMask={true}>
+                <button style={{ marginTop: 35 }} onClick={() => setShowChangePasswordDialog(true)}>Change Password</button>
+                { showChangePasswordDialog &&
+                <div>
+                  <h3>Change Password</h3>
+                  <button style={{ marginTop: 10 }} onClick={() => setShowChangePasswordDialog(false)}>Close</button>
                   <div>
-                    <Password value={oldPassword} placeholder="Old Password" onChange={(e) => setOldPassword(e.target.value)} toggleMask />
+                    <input type="password" value={oldPassword} placeholder="Old Password" onChange={(e) => setOldPassword(e.target.value)} />
                   </div>
                   <div>
-                    <Password value={newPassword} placeholder="New Password" onKeyUp={(e) => e.key === 'Enter' ? changePassword.mutate() : null} onChange={(e) => setNewPassword(e.target.value)} toggleMask />
+                    <input type="password" value={newPassword} placeholder="New Password" onKeyUp={(e) => e.key === 'Enter' ? changePassword.mutate() : null} onChange={(e) => setNewPassword(e.target.value)} />
                   </div>
                   <div>
-                  <Button style={{backgroundColor: 'var(--primary-color)', marginTop: 10}} label="Save" onClick={() => changePassword.mutate()} loading={changePassword.isLoading} disabled={changePassword.isLoading} />
+                  <button style={{ marginTop: 10}} onClick={() => changePassword.mutate()} disabled={changePassword.isLoading}>Save</button>
                   </div>
-                </Dialog>
+                </div>
+                }
               </div>
               <div style={{ marginTop: 30 }}>
                 <h4>Danger Zone</h4>
-                <Button style={{backgroundColor: 'var(--red-500)',marginTop: 5 }} label="Destroy Account" onClick={() => setShowDestroyAccountDialog(true)} />
-                <Dialog header="Destroy Account" visible={showDestroyAccountDialog} style={{ width: '50vw' }} onHide={() => setShowDestroyAccountDialog(false)} dismissableMask={true}>
+                <button style={{ marginTop: 5 }} onClick={() => setShowDestroyAccountDialog(true)}>Destroy Account</button>
+                { showDestroyAccountDialog &&
+                <div>
+                  <h3>Destroy Account</h3>
+                  <button style={{ marginTop: 10 }} onClick={() => setShowDestroyAccountDialog(false)}>Close</button>
                   <div>
                     <p>
                       Your AppName account and all the data it contains will be permanently destroyed.
                     </p>
-                    <Password value={destroyPassword} placeholder="Password" onChange={(e) => setDestroyPassword(e.target.value)} toggleMask />
+                    <input type="password" value={destroyPassword} placeholder="Password" onChange={(e) => setDestroyPassword(e.target.value)} />
                   </div>
                   <div>
-                  <Button style={{backgroundColor: 'var(--red-500)', marginTop: 10}} label="Destroy Account" onClick={() => destroyAccount.mutate()} loading={destroyAccount.isLoading} disabled={destroyAccount.isLoading} />
+                  <button style={{ marginTop: 10}} onClick={() => destroyAccount.mutate()} disabled={destroyAccount.isLoading}>Destroy Account</button>
                   </div>
-                </Dialog>
+                </div>
+                }
               </div>
             </div>
           </div>

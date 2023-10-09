@@ -1,17 +1,14 @@
 import { observer } from "mobx-react-lite"
-import { useContext, useState, useRef } from "react"
+import { useContext, useState } from "react"
 import { AuthContext } from "../stores/stores"
-import { Image } from 'primereact/image'
-import { Button } from 'primereact/button'
-import { Toast } from 'primereact/toast';
-import { FileUpload, FileUploadSelectEvent } from 'primereact/fileupload';
 import { useMutation } from "@tanstack/react-query"
 
 const UserProfilePhotoPicker = observer(() => {
   const auth = useContext(AuthContext)
-  const toast = useRef<Toast>(null)
   const [image64, setImage64] = useState<string | null>(null)
   const [profilePic, setProfilePic] = useState<File | null>(null)
+  const [toast, setToast] = useState('')
+  const [toastClass, setToastClass] = useState('')
 
   function photoCleared () {
     setImage64(null)
@@ -20,22 +17,34 @@ const UserProfilePhotoPicker = observer(() => {
 
   const save = useMutation({
     mutationFn: () => auth.updateProfilePicture(profilePic!),
-    onSuccess: () => toast.current?.show({ severity: 'success', summary: 'Successful', detail: 'You have successfully added a profile picture' }),
-    onError: (error) => toast.current?.show({ severity: 'error', summary: 'Error', detail: error!.toString() })
+    onSuccess: () => {
+      setToast('You have successfully added a profile picture')
+      setToastClass('toastSuccess')
+    },
+    onError: (error) => {
+      setToast('Error: ' + error!.toString())
+      setToastClass('toastError')
+    }
   })
   const removePhoto = useMutation({
     mutationFn: () => auth.removeProfilePicture(),
-    onSuccess: () =>  { toast.current?.show({ severity: 'success', summary: 'Successful', detail: 'You have successfully removed your profile picture' }); photoCleared() } ,
-    onError: (error) => toast.current?.show({ severity: 'error', summary: 'Error', detail: error!.toString() })
+    onSuccess: () =>  { 
+      setToast('You have successfully removed your profile picture')
+      setToastClass('toastSuccess')
+    },
+    onError: (error) => {
+      setToast('Error: ' + error!.toString())
+      setToastClass('toastError')
+    }
   })
 
   function resetPhoto () {
     photoCleared()
   }
 
-  const photoSelected  = async (e: FileUploadSelectEvent) => {
-    const file = e.files[0]
-    if (file) {
+  const photoSelected  = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files && e.currentTarget.files[0]) {
+      const file = e.currentTarget.files[0]
       setProfilePic(file)
       setImage64(await getBase64(file))
     } else {
@@ -53,31 +62,33 @@ const UserProfilePhotoPicker = observer(() => {
   }
   return (
     <>
-      <Toast ref={toast} position="top-center" />
+      { toast &&
+        <div className={toastClass}>{ toast }</div>
+      }
       {
         auth.user && auth.user.avatar_file_key && !image64 && 
         <div>
-          <Image src={auth.userAvatarKeyToUrl(auth.user.avatar_file_key)} alt="Image" width="200" />
+          <img src={auth.userAvatarKeyToUrl(auth.user.avatar_file_key)} alt="Image" width="200" />
         </div>
       }
       {
         !auth.user?.avatar_file_key && <div> No Profile Picture </div>
       }
       {
-        image64 && <Image src={image64} alt="Image" width="200" />
+        image64 && <img src={image64} alt="Image" width="200" />
       }
       {
-        !image64 && !auth.user?.avatar_file_key && <FileUpload style={{ marginTop: 10 }} mode="basic" auto accept="image/*" maxFileSize={1000000} multiple={false} onSelect={photoSelected} />
+        !image64 && !auth.user?.avatar_file_key && <input type="file" style={{ marginTop: 10 }} accept="image/*" multiple={false} onChange={photoSelected} />
       }
       {
         profilePic &&
         <div>
-          <Button label="Save" style={{ backgroundColor: 'var(--primary-color)', marginRight: 10 }} onClick={() => save.mutate()} loading={save.isLoading} />
-          <Button label="Reset" style={{ backgroundColor: 'var(--primary-color)' }} disabled={save.isLoading} onClick={resetPhoto} />
+          <button style={{ marginRight: 10 }} onClick={() => save.mutate()}>Save</button>
+          <button disabled={save.isLoading} onClick={resetPhoto}>Reset</button>
         </div>
       }
       {
-        auth.user?.avatar_file_key && <Button label="Remove" style={{ backgroundColor: 'var(--red-500)', marginTop: 5 }} disabled={removePhoto.isLoading} onClick={() => removePhoto.mutate() } />
+        auth.user?.avatar_file_key && <button style={{ backgroundColor: 'var(--red-500)', marginTop: 5 }} disabled={removePhoto.isLoading} onClick={() => removePhoto.mutate() }>Remove</button>
       }
     </>
   )

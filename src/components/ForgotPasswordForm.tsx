@@ -5,10 +5,6 @@ import {
   useMutation,
 } from '@tanstack/react-query'
 
-import { Button } from 'primereact/button'
-import { Message } from 'primereact/message';
-import { InputText } from 'primereact/inputtext'
-
 const ForgotPasswordForm = observer(() => {
   const auth = useContext(AuthContext)
 
@@ -29,24 +25,24 @@ const ForgotPasswordForm = observer(() => {
       </div>
 
       <div style={{marginTop: '1em'}}>
-        <InputText placeholder="Email" value={email} onChange={(e) => setEmail(e.currentTarget.value)} readOnly={requestResetEmailMutation.isSuccess} onKeyUp={(e) => {if(e.key === 'Enter'){requestResetEmail()}}} />
+        <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.currentTarget.value)} readOnly={requestResetEmailMutation.isSuccess} onKeyUp={(e) => {if(e.key === 'Enter'){requestResetEmail()}}} />
       </div>
 
       { requestResetEmailMutation.isError && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="error" text={(requestResetEmailMutation.error as Error).message} />
+          <div className="messageError">{ (requestResetEmailMutation.error as Error).message }</div>
         </div>
       }
 
       { requestResetEmailMutation.isSuccess && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="success" text="Password reset email sent." />
+          <div className="messageSuccess">Password reset email sent.</div>
         </div>
       }
 
       { !requestResetEmailMutation.isSuccess &&
         <div style={{marginTop: '1em'}}>
-          <Button style={{backgroundColor: 'var(--primary-color)'}} label="Submit" onClick={requestResetEmail} disabled={requestResetEmailMutation.isLoading} loading={requestResetEmailMutation.isLoading} />  
+          <button onClick={requestResetEmail} disabled={requestResetEmailMutation.isLoading}>Submit</button>  
         </div>
       }
     </div>

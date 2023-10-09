@@ -6,9 +6,6 @@ import {
   useMutation,
 } from '@tanstack/react-query'
 
-import { Message } from 'primereact/message';
-import { ProgressSpinner } from 'primereact/progressspinner'
-
 const VerifyEmailLandingPage = observer(() => {
   const auth = useContext(AuthContext)
   const { code } = useParams() as { code: string }
@@ -33,18 +30,18 @@ const VerifyEmailLandingPage = observer(() => {
       </div>
 
       { verifyEmailMutation.isLoading &&
-        <ProgressSpinner />
+        <div>Wait...</div>
       }
 
       { verifyEmailMutation.isSuccess && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="success" text="Your email has been verified." />
+          <div className="messageSuccess">Your email has been verified.</div>
         </div>
       }
 
       { verifyEmailMutation.isError && 
         <div style={{marginTop: '1em'}}>
-          <Message severity="error" text={(verifyEmailMutation.error as Error).message} />
+          <div className="messageError">{(verifyEmailMutation.error as Error).message}</div>
         </div>
       }
     </div>
