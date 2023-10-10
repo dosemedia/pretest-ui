@@ -6,7 +6,7 @@ const HomePage = observer(() => {
   const auth = useContext(AuthContext)
   return (
     <>
-      <div>Home Page - { auth.isAuthenticated ? 'Logged In' : 'Logged Out' }</div>
+      <div className="text-3xl font-bold underline">Home Page - { auth.isAuthenticated ? 'Logged In' : 'Logged Out' }</div>
     </>
   )
 })
