@@ -45,7 +45,7 @@ const LoginForm = observer(() => {
       }
 
       <div style={{marginTop: '1em'}}>
-        <button onClick={handleLogin} disabled={handleLoginMutation.isLoading}>Login</button> 
+        <button className="btn btn-primary" onClick={handleLogin} disabled={handleLoginMutation.isLoading}>Login</button> 
       </div>
     </div>
   )
