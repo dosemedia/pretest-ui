@@ -27,7 +27,7 @@ const LoginForm = observer(() => {
 
   return (
     <div>
-      <div style={{ marginTop: 36 }}>
+      <div>
         <p className="text-lg font-bold">Log in</p>
         <p style={{ marginTop: 10 }} className="text-base" >Want to see what Orchard can do for you?</p>
       </div>
@@ -47,7 +47,7 @@ const LoginForm = observer(() => {
           </div>
           <div className="flex" style={{ gap: 16, marginTop: 20 }}>
             <button className="btn action-button text-base font-bold" onClick={handleLogin} disabled={handleLoginMutation.isLoading}>
-              Log in
+              Log in { handleLoginMutation.isLoading && <span className="loading loading-spinner"></span> }
             </button>
             <p className="text-base" style={{ lineHeight: '106%' }}>
               Don't have an account?
@@ -56,7 +56,7 @@ const LoginForm = observer(() => {
             </p>
           </div>
           <p className="text-xs opacity-60" style={{ marginTop: 37 }}>
-            By clicking “Log in”  I agree to Orchards Terms of Use and Privacy Policy and to receive electronic communication about my accounts and services.
+            By clicking “Log in” I agree to Orchards Terms of Use and Privacy Policy and to receive electronic communication about my accounts and services.
           </p>
         </div>
         { handleLoginMutation.isError &&

@@ -11,10 +11,6 @@ export default function LoginPage() {
               <figure><img src="/src/assets/orchard_logo.png" alt="orchard_logo" width="157" /></figure>
               </div>
               <LoginForm />
-              {/* <div style={{textAlign: 'center', marginTop: '1em'}}>
-                <Link to='/auth/register'>Register</Link> |&nbsp;
-                <Link to='/auth/forgot'>Forgot Password</Link>
-              </div> */}
             </div>
           </div>
         </div>
