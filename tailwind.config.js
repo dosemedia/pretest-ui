@@ -40,7 +40,7 @@ export default {
           "info": "#3abff8",
           "success": "#36d399",
           "warning": "#fbbd23",
-          "error": "#F8D8D6",
+          "error": "#f74f4f",
         },
       },
     ],

@@ -27,7 +27,7 @@ const LoginForm = observer(() => {
 
   return (
     <div>
-      <div>
+      <div style={{ marginTop: 36 }}>
         <p className="text-lg font-bold">Log in</p>
         <p style={{ marginTop: 10 }} className="text-base" >Want to see what Orchard can do for you?</p>
       </div>
@@ -60,7 +60,7 @@ const LoginForm = observer(() => {
           </p>
         </div>
         { handleLoginMutation.isError &&
-          <div style={{marginTop: '1em'}}>
+          <div style={{marginTop: 20 }}>
             <MessageAlert message={(handleLoginMutation.error as Error).message} type="error" />
           </div>
         }
