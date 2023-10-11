@@ -22,10 +22,9 @@ import './index.css'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <><RootLayout /><HomePage /></> },
       {
         path: "/auth/register",
         async lazy() {

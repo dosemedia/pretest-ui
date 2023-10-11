@@ -8,7 +8,25 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        sm: '14px',
+        base: '20px',
+        lg: '25px',
+        xl: '30px',
+        '2xl': '1.063rem',
+        '3xl': '1.953rem',
+        '4xl': '2.441rem',
+        '5xl': '3.052rem',
+      },
+      screens: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
+    },
   },
   daisyui: {
     themes: [
@@ -18,7 +36,7 @@ export default {
           "secondary": "#AB2160",
           "accent": "#494949",
           "neutral": "#2b3440",
-          "base-100": "#ffffff",
+          "base-100": "#FBFBFB",
           "info": "#3abff8",
           "success": "#36d399",
           "warning": "#fbbd23",
