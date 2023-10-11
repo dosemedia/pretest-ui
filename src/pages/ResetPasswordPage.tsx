@@ -93,7 +93,7 @@ const ResetPasswordPage = observer(() => {
                   <label className="label" style={{ marginTop: 10 }}>
                     <span className="text-sm opacity-60">Confirm Password</span>
                   </label>
-                  <input type="password" className={(passwordValid ? '' : 'p-invalid') + ' input'} placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange} onKeyUp={(e) => {if(e.key === 'Enter'){handleCompletePasswordReset()}}} />
+                  <input type="password" className={(confirmPasswordValid ? '' : 'p-invalid') + ' input'} placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange} onKeyUp={(e) => {if(e.key === 'Enter'){handleCompletePasswordReset()}}} />
                 </div>
 
 
