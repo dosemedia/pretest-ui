@@ -20,7 +20,7 @@ const RootLayout = observer(() => {
       auth.isAuthenticated ?
         <>
           <button onClick={() => auth.logout()}>Logout</button>
-          <Link style={{ marginLeft: 25 }} to={`me/profile`}>Profile</Link>
+          <Link style={{ marginLeft: 25 }} to={`/me/profile`}>Profile</Link>
         </>
         :
         location.pathname !== '/auth/login' ? <Link to={`/auth/login`}>Login</Link> : <div></div>

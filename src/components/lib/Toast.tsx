@@ -1,32 +1,31 @@
-class ToastController {
-  isShowing: boolean = false
-  message: string = ''
-  type: string = 'error'
-
-  public show({ message, type }: { message: string, type: string }): void {
-    this.isShowing = true
-    this.message = message
-    this.type = type
-  }
-
-  public hide(): void {
-    this.isShowing = false
-  }
-}
-
-export const toastController = new ToastController()
-
-export const Toast = () => {
+import { observer } from "mobx-react-lite";
+import { useContext } from "react";
+import { ToastsContext } from "../../stores/stores";
+import { Toast } from "../../stores/toast";
+export const Toasts = observer(() => {
+  const toastStore = useContext(ToastsContext)
   return (
-    <>
-     {
-        toastController.isShowing &&
-        <div className="toast toast-top toast-center">
-          <div className="alert alert-info">
-            <span>{toastController.message}</span>
-          </div>
+    <div className="toast toast-top toast-center" style={{ zIndex: 100 }}>
+      {toastStore.toasts.map((toast: Toast) => (
+        <div key={toast.id}>
+          <ToastItem toast={toast} />
         </div>
+      ))
       }
-    </>
+    </div>
+  )
+})
+
+const ToastItem: React.FC<{ toast: Toast }> = ({ toast }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const icon: any = {
+    success: 'mdi mdi-check-circle',
+    error: 'mdi mdi-exclamation-circle',
+    warning: 'mdi mdi-exclamation-circle'
+  }
+  return (
+    <div className={`alert alert-${toast.type}`}>
+      <span className={`${icon[toast.type]} text-white text-base`}></span><span className="text-white">{toast.message}</span>
+    </div>
   )
 }

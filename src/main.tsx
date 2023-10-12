@@ -18,6 +18,7 @@ import {
 } from '@tanstack/react-query'
 
 import './index.css'
+import { Toasts } from './components/lib/Toast.tsx'
 
 const router = createBrowserRouter([
   {
@@ -124,6 +125,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <URQLProvider value={urqlClient}>
         <AuthContext.Provider value={authStore}>
+          <Toasts />
           <RouterProvider router={router} />
         </AuthContext.Provider>
       </URQLProvider>

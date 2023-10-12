@@ -2,15 +2,14 @@ import { observer } from "mobx-react-lite"
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react"
 import { useState } from "react";
-import { AuthContext } from "../stores/stores"
+import { AuthContext, ToastsContext } from "../stores/stores"
 import { useMutation } from "@tanstack/react-query";
 import UserProfilePhotoPicker from "../components/UserProfilePhotoPIcker";
 import { SpinningLoading } from "../components/lib/SpinningLoading";
 
 const ProfilePage = observer(() => {
   const auth = useContext(AuthContext)
-  const [toast, setToast] = useState('')
-  const [toastClass, setToastClass] = useState('')
+  const toastStore = useContext(ToastsContext)
   const navigate = useNavigate()
   const [displayName, setDisplayName] = useState(auth.user?.display_name || '')
   const [email, setEmail] = useState('')
@@ -19,7 +18,6 @@ const ProfilePage = observer(() => {
   const [emailChanged, setEmailChanged] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [oldPassword, setOldPassword] = useState('')
-  const [showDestroyAccountDialog, setShowDestroyAccountDialog] = useState(false)
   const [destroyPassword, setDestroyPassword] = useState('')
 
   useEffect(() => {
@@ -34,20 +32,17 @@ const ProfilePage = observer(() => {
     mutationFn: () => auth.destroyUser(destroyPassword),
     onSuccess: () => navigate('/'), 
     onError: (error) => {
-      setToast('Error: ' + error!.toString())
-      setToastClass('toastError')
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
     }
   })
 
   const updateDisplayName = useMutation({
     mutationFn: () =>  auth.updateDisplayName(displayName),
     onSuccess: () => {
-      setToast('You have successfully updated your display name')
-      setToastClass('toastSuccess')
+      toastStore.addToast({ message: 'You have successfully updated your display name', type: 'success' })
     },
     onError: (error) => {
-      setToast('Error: ' + error!.toString())
-      setToastClass('toastError')
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
     }
   })
 
@@ -55,26 +50,22 @@ const ProfilePage = observer(() => {
     mutationFn: () =>  auth.changePassword(oldPassword, newPassword),
     onSuccess: () => { navigate('/auth/login') }, 
     onError: (error) => {
-      setToast('Error: ' + error!.toString())
-      setToastClass('toastError')
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
     }
   })
 
   const changeEmail = useMutation({
     mutationFn: () => auth.changeEmail(email, changeEmailPassword),
     onSuccess: () => {
-      setToast('You have successfully changed your email')
-      setToastClass('toastSuccess')
+      toastStore.addToast({ message: 'You have successfully changed your email', type: 'success' })
     },
     onError: (error) => {
-      setToast('Error: ' + error!.toString())
-      setToastClass('toastError')
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
     }
   })
 
   return (
     <>
-      {/* <Toast /> */}
       <div className="auth-background">
         <div className="container mx-auto p-2 md:p-0">
           <div className="flex justify-center">
@@ -83,9 +74,6 @@ const ProfilePage = observer(() => {
                 auth.isAuthenticated ?
                   <div style={{ paddingTop: 40 }}>
                     <div>
-                      { toast &&
-                        <div className={toastClass}>{ toast }</div>
-                      }
                       <p className="text-lg font-bold">Profile</p>
                       <div className="form-control">
                         <label className="label">
@@ -103,7 +91,7 @@ const ProfilePage = observer(() => {
                         </label>
                         <input className="input" type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                         <label className="label">
-                          <span className="text-sm opacity-60">Display Name</span>
+                          <span className="text-sm opacity-60">Password</span>
                         </label>
                         <input className="input" type="password" value={changeEmailPassword} placeholder="Password (Required to Change Email)" onChange={(e) => setChangeEmailPassword(e.target.value)} />
                       </div>
@@ -156,6 +144,9 @@ const ProfilePage = observer(() => {
                               <button className="btn action-button text-base font-bold" style={{ marginTop: 10 }} onClick={() => destroyAccount.mutate()} disabled={destroyAccount.isLoading}>Destroy Account <SpinningLoading isLoading={destroyAccount.isLoading} /></button>
                             </div>
                           </div>
+                          <form method="dialog" className="modal-backdrop">
+                            <button>close</button>
+                          </form>
                         </dialog>
                       </div>
                     </div>

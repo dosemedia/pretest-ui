@@ -1,15 +1,13 @@
 import { observer } from "mobx-react-lite"
 import { useContext, useState } from "react"
-import { AuthContext } from "../stores/stores"
+import { AuthContext, ToastsContext } from "../stores/stores"
 import { useMutation } from "@tanstack/react-query"
-import MessageAlert from "./MessageAlert"
 
 const UserProfilePhotoPicker = observer(() => {
   const auth = useContext(AuthContext)
+  const toastStore = useContext(ToastsContext)
   const [image64, setImage64] = useState<string | null>(null)
   const [profilePic, setProfilePic] = useState<File | null>(null)
-  const [toast, setToast] = useState('')
-  const [toastClass, setToastClass] = useState('')
 
   function photoCleared () {
     setImage64(null)
@@ -19,23 +17,19 @@ const UserProfilePhotoPicker = observer(() => {
   const save = useMutation({
     mutationFn: () => auth.updateProfilePicture(profilePic!),
     onSuccess: () => {
-      setToast('You have successfully added a profile picture')
-      setToastClass('toastSuccess')
+      toastStore.addToast({ message: 'You have successfully added a profile picture', type: 'success' })
     },
     onError: (error) => {
-      setToast('Error: ' + error!.toString())
-      setToastClass('toastError')
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
     }
   })
   const removePhoto = useMutation({
     mutationFn: () => auth.removeProfilePicture(),
     onSuccess: () =>  { 
-      setToast('You have successfully removed your profile picture')
-      setToastClass('toastSuccess')
+      toastStore.addToast({ message: 'You have successfully removed your profile picture', type: 'success' })
     },
     onError: (error) => {
-      setToast('Error: ' + error!.toString())
-      setToastClass('toastError')
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
     }
   })
 
@@ -63,9 +57,6 @@ const UserProfilePhotoPicker = observer(() => {
   }
   return (
     <>
-      { toast &&
-        <div className={toastClass}>{ toast }</div>
-      }
       {
         auth.user && auth.user.avatar_file_key && !image64 && 
         <div>
@@ -103,7 +94,7 @@ const UserProfilePhotoPicker = observer(() => {
         </div>
       }
       {
-        auth.user?.avatar_file_key && <button style={{ backgroundColor: 'var(--red-500)', marginTop: 5 }} disabled={removePhoto.isLoading} onClick={() => removePhoto.mutate() }>Remove</button>
+        auth.user?.avatar_file_key && <button className="btn rounded-full bg-red-600 text-base text-white font-bold" style={{ marginTop: 5, textTransform: 'none', alignItems: 'center' }} disabled={removePhoto.isLoading} onClick={() => removePhoto.mutate() }>Remove</button>
       }
     </>
   )
