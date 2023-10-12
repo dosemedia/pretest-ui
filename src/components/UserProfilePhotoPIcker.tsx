@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import { useContext, useState } from "react"
 import { AuthContext } from "../stores/stores"
 import { useMutation } from "@tanstack/react-query"
+import MessageAlert from "./MessageAlert"
 
 const UserProfilePhotoPicker = observer(() => {
   const auth = useContext(AuthContext)
@@ -68,23 +69,37 @@ const UserProfilePhotoPicker = observer(() => {
       {
         auth.user && auth.user.avatar_file_key && !image64 && 
         <div>
-          <img src={auth.userAvatarKeyToUrl(auth.user.avatar_file_key)} alt="Image" width="200" />
+          <div className="avatar" style={{ marginTop: 10 }}>
+            <div className="w-32 rounded-full">
+              <img  src={auth.userAvatarKeyToUrl(auth.user.avatar_file_key)} alt="Image"  />
+            </div>
+          </div>
         </div>
       }
       {
-        !auth.user?.avatar_file_key && <div> No Profile Picture </div>
+        !auth.user?.avatar_file_key && !image64 &&
+        <div className="avatar" style={{ marginTop: 10 }}>
+          <div className="w-32 rounded-full">
+            <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" />
+          </div>
+        </div>
       }
       {
-        image64 && <img src={image64} alt="Image" width="200" />
+        image64 &&
+        <div className="avatar" style={{ marginTop: 10 }}>
+          <div className="w-32 rounded-full">
+            <img src={image64} />
+          </div>
+        </div>
       }
       {
-        !image64 && !auth.user?.avatar_file_key && <input type="file" style={{ marginTop: 10 }} accept="image/*" multiple={false} onChange={photoSelected} />
+        !image64 && !auth.user?.avatar_file_key && <div><input type="file" style={{ marginTop: 10 }} accept="image/*" multiple={false} onChange={photoSelected} /></div>
       }
       {
         profilePic &&
         <div>
-          <button style={{ marginRight: 10 }} onClick={() => save.mutate()}>Save</button>
-          <button disabled={save.isLoading} onClick={resetPhoto}>Reset</button>
+          <button className="btn action-button text-base font-bold w-28 mt-2" style={{ marginRight: 10 }} onClick={() => save.mutate()}>Save</button>
+          <button className="btn btn-info rounded-full text-white text-base font-bold w-28 mt-2" style={{ textTransform: 'none' }} disabled={save.isLoading} onClick={resetPhoto}>Reset</button>
         </div>
       }
       {

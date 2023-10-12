@@ -5,6 +5,7 @@ import {
   useMutation,
 } from '@tanstack/react-query'
 import MessageAlert from './MessageAlert'
+import { SpinningLoading } from './lib/SpinningLoading'
 
 const ForgotPasswordForm = observer(() => {
   const auth = useContext(AuthContext)
@@ -47,7 +48,7 @@ const ForgotPasswordForm = observer(() => {
 
       { !requestResetEmailMutation.isSuccess &&
         <div style={{marginTop: 26 }}>
-          <button className="btn action-button text-base font-bold" onClick={requestResetEmail} disabled={requestResetEmailMutation.isLoading}>Submit { requestResetEmailMutation.isLoading && <span className="loading loading-spinner"></span> }</button>  
+          <button className="btn action-button text-base font-bold" onClick={requestResetEmail} disabled={requestResetEmailMutation.isLoading}>Submit <SpinningLoading isLoading={requestResetEmailMutation.isLoading} /></button>  
         </div>
       }
     </div>

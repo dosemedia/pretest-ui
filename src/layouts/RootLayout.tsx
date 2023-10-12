@@ -23,7 +23,7 @@ const RootLayout = observer(() => {
           <Link style={{ marginLeft: 25 }} to={`me/profile`}>Profile</Link>
         </>
         :
-        location.pathname !== '/auth/login' ? <Link to={`auth/login`}>Login</Link> : <div></div>
+        location.pathname !== '/auth/login' ? <Link to={`/auth/login`}>Login</Link> : <div></div>
     }
     </>
   )

@@ -6,6 +6,8 @@ const MessageAlert: React.FC<{message:string, type: string}> = ({ message, type=
       return 'alert-success'
     } else if (type === 'warning') {
       return 'alert-warning'
+    } else if (type === 'info') {
+      return 'alert-info'
     }
     return 'alert-error'
   }

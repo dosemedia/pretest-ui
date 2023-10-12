@@ -76,8 +76,11 @@ const router = createBrowserRouter([
           const ProfilePage = await import('./pages/ProfilePage.tsx')
           return {
             Component: () => {
-              return ( 
-                <ProfilePage.default />
+              return (
+                <>
+                  <RootLayout />
+                  <ProfilePage.default />
+                </>
               );
             },
           }

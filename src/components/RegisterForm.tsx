@@ -7,6 +7,7 @@ import {
   useMutation,
 } from '@tanstack/react-query'
 import MessageAlert from './MessageAlert'
+import { SpinningLoading } from './lib/SpinningLoading'
 
 const RegisterForm = observer(() => {
   const auth = useContext(AuthContext)
@@ -73,7 +74,7 @@ const RegisterForm = observer(() => {
         </div>
         <div className="flex" style={{ gap: 16, marginTop: 20 }}>
           <button className="btn action-button text-base font-bold" onClick={handleRegister} disabled={handleRegisterMutation.isLoading || !termsAccepted || !email || !password || !emailValid}>
-            Sign up { handleRegisterMutation.isLoading && <span className="loading loading-spinner"></span> }
+            Sign up <SpinningLoading isLoading={handleRegisterMutation.isLoading} />
           </button>
           <p className="text-base" style={{ lineHeight: '106%' }}>
             Have an account?
