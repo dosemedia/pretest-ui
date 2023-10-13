@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     path: "/",
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <><RootLayout /><HomePage /></> },
+      { index: true, element: <><RootLayout><HomePage /></RootLayout></> },
       {
         path: "/auth/register",
         async lazy() {

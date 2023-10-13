@@ -66,7 +66,7 @@ const ProfilePage = observer(() => {
 
   return (
     <>
-      <div className="auth-background">
+      <div style={{ backgroundColor: '#FBFBFB' }}>
         <div className="container mx-auto p-2 md:p-0">
           <div className="flex justify-center">
             <div className="w-11/12 md:w-1/2">

@@ -7,6 +7,10 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+a.active {
+  background-color: #B8AD862B !important;
+}
+
 
 .action-button {
   border-radius: 50px;
