@@ -79,8 +79,26 @@ const router = createBrowserRouter([
             Component: () => {
               return (
                 <>
-                  <RootLayout />
-                  <ProfilePage.default />
+                  <RootLayout>
+                    <ProfilePage.default />
+                  </RootLayout>
+                </>
+              );
+            },
+          }
+        }
+      },
+      {
+        path: "/drafts",
+        async lazy() {
+          const DraftsPage = await import('./pages/DraftsPage.tsx')
+          return {
+            Component: () => {
+              return (
+                <>
+                  <RootLayout>
+                    <DraftsPage.default />
+                  </RootLayout>
                 </>
               );
             },
@@ -110,7 +128,13 @@ const router = createBrowserRouter([
         async lazy() {
           const ContactPage = await import('./pages/ContactPage.tsx')
           return {
-            Component: ContactPage.default
+            Component: () => {
+              return (
+                <>
+                  <RootLayout><ContactPage.default /></RootLayout>
+                </>
+              )
+            }
           }
         }
       },

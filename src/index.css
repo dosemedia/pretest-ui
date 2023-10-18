@@ -7,8 +7,13 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+a.inactive {
+  opacity: .56;
+}
+
 a.active {
-  background-color: #B8AD862B !important;
+  color: #494949 !important;
+  background-color: rgba(184, 173, 134, 0.17) !important;
 }
 
 
@@ -22,10 +27,15 @@ a.active {
   background: linear-gradient(90deg, #AB2160 0%, #EF4136 100%);
 }
 
-.input {
+.input, .textarea {
   border-radius: 10px;
   opacity: 0.9;
-  background: #FFF; 
+  background: #FFF;
+  border: 1px solid #E3E1D9; 
+}
+
+.background {
+  background-color: #FBFBFB;
 }
 
 .auth-background {
