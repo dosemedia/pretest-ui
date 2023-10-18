@@ -60,8 +60,8 @@ export class Auth {
           Authorization: 'Bearer ' + this.token
         }
       })
-      if (response?.data && this.user) {
-        this.syncUser()
+      if (response?.data) {
+        this.user.avatar_file_key = response.data.key
       }
     } else {
       throw new Error('Authentication required.')
@@ -149,6 +149,7 @@ export class Auth {
       throw result.error
     } else if (result?.data?.users_by_pk) {
       this.user = result?.data?.users_by_pk
+      console.log(this.user)
     }
   }
 
