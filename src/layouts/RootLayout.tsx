@@ -26,7 +26,7 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
 
   const toolbarStart = (
     <>
-      <Link className="font-bold" style={{ fontSize: 26, color: '#000' }} to={`/`}>Demo</Link> <span className="ml-4" style={{ color: '#030102', fontSize: 16, verticalAlign: 'middle' }}>Welcome to the Orchard Self Serve Demo</span>
+      <div className="font-bold" style={{ fontSize: 26, color: '#000' }}>Demo</div> <span className="ml-4" style={{ color: '#030102', fontSize: 16, verticalAlign: 'middle' }}>Welcome to the Orchard Self Serve Demo</span>
     </>
   )
   const toolbarEnd = (
@@ -61,15 +61,15 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
               {toolbarEnd}
             </div>
           </div>
-          <div className="p-6">
+          <div className="p-6 pl-9">
             { children }
           </div>
         </div> 
         <div className="drawer-side">
           <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label> 
           <ul className="menu w-56 h-screen relative" style={{ backgroundColor: '#F5F5F3' }}>
-            <div className="menu-title" style={{ marginBottom: 29 }}>
-              <img src="/src/assets/orchard_logo_gradient.svg" width={127} />
+            <div className="menu-title mt-1" style={{ marginBottom: 29 }}>
+              <Link to="/"><img src="/src/assets/orchard_logo_gradient.svg" width={127} /></Link>
             </div>
             { menuLinks.map((item) => {
               return (
@@ -80,6 +80,7 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
             }) }
             { auth.isAuthenticated &&
               <li style={{ position: 'absolute', bottom: '5%' }} className="mr-4">
+                <Link className="md:hidden" to={`/contact`} style={{marginRight: 25}}>Contact</Link>
                 <details className="dropdown dropdown-top">
                   <summary className="flex">
                       <ProfilePicture width="42px" />
