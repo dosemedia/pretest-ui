@@ -6,6 +6,7 @@ import validator from 'validator'
 import {
   useMutation,
 } from '@tanstack/react-query'
+import MessageAlert from '../components/MessageAlert'
 
 const ResetPasswordPage = observer(() => {
   const auth = useContext(AuthContext)
@@ -16,6 +17,8 @@ const ResetPasswordPage = observer(() => {
   const [emailValid, setEmailValid] = useState(true)
   const [passwordValid, setPasswordValid] = useState(true)
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPasswordValid, setConfirmPasswordValid] = useState(true)
 
   const handleCompletePasswordResetMutation = useMutation({
     mutationFn: () => auth.resetPassword(code, email, password),
@@ -43,6 +46,16 @@ const ResetPasswordPage = observer(() => {
     }
   }
 
+  const handleConfirmPasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.currentTarget.value)
+    // Don't set invalid on empty
+    if (!confirmPassword || e.currentTarget.value.length >= 6) {
+      setConfirmPasswordValid(true)
+    } else {
+      setConfirmPasswordValid(false)
+    }
+  }
+
   const handlePasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
     setPassword(e.currentTarget.value)
     // Don't set invalid on empty
@@ -54,29 +67,50 @@ const ResetPasswordPage = observer(() => {
   }
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-      <div>
-        <h1>Reset Password</h1>
-      </div>
+    <div className="auth-background">
+      <div className="container mx-auto">
+        <div className="flex justify-center items-center h-screen">
+          <div className="card w-11/12 md:w-5/12">
+            <div className="card-body">
+              <div className="card-title">
+                <figure><img src="/src/assets/orchard_logo.png" alt="orchard_logo" width="157" /></figure>
+              </div>
+              <div style={{ marginTop: 36 }}>
+                <div>
+                  <p className="text-lg font-bold">Reset Password</p>
+                  <p style={{ marginTop: 10 }} className="text-base" >Please choose a new password.</p>
+                </div>
 
-      <div style={{marginTop: '1em'}}>
-        <input type="text" className={emailValid ? '' : 'p-invalid'} placeholder="Email" value={email} onChange={handleEmailChange} />
-      </div>
-      
-      <div style={{marginTop: '1em'}}>
-        <input type="password" className={passwordValid ? '' : 'p-invalid'} placeholder="Password" value={password} onChange={handlePasswordChange} onKeyUp={(e) => {if(e.key === 'Enter'){handleCompletePasswordReset()}}} />
-      </div>
+                <div className="form-control" style={{ marginTop: 20 }}>
+                  <label className="label">
+                    <span className="text-sm opacity-60">Email</span>
+                  </label>
+                  <input type="text" className={(emailValid ? '' : 'p-invalid') + ' input'} placeholder="Email" value={email} onChange={handleEmailChange} />
+                  <label className="label" style={{ marginTop: 10 }}>
+                    <span className="text-sm opacity-60">New Password</span>
+                  </label>
+                  <input type="password" className={(passwordValid ? '' : 'p-invalid') + ' input'} placeholder="New Password" value={password} onChange={handlePasswordChange} />
+                  <label className="label" style={{ marginTop: 10 }}>
+                    <span className="text-sm opacity-60">Confirm Password</span>
+                  </label>
+                  <input type="password" className={(confirmPasswordValid ? '' : 'p-invalid') + ' input'} placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange} onKeyUp={(e) => {if(e.key === 'Enter'){handleCompletePasswordReset()}}} />
+                </div>
 
-      { handleCompletePasswordResetMutation.isError && 
-        <div style={{marginTop: '1em'}}>
-          <div className="messageError">{ (handleCompletePasswordResetMutation.error as Error).message }</div>
+
+                { handleCompletePasswordResetMutation.isError && 
+                  <div style={{marginTop: 20 }}>
+                    <MessageAlert message={(handleCompletePasswordResetMutation.error as Error).message} type="error" />
+                  </div>
+                }
+
+                <div style={{marginTop: 30 }}>
+                  <button className="btn action-button text-base font-bold" onClick={handleCompletePasswordReset} disabled={handleCompletePasswordResetMutation.isLoading || !email || !password || !confirmPassword || password !== confirmPassword}>Reset password</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      }
-
-      <div style={{marginTop: '1em'}}>
-        <button onClick={handleCompletePasswordReset} disabled={handleCompletePasswordResetMutation.isLoading || !email || !password}>Complete Password Reset</button>
       </div>
-
     </div>
   )
 })

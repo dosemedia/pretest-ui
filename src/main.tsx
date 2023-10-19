@@ -18,14 +18,14 @@ import {
 } from '@tanstack/react-query'
 
 import './index.css'
+import { Toasts } from './components/lib/Toast.tsx'
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <><RootLayout><HomePage /></RootLayout></> },
       {
         path: "/auth/register",
         async lazy() {
@@ -77,8 +77,29 @@ const router = createBrowserRouter([
           const ProfilePage = await import('./pages/ProfilePage.tsx')
           return {
             Component: () => {
-              return ( 
-                <ProfilePage.default />
+              return (
+                <>
+                  <RootLayout>
+                    <ProfilePage.default />
+                  </RootLayout>
+                </>
+              );
+            },
+          }
+        }
+      },
+      {
+        path: "/drafts",
+        async lazy() {
+          const DraftsPage = await import('./pages/DraftsPage.tsx')
+          return {
+            Component: () => {
+              return (
+                <>
+                  <RootLayout>
+                    <DraftsPage.default />
+                  </RootLayout>
+                </>
               );
             },
           }
@@ -107,7 +128,13 @@ const router = createBrowserRouter([
         async lazy() {
           const ContactPage = await import('./pages/ContactPage.tsx')
           return {
-            Component: ContactPage.default
+            Component: () => {
+              return (
+                <>
+                  <RootLayout><ContactPage.default /></RootLayout>
+                </>
+              )
+            }
           }
         }
       },
@@ -122,6 +149,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <URQLProvider value={urqlClient}>
         <AuthContext.Provider value={authStore}>
+          <Toasts />
           <RouterProvider router={router} />
         </AuthContext.Provider>
       </URQLProvider>

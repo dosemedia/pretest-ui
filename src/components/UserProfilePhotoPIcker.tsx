@@ -1,14 +1,13 @@
 import { observer } from "mobx-react-lite"
 import { useContext, useState } from "react"
-import { AuthContext } from "../stores/stores"
+import { AuthContext, ToastsContext } from "../stores/stores"
 import { useMutation } from "@tanstack/react-query"
 
 const UserProfilePhotoPicker = observer(() => {
   const auth = useContext(AuthContext)
+  const toastStore = useContext(ToastsContext)
   const [image64, setImage64] = useState<string | null>(null)
   const [profilePic, setProfilePic] = useState<File | null>(null)
-  const [toast, setToast] = useState('')
-  const [toastClass, setToastClass] = useState('')
 
   function photoCleared () {
     setImage64(null)
@@ -18,23 +17,19 @@ const UserProfilePhotoPicker = observer(() => {
   const save = useMutation({
     mutationFn: () => auth.updateProfilePicture(profilePic!),
     onSuccess: () => {
-      setToast('You have successfully added a profile picture')
-      setToastClass('toastSuccess')
+      toastStore.addToast({ message: 'You have successfully added a profile picture', type: 'success' })
     },
     onError: (error) => {
-      setToast('Error: ' + error!.toString())
-      setToastClass('toastError')
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
     }
   })
   const removePhoto = useMutation({
     mutationFn: () => auth.removeProfilePicture(),
     onSuccess: () =>  { 
-      setToast('You have successfully removed your profile picture')
-      setToastClass('toastSuccess')
+      toastStore.addToast({ message: 'You have successfully removed your profile picture', type: 'success' })
     },
     onError: (error) => {
-      setToast('Error: ' + error!.toString())
-      setToastClass('toastError')
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
     }
   })
 
@@ -62,33 +57,44 @@ const UserProfilePhotoPicker = observer(() => {
   }
   return (
     <>
-      { toast &&
-        <div className={toastClass}>{ toast }</div>
-      }
       {
         auth.user && auth.user.avatar_file_key && !image64 && 
         <div>
-          <img src={auth.userAvatarKeyToUrl(auth.user.avatar_file_key)} alt="Image" width="200" />
+          <div className="avatar" style={{ marginTop: 10 }}>
+            <div className="w-32 rounded-full">
+              <img  src={auth.userAvatarKeyToUrl(auth.user.avatar_file_key)} alt="Image"  />
+            </div>
+          </div>
         </div>
       }
       {
-        !auth.user?.avatar_file_key && <div> No Profile Picture </div>
+        !auth.user?.avatar_file_key && !image64 &&
+        <div className="avatar" style={{ marginTop: 10 }}>
+          <div className="w-32 rounded-full">
+            <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" />
+          </div>
+        </div>
       }
       {
-        image64 && <img src={image64} alt="Image" width="200" />
+        image64 &&
+        <div className="avatar" style={{ marginTop: 10 }}>
+          <div className="w-32 rounded-full">
+            <img src={image64} />
+          </div>
+        </div>
       }
       {
-        !image64 && !auth.user?.avatar_file_key && <input type="file" style={{ marginTop: 10 }} accept="image/*" multiple={false} onChange={photoSelected} />
+        !image64 && !auth.user?.avatar_file_key && <div><input type="file" style={{ marginTop: 10 }} accept="image/*" multiple={false} onChange={photoSelected} /></div>
       }
       {
         profilePic &&
         <div>
-          <button style={{ marginRight: 10 }} onClick={() => save.mutate()}>Save</button>
-          <button disabled={save.isLoading} onClick={resetPhoto}>Reset</button>
+          <button className="btn action-button text-base font-bold w-28 mt-2" style={{ marginRight: 10 }} onClick={() => save.mutate()}>Save</button>
+          <button className="btn btn-info rounded-full text-white text-base font-bold w-28 mt-2" style={{ textTransform: 'none' }} disabled={save.isLoading} onClick={resetPhoto}>Reset</button>
         </div>
       }
       {
-        auth.user?.avatar_file_key && <button style={{ backgroundColor: 'var(--red-500)', marginTop: 5 }} disabled={removePhoto.isLoading} onClick={() => removePhoto.mutate() }>Remove</button>
+        auth.user?.avatar_file_key && <button className="btn rounded-full bg-red-600 text-base text-white font-bold" style={{ marginTop: 5, textTransform: 'none', alignItems: 'center' }} disabled={removePhoto.isLoading} onClick={() => removePhoto.mutate() }>Remove</button>
       }
     </>
   )
