@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       {
         path: "/auth/register",
         async lazy() {
-          const RegisterPage = await import('./pages/RegisterPage.tsx')
+          const RegisterPage = await import('./pages/auth/RegisterPage.tsx')
           return {
             Component: () => {
               return (
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       {
         path: "/auth/login",
         async lazy() {
-          const LoginPage = await import('./pages/LoginPage.tsx')
+          const LoginPage = await import('./pages/auth/LoginPage.tsx')
           return {
             Component: () => {
               return (
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       {
         path: "/auth/forgot",
         async lazy() {
-          const ForgotPasswordPage = await import('./pages/ForgotPasswordPage.tsx')
+          const ForgotPasswordPage = await import('./pages/auth/ForgotPasswordPage.tsx')
           return {
             Component: () => {
               return (
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
       {
         path: "/me/profile",
         async lazy() {
-          const ProfilePage = await import('./pages/ProfilePage.tsx')
+          const ProfilePage = await import('./pages/auth/ProfilePage.tsx')
           return {
             Component: () => {
               return (
@@ -108,7 +108,7 @@ const router = createBrowserRouter([
       {
         path: "/verify-email/:code",
         async lazy() {
-          const VerifyEmailLandingPage = await import('./pages/VerifyEmailLandingPage.tsx')
+          const VerifyEmailLandingPage = await import('./pages/auth/VerifyEmailLandingPage.tsx')
           return {
             Component: VerifyEmailLandingPage.default
           }
@@ -117,9 +117,24 @@ const router = createBrowserRouter([
       {
         path: "/reset-password/:code",
         async lazy() {
-          const ResetPasswordPage = await import('./pages/ResetPasswordPage.tsx')
+          const ResetPasswordPage = await import('./pages/auth/ResetPasswordPage.tsx')
           return {
             Component: ResetPasswordPage.default
+          }
+        }
+      },
+      {
+        path: "/teams",
+        async lazy() {
+          const TeamsPage = await import('./pages/teams/TeamsPage.tsx')
+          return {
+            Component: () => {
+              return (
+                <>
+                  <RootLayout><TeamsPage.default /></RootLayout>
+                </>
+              )
+            }
           }
         }
       },

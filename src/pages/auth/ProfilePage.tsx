@@ -2,10 +2,10 @@ import { observer } from "mobx-react-lite"
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react"
 import { useState } from "react";
-import { AuthContext, ToastsContext } from "../stores/stores"
+import { AuthContext, ToastsContext } from "../../stores/stores"
 import { useMutation } from "@tanstack/react-query";
-import UserProfilePhotoPicker from "../components/UserProfilePhotoPIcker";
-import { SpinningLoading } from "../components/lib/SpinningLoading";
+import UserProfilePhotoPicker from "../../components/UserProfilePhotoPIcker";
+import { SpinningLoading } from "../../components/lib/SpinningLoading";
 
 const ProfilePage = observer(() => {
   const auth = useContext(AuthContext)

@@ -90,6 +90,7 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
                   </summary>
                   <ul className="p-2 shadow menu dropdown-content bg-base-100 rounded-box mb-2">
                     <li><Link to="/me/profile"><span className="mdi mdi-account-cog-outline"></span>My Profile</Link></li>
+                    <li><Link to="/teams"><span className="mdi mdi-account-group-outline"></span>Teams</Link></li>
                     <li className="mt-8" onClick={() => auth.logout()}><a className="flex justify-between">Logout<span className="mdi mdi-logout"></span></a></li>
                   </ul>
                 </details>
