@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { AuthContext } from '../stores/stores'
+import { AuthContext, TeamsContext } from '../stores/stores'
 import { useContext, PropsWithChildren } from 'react'
 import { observer } from "mobx-react-lite"
 import { Link, useLocation } from 'react-router-dom'
@@ -8,6 +8,7 @@ import ProfilePicture from "../components/user/ProfilePicture"
 
 const RootLayout = observer(({ children }: PropsWithChildren) => {
   const auth = useContext(AuthContext)
+  const teamsStore = useContext(TeamsContext)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -72,21 +73,20 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
               <Link to="/"><img src="/src/assets/orchard_logo_gradient.svg" width={127} /></Link>
             </div>
             { menuLinks.map((item) => {
-              return (
-              <>
-                <li className="w-full"><Link className={`${item.path === location.pathname ? 'active' : 'inactive'}`} to={item.path}><span className={`${item.icon} mr-2`}></span>{item.name}</Link></li>
-              </>
+              return ( 
+                <li key={item.path} className="w-full"><Link className={`${item.path === location.pathname ? 'active' : 'inactive'}`} to={item.path}><span className={`${item.icon} mr-2`}></span>{item.name}</Link></li>
               )
             }) }
             { auth.isAuthenticated &&
               <li style={{ position: 'absolute', bottom: '5%' }} className="mr-4">
                 <Link className="md:hidden" to={`/contact`} style={{marginRight: 25}}>Contact</Link>
+                { teamsStore.activeTeam && <p className="font-bold text-base">{teamsStore.activeTeam.name}</p> }
                 <details className="dropdown dropdown-top">
                   <summary className="flex">
-                      <ProfilePicture width="42px" />
-                      <p className="text-sm w-28 break-words pl-1">
-                        { auth.user.display_name || auth.user.email }
-                      </p>
+                    <ProfilePicture width="42px" />
+                    <p className="text-sm w-28 break-words pl-1">
+                      { auth.user.display_name || auth.user.email }
+                    </p>
                   </summary>
                   <ul className="p-2 shadow menu dropdown-content bg-base-100 rounded-box mb-2">
                     <li><Link to="/me/profile"><span className="mdi mdi-account-cog-outline"></span>My Profile</Link></li>

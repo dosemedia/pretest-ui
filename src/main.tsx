@@ -11,7 +11,7 @@ import { client as urqlClient } from './graphql'
 import RootLayout from './layouts/RootLayout.tsx'
 import ErrorPage from './ErrorPage.tsx'
 import HomePage from './pages/HomePage.tsx'
-import LoginExcludedRoute from './components/LoginExcludedRoute'
+import LoginExcludedRoute from './components/auth/LoginExcludedRoute.tsx'
 import {
   QueryClient,
   QueryClientProvider,
@@ -19,6 +19,7 @@ import {
 
 import './index.css'
 import { Toasts } from './components/lib/Toast.tsx'
+import LoginRequiredRoute from './components/auth/LoginRequiredRoute.tsx'
 
 const router = createBrowserRouter([
   {
@@ -79,9 +80,11 @@ const router = createBrowserRouter([
             Component: () => {
               return (
                 <>
-                  <RootLayout>
-                    <ProfilePage.default />
-                  </RootLayout>
+                  <LoginRequiredRoute>
+                    <RootLayout>
+                      <ProfilePage.default />
+                    </RootLayout>
+                  </LoginRequiredRoute>
                 </>
               );
             },
@@ -96,9 +99,11 @@ const router = createBrowserRouter([
             Component: () => {
               return (
                 <>
-                  <RootLayout>
-                    <DraftsPage.default />
-                  </RootLayout>
+                  <LoginRequiredRoute>
+                    <RootLayout>
+                      <DraftsPage.default />
+                    </RootLayout>
+                  </LoginRequiredRoute>
                 </>
               );
             },
@@ -131,7 +136,11 @@ const router = createBrowserRouter([
             Component: () => {
               return (
                 <>
-                  <RootLayout><TeamsPage.default /></RootLayout>
+                  <LoginRequiredRoute>
+                    <RootLayout>
+                      <TeamsPage.default />
+                    </RootLayout>
+                  </LoginRequiredRoute>
                 </>
               )
             }

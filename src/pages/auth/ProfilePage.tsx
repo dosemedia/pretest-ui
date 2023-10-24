@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react"
 import { useState } from "react";
 import { AuthContext, ToastsContext } from "../../stores/stores"
 import { useMutation } from "@tanstack/react-query";
-import UserProfilePhotoPicker from "../../components/UserProfilePhotoPIcker";
+import UserProfilePhotoPicker from "../../components/user/UserProfilePhotoPIcker";
 import { SpinningLoading } from "../../components/lib/SpinningLoading";
 
 const ProfilePage = observer(() => {

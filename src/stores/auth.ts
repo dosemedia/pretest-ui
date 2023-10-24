@@ -21,7 +21,6 @@ export class Auth {
     })
     observe(this, 'user', () => {
       localStorage.setItem('auth.user', JSON.stringify(this.user))
-
     })
     observe(this, 'id', async () => {
       localStorage.setItem('auth.id', this.id)

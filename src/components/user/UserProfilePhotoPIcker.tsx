@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import { useContext, useState } from "react"
-import { AuthContext, ToastsContext } from "../stores/stores"
+import { AuthContext, ToastsContext } from "../../stores/stores"
 import { useMutation } from "@tanstack/react-query"
 
 const UserProfilePhotoPicker = observer(() => {
