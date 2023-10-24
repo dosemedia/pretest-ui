@@ -4,13 +4,19 @@ import { useContext, PropsWithChildren } from 'react'
 import { observer } from "mobx-react-lite"
 import { Link, useLocation } from 'react-router-dom'
 import ProfilePicture from "../components/user/ProfilePicture"
-
+import { QueryKey, useQuery } from "@tanstack/react-query"
+import { Teams as Team } from "../gql/graphql"
 
 const RootLayout = observer(({ children }: PropsWithChildren) => {
   const auth = useContext(AuthContext)
   const teamsStore = useContext(TeamsContext)
   const location = useLocation()
   const navigate = useNavigate()
+
+  const { data: teams } = useQuery<Promise<Team[]>, Error, Team[], QueryKey>({
+    queryKey: ['fetchTeams'],
+    queryFn: () => teamsStore.fetchTeams(),
+  })
 
   const menuLinks = [
     {
@@ -80,6 +86,7 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
             { auth.isAuthenticated &&
               <li style={{ position: 'absolute', bottom: '5%' }} className="mr-4">
                 <Link className="md:hidden" to={`/contact`} style={{marginRight: 25}}>Contact</Link>
+                { teams && <p className="font-bold text-base">{teams[0].name}</p>}
                 { teamsStore.activeTeam && <p className="font-bold text-base">{teamsStore.activeTeam.name}</p> }
                 <details className="dropdown dropdown-top">
                   <summary className="flex">
