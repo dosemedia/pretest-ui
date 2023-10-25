@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
-import { TeamsContext } from "../../stores/stores";
+import { AuthContext, TeamsContext } from "../../stores/stores";
 import { Teams as Team } from "../../gql/graphql";
 import { QueryKey, useQuery } from "@tanstack/react-query";
 import ErrorMessage from "../../components/lib/Error";
@@ -17,8 +17,10 @@ function tableRow (team: Team) {
 
 const TeamsPage = observer(() => {
   const teamsStore = useContext(TeamsContext)
+  const auth = useContext(AuthContext)
   const { data, error } = useQuery<Promise<Team[]>, Error, Team[], QueryKey>({
-    queryKey: ['fetchTeams'],
+    queryKey: ['fetchTeams', auth.id],
+    enabled: true,
     queryFn: () => teamsStore.fetchTeams()
   })
   return (

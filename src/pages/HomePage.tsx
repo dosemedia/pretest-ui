@@ -7,7 +7,13 @@ const HomePage = observer(() => {
   const auth = useContext(AuthContext)
   return (
     <>
-      { auth.isAuthenticated && <ProjectsTable /> }
+      <div>
+        <div className="flex justify-center">
+          <div className="w-10/12">
+            {auth.isAuthenticated && <ProjectsTable />}
+          </div>
+        </div>
+      </div>
     </>
   )
 })

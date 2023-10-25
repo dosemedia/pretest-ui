@@ -13,8 +13,9 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const { data: teams } = useQuery<Promise<Team[]>, Error, Team[], QueryKey>({
-    queryKey: ['fetchTeams'],
+  useQuery<Promise<Team[]>, Error, Team[], QueryKey>({
+    queryKey: ['fetchTeams', auth.id],
+    enabled: true,
     queryFn: () => teamsStore.fetchTeams(),
   })
 
@@ -86,12 +87,11 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
             { auth.isAuthenticated &&
               <li style={{ position: 'absolute', bottom: '5%' }} className="mr-4">
                 <Link className="md:hidden" to={`/contact`} style={{marginRight: 25}}>Contact</Link>
-                { teams && <p className="font-bold text-base">{teams[0].name}</p>}
-                { teamsStore.activeTeam && <p className="font-bold text-base">{teamsStore.activeTeam.name}</p> }
                 <details className="dropdown dropdown-top">
                   <summary className="flex">
                     <ProfilePicture width="42px" />
                     <p className="text-sm w-28 break-words pl-1">
+                      { teamsStore.activeTeam && <span className="font-bold text-base">{teamsStore.activeTeam.name}<br></br></span> }
                       { auth.user.display_name || auth.user.email }
                     </p>
                   </summary>

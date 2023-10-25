@@ -7,6 +7,22 @@ export class Projects {
   constructor() {
     makeAutoObservable(this)
   }
+  async createProject({ name, team_id }: { team_id: string, name: string }) : Promise<Project> {
+    if (!name) {
+      throw new Error('Name is required')
+    }
+    const result = await client.mutation(graphql(`
+    mutation CreateProject($name: String!, $team_id: uuid!) {
+      createProject(team_id: $team_id, name: $name) {
+        name
+      }
+    }
+    `), { team_id, name })
+    if (result.error) {
+      throw result.error
+    }
+    return result.data?.createProject as Project
+  }
   async delete ({ id }: { id: string }): Promise<boolean>{
     const result = await client.mutation(graphql(`
     mutation DeleteProject($id: uuid!) {
@@ -20,7 +36,7 @@ export class Projects {
     }
     return true
   }
-  async fetchProjects ({ teamId }: { teamId: string }): Promise<Project[] | undefined> {
+  async fetchProjects ({ teamId }: { teamId: string }): Promise<Project[] | undefined> { 
   const result = await client.query(graphql(`
     query fetchProjects($teamId: uuid!) {
       projects(where: {teams_projects: {team_id: {_eq: $teamId}}}) {
@@ -30,7 +46,6 @@ export class Projects {
       }
     }
     `), { teamId })
-    console.log(result)
     if (result.error) {
       throw result.error
     }
