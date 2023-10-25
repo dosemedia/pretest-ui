@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite"
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react"
 import { useState } from "react";
-import { AuthContext, ToastsContext } from "../stores/stores"
+import { AuthContext, ToastsContext, authStore } from "../stores/stores"
 import { useMutation } from "@tanstack/react-query";
 import UserProfilePhotoPicker from "../components/UserProfilePhotoPIcker";
 import { SpinningLoading } from "../components/lib/SpinningLoading";
@@ -144,6 +144,13 @@ const ProfilePage = observer(() => {
                     <button>close</button>
                   </form>
                 </dialog>
+              </div>
+              <div style={{marginTop: 30}}>
+                <p className="text-lg font-bold">Developer Mode</p>
+                <label className="label">
+                  <span className="text-sm opacity-60">Access Token</span>
+                </label>
+                <input className="input w-full" type="text" value={authStore.token} readOnly={true} />
               </div>
             </div>
           : <div></div>
