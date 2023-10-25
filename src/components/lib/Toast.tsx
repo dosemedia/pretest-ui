@@ -20,8 +20,8 @@ const ToastItem: React.FC<{ toast: Toast }> = ({ toast }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const icon: any = {
     success: 'mdi mdi-check-circle',
-    error: 'mdi mdi-exclamation-circle',
-    warning: 'mdi mdi-exclamation-circle'
+    error: 'mdi mdi-alert-circle-outline',
+    warning: 'mdi mdi-alert-circle-outline'
   }
   return (
     <div className={`alert alert-${toast.type}`}>

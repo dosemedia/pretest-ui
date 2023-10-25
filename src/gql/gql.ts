@@ -24,6 +24,10 @@ const documents = {
     "\n    mutation VerifyEmail($code: String!) {\n      verifyEmail(code: $code)\n    }": types.VerifyEmailDocument,
     "\n    mutation ResetPassword($code: String!, $email: String!, $newPassword: String!) {\n      resetPassword(code: $code, email: $email, newPassword: $newPassword)\n    }": types.ResetPasswordDocument,
     "\n    mutation SubmitContactForm($name: String!, $email: String!, $message: String!) {\n      insert_contact_form_submissions(objects: {email: $email, message: $message, name: $name}) {\n        affected_rows\n      }\n    }\n    ": types.SubmitContactFormDocument,
+    "\n    mutation CreateProject($name: String!, $team_id: uuid!) {\n      createProject(team_id: $team_id, name: $name) {\n        name\n      }\n    }\n    ": types.CreateProjectDocument,
+    "\n    mutation DeleteProject($id: uuid!) {\n      delete_projects_by_pk(id: $id) {\n        id\n      }\n    }\n    ": types.DeleteProjectDocument,
+    "\n    query fetchProjects($teamId: uuid!) {\n      projects(where: {teams_projects: {team_id: {_eq: $teamId}}}) {\n        name\n        id\n        created_at\n      }\n    }\n    ": types.FetchProjectsDocument,
+    "\n      query fetchTeams {\n        teams {\n          name\n          id\n          created_at\n        }\n      }\n      ": types.FetchTeamsDocument,
 };
 
 /**
@@ -84,6 +88,22 @@ export function graphql(source: "\n    mutation ResetPassword($code: String!, $e
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    mutation SubmitContactForm($name: String!, $email: String!, $message: String!) {\n      insert_contact_form_submissions(objects: {email: $email, message: $message, name: $name}) {\n        affected_rows\n      }\n    }\n    "): (typeof documents)["\n    mutation SubmitContactForm($name: String!, $email: String!, $message: String!) {\n      insert_contact_form_submissions(objects: {email: $email, message: $message, name: $name}) {\n        affected_rows\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation CreateProject($name: String!, $team_id: uuid!) {\n      createProject(team_id: $team_id, name: $name) {\n        name\n      }\n    }\n    "): (typeof documents)["\n    mutation CreateProject($name: String!, $team_id: uuid!) {\n      createProject(team_id: $team_id, name: $name) {\n        name\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation DeleteProject($id: uuid!) {\n      delete_projects_by_pk(id: $id) {\n        id\n      }\n    }\n    "): (typeof documents)["\n    mutation DeleteProject($id: uuid!) {\n      delete_projects_by_pk(id: $id) {\n        id\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    query fetchProjects($teamId: uuid!) {\n      projects(where: {teams_projects: {team_id: {_eq: $teamId}}}) {\n        name\n        id\n        created_at\n      }\n    }\n    "): (typeof documents)["\n    query fetchProjects($teamId: uuid!) {\n      projects(where: {teams_projects: {team_id: {_eq: $teamId}}}) {\n        name\n        id\n        created_at\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      query fetchTeams {\n        teams {\n          name\n          id\n          created_at\n        }\n      }\n      "): (typeof documents)["\n      query fetchTeams {\n        teams {\n          name\n          id\n          created_at\n        }\n      }\n      "];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

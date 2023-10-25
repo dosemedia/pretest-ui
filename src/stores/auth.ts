@@ -16,12 +16,10 @@ export class Auth {
   constructor() {
     makeAutoObservable(this)
     observe(this, 'token', () => {
-      console.log(this.token)
       localStorage.setItem('auth.token', this.token)
     })
     observe(this, 'user', () => {
       localStorage.setItem('auth.user', JSON.stringify(this.user))
-
     })
     observe(this, 'id', async () => {
       localStorage.setItem('auth.id', this.id)
@@ -149,7 +147,6 @@ export class Auth {
       throw result.error
     } else if (result?.data?.users_by_pk) {
       this.user = result?.data?.users_by_pk
-      console.log(this.user)
     }
   }
 

@@ -17,6 +17,11 @@ a.active {
 }
 
 
+.gradient-background {
+  background: linear-gradient(90deg, #AB2160 0%, #EF4136 100%);
+}
+
+
 .action-button {
   border-radius: 50px;
   border: none;
@@ -36,6 +41,11 @@ a.active {
 
 .background {
   background-color: #FBFBFB;
+}
+
+.modal-backdrop {
+  background-color: black;
+  opacity: .2;
 }
 
 .auth-background {
