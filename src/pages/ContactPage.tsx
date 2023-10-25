@@ -23,7 +23,7 @@ const ContactPage = observer(() => {
   const submitContactForm = useMutation({
     mutationFn: () => contact.submitContactForm(name, email, message),
     onSuccess: () => {
-      toastStore.addToast({ message: 'You have successfully changed your email', type: 'success' })
+      toastStore.addToast({ message: 'Message has been delivered', type: 'success' })
       setSubmitted(true)
     }, 
     onError: (error) => {
