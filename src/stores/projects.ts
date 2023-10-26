@@ -39,7 +39,7 @@ export class Projects {
   async fetchProjects ({ teamId }: { teamId: string }): Promise<Project[] | undefined> { 
   const result = await client.query(graphql(`
     query fetchProjects($teamId: uuid!) {
-      projects(where: {teams_projects: {team_id: {_eq: $teamId}}}) {
+      projects(where: {teams_projects: {team_id: {_eq: $teamId}}}, order_by: {created_at: desc}) {
         name
         id
         created_at

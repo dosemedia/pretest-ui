@@ -14,9 +14,10 @@ const ProjectsTable = observer(() => {
   const auth = useContext(AuthContext)
   const toastStore = useContext(ToastsContext)
   const [itemToDelete, setItemToDelete] = useState<Project | null>(null)
+  const [filter, setFilter] = useState('')
   const deleteModalID = 'delete_modal'
   const { data, error, isLoading, refetch } = useQuery<Promise<Project[] | undefined>, Error, Project[], QueryKey>({
-    queryKey: ['fetchProjects', auth.id],
+    queryKey: ['fetchProjects', auth.id, teams.activeTeam],
     queryFn: () => {
       if (teams.activeTeam) {
         return projectStore.fetchProjects({ teamId: teams.activeTeam?.id })
@@ -52,13 +53,13 @@ const ProjectsTable = observer(() => {
         error && <ErrorMessage message={error.message} />
       }
       {
-        !teams.activeTeam && <div className="alert alert-info text-white"><span>You are not part of a team yet! Create a team <Link className="underline" to="/teams">here</Link> and start your create your first test today!</span></div>
+        !teams.activeTeam && !isLoading && <div className="alert alert-info text-white"><span>You are not part of a team yet! Create a team <Link className="underline" to="/teams">here</Link> and start your create your first test today!</span></div>
       }
-      {data && teams.activeTeam &&
+      {data && teams.activeTeam && !isLoading &&
         <>
           <div className="flex items-center justify-center mb-6">
             <div className="flex-1">
-              <input className="input w-full" placeholder="Search or jump to" />
+              <input className="input w-full" placeholder="Search or jump to" value={filter} onChange={(e) => setFilter(e.target.value) } />
             </div>
             <div className="ml-4">
               <CreateProject onCreate={() => refetch() } />
@@ -85,7 +86,7 @@ const ProjectsTable = observer(() => {
                 </thead>
                 <tbody>
                   {
-                    data.map((item: Project) => tableRow(item))
+                    data.filter((item) => filter ? item.name.toLowerCase().includes(filter.toLowerCase()) : true).map((item: Project) => tableRow(item))
                   }
                 </tbody>
               </table>
