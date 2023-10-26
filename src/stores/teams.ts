@@ -3,13 +3,54 @@ import { client } from '../graphql'
 import { graphql } from '../gql'
 import { Teams as Team } from "../gql/graphql";
 export class Teams {
-  activeTeam: Team | null = null 
+  activeTeam: Team | null = null
+  ownsTeam: boolean = false
   constructor() {
     makeAutoObservable(this)
   }
 
-  setActiveTeam (team: Team) {
+  setActiveTeam (team: Team | null) {
     this.activeTeam = team
+  }
+
+  setOwnsTeam (ownsTeam: boolean) {
+    this.ownsTeam = ownsTeam
+  }
+
+  checkIfOwnsTeam (teams: Team[]) {
+    for (const team of teams) {
+      for (const member of team.teams_users) {
+        if (member.role === 'admin') {
+          this.setOwnsTeam(true)
+          break
+        }
+      }
+    }
+  }
+
+  async inviteUser ({ teamId, email }: { teamId: string, email: string }): Promise<boolean> {
+    const result = await client.mutation(graphql(`
+      mutation inviteUser($email: String!, $teamId: uuid!) {
+        insert_invitations_one(object: { email: $email, team_id: $teamId }) {
+          created_at
+        }
+      }
+      `), { email, teamId })
+    if (result.error) {
+      throw result.error
+    }
+    return true
+  }
+
+  async createTeam (name: string): Promise<void> {
+    const result = await client.mutation(graphql(`
+      mutation createTeam($name: String!) {
+        createTeam(name: $name)
+      }
+      `), { name })
+    if (result.error) {
+      throw result.error
+    }
   }
 
   async fetchTeams (): Promise<Team[]> {
@@ -19,6 +60,15 @@ export class Teams {
           name
           id
           created_at
+          teams_users_aggregate {
+            aggregate {
+              count
+            }
+          }
+          teams_users {
+            user_id
+            role
+          }
         }
       }
       `), {})
@@ -27,6 +77,9 @@ export class Teams {
     }
     if (result.data?.teams && result.data.teams.length > 0) {
       this.setActiveTeam(result.data.teams[0] as Team)
+      this.checkIfOwnsTeam(result.data.teams as Team[])
+    } else if (result.data?.teams.length === 0) {
+      this.setActiveTeam(null)
     }
     return result.data?.teams as Team[]
   }
@@ -38,6 +91,14 @@ export class Teams {
           id
           name
           created_at
+          teams_users {
+            user_id
+            created_at
+            user {
+              email
+              created_at
+            }
+          }
         }
       }
       `), { teamId })
@@ -64,6 +125,18 @@ export class Teams {
       return result.data.teams_users.length > 0
     }
     return false
+  }
+
+  async leaveTeam (teamId: string): Promise<boolean> {
+    const result = await client.mutation(graphql(`
+      mutation leaveTeam($teamId: uuid!) {
+        leaveTeam(teamId: $teamId)
+      }
+      `), { teamId })
+    if (result.error) {
+      throw result.error
+    }
+    return result.data?.leaveTeam || false
   }
 
   async joinTeam (teamId: string): Promise<boolean> {

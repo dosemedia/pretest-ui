@@ -6,6 +6,7 @@ import { useQuery, QueryKey, useMutation } from "@tanstack/react-query";
 import ErrorMessage from "../lib/Error";
 import DeleteModal from "../lib/DeleteModal";
 import CreateProject from "./CreateProject";
+import { Link } from "react-router-dom";
 
 const ProjectsTable = observer(() => {
   const projectStore = useContext(ProjectsContext)
@@ -50,7 +51,10 @@ const ProjectsTable = observer(() => {
       {
         error && <ErrorMessage message={error.message} />
       }
-      {data &&
+      {
+        !teams.activeTeam && <div className="alert alert-info text-white"><span>You are not part of a team yet! Create a team <Link className="underline" to="/teams">here</Link> and start your create your first test today!</span></div>
+      }
+      {data && teams.activeTeam &&
         <>
           <div className="flex items-center justify-center mb-6">
             <div className="flex-1">

@@ -13,7 +13,7 @@ const createProject = observer(({ onCreate }: { onCreate: () => void }) => {
     setName('')
   }
   const createProject = useMutation({
-    mutationKey: ['fetchProjects'],
+    mutationKey: ['createProject'],
     mutationFn: () => {
       return projects.createProject({ name, team_id: teams.activeTeam?.id })
     },

@@ -500,6 +500,7 @@ export type Mutation_Root = {
   changePassword: Scalars['Boolean']['output'];
   /** Create a new project. */
   createProject?: Maybe<ProjectOutput>;
+  createTeam: Scalars['Boolean']['output'];
   /** delete data from the table: "contact_form_submissions" */
   delete_contact_form_submissions?: Maybe<Contact_Form_Submissions_Mutation_Response>;
   /** delete single row from the table: "contact_form_submissions" */
@@ -520,6 +521,10 @@ export type Mutation_Root = {
   delete_teams_projects?: Maybe<Teams_Projects_Mutation_Response>;
   /** delete single row from the table: "teams_projects" */
   delete_teams_projects_by_pk?: Maybe<Teams_Projects>;
+  /** delete data from the table: "teams_roles" */
+  delete_teams_roles?: Maybe<Teams_Roles_Mutation_Response>;
+  /** delete single row from the table: "teams_roles" */
+  delete_teams_roles_by_pk?: Maybe<Teams_Roles>;
   /** delete data from the table: "teams_users" */
   delete_teams_users?: Maybe<Teams_Users_Mutation_Response>;
   /** delete single row from the table: "teams_users" */
@@ -549,6 +554,10 @@ export type Mutation_Root = {
   insert_teams_projects?: Maybe<Teams_Projects_Mutation_Response>;
   /** insert a single row into the table: "teams_projects" */
   insert_teams_projects_one?: Maybe<Teams_Projects>;
+  /** insert data into the table: "teams_roles" */
+  insert_teams_roles?: Maybe<Teams_Roles_Mutation_Response>;
+  /** insert a single row into the table: "teams_roles" */
+  insert_teams_roles_one?: Maybe<Teams_Roles>;
   /** insert data into the table: "teams_users" */
   insert_teams_users?: Maybe<Teams_Users_Mutation_Response>;
   /** insert a single row into the table: "teams_users" */
@@ -596,6 +605,12 @@ export type Mutation_Root = {
   update_teams_projects_by_pk?: Maybe<Teams_Projects>;
   /** update multiples rows of table: "teams_projects" */
   update_teams_projects_many?: Maybe<Array<Maybe<Teams_Projects_Mutation_Response>>>;
+  /** update data of the table: "teams_roles" */
+  update_teams_roles?: Maybe<Teams_Roles_Mutation_Response>;
+  /** update single row of the table: "teams_roles" */
+  update_teams_roles_by_pk?: Maybe<Teams_Roles>;
+  /** update multiples rows of table: "teams_roles" */
+  update_teams_roles_many?: Maybe<Array<Maybe<Teams_Roles_Mutation_Response>>>;
   /** update data of the table: "teams_users" */
   update_teams_users?: Maybe<Teams_Users_Mutation_Response>;
   /** update single row of the table: "teams_users" */
@@ -630,6 +645,12 @@ export type Mutation_RootChangePasswordArgs = {
 export type Mutation_RootCreateProjectArgs = {
   name: Scalars['String']['input'];
   team_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateTeamArgs = {
+  name: Scalars['String']['input'];
 };
 
 
@@ -692,6 +713,18 @@ export type Mutation_RootDelete_Teams_ProjectsArgs = {
 export type Mutation_RootDelete_Teams_Projects_By_PkArgs = {
   project_id: Scalars['uuid']['input'];
   team_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Teams_RolesArgs = {
+  where: Teams_Roles_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Teams_Roles_By_PkArgs = {
+  role: Scalars['String']['input'];
 };
 
 
@@ -793,6 +826,20 @@ export type Mutation_RootInsert_Teams_ProjectsArgs = {
 export type Mutation_RootInsert_Teams_Projects_OneArgs = {
   object: Teams_Projects_Insert_Input;
   on_conflict?: InputMaybe<Teams_Projects_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Teams_RolesArgs = {
+  objects: Array<Teams_Roles_Insert_Input>;
+  on_conflict?: InputMaybe<Teams_Roles_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Teams_Roles_OneArgs = {
+  object: Teams_Roles_Insert_Input;
+  on_conflict?: InputMaybe<Teams_Roles_On_Conflict>;
 };
 
 
@@ -961,6 +1008,26 @@ export type Mutation_RootUpdate_Teams_Projects_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Teams_Projects_ManyArgs = {
   updates: Array<Teams_Projects_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Teams_RolesArgs = {
+  _set?: InputMaybe<Teams_Roles_Set_Input>;
+  where: Teams_Roles_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Teams_Roles_By_PkArgs = {
+  _set?: InputMaybe<Teams_Roles_Set_Input>;
+  pk_columns: Teams_Roles_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Teams_Roles_ManyArgs = {
+  updates: Array<Teams_Roles_Updates>;
 };
 
 
@@ -1250,6 +1317,12 @@ export type Query_Root = {
   teams_projects_aggregate: Teams_Projects_Aggregate;
   /** fetch data from the table: "teams_projects" using primary key columns */
   teams_projects_by_pk?: Maybe<Teams_Projects>;
+  /** fetch data from the table: "teams_roles" */
+  teams_roles: Array<Teams_Roles>;
+  /** fetch aggregated fields from the table: "teams_roles" */
+  teams_roles_aggregate: Teams_Roles_Aggregate;
+  /** fetch data from the table: "teams_roles" using primary key columns */
+  teams_roles_by_pk?: Maybe<Teams_Roles>;
   /** An array relationship */
   teams_users: Array<Teams_Users>;
   /** An aggregate relationship */
@@ -1382,6 +1455,29 @@ export type Query_RootTeams_Projects_By_PkArgs = {
 };
 
 
+export type Query_RootTeams_RolesArgs = {
+  distinct_on?: InputMaybe<Array<Teams_Roles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Teams_Roles_Order_By>>;
+  where?: InputMaybe<Teams_Roles_Bool_Exp>;
+};
+
+
+export type Query_RootTeams_Roles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Teams_Roles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Teams_Roles_Order_By>>;
+  where?: InputMaybe<Teams_Roles_Bool_Exp>;
+};
+
+
+export type Query_RootTeams_Roles_By_PkArgs = {
+  role: Scalars['String']['input'];
+};
+
+
 export type Query_RootTeams_UsersArgs = {
   distinct_on?: InputMaybe<Array<Teams_Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1468,6 +1564,14 @@ export type Subscription_Root = {
   teams_projects_by_pk?: Maybe<Teams_Projects>;
   /** fetch data from the table in a streaming manner: "teams_projects" */
   teams_projects_stream: Array<Teams_Projects>;
+  /** fetch data from the table: "teams_roles" */
+  teams_roles: Array<Teams_Roles>;
+  /** fetch aggregated fields from the table: "teams_roles" */
+  teams_roles_aggregate: Teams_Roles_Aggregate;
+  /** fetch data from the table: "teams_roles" using primary key columns */
+  teams_roles_by_pk?: Maybe<Teams_Roles>;
+  /** fetch data from the table in a streaming manner: "teams_roles" */
+  teams_roles_stream: Array<Teams_Roles>;
   /** fetch data from the table in a streaming manner: "teams" */
   teams_stream: Array<Teams>;
   /** An array relationship */
@@ -1631,6 +1735,36 @@ export type Subscription_RootTeams_Projects_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Teams_Projects_Stream_Cursor_Input>>;
   where?: InputMaybe<Teams_Projects_Bool_Exp>;
+};
+
+
+export type Subscription_RootTeams_RolesArgs = {
+  distinct_on?: InputMaybe<Array<Teams_Roles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Teams_Roles_Order_By>>;
+  where?: InputMaybe<Teams_Roles_Bool_Exp>;
+};
+
+
+export type Subscription_RootTeams_Roles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Teams_Roles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Teams_Roles_Order_By>>;
+  where?: InputMaybe<Teams_Roles_Bool_Exp>;
+};
+
+
+export type Subscription_RootTeams_Roles_By_PkArgs = {
+  role: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootTeams_Roles_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Teams_Roles_Stream_Cursor_Input>>;
+  where?: InputMaybe<Teams_Roles_Bool_Exp>;
 };
 
 
@@ -2063,6 +2197,156 @@ export type Teams_Projects_Updates = {
   where: Teams_Projects_Bool_Exp;
 };
 
+/** columns and relationships of "teams_roles" */
+export type Teams_Roles = {
+  __typename?: 'teams_roles';
+  description: Scalars['String']['output'];
+  role: Scalars['String']['output'];
+};
+
+/** aggregated selection of "teams_roles" */
+export type Teams_Roles_Aggregate = {
+  __typename?: 'teams_roles_aggregate';
+  aggregate?: Maybe<Teams_Roles_Aggregate_Fields>;
+  nodes: Array<Teams_Roles>;
+};
+
+/** aggregate fields of "teams_roles" */
+export type Teams_Roles_Aggregate_Fields = {
+  __typename?: 'teams_roles_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Teams_Roles_Max_Fields>;
+  min?: Maybe<Teams_Roles_Min_Fields>;
+};
+
+
+/** aggregate fields of "teams_roles" */
+export type Teams_Roles_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Teams_Roles_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "teams_roles". All fields are combined with a logical 'AND'. */
+export type Teams_Roles_Bool_Exp = {
+  _and?: InputMaybe<Array<Teams_Roles_Bool_Exp>>;
+  _not?: InputMaybe<Teams_Roles_Bool_Exp>;
+  _or?: InputMaybe<Array<Teams_Roles_Bool_Exp>>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  role?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "teams_roles" */
+export enum Teams_Roles_Constraint {
+  /** unique or primary key constraint on columns "role" */
+  TeamsRolesPkey = 'teams_roles_pkey'
+}
+
+export enum Teams_Roles_Enum {
+  /** Admin permissions for a team */
+  Admin = 'admin',
+  /** View permissions for a team */
+  Member = 'member'
+}
+
+/** Boolean expression to compare columns of type "teams_roles_enum". All fields are combined with logical 'AND'. */
+export type Teams_Roles_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Teams_Roles_Enum>;
+  _in?: InputMaybe<Array<Teams_Roles_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Teams_Roles_Enum>;
+  _nin?: InputMaybe<Array<Teams_Roles_Enum>>;
+};
+
+/** input type for inserting data into table "teams_roles" */
+export type Teams_Roles_Insert_Input = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Teams_Roles_Max_Fields = {
+  __typename?: 'teams_roles_max_fields';
+  description?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Teams_Roles_Min_Fields = {
+  __typename?: 'teams_roles_min_fields';
+  description?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "teams_roles" */
+export type Teams_Roles_Mutation_Response = {
+  __typename?: 'teams_roles_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Teams_Roles>;
+};
+
+/** on_conflict condition type for table "teams_roles" */
+export type Teams_Roles_On_Conflict = {
+  constraint: Teams_Roles_Constraint;
+  update_columns?: Array<Teams_Roles_Update_Column>;
+  where?: InputMaybe<Teams_Roles_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "teams_roles". */
+export type Teams_Roles_Order_By = {
+  description?: InputMaybe<Order_By>;
+  role?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: teams_roles */
+export type Teams_Roles_Pk_Columns_Input = {
+  role: Scalars['String']['input'];
+};
+
+/** select columns of table "teams_roles" */
+export enum Teams_Roles_Select_Column {
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Role = 'role'
+}
+
+/** input type for updating data in table "teams_roles" */
+export type Teams_Roles_Set_Input = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "teams_roles" */
+export type Teams_Roles_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Teams_Roles_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Teams_Roles_Stream_Cursor_Value_Input = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "teams_roles" */
+export enum Teams_Roles_Update_Column {
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Role = 'role'
+}
+
+export type Teams_Roles_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Teams_Roles_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Teams_Roles_Bool_Exp;
+};
+
 /** select columns of table "teams" */
 export enum Teams_Select_Column {
   /** column name */
@@ -2122,6 +2406,7 @@ export type Teams_Updates = {
 export type Teams_Users = {
   __typename?: 'teams_users';
   created_at: Scalars['timestamptz']['output'];
+  role: Teams_Roles_Enum;
   /** An object relationship */
   team: Teams;
   team_id: Scalars['uuid']['output'];
@@ -2183,6 +2468,7 @@ export type Teams_Users_Bool_Exp = {
   _not?: InputMaybe<Teams_Users_Bool_Exp>;
   _or?: InputMaybe<Array<Teams_Users_Bool_Exp>>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  role?: InputMaybe<Teams_Roles_Enum_Comparison_Exp>;
   team?: InputMaybe<Teams_Bool_Exp>;
   team_id?: InputMaybe<Uuid_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
@@ -2198,6 +2484,7 @@ export enum Teams_Users_Constraint {
 /** input type for inserting data into table "teams_users" */
 export type Teams_Users_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  role?: InputMaybe<Teams_Roles_Enum>;
   team?: InputMaybe<Teams_Obj_Rel_Insert_Input>;
   team_id?: InputMaybe<Scalars['uuid']['input']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
@@ -2253,6 +2540,7 @@ export type Teams_Users_On_Conflict = {
 /** Ordering options when selecting data from "teams_users". */
 export type Teams_Users_Order_By = {
   created_at?: InputMaybe<Order_By>;
+  role?: InputMaybe<Order_By>;
   team?: InputMaybe<Teams_Order_By>;
   team_id?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
@@ -2270,6 +2558,8 @@ export enum Teams_Users_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  Role = 'role',
+  /** column name */
   TeamId = 'team_id',
   /** column name */
   UserId = 'user_id'
@@ -2278,6 +2568,7 @@ export enum Teams_Users_Select_Column {
 /** input type for updating data in table "teams_users" */
 export type Teams_Users_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  role?: InputMaybe<Teams_Roles_Enum>;
   team_id?: InputMaybe<Scalars['uuid']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -2293,6 +2584,7 @@ export type Teams_Users_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Teams_Users_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  role?: InputMaybe<Teams_Roles_Enum>;
   team_id?: InputMaybe<Scalars['uuid']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
@@ -2301,6 +2593,8 @@ export type Teams_Users_Stream_Cursor_Value_Input = {
 export enum Teams_Users_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Role = 'role',
   /** column name */
   TeamId = 'team_id',
   /** column name */
@@ -2726,17 +3020,32 @@ export type FetchProjectsQueryVariables = Exact<{
 
 export type FetchProjectsQuery = { __typename?: 'query_root', projects: Array<{ __typename?: 'projects', name: string, id: any, created_at: any }> };
 
+export type InviteUserMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  teamId: Scalars['uuid']['input'];
+}>;
+
+
+export type InviteUserMutation = { __typename?: 'mutation_root', insert_invitations_one?: { __typename?: 'invitations', created_at: any } | null };
+
+export type CreateTeamMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type CreateTeamMutation = { __typename?: 'mutation_root', createTeam: boolean };
+
 export type FetchTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FetchTeamsQuery = { __typename?: 'query_root', teams: Array<{ __typename?: 'teams', name: string, id: any, created_at: any }> };
+export type FetchTeamsQuery = { __typename?: 'query_root', teams: Array<{ __typename?: 'teams', name: string, id: any, created_at: any, teams_users_aggregate: { __typename?: 'teams_users_aggregate', aggregate?: { __typename?: 'teams_users_aggregate_fields', count: number } | null }, teams_users: Array<{ __typename?: 'teams_users', user_id: any, role: Teams_Roles_Enum }> }> };
 
 export type FetchTeamQueryVariables = Exact<{
   teamId: Scalars['uuid']['input'];
 }>;
 
 
-export type FetchTeamQuery = { __typename?: 'query_root', teams_by_pk?: { __typename?: 'teams', id: any, name: string, created_at: any } | null };
+export type FetchTeamQuery = { __typename?: 'query_root', teams_by_pk?: { __typename?: 'teams', id: any, name: string, created_at: any, teams_users: Array<{ __typename?: 'teams_users', user_id: any, created_at: any, user: { __typename?: 'users', email: string, created_at: any } }> } | null };
 
 export type CheckMembershipQueryVariables = Exact<{
   teamId: Scalars['uuid']['input'];
@@ -2745,6 +3054,13 @@ export type CheckMembershipQueryVariables = Exact<{
 
 
 export type CheckMembershipQuery = { __typename?: 'query_root', teams_users: Array<{ __typename?: 'teams_users', team_id: any }> };
+
+export type LeaveTeamMutationVariables = Exact<{
+  teamId: Scalars['uuid']['input'];
+}>;
+
+
+export type LeaveTeamMutation = { __typename?: 'mutation_root', leaveTeam: boolean };
 
 export type JoinTeamMutationVariables = Exact<{
   teamId: Scalars['uuid']['input'];
@@ -2768,7 +3084,10 @@ export const SubmitContactFormDocument = {"kind":"Document","definitions":[{"kin
 export const CreateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"team_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateProjectMutation, CreateProjectMutationVariables>;
 export const DeleteProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteProjectMutation, DeleteProjectMutationVariables>;
 export const FetchProjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchProjects"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"teams_projects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchProjectsQuery, FetchProjectsQueryVariables>;
-export const FetchTeamsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchTeams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchTeamsQuery, FetchTeamsQueryVariables>;
-export const FetchTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchTeamQuery, FetchTeamQueryVariables>;
+export const InviteUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"inviteUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_invitations_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<InviteUserMutation, InviteUserMutationVariables>;
+export const CreateTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTeam"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}]}}]} as unknown as DocumentNode<CreateTeamMutation, CreateTeamMutationVariables>;
+export const FetchTeamsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchTeams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"teams_users_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"teams_users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]}}]} as unknown as DocumentNode<FetchTeamsQuery, FetchTeamsQueryVariables>;
+export const FetchTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"teams_users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]}}]}}]} as unknown as DocumentNode<FetchTeamQuery, FetchTeamQueryVariables>;
 export const CheckMembershipDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"checkMembership"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams_users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"team_id"}}]}}]}}]} as unknown as DocumentNode<CheckMembershipQuery, CheckMembershipQueryVariables>;
+export const LeaveTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"leaveTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"leaveTeam"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"teamId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}]}}]} as unknown as DocumentNode<LeaveTeamMutation, LeaveTeamMutationVariables>;
 export const JoinTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"joinTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"joinTeam"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"teamId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}]}}]} as unknown as DocumentNode<JoinTeamMutation, JoinTeamMutationVariables>;

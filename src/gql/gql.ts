@@ -27,9 +27,12 @@ const documents = {
     "\n    mutation CreateProject($name: String!, $team_id: uuid!) {\n      createProject(team_id: $team_id, name: $name) {\n        name\n      }\n    }\n    ": types.CreateProjectDocument,
     "\n    mutation DeleteProject($id: uuid!) {\n      delete_projects_by_pk(id: $id) {\n        id\n      }\n    }\n    ": types.DeleteProjectDocument,
     "\n    query fetchProjects($teamId: uuid!) {\n      projects(where: {teams_projects: {team_id: {_eq: $teamId}}}) {\n        name\n        id\n        created_at\n      }\n    }\n    ": types.FetchProjectsDocument,
-    "\n      query fetchTeams {\n        teams {\n          name\n          id\n          created_at\n        }\n      }\n      ": types.FetchTeamsDocument,
-    "\n      query fetchTeam($teamId: uuid!) {\n        teams_by_pk(id: $teamId) {\n          id\n          name\n          created_at\n        }\n      }\n      ": types.FetchTeamDocument,
+    "\n      mutation inviteUser($email: String!, $teamId: uuid!) {\n        insert_invitations_one(object: { email: $email, team_id: $teamId }) {\n          created_at\n        }\n      }\n      ": types.InviteUserDocument,
+    "\n      mutation createTeam($name: String!) {\n        createTeam(name: $name)\n      }\n      ": types.CreateTeamDocument,
+    "\n      query fetchTeams {\n        teams {\n          name\n          id\n          created_at\n          teams_users_aggregate {\n            aggregate {\n              count\n            }\n          }\n          teams_users {\n            user_id\n            role\n          }\n        }\n      }\n      ": types.FetchTeamsDocument,
+    "\n      query fetchTeam($teamId: uuid!) {\n        teams_by_pk(id: $teamId) {\n          id\n          name\n          created_at\n          teams_users {\n            user_id\n            created_at\n            user {\n              email\n              created_at\n            }\n          }\n        }\n      }\n      ": types.FetchTeamDocument,
     "\n    query checkMembership($teamId: uuid!, $userId: uuid!) {\n      teams_users(where: {_and: {team_id: {_eq: $teamId}, user_id: {_eq: $userId}}}) {\n        team_id\n      }\n    }": types.CheckMembershipDocument,
+    "\n      mutation leaveTeam($teamId: uuid!) {\n        leaveTeam(teamId: $teamId)\n      }\n      ": types.LeaveTeamDocument,
     "\n      mutation joinTeam($teamId: uuid!) {\n        joinTeam(teamId: $teamId)\n      }\n      ": types.JoinTeamDocument,
 };
 
@@ -106,15 +109,27 @@ export function graphql(source: "\n    query fetchProjects($teamId: uuid!) {\n  
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n      query fetchTeams {\n        teams {\n          name\n          id\n          created_at\n        }\n      }\n      "): (typeof documents)["\n      query fetchTeams {\n        teams {\n          name\n          id\n          created_at\n        }\n      }\n      "];
+export function graphql(source: "\n      mutation inviteUser($email: String!, $teamId: uuid!) {\n        insert_invitations_one(object: { email: $email, team_id: $teamId }) {\n          created_at\n        }\n      }\n      "): (typeof documents)["\n      mutation inviteUser($email: String!, $teamId: uuid!) {\n        insert_invitations_one(object: { email: $email, team_id: $teamId }) {\n          created_at\n        }\n      }\n      "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n      query fetchTeam($teamId: uuid!) {\n        teams_by_pk(id: $teamId) {\n          id\n          name\n          created_at\n        }\n      }\n      "): (typeof documents)["\n      query fetchTeam($teamId: uuid!) {\n        teams_by_pk(id: $teamId) {\n          id\n          name\n          created_at\n        }\n      }\n      "];
+export function graphql(source: "\n      mutation createTeam($name: String!) {\n        createTeam(name: $name)\n      }\n      "): (typeof documents)["\n      mutation createTeam($name: String!) {\n        createTeam(name: $name)\n      }\n      "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      query fetchTeams {\n        teams {\n          name\n          id\n          created_at\n          teams_users_aggregate {\n            aggregate {\n              count\n            }\n          }\n          teams_users {\n            user_id\n            role\n          }\n        }\n      }\n      "): (typeof documents)["\n      query fetchTeams {\n        teams {\n          name\n          id\n          created_at\n          teams_users_aggregate {\n            aggregate {\n              count\n            }\n          }\n          teams_users {\n            user_id\n            role\n          }\n        }\n      }\n      "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      query fetchTeam($teamId: uuid!) {\n        teams_by_pk(id: $teamId) {\n          id\n          name\n          created_at\n          teams_users {\n            user_id\n            created_at\n            user {\n              email\n              created_at\n            }\n          }\n        }\n      }\n      "): (typeof documents)["\n      query fetchTeam($teamId: uuid!) {\n        teams_by_pk(id: $teamId) {\n          id\n          name\n          created_at\n          teams_users {\n            user_id\n            created_at\n            user {\n              email\n              created_at\n            }\n          }\n        }\n      }\n      "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    query checkMembership($teamId: uuid!, $userId: uuid!) {\n      teams_users(where: {_and: {team_id: {_eq: $teamId}, user_id: {_eq: $userId}}}) {\n        team_id\n      }\n    }"): (typeof documents)["\n    query checkMembership($teamId: uuid!, $userId: uuid!) {\n      teams_users(where: {_and: {team_id: {_eq: $teamId}, user_id: {_eq: $userId}}}) {\n        team_id\n      }\n    }"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      mutation leaveTeam($teamId: uuid!) {\n        leaveTeam(teamId: $teamId)\n      }\n      "): (typeof documents)["\n      mutation leaveTeam($teamId: uuid!) {\n        leaveTeam(teamId: $teamId)\n      }\n      "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

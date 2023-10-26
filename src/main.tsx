@@ -148,6 +148,25 @@ const router = createBrowserRouter([
         }
       },
       {
+        path: "/team/:teamId",
+        async lazy() {
+          const JoinTeamPage = await import('./pages/teams/TeamMembers.tsx')
+          return {
+            Component: () => {
+              return (
+                <>
+                  <LoginRequiredRoute>
+                    <RootLayout>
+                      <JoinTeamPage.default />
+                    </RootLayout>
+                  </LoginRequiredRoute>
+                </>
+              )
+            }
+          }
+        }
+      },
+      {
         path: "/team/:teamId/join",
         async lazy() {
           const JoinTeamPage = await import('./pages/teams/JoinTeamPage.tsx')
