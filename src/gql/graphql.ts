@@ -319,6 +319,17 @@ export type Invitations_Aggregate = {
   nodes: Array<Invitations>;
 };
 
+export type Invitations_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Invitations_Aggregate_Bool_Exp_Count>;
+};
+
+export type Invitations_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Invitations_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Invitations_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "invitations" */
 export type Invitations_Aggregate_Fields = {
   __typename?: 'invitations_aggregate_fields';
@@ -332,6 +343,20 @@ export type Invitations_Aggregate_Fields = {
 export type Invitations_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Invitations_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "invitations" */
+export type Invitations_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Invitations_Max_Order_By>;
+  min?: InputMaybe<Invitations_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "invitations" */
+export type Invitations_Arr_Rel_Insert_Input = {
+  data: Array<Invitations_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Invitations_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "invitations". All fields are combined with a logical 'AND'. */
@@ -367,12 +392,26 @@ export type Invitations_Max_Fields = {
   team_id?: Maybe<Scalars['uuid']['output']>;
 };
 
+/** order by max() on columns of table "invitations" */
+export type Invitations_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
+  team_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Invitations_Min_Fields = {
   __typename?: 'invitations_min_fields';
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   team_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "invitations" */
+export type Invitations_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
+  team_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "invitations" */
@@ -518,6 +557,9 @@ export type Mutation_Root = {
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
+  /** Note that an invitation must exist with the user's email before they can join the team. */
+  joinTeam: Scalars['Boolean']['output'];
+  leaveTeam: Scalars['Boolean']['output'];
   login?: Maybe<LoginOutput>;
   /** Create new user. */
   register?: Maybe<RegisterOutput>;
@@ -779,6 +821,18 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootJoinTeamArgs = {
+  teamId: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootLeaveTeamArgs = {
+  teamId: Scalars['uuid']['input'];
 };
 
 
@@ -1172,9 +1226,9 @@ export type Query_Root = {
   contact_form_submissions_aggregate: Contact_Form_Submissions_Aggregate;
   /** fetch data from the table: "contact_form_submissions" using primary key columns */
   contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
-  /** fetch data from the table: "invitations" */
+  /** An array relationship */
   invitations: Array<Invitations>;
-  /** fetch aggregated fields from the table: "invitations" */
+  /** An aggregate relationship */
   invitations_aggregate: Invitations_Aggregate;
   /** fetch data from the table: "invitations" using primary key columns */
   invitations_by_pk?: Maybe<Invitations>;
@@ -1384,9 +1438,9 @@ export type Subscription_Root = {
   contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
   /** fetch data from the table in a streaming manner: "contact_form_submissions" */
   contact_form_submissions_stream: Array<Contact_Form_Submissions>;
-  /** fetch data from the table: "invitations" */
+  /** An array relationship */
   invitations: Array<Invitations>;
-  /** fetch aggregated fields from the table: "invitations" */
+  /** An aggregate relationship */
   invitations_aggregate: Invitations_Aggregate;
   /** fetch data from the table: "invitations" using primary key columns */
   invitations_by_pk?: Maybe<Invitations>;
@@ -1652,12 +1706,36 @@ export type Teams = {
   __typename?: 'teams';
   created_at: Scalars['timestamptz']['output'];
   id: Scalars['uuid']['output'];
+  /** An array relationship */
+  invitations: Array<Invitations>;
+  /** An aggregate relationship */
+  invitations_aggregate: Invitations_Aggregate;
   name: Scalars['String']['output'];
   /** An array relationship */
   teams_users: Array<Teams_Users>;
   /** An aggregate relationship */
   teams_users_aggregate: Teams_Users_Aggregate;
   updated_at: Scalars['timestamptz']['output'];
+};
+
+
+/** columns and relationships of "teams" */
+export type TeamsInvitationsArgs = {
+  distinct_on?: InputMaybe<Array<Invitations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Invitations_Order_By>>;
+  where?: InputMaybe<Invitations_Bool_Exp>;
+};
+
+
+/** columns and relationships of "teams" */
+export type TeamsInvitations_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Invitations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Invitations_Order_By>>;
+  where?: InputMaybe<Invitations_Bool_Exp>;
 };
 
 
@@ -1709,6 +1787,8 @@ export type Teams_Bool_Exp = {
   _or?: InputMaybe<Array<Teams_Bool_Exp>>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  invitations?: InputMaybe<Invitations_Bool_Exp>;
+  invitations_aggregate?: InputMaybe<Invitations_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   teams_users?: InputMaybe<Teams_Users_Bool_Exp>;
   teams_users_aggregate?: InputMaybe<Teams_Users_Aggregate_Bool_Exp>;
@@ -1725,6 +1805,7 @@ export enum Teams_Constraint {
 export type Teams_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  invitations?: InputMaybe<Invitations_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
   teams_users?: InputMaybe<Teams_Users_Arr_Rel_Insert_Input>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -1775,6 +1856,7 @@ export type Teams_On_Conflict = {
 export type Teams_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  invitations_aggregate?: InputMaybe<Invitations_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
   teams_users_aggregate?: InputMaybe<Teams_Users_Aggregate_Order_By>;
   updated_at?: InputMaybe<Order_By>;
@@ -2649,6 +2731,28 @@ export type FetchTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type FetchTeamsQuery = { __typename?: 'query_root', teams: Array<{ __typename?: 'teams', name: string, id: any, created_at: any }> };
 
+export type FetchTeamQueryVariables = Exact<{
+  teamId: Scalars['uuid']['input'];
+}>;
+
+
+export type FetchTeamQuery = { __typename?: 'query_root', teams_by_pk?: { __typename?: 'teams', id: any, name: string, created_at: any } | null };
+
+export type CheckMembershipQueryVariables = Exact<{
+  teamId: Scalars['uuid']['input'];
+  userId: Scalars['uuid']['input'];
+}>;
+
+
+export type CheckMembershipQuery = { __typename?: 'query_root', teams_users: Array<{ __typename?: 'teams_users', team_id: any }> };
+
+export type JoinTeamMutationVariables = Exact<{
+  teamId: Scalars['uuid']['input'];
+}>;
+
+
+export type JoinTeamMutation = { __typename?: 'mutation_root', joinTeam: boolean };
+
 
 export const UpdateDisplayNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDisplayName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"avatar_file_key"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_users_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"avatar_file_key"},"value":{"kind":"Variable","name":{"kind":"Name","value":"avatar_file_key"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar_file_key"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}}]}}]}}]} as unknown as DocumentNode<UpdateDisplayNameMutation, UpdateDisplayNameMutationVariables>;
 export const DestroyUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DestroyUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"destroyUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}]}}]} as unknown as DocumentNode<DestroyUserMutation, DestroyUserMutationVariables>;
@@ -2665,3 +2769,6 @@ export const CreateProjectDocument = {"kind":"Document","definitions":[{"kind":"
 export const DeleteProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteProjectMutation, DeleteProjectMutationVariables>;
 export const FetchProjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchProjects"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"teams_projects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchProjectsQuery, FetchProjectsQueryVariables>;
 export const FetchTeamsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchTeams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchTeamsQuery, FetchTeamsQueryVariables>;
+export const FetchTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchTeamQuery, FetchTeamQueryVariables>;
+export const CheckMembershipDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"checkMembership"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams_users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"team_id"}}]}}]}}]} as unknown as DocumentNode<CheckMembershipQuery, CheckMembershipQueryVariables>;
+export const JoinTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"joinTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"joinTeam"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"teamId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}]}}]} as unknown as DocumentNode<JoinTeamMutation, JoinTeamMutationVariables>;

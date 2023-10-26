@@ -16,7 +16,12 @@ const ProjectsTable = observer(() => {
   const deleteModalID = 'delete_modal'
   const { data, error, isLoading, refetch } = useQuery<Promise<Project[] | undefined>, Error, Project[], QueryKey>({
     queryKey: ['fetchProjects', auth.id],
-    queryFn: () => projectStore.fetchProjects({ teamId: teams.activeTeam?.id })
+    queryFn: () => {
+      if (teams.activeTeam) {
+        return projectStore.fetchProjects({ teamId: teams.activeTeam?.id })
+      }
+      return Promise.resolve([] as Project[])
+    }
   })
   const onDelete = useMutation({
     onSuccess: () => {

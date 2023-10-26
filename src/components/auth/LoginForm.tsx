@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../stores/stores'
 import { observer } from "mobx-react-lite"
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 import {
   useMutation,
 } from '@tanstack/react-query'
@@ -11,6 +11,8 @@ import { SpinningLoading } from '../lib/SpinningLoading'
 const LoginForm = observer(() => {
   const auth = useContext(AuthContext)
   const navigate = useNavigate()
+  const location = useLocation()
+  const fromState = location.state as { from: { pathname: string } } | null
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -18,7 +20,11 @@ const LoginForm = observer(() => {
   const handleLoginMutation = useMutation({
     mutationFn: () => auth.login(email, password),
     onSuccess: () => {
-      navigate('/')
+      if (fromState) {
+        navigate(fromState.from.pathname)
+      } else {
+        navigate('/')
+      }
     }
   })
 
@@ -53,7 +59,7 @@ const LoginForm = observer(() => {
             <p className="text-base" style={{ lineHeight: '106%' }}>
               Don't have an account?
               <br></br>
-              <Link to='/auth/register' style={{ textDecoration: 'underline' }}>Sign up now</Link>
+              <Link to='/auth/register' style={{ textDecoration: 'underline' }} state={ location ? { from: fromState?.from } : null}>Sign up now</Link>
             </p>
           </div>
           <p className="text-xs opacity-60" style={{ marginTop: 37 }}>
