@@ -22,12 +22,66 @@ export class Teams {
         }
       }
       `), {})
-      if (result.error) {
-        throw result.error
+    if (result.error) {
+      throw result.error
+    }
+    if (result.data?.teams && result.data.teams.length > 0) {
+      this.setActiveTeam(result.data.teams[0] as Team)
+    }
+    return result.data?.teams as Team[]
+  }
+
+  async fetchTeam (teamId: string): Promise<Team | null> {
+    const result = await client.query(graphql(`
+      query fetchTeam($teamId: uuid!) {
+        teams_by_pk(id: $teamId) {
+          id
+          name
+          created_at
+        }
       }
-      if (result.data?.teams && result.data.teams.length > 0) {
-        this.setActiveTeam(result.data.teams[0] as Team)
+      `), { teamId })
+    if (result.error) {
+      throw result.error
+    }
+    if (result.data?.teams_by_pk) {
+      return result.data.teams_by_pk as Team
+    }
+    return null
+  }
+
+  async checkMembership (teamId: string, userId: string): Promise<boolean> {
+    const result = await client.query(graphql(`
+    query checkMembership($teamId: uuid!, $userId: uuid!) {
+      teams_users(where: {_and: {team_id: {_eq: $teamId}, user_id: {_eq: $userId}}}) {
+        team_id
       }
-      return result.data?.teams as Team[]
+    }`), { teamId, userId })
+    if (result.error) {
+      throw result.error
+    }
+    if (result.data?.teams_users) {
+      return result.data.teams_users.length > 0
+    }
+    return false
+  }
+
+  async joinTeam (teamId: string): Promise<boolean> {
+    const result = await client.mutation(graphql(`
+      mutation joinTeam($teamId: uuid!) {
+        joinTeam(teamId: $teamId)
+      }
+      `), { teamId })
+    if (result.error) {
+      throw result.error
+    }
+    if (result.data?.joinTeam) {
+      const team = await this.fetchTeam(teamId)
+      if (team) {
+        this.setActiveTeam(team as Team)
+      }
+      return result.data?.joinTeam
+    }
+    return false
   }
 }

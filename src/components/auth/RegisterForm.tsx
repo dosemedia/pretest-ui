@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../stores/stores'
 import { observer } from "mobx-react-lite"
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 import validator from 'validator'
 import {
   useMutation,
@@ -12,6 +12,8 @@ import { SpinningLoading } from '../lib/SpinningLoading'
 const RegisterForm = observer(() => {
   const auth = useContext(AuthContext)
   const navigate = useNavigate()
+  const location = useLocation()
+  const fromState = location.state as { from: { pathname: string } } | null
 
   const [email, setEmail] = useState('')
   const [emailValid, setEmailValid] = useState(true)
@@ -28,7 +30,11 @@ const RegisterForm = observer(() => {
   const handleRegisterMutation = useMutation({
     mutationFn: () => auth.register(email, password),
     onSuccess: () => { 
-      navigate("/")
+      if (fromState) {
+        navigate(fromState.from.pathname)
+      } else {
+        navigate('/')
+      }
     }
   })
 

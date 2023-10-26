@@ -8,7 +8,7 @@ const LoginRequiredRoute = observer(({ children }: PropsWithChildren) => {
   const auth = useContext(AuthContext)
   const location = useLocation();
   if (!auth.isAuthenticated) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
   return children;
 })
