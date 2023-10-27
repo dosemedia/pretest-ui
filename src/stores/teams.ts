@@ -17,15 +17,13 @@ export class Teams {
     this.ownsTeam = ownsTeam
   }
 
-  checkIfOwnsTeam (teams: Team[]) {
-    for (const team of teams) {
-      for (const member of team.teams_users) {
-        if (member.role === 'admin') {
-          this.setOwnsTeam(true)
-          break
-        }
+  checkIfOwnsTeam (team: Team): boolean {
+    for (const member of team.teams_users) {
+      if (member.role === 'admin') {
+        return true
       }
     }
+    return false
   }
 
   async inviteUser ({ teamId, email }: { teamId: string, email: string }): Promise<boolean> {
@@ -77,7 +75,6 @@ export class Teams {
     }
     if (result.data?.teams && result.data.teams.length > 0) {
       this.setActiveTeam(result.data.teams[0] as Team)
-      this.checkIfOwnsTeam(result.data.teams as Team[])
     } else if (result.data?.teams.length === 0) {
       this.setActiveTeam(null)
     }
