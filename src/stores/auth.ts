@@ -59,7 +59,7 @@ export class Auth {
         }
       })
       if (response?.data) {
-        this.user.avatar_file_key = response.data.key
+        this.syncUser()
       }
     } else {
       throw new Error('Authentication required.')
