@@ -24,7 +24,7 @@ const TeamsPage = observer(() => {
         <th>{team.id}</th>
         <td>{new Date(team.created_at).toLocaleDateString()}</td>
         <td>{team.teams_users_aggregate?.aggregate?.count}</td>
-        <td>{ teamsStore.checkIfOwnsTeam(team) ? <div className="badge badge-neutral">Owner</div> : <div className="badge">Member</div>}</td>
+        <td>{ teamsStore.isOwner(team) ? <div className="badge badge-neutral">Owner</div> : <div className="badge">Member</div>}</td>
       </tr>
     )
   }
