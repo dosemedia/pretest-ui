@@ -2,11 +2,13 @@ import { useMutation } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { ProjectsContext, TeamsContext, ToastsContext } from "../../stores/stores";
+import { useNavigate } from "react-router-dom";
 
-const createProject = observer(({ onCreate }: { onCreate: () => void }) => {
+const createProject = observer(() => {
   const projects = useContext(ProjectsContext)
   const teams = useContext(TeamsContext)
   const toasts = useContext(ToastsContext)
+  const navigate = useNavigate()
   const element_id = "create_project_modal"
   const [name, setName] = useState('')
   function removeFields () {
@@ -17,11 +19,13 @@ const createProject = observer(({ onCreate }: { onCreate: () => void }) => {
     mutationFn: () => {
       return projects.createProject({ name, team_id: teams.activeTeam?.id })
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       (document.getElementById(element_id) as HTMLDialogElement).close()
       removeFields()
       toasts.addToast({ message: 'Project successfully created', type: 'success' })
-      onCreate()
+      if (data?.id) {
+        navigate(`/project/${data.id}`)
+      }
     },
     onError: (error: Error) => { toasts.addToast({ message: error.message, type: 'error' }) }
   })

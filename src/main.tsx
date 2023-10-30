@@ -129,6 +129,25 @@ const router = createBrowserRouter([
         }
       },
       {
+        path: "/project/:projectId",
+        async lazy() {
+          const ProjectDetail = await import('./pages/projects/ProjectDetail.tsx')
+          return {
+            Component: () => {
+              return (
+                <>
+                  <LoginRequiredRoute>
+                    <RootLayout>
+                      <ProjectDetail.default />
+                    </RootLayout>
+                  </LoginRequiredRoute>
+                </>
+              )
+            }
+          }
+        }
+      },
+      {
         path: "/teams",
         async lazy() {
           const TeamsPage = await import('./pages/teams/TeamsPage.tsx')

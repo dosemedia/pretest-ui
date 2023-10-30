@@ -62,7 +62,7 @@ const ProjectsTable = observer(() => {
               <input className="input w-full" placeholder="Search or jump to" value={filter} onChange={(e) => setFilter(e.target.value) } />
             </div>
             <div className="ml-4">
-              <CreateProject onCreate={() => refetch() } />
+              <CreateProject />
             </div>
           </div>
           <div className="card" style={{ backgroundColor: "white" }}>
