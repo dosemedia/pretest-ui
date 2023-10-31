@@ -7,7 +7,7 @@ export class Projects {
   constructor() {
     makeAutoObservable(this)
   }
-  async createProject({ name, team_id }: { team_id: string, name: string }) : Promise<Project | undefined> {
+  async createProject({ name, team_id }: { team_id: string, name: string }): Promise<Project | undefined> {
     if (!name) {
       throw new Error('Name is required')
     }
@@ -25,7 +25,7 @@ export class Projects {
     }
     return result.data?.createProject as Project | undefined
   }
-  async delete ({ id }: { id: string }): Promise<boolean>{
+  async delete({ id }: { id: string }): Promise<boolean> {
     const result = await client.mutation(graphql(`
     mutation DeleteProject($id: uuid!) {
       delete_projects_by_pk(id: $id) {
@@ -38,9 +38,29 @@ export class Projects {
     }
     return true
   }
-  async fetchProject ({ projectId }: { projectId: string }): Promise<Project | undefined> { 
+  async updateProject({ projectId, payload }: { projectId: string, payload: object }): Promise<Project | undefined> {
+    const project: Project = payload as Project
+    const result = await client.mutation(graphql(`
+      mutation UpdateProject($projectId: uuid!, $name: String, $objective: String) {
+        update_projects_by_pk(pk_columns: {id: $projectId}, _set: {name: $name, objective: $objective}) {
+          name
+          objective
+          branding
+          is_draft
+          updated_at
+          start_time
+          stop_time
+        }
+      }
+      `), { projectId, name: project.name, objective: project.objective })
+    if (result.error) {
+      throw result.error
+    }
+    return result.data?.update_projects_by_pk as Project
+  }
+  async fetchProject({ projectId }: { projectId: string }): Promise<Project | undefined> {
     const result = await client.query(graphql(`
-      query fetchProject($projectId: uuid!) {
+      query FetchProject($projectId: uuid!) {
         projects_by_pk(id: $projectId) {
           id
           name
@@ -54,13 +74,13 @@ export class Projects {
         }
       }
       `), { projectId })
-      if (result.error) {
-        throw result.error
-      }
-      return result.data?.projects_by_pk as Project
+    if (result.error) {
+      throw result.error
     }
-  async fetchProjects ({ teamId }: { teamId: string }): Promise<Project[] | undefined> { 
-  const result = await client.query(graphql(`
+    return result.data?.projects_by_pk as Project
+  }
+  async fetchProjects({ teamId }: { teamId: string }): Promise<Project[] | undefined> {
+    const result = await client.query(graphql(`
     query fetchProjects($teamId: uuid!) {
       projects(where: {teams_projects: {team_id: {_eq: $teamId}}}, order_by: {created_at: desc}) {
         name

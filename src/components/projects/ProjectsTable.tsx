@@ -6,13 +6,14 @@ import { useQuery, QueryKey, useMutation } from "@tanstack/react-query";
 import ErrorMessage from "../lib/Error";
 import DeleteModal from "../lib/DeleteModal";
 import CreateProject from "./CreateProject";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProjectsTable = observer(() => {
   const projectStore = useContext(ProjectsContext)
   const teams = useContext(TeamsContext)
   const auth = useContext(AuthContext)
   const toastStore = useContext(ToastsContext)
+  const navigate = useNavigate()
   const [itemToDelete, setItemToDelete] = useState<Project | null>(null)
   const [filter, setFilter] = useState('')
   const deleteModalID = 'delete_modal'
@@ -38,7 +39,7 @@ const ProjectsTable = observer(() => {
   })
   function tableRow(project: Project) {
     return (
-      <tr key={project.id}>
+      <tr key={project.id} className="hover:bg-slate-100 cursor-pointer" onClick={() => { navigate(`/project/${project.id}`) }}>
         <td>{project.name}</td>
         <th>{project.id}</th>
         <td>{new Date(project.created_at).toLocaleDateString()}</td>

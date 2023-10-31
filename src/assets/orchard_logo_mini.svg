@@ -1,0 +1,17 @@
+<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ORCHARD_LOGO_gradient 1" clip-path="url(#clip0_74_236)">
+<path id="Vector" d="M12.5 0C5.59783 0 0 5.42254 0 12.1152C0 18.0181 4.36141 22.9273 10.1359 24V18.1234C7.63587 17.2021 5.85598 14.8593 5.85598 12.1086C5.85598 8.55498 8.83152 5.67261 12.5 5.67261C16.1685 5.67261 19.144 8.55498 19.144 12.1086C19.144 14.8593 17.3641 17.1955 14.8641 18.1234V24C20.6386 22.9273 25 18.0181 25 12.1152C25 5.42912 19.4022 0.00658027 12.5 0.00658027V0Z" fill="url(#paint0_linear_74_236)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_74_236" x1="12.5" y1="0" x2="12.5" y2="24" gradientUnits="userSpaceOnUse">
+<stop stop-color="#EF4136"/>
+<stop offset="0.21" stop-color="#D73644"/>
+<stop offset="0.52" stop-color="#BD2A54"/>
+<stop offset="0.79" stop-color="#AD225E"/>
+<stop offset="1" stop-color="#A82062"/>
+</linearGradient>
+<clipPath id="clip0_74_236">
+<rect width="25" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>
