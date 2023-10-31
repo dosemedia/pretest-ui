@@ -29,7 +29,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
     {
       label: 'Concept & Product Development',
       value: 'concept_product_development',
-      icon: '/src/assets/magnifying_glass.svg',
+      icon: '/src/assets/egg.png',
       description: 'Ideas, Validations',
       items: [
         'Which product idea is best?',
@@ -39,7 +39,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
     {
       label: 'Feature & Benefits',
       value: 'feature_benefits',
-      icon: '/src/assets/magnifying_glass.svg',
+      icon: '/src/assets/lightbulb.png',
       description: 'Positioning, Features, Benefits, Claims',
       items: [
         'Which product/service features and benefits resonate most?',
@@ -49,7 +49,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
     {
       label: 'Marketing Communication',
       value: 'marketing_communication',
-      icon: '/src/assets/magnifying_glass.svg',
+      icon: '/src/assets/horseshoe.png',
       description: 'Exploratory, Whitespace,\nProblems, Solutions, Innovations',
       items: [
         'How do I talk about and show my product or service?',
