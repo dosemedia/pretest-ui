@@ -41,8 +41,8 @@ export class Projects {
   async updateProject({ projectId, payload }: { projectId: string, payload: object }): Promise<Project | undefined> {
     const project: Project = payload as Project
     const result = await client.mutation(graphql(`
-      mutation UpdateProject($projectId: uuid!, $name: String, $objective: String, $branding: String, $platform: String) {
-        update_projects_by_pk(pk_columns: {id: $projectId}, _set: {name: $name, objective: $objective, branding: $branding, platform: $platform}) {
+      mutation UpdateProject($projectId: uuid!, $name: String, $objective: String, $branding: String, $platform: String, $startTime: timestamptz, $stopTime: timestamptz) {
+        update_projects_by_pk(pk_columns: {id: $projectId}, _set: {name: $name, objective: $objective, branding: $branding, platform: $platform, start_time: $startTime, stop_time: $stopTime}) {
           name
           objective
           branding
@@ -53,7 +53,7 @@ export class Projects {
           stop_time
         }
       }
-      `), { projectId, name: project.name, objective: project.objective, branding: project.branding, platform: project.platform })
+      `), { projectId, name: project.name, objective: project.objective, branding: project.branding, platform: project.platform, startTime: project.start_time, stopTime: project.stop_time })
     if (result.error) {
       throw result.error
     }

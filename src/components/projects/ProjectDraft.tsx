@@ -18,7 +18,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
   const projectMutation = useMutation({
-    mutationFn: (payload: object) => projectStore.updateProject({ projectId: project.id, payload: {...project, ...payload} }),
+    mutationFn: (payload: object) => projectStore.updateProject({ projectId: project.id, payload: { ...project, ...payload } }),
     onSuccess: (data) => { setUpdatedAt(data?.updated_at); onUpdate() }
   })
   const onSave = _.debounce((payload: object) => {
@@ -60,7 +60,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         label: 'Runtime',
         value: 'runtime',
         step: 5,
-        isCompete: project.start_time && project.stop_time,
+        isComplete: project.start_time && project.stop_time,
         icon: 'mdi mdi-clock-outline'
       }
     ]
@@ -73,7 +73,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
       <div className="flex flex-wrap justify-between gap-y-12 gap-x-4">
         <div className="flex-initial">
           <div className="badge p-4 ml-6 badge-success text-white">
-            last updated: { new Date(updatedAt).toLocaleString()}
+            last updated: {new Date(updatedAt).toLocaleString()}
           </div>
           <ul className="menu w-56">
             {configurationMenu.map((item) =>
@@ -82,7 +82,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
                   <summary><span className={item.icon}></span>{item.label}</summary>
                   <ul>
                     {item.children.map((child) =>
-                      <li key={child.value} className={`project-menu-item ${child.step === step && 'active'}`} onClick={() => setStep(child.step)}><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" /> }</a></li>
+                      <li key={child.value} className={`project-menu-item ${child.step === step && 'active'}`} onClick={() => setStep(child.step)}><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>
                     )}
                   </ul>
                 </details>
@@ -91,19 +91,21 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           </ul>
         </div>
         <div className="flex-initial w-full md:w-8/12">
-          {step === 1 && <TestObjective project={project} onSave={onSave}/>}
-          {step === 2 && <TestBranding project={project} onSave={onSave}/>}
-          {step === 3 && <TestPlatform project={project} onSave={onSave}/>}
+          {step === 1 && <TestObjective project={project} onSave={onSave} />}
+          {step === 2 && <TestBranding project={project} onSave={onSave} />}
+          {step === 3 && <TestPlatform project={project} onSave={onSave} />}
           {step === 4 && <TestAudience />}
-          {step === 5 && <TestRuntime project={project} onSave={onSave}/>}
+          {step === 5 && <TestRuntime project={project} onSave={onSave} />}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setStep((prev) => prev -= 1)}>
               <span className="mdi mdi-chevron-left text-base" /> Go Back
             </button>
             }
-            <button className="btn action-button text-base" onClick={() => setStep((prev) => prev += 1)}>
-              Next <span className="mdi mdi-chevron-right text-base" />
-            </button>
+            {step != 5 &&
+              <button className="btn action-button text-base" onClick={() => setStep((prev) => prev += 1)}>
+                Next <span className="mdi mdi-chevron-right text-base" />
+              </button>
+            }
           </div>
         </div>
       </div>

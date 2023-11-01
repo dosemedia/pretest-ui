@@ -1,48 +1,49 @@
 import { observer } from "mobx-react-lite";
 import { Projects as Project } from "../../../gql/graphql";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { DateTime } from "luxon"
 const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
-  const [branding, setBranding] = useState(project.branding || '')
+  const dateFormat = "yyyy-M-dd'T'T"
+  const [startTime, setStartTime] = useState(DateTime.fromISO(project.start_time || DateTime.now().toISO()).toLocal())
+  const [stopTime, setStopTime] = useState(DateTime.fromISO(project.stop_time || DateTime.now().toISO()).toLocal())
   const pageStyle = {
     fontWeight: '500'
   }
-  interface Branding {
+  interface Runtime {
     label: string,
-    value: string,
-    icon: string,
-    description: string
+    value: DateTime
   }
-  const items: Branding[] = [
+  const items: Runtime[] = [
     {
-      label: 'Unbranded',
-      icon: 'mdi mdi-decagram-outline',
-      value: 'unbranded',
-      description: 'Unbranded tests are created with no brand associated. This is usually chosen when test is upper funnel.'
+      label: '3',
+      value: startTime.plus({ days: 3 })
     },
     {
-      label: 'Branded',
-      icon: 'mdi mdi-check-decagram-outline',
-      value: 'branded',
-      description: 'Branded tests are created with brand guidelines (color, font, logo, etc.). This is usually chosen when test is lower funnel.'
+      label: '4',
+      value: startTime.plus({ days: 4 })
+    },
+    {
+      label: '5',
+      value: startTime.plus({ days: 5 })
     }
   ]
 
+  function onChange(e: ChangeEvent<HTMLInputElement>) {
+    const date = DateTime.fromFormat(e.target.value, dateFormat)
+    setStartTime(date)
+  }
+
   useEffect(() => {
-    onSave({ branding })
-  }, [branding])
-  function selectionCard (item: Branding) {
+    const diff = Math.abs(startTime.diff(stopTime, 'days').days)
+    onSave({ stop_time: diff <= 5 && diff >= 3 ? stopTime.toISO() : null, start_time: startTime.toISO() })
+  }, [startTime, stopTime])
+  function selectionCard(item: Runtime) {
     return (
-      <div key={item.label} className="flex flex-col" style={{ width: 285 }}>
-        <div className={`card cursor-pointer ${branding === item.value && 'card-selected'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => setBranding(item.value)}>
-          <div className="card-body">
-            <div className="flex flex-col items-center gap-2 text-center">
-              <span className={item.icon} style={{ fontSize: 70 }} />
-              <span className="text-md font-bold text-center">{item.label}</span>
-            </div>
+      <div key={item.label} className={`card cursor-pointer ${stopTime.day === item.value.day && 'card-selected'}`} style={{ backgroundColor: 'white', padding: '0px 0px', width: 174 }} onClick={() => setStopTime(item.value)}>
+        <div className="card-body">
+          <div className="flex flex-col items-center">
+            <span className="text-[42px] font-black text-black">{item.label}<span className="text-base font-bold ml-1">days</span></span>
           </div>
-        </div>
-        <div className="text-xxs opacity-60 font-medium mt-4">
-          {item.description}
         </div>
       </div>
     )
@@ -51,10 +52,29 @@ const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (
     <>
       <div style={{ color: '#282828', fontWeight: '500', opacity: 0.7 }}>
         <div className="text-lg mb-4" style={pageStyle}>
-          Are you looking for an unbranded or branded test?
+          Set your test duration
         </div>
+        <div>
+          <label className="label">
+            <span className="text-sm opacity-60">Start Time</span>
+          </label>
+          <input
+            type="datetime-local"
+            id="meeting-time"
+            className="rounded-lg p-3 mb-5"
+            style={{ border: '1px solid grey' }}
+            name="meeting-time"
+            value={startTime.toFormat(dateFormat)}
+            onChange={onChange} />
+        </div>
+        <label className="label">
+          <span className="text-sm opacity-60">Duration</span>
+        </label>
         <div className="flex flex-wrap gap-y-10 gap-x-10">
           {items.map((item) => selectionCard(item))}
+        </div>
+        <div className="text-xxs opacity-60 font-medium mt-4">
+        Orchard recommends a campaign run time to be <br></br> between 3 to 5 days. Standard run time is 3 days.
         </div>
       </div>
     </>
