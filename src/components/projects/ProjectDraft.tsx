@@ -1,12 +1,15 @@
 import { observer } from "mobx-react-lite";
 import { Projects as Project } from "../../gql/graphql";
-import TestObjective from "./draft_components/TestObjective";
+import TestObjective from "./test_components/TestObjective";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ProjectsContext } from "../../stores/stores";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
-import TestBranding from "./draft_components/TestBranding";
+import TestBranding from "./test_components/TestBranding";
+import TestPlatform from "./test_components/TestPlatform";
+import TestRuntime from "./test_components/TestRuntime";
+import TestAudience from "./test_components/TestAudience";
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams] = useSearchParams();
@@ -44,6 +47,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         label: 'Platform',
         value: 'platform',
         step: 3,
+        isComplete: project.platform,
         icon: 'mdi mdi-facebook'
       },
       {
@@ -56,6 +60,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         label: 'Runtime',
         value: 'runtime',
         step: 5,
+        isCompete: project.start_time && project.stop_time,
         icon: 'mdi mdi-clock-outline'
       }
     ]
@@ -88,6 +93,9 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         <div className="flex-initial w-full md:w-8/12">
           {step === 1 && <TestObjective project={project} onSave={onSave}/>}
           {step === 2 && <TestBranding project={project} onSave={onSave}/>}
+          {step === 3 && <TestPlatform project={project} onSave={onSave}/>}
+          {step === 4 && <TestAudience />}
+          {step === 5 && <TestRuntime project={project} onSave={onSave}/>}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setStep((prev) => prev -= 1)}>
               <span className="mdi mdi-chevron-left text-base" /> Go Back
