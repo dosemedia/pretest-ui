@@ -55,7 +55,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
     <>
       <div style={{ color: '#282828', fontWeight: '500', opacity: 0.7 }}>
         <div className="text-lg mb-4" style={pageStyle}>
-          Are you looking for an unbranded or branded test?
+          Where would you like to test?
         </div>
         <div className="flex flex-wrap gap-y-10 gap-x-10">
           {items.map((item) => selectionCard(item))}
