@@ -16,7 +16,6 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const projectStore = useContext(ProjectsContext)
   const navigate = useNavigate()
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
-  const [isStepComplete, setIsStepComplete] = useState(false)
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
   const projectMutation = useMutation({
     mutationFn: (payload: object) => projectStore.updateProject({ projectId: project.id, payload: { ...project, ...payload } }),
@@ -70,16 +69,6 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     ]
   }]
   useEffect(() => {
-    // Controls the state of the 'Next' button
-    setIsStepComplete(() => {
-      for (const item of configurationMenu) {
-        const found = _.find(item.children, (child) => child.step === step)
-        return found?.isComplete || false
-      }
-      return false
-    })
-  }, [project])
-  useEffect(() => {
     navigate(`/project/${project.id}?step=${step}`, { replace: true })
   }, [step])
   return (
@@ -116,7 +105,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
             </button>
             }
             {step != 5 &&
-              <button className="btn action-button text-base" onClick={() => setStep((prev) => prev += 1)} disabled={!isStepComplete}>
+              <button className="btn action-button text-base" onClick={() => setStep((prev) => prev += 1)}>
                 Next <span className="mdi mdi-chevron-right text-base" />
               </button>
             }
