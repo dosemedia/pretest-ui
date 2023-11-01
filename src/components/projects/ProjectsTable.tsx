@@ -54,7 +54,7 @@ const ProjectsTable = observer(() => {
         error && <ErrorMessage message={error.message} />
       }
       {
-        !teams.activeTeam && !isLoading && <div className="alert alert-info text-white"><span>You are not part of a team yet! Create a team <Link className="underline" to="/teams">here</Link> and start your create your first test today!</span></div>
+        !teams.activeTeam && !isLoading && !data && <div className="alert alert-info text-white"><span>You are not part of a team yet! Create a team <Link className="underline" to="/teams">here</Link> and start your create your first test today!</span></div>
       }
       {data && teams.activeTeam && !isLoading &&
         <>

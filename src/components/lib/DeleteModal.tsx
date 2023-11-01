@@ -9,8 +9,11 @@ function DeleteModal({ element_id, model, model_type, onDelete }: { element_id: 
           <div className="modal-box">
             <h3 className="font-bold text-lg">Delete {model_type}</h3>
             <p className="py-4">Are you sure you want to delete <span className="font-bold">{model.name}</span>?</p>
+            <label className="label">
+              <span className="text-sm opacity-60">Type <span className="font-bold">{model.name}</span> in order to delete</span>
+            </label>
             <div>
-              <input className="input w-full" value={validationName} onChange={(e) => setValidationName(e.target.value)} placeholder={`Type '${model.name}' in order to delete`} />
+              <input className="input w-full" value={validationName} onChange={(e) => setValidationName(e.target.value)} />
             </div>
             <div className="modal-action">
               <button className="btn btn-error text-white mr-3" onClick={() => onDelete()} disabled={validationName !== model.name}>Delete</button>
