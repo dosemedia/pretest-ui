@@ -16,10 +16,14 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const projectStore = useContext(ProjectsContext)
   const navigate = useNavigate()
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
+  const [isStepComplete, setIsStepComplete] = useState(false)
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
   const projectMutation = useMutation({
     mutationFn: (payload: object) => projectStore.updateProject({ projectId: project.id, payload: { ...project, ...payload } }),
-    onSuccess: (data) => { setUpdatedAt(data?.updated_at); onUpdate() }
+    onSuccess: (data) => {
+      setUpdatedAt(data?.updated_at);
+      onUpdate(); 
+    }
   })
   const onSave = _.debounce((payload: object) => {
     projectMutation.mutate(payload)
@@ -32,7 +36,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
       {
         label: 'Test Objective',
         step: 1,
-        isComplete: project.name && project.objective,
+        isComplete: Boolean(project.name && project.objective),
         value: 'test_objective',
         icon: 'mdi mdi-flask-outline'
       },
@@ -40,14 +44,14 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         label: 'Brandness',
         value: 'brandness',
         step: 2,
-        isComplete: project.branding,
+        isComplete: Boolean(project.branding),
         icon: 'mdi mdi-brush-variant'
       },
       {
         label: 'Platform',
         value: 'platform',
         step: 3,
-        isComplete: project.platform,
+        isComplete: Boolean(project.platform),
         icon: 'mdi mdi-facebook'
       },
       {
@@ -60,11 +64,21 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         label: 'Runtime',
         value: 'runtime',
         step: 5,
-        isComplete: project.start_time && project.stop_time,
+        isComplete: Boolean(project.start_time && project.stop_time),
         icon: 'mdi mdi-clock-outline'
       }
     ]
   }]
+  useEffect(() => {
+    // Controls the state of the 'Next' button
+    setIsStepComplete(() => {
+      for (const item of configurationMenu) {
+        const found = _.find(item.children, (child) => child.step === step)
+        return found?.isComplete || false
+      }
+      return false
+    })
+  }, [project])
   useEffect(() => {
     navigate(`/project/${project.id}?step=${step}`, { replace: true })
   }, [step])
@@ -102,7 +116,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
             </button>
             }
             {step != 5 &&
-              <button className="btn action-button text-base" onClick={() => setStep((prev) => prev += 1)}>
+              <button className="btn action-button text-base" onClick={() => setStep((prev) => prev += 1)} disabled={!isStepComplete}>
                 Next <span className="mdi mdi-chevron-right text-base" />
               </button>
             }
