@@ -43,7 +43,7 @@ const ProjectsTable = observer(() => {
         <td>{project.name}</td>
         <th>{project.id}</th>
         <td>{new Date(project.created_at).toLocaleDateString()}</td>
-        <td><button className="btn btn-circle btn-sm bg-error border-none" onClick={() => { (document.getElementById(deleteModalID) as HTMLDialogElement).showModal(); setItemToDelete(project) }}><span className="mdi mdi-delete text-white"></span></button></td>
+        <td><button className="btn btn-circle btn-sm bg-error border-none" onClick={(e) => { e.stopPropagation(); (document.getElementById(deleteModalID) as HTMLDialogElement).showModal(); setItemToDelete(project) }}><span className="mdi mdi-delete text-white"></span></button></td>
       </tr>
     )
   }
