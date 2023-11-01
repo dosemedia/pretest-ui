@@ -70,12 +70,12 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
         <div className="card-body">
           <div className="flex flex-col items-center gap-2">
             <img src={item.icon} style={{ width: 58 }} />
-            <span className="text-[16px] font-bold text-center">{item.label}</span>
-            <div className="opacity-80 text-[12px] text-center">
+            <span className="text-md font-bold text-center">{item.label}</span>
+            <div className="opacity-80 text-xxs text-center">
               {item.description}
             </div> 
             <ul className="list-disc">
-              {item.items.map((question) => <li key={question} className="text-[12px]" style={{ color: '#282828' }}>{question}</li>)}
+              {item.items.map((question) => <li key={question} className="text-xxs" style={{ color: '#282828' }}>{question}</li>)}
             </ul>
           </div>
         </div>
@@ -97,7 +97,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
             <span className="text-sm">What are you goals for this test?</span>
           </label>
           <input type="text" className="input" placeholder="Your goals go here" value={objective} onChange={(e) => setObjective(e.target.value)} />
-          <span className="text-[12px] mt-1 ml-1">Example: “I’m using test to narrow in a new message or claim for my product.”</span>
+          <span className="text-xxs mt-1 ml-1">Example: “I’m using test to narrow in a new message or claim for my product.”</span>
         </div>
       </div>
       <div>

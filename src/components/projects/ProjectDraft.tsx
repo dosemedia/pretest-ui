@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { ProjectsContext } from "../../stores/stores";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
+import TestBranding from "./draft_components/TestBranding";
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams] = useSearchParams();
@@ -14,7 +15,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
   const projectMutation = useMutation({
-    mutationFn: (payload: object) => projectStore.updateProject({ projectId: project.id, payload }),
+    mutationFn: (payload: object) => projectStore.updateProject({ projectId: project.id, payload: {...project, ...payload} }),
     onSuccess: (data) => { setUpdatedAt(data?.updated_at); onUpdate() }
   })
   const onSave = _.debounce((payload: object) => {
@@ -61,11 +62,10 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   }]
   useEffect(() => {
     navigate(`/project/${project.id}?step=${step}`, { replace: true })
-    // setSearchParams({ step: step.toString() })
   }, [step])
   return (
     <>
-      <div className="flex flex-wrap gap-x-48">
+      <div className="flex flex-wrap justify-between gap-y-12 gap-x-4">
         <div className="flex-initial">
           <div className="badge p-4 ml-6 badge-success text-white">
             last updated: { new Date(updatedAt).toLocaleString()}
@@ -85,8 +85,9 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
             )}
           </ul>
         </div>
-        <div className="flex-initial w-full md:w-7/12">
+        <div className="flex-initial w-full md:w-8/12">
           {step === 1 && <TestObjective project={project} onSave={onSave}/>}
+          {step === 2 && <TestBranding project={project} onSave={onSave}/>}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setStep((prev) => prev -= 1)}>
               <span className="mdi mdi-chevron-left text-base" /> Go Back
