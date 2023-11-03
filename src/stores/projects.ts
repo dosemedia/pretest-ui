@@ -40,20 +40,22 @@ export class Projects {
   }
   async updateProject({ projectId, payload }: { projectId: string, payload: object }): Promise<Project | undefined> {
     const project: Project = payload as Project
+    console.log(project)
     const result = await client.mutation(graphql(`
-      mutation UpdateProject($projectId: uuid!, $name: String, $objective: String, $branding: String, $platform: String, $startTime: timestamptz, $stopTime: timestamptz) {
-        update_projects_by_pk(pk_columns: {id: $projectId}, _set: {name: $name, objective: $objective, branding: $branding, platform: $platform, start_time: $startTime, stop_time: $stopTime}) {
+      mutation UpdateProject($projectId: uuid!, $name: String, $objective: String, $branding: String, $platform: String, $projectType: String, $startTime: timestamptz, $stopTime: timestamptz) {
+        update_projects_by_pk(pk_columns: {id: $projectId}, _set: {name: $name, objective: $objective, branding: $branding, platform: $platform, project_type: $projectType, start_time: $startTime, stop_time: $stopTime}) {
           name
           objective
           branding
           platform
+          project_type
           is_draft
           updated_at
           start_time
           stop_time
         }
       }
-      `), { projectId, name: project.name, objective: project.objective, branding: project.branding, platform: project.platform, startTime: project.start_time, stopTime: project.stop_time })
+      `), { projectId, name: project.name, objective: project.objective, branding: project.branding, platform: project.platform, startTime: project.start_time, stopTime: project.stop_time, projectType: project.project_type })
     if (result.error) {
       throw result.error
     }
@@ -68,6 +70,7 @@ export class Projects {
           objective
           branding
           platform
+          project_type
           is_draft
           created_at
           updated_at
@@ -87,6 +90,10 @@ export class Projects {
       projects(where: {teams_projects: {team_id: {_eq: $teamId}}}, order_by: {created_at: desc}) {
         name
         id
+        is_draft
+        project_type
+        start_time
+        stop_time
         created_at
       }
     }

@@ -6,9 +6,6 @@ const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (
   const dateFormat = "yyyy-M-dd'T'T"
   const [startTime, setStartTime] = useState(DateTime.fromISO(project.start_time || DateTime.now().toISO()).toLocal())
   const [stopTime, setStopTime] = useState(DateTime.fromISO(project.stop_time || DateTime.now().toISO()).toLocal())
-  const pageStyle = {
-    fontWeight: '500'
-  }
   interface Runtime {
     label: string,
     value: DateTime
@@ -50,8 +47,8 @@ const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (
   }
   return (
     <>
-      <div style={{ color: '#282828', fontWeight: '500', opacity: 0.7 }}>
-        <div className="text-lg mb-4" style={pageStyle}>
+      <div>
+        <div className="text-lg mb-4">
           Set your test duration
         </div>
         <div>

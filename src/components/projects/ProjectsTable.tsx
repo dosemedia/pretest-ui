@@ -7,6 +7,7 @@ import ErrorMessage from "../lib/Error";
 import DeleteModal from "../lib/DeleteModal";
 import CreateProject from "./CreateProject";
 import { Link, useNavigate } from "react-router-dom";
+import ProjectStatus from "../lib/ProjectStatus";
 
 const ProjectsTable = observer(() => {
   const projectStore = useContext(ProjectsContext)
@@ -43,6 +44,7 @@ const ProjectsTable = observer(() => {
         <td>{project.name}</td>
         <th>{project.id}</th>
         <td>{new Date(project.created_at).toLocaleDateString()}</td>
+        <td><ProjectStatus project={project} /></td>
         <td><button className="btn btn-circle btn-sm bg-error border-none" onClick={(e) => { e.stopPropagation(); (document.getElementById(deleteModalID) as HTMLDialogElement).showModal(); setItemToDelete(project) }}><span className="mdi mdi-delete text-white"></span></button></td>
       </tr>
     )
@@ -60,7 +62,7 @@ const ProjectsTable = observer(() => {
         <>
           <div className="flex items-center justify-center mb-6">
             <div className="flex-1">
-              <input className="input w-full" placeholder="Search or jump to" value={filter} onChange={(e) => setFilter(e.target.value) } />
+              <input className="input w-full" placeholder="Search or jump to" value={filter} onChange={(e) => setFilter(e.target.value)} />
             </div>
             <div className="ml-4">
               <CreateProject />
@@ -82,7 +84,8 @@ const ProjectsTable = observer(() => {
                     <th>Name</th>
                     <th>ID</th>
                     <th>Created At</th>
-                    <th></th>
+                    <th>Status</th>
+                    <th />
                   </tr>
                 </thead>
                 <tbody>
@@ -91,7 +94,7 @@ const ProjectsTable = observer(() => {
                   }
                 </tbody>
               </table>
-              { data.length === 0 && <p className="mt-8">You have no projects yet. Launch your first test today!</p>}
+              {data.length === 0 && <p className="mt-8">You have no projects yet. Launch your first test today!</p>}
             </div>
           </div>
         </>

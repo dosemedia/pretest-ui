@@ -53,7 +53,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
   }
   return (
     <>
-      <div style={{ color: '#282828', fontWeight: '500', opacity: 0.7 }}>
+      <div>
         <div className="text-lg mb-4" style={pageStyle}>
           Where would you like to test?
         </div>

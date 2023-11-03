@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
   const [name, setName] = useState(project.name || '')
   const [objective, setObjective] = useState(project.objective || '')
-  const [testType, setTestType] = useState('')
+  const [projectType, setProjectType] = useState(project.project_type || '')
   interface TestTypeMenu {
     label: string,
     icon: string,
@@ -28,7 +28,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
     },
     {
       label: 'Concept & Product Development',
-      value: 'concept_product_development',
+      value: 'concept_test',
       icon: '/src/assets/egg.png',
       description: 'Ideas, Validations',
       items: [
@@ -38,7 +38,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
     },
     {
       label: 'Feature & Benefits',
-      value: 'feature_benefits',
+      value: 'benefits_claims',
       icon: '/src/assets/lightbulb.png',
       description: 'Positioning, Features, Benefits, Claims',
       items: [
@@ -57,34 +57,50 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
       ]
     }
   ]
-  const pageStyle = {
-    fontWeight: '500'
-  }
   useEffect(() => {
-    onSave({ name, objective, testType })
-  }, [name, objective, testType])
+    if (projectType === 'marketing_communication') {
+      setProjectType('marketing_communication_language')
+    }
+    onSave({ name, objective, project_type: projectType })
+  }, [name, objective, projectType])
 
   function selectionCard(item: TestTypeMenu) {
     return (
-      <div key={item.label} className={`card cursor-pointer ${testType === item.value && 'card-selected'}`} style={{ backgroundColor: 'white', padding: '0px 10px', width: 285 }} onClick={() => setTestType(item.value)}>
+      <div key={item.label} className={`card cursor-pointer ${projectType.includes(item.value) && 'card-selected'}`} style={{ backgroundColor: 'white', padding: '0px 10px', width: 285 }} onClick={() => { setProjectType(item.value) }}>
         <div className="card-body">
           <div className="flex flex-col items-center gap-2">
             <img src={item.icon} style={{ width: 58 }} />
             <span className="text-md font-bold text-center">{item.label}</span>
             <div className="opacity-80 text-xxs text-center">
               {item.description}
-            </div> 
+            </div>
             <ul className="list-disc">
               {item.items.map((question) => <li key={question} className="text-xxs" style={{ color: '#282828' }}>{question}</li>)}
             </ul>
+            {item.value.includes('marketing_communication') &&
+              <div className="mt-2">
+                <div className="text-sm mb-2">
+                  What type of marketing communication would you like to test?
+                </div>
+                <div>
+                  <input type="checkbox" style={{ verticalAlign: 'middle' }} className="toggle toggle-sm mr-2" checked={projectType === 'marketing_communication_language'} onChange={() => { setProjectType(item.value + '_language') }} />
+                  <span className="label-text">Copy</span>
+                </div>
+                <div>
+                  <input type="checkbox" style={{ verticalAlign: 'middle' }} className="toggle toggle-sm mr-2" checked={projectType === 'marketing_communication_visual'} onChange={() => { setProjectType(item.value + '_visual') }}/>
+                  <span className="label-text">Visual Design</span>
+                </div>
+              </div>
+
+            }
           </div>
         </div>
       </div>
     )
   }
   return (
-    <div style={{ color: '#282828', fontWeight: '500', opacity: 0.7 }}>
-      <div className="text-lg" style={pageStyle}>
+    <div>
+      <div className="text-lg">
         What type of test are you creating?
       </div>
       <div>
