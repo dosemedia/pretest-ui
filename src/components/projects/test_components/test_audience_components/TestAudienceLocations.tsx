@@ -8,9 +8,10 @@ import { SpinningLoading } from "../../../lib/SpinningLoading";
 import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql";
 import { ProjectFacebookAudienceGeolocation } from "../../../../stores/project_facebook_audience";
 
-const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: { onUpdate: (locations: object) => void, projectFacebookAudience: FacebookAudience }) => {
+const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience }) => {
   const facebookStore = useContext(FacebookContext)
   const [locationSearch, setLocationSearch] = useState('')
+  const [isUpdated, setIsUpdated] = useState(false)
   const [locations, setLocations] = useState<FacebookAudienceGeolocation[]>([])
   const [selectedLocation, setSelectedLocation] = useState<FacebookAudienceGeolocation | null>()
   const { data: projectFacebookAudienceData } = useQuery({
@@ -33,16 +34,18 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
       setLocations((prev) => [...prev, location])
     }
     setLocationSearch('')
+    setIsUpdated(true)
   }
 
   function updateLocations() {
     const formattedLocations = formatLocations()
-    onUpdate({ geo_locations: formattedLocations as ProjectFacebookAudienceGeolocation })
+    onUpdate({ geo_locations: formattedLocations as ProjectFacebookAudienceGeolocation } as FacebookAudience, isUpdated)
   }
 
   function removeLocation(value: FacebookAudienceGeolocation) {
     const list = _.filter(locations, (item) => item.name !== value.name)
     setLocations(list)
+    setIsUpdated(true)
   }
 
   useEffect(() => {
@@ -50,6 +53,7 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
       facebookLocationsMutations.mutate('')
     }
   }, [locationSearch])
+
   useEffect(() => {
     if (projectFacebookAudienceData) {
       setLocations(projectFacebookAudienceData)

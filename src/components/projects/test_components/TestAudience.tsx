@@ -12,18 +12,18 @@ const TestAudience = observer(() => {
   const { data: facebookAudienceData, isLoading, refetch } = useQuery({
     queryKey: ['getProjectFacebookAudienceLocations'],
     retry: false,
-    queryFn: () => projectFacebookAudienceStore.getFacebookAudiencesByProjectID({ projectId })
+    queryFn: () => projectFacebookAudienceStore.getFacebookAudiencesByProjectID({ projectId, createIfDoesNotExist: true })
   })
   const projectFacebookAudienceMutation = useMutation({
     mutationKey: ['projectFacebookAudienceMutation'],
-    mutationFn: (payload: object) => projectFacebookAudienceStore.updateFacebookAudiencesByID({ id: facebookAudienceData![0].id, payload }),
+    mutationFn: ({ payload, audienceId }: { payload: FacebookAudience, audienceId: string }) => projectFacebookAudienceStore.updateFacebookAudiencesByID({ id: audienceId, payload }),
     onSuccess: () => refetch(),
-    onError: (error) => console.log(error)
+    onError: (error: Error) => console.log(error)
   })
-  function onUpdate(payload: object) {
-    console.log(payload)
-    if (facebookAudienceData && facebookAudienceData[0]) {
-      projectFacebookAudienceMutation.mutate(payload)
+  function onUpdate(payload: FacebookAudience, isUpdated: boolean) {
+    // Only update if there are updates
+    if (facebookAudienceData && facebookAudienceData[0].id && isUpdated) {
+      projectFacebookAudienceMutation.mutate({ payload, audienceId: facebookAudienceData[0].id })
     }
   }
   return (<>
