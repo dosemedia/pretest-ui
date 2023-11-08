@@ -6,7 +6,10 @@ import { ProjectFacebookAudienceContext } from "../../../stores/stores";
 import { useParams } from "react-router-dom";
 import { SpinningLoading } from "../../lib/SpinningLoading";
 import { Facebook_Audiences as FacebookAudience } from "../../../gql/graphql";
-const TestAudience = observer(() => {
+import TestAudienceGender from "./test_audience_components/TestAudienceGender";
+import _ from 'lodash'
+import TestAudienceAge from "./test_audience_components/TestAudienceAge";
+const TestAudience = observer(({ onSave }: { onSave: (payload: object) => void }) => {
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
   const { projectId } = useParams() as { projectId: string }
   const { data: facebookAudienceData, isLoading, refetch } = useQuery({
@@ -16,23 +19,30 @@ const TestAudience = observer(() => {
   })
   const projectFacebookAudienceMutation = useMutation({
     mutationKey: ['projectFacebookAudienceMutation'],
-    mutationFn: ({ payload, audienceId }: { payload: FacebookAudience, audienceId: string }) => projectFacebookAudienceStore.updateFacebookAudiencesByID({ id: audienceId, payload }),
+    mutationFn: ({ payload, audience }: { payload: FacebookAudience, audience: FacebookAudience}) => projectFacebookAudienceStore.updateFacebookAudiencesByID({ id: audience.id, payload: { ...audience, ...payload }}),
     onSuccess: () => refetch(),
     onError: (error: Error) => console.log(error)
   })
-  function onUpdate(payload: FacebookAudience, isUpdated: boolean) {
+  
+  const onUpdate = _.debounce((payload: FacebookAudience, isUpdated: boolean) => {
+    console.log(payload)
     // Only update if there are updates
-    if (facebookAudienceData && facebookAudienceData[0].id && isUpdated) {
-      projectFacebookAudienceMutation.mutate({ payload, audienceId: facebookAudienceData[0].id })
+    if (facebookAudienceData && facebookAudienceData[0] && isUpdated) {
+      projectFacebookAudienceMutation.mutate({ payload, audience: facebookAudienceData[0] })
+      onSave({})
     }
-  }
+  }, 1000)
   return (<>
     <div>
-      <div className="text-lg configuration-title mb-4">
+      <div className="text-lg configuration-title">
         Create your own audience
       </div>
       {isLoading && <SpinningLoading isLoading={isLoading} size="lg" />}
-      {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
+      <div className="flex flex-col gap-y-4">
+        {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
+        {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
+        {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
+      </div>
     </div>
   </>
   )

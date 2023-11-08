@@ -40,7 +40,6 @@ export class Projects {
   }
   async updateProject({ projectId, payload }: { projectId: string, payload: object }): Promise<Project | undefined> {
     const project: Project = payload as Project
-    console.log(project)
     const result = await client.mutation(graphql(`
       mutation UpdateProject($projectId: uuid!, $name: String, $objective: String, $branding: String, $platform: String, $projectType: String, $startTime: timestamptz, $stopTime: timestamptz) {
         update_projects_by_pk(pk_columns: {id: $projectId}, _set: {name: $name, objective: $objective, branding: $branding, platform: $platform, project_type: $projectType, start_time: $startTime, stop_time: $stopTime}) {

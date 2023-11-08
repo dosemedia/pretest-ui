@@ -98,7 +98,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           {step === 1 && <TestObjective project={project} onSave={onSave} />}
           {step === 2 && <TestBranding project={project} onSave={onSave} />}
           {step === 3 && <TestPlatform project={project} onSave={onSave} />}
-          {step === 4 && <TestAudience />}
+          {step === 4 && <TestAudience onSave={onSave} />}
           {step === 5 && <TestRuntime project={project} onSave={onSave} />}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setStep((prev) => prev -= 1)}>

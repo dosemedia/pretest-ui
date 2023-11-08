@@ -47,7 +47,7 @@ a.active {
 }
 
 .input,
-.textarea {
+.textarea, .number {
   border-radius: 10px;
   opacity: 0.9;
   background: #FFF;
