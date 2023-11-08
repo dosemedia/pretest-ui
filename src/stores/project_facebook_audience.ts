@@ -14,17 +14,19 @@ export class ProjectFacebookAudience {
   async updateFacebookAudiencesByID({ id, payload }: { id: string, payload: object }): Promise<FacebookAudience> {
     const facebookAudienceData = payload as FacebookAudience
     const result = await client.mutation(graphql(`
-      mutation UpdateFacebookAudiencesByProjectID($geo_locations: jsonb!, $genders: [Int!], $id: uuid!, $min_age: numeric, $max_age: numeric) {
-        update_facebook_audiences_by_pk(pk_columns: {id: $id}, _set: {geo_locations: $geo_locations, genders: $genders, min_age: $min_age, max_age: $max_age}) {
+      mutation UpdateFacebookAudiencesByProjectID($geo_locations: jsonb!, $genders: [Int!], $id: uuid!, $min_age: numeric, $max_age: numeric, $device_platforms: [String!], $facebook_positions: [String!]) {
+        update_facebook_audiences_by_pk(pk_columns: {id: $id}, _set: {geo_locations: $geo_locations, genders: $genders, min_age: $min_age, max_age: $max_age, device_platforms: $device_platforms, facebook_positions: $facebook_positions}) {
           id
           geo_locations
           genders
+          device_platforms
+          facebook_positions
           min_age
           max_age
           updated_at
         }
       }
-    `), { geo_locations: facebookAudienceData.geo_locations, id, genders: facebookAudienceData.genders, min_age: facebookAudienceData.min_age, max_age: facebookAudienceData.max_age })
+    `), { geo_locations: facebookAudienceData.geo_locations, id, genders: facebookAudienceData.genders, min_age: facebookAudienceData.min_age, max_age: facebookAudienceData.max_age, device_platforms: facebookAudienceData.device_platforms, facebook_positions: facebookAudienceData.facebook_positions })
     if (result.error) {
       throw result.error
     }
@@ -41,6 +43,8 @@ export class ProjectFacebookAudience {
         insert_facebook_audiences_one(object: {name: $name, geo_locations: $geo_locations, project_id: $projectId}) {
           id
           geo_locations
+          device_platforms
+          facebook_positions
           genders
           updated_at
         }
@@ -58,6 +62,8 @@ export class ProjectFacebookAudience {
         facebook_audiences(where: {project_id: {_eq: $projectId}}) {
           id
           geo_locations
+          device_platforms
+          facebook_positions
           genders
           min_age
           max_age
