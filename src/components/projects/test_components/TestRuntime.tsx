@@ -48,7 +48,7 @@ const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (
   return (
     <>
       <div>
-        <div className="text-lg mb-4">
+        <div className="text-lg configuration-title mb-4">
           Set your test duration
         </div>
         <div>

@@ -1,0 +1,29 @@
+.project-menu-item {
+  border-left: 4px solid rgba(184, 173, 134, 0.17);
+}
+
+.project-menu-item a {
+  border-radius: 0 4px 4px 0;
+}
+
+.project-menu-item a:hover {
+  background: rgba(184, 173, 134, 0.17);
+}
+
+.project-menu-item.active a {
+  background: rgba(184, 173, 134, 0.17);
+}
+
+.project-menu-item.active {
+  border-left-width: 6px;
+  border-image: linear-gradient(351deg, #AB2160 -4.8%, #EF4136 94.68%) 1 100%;
+}
+
+.configuration-title {
+  color: #030102;
+  font-weight: 700;
+}
+
+.card-selected {
+  background-color: #F8D8D6 !important;
+}

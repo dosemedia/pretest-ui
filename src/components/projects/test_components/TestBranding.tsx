@@ -47,7 +47,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
   return (
     <>
       <div>
-        <div className="text-lg mb-4">
+        <div className="text-lg configuration-title mb-4">
           Are you looking for an unbranded or branded test?
         </div>
         <div className="flex flex-wrap gap-y-10 gap-x-10">

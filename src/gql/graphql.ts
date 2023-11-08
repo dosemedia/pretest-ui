@@ -14,6 +14,9 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  json: { input: any; output: any; }
+  jsonb: { input: any; output: any; }
+  numeric: { input: any; output: any; }
   timestamptz: { input: any; output: any; }
   uuid: { input: any; output: any; }
 };
@@ -29,6 +32,23 @@ export type Boolean_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['Boolean']['input']>;
   _neq?: InputMaybe<Scalars['Boolean']['input']>;
   _nin?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+};
+
+/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
+export type Int_Array_Comparison_Exp = {
+  /** is the array contained in the given array value */
+  _contained_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  /** does the array contain the given value */
+  _contains?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _eq?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _gt?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _gte?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _in?: InputMaybe<Array<Array<Scalars['Int']['input']>>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _lte?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _neq?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _nin?: InputMaybe<Array<Array<Scalars['Int']['input']>>>;
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
@@ -61,6 +81,23 @@ export type RegisterOutput = {
   __typename?: 'RegisterOutput';
   id: Scalars['String']['output'];
   token: Scalars['String']['output'];
+};
+
+/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+export type String_Array_Comparison_Exp = {
+  /** is the array contained in the given array value */
+  _contained_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** does the array contain the given value */
+  _contains?: InputMaybe<Array<Scalars['String']['input']>>;
+  _eq?: InputMaybe<Array<Scalars['String']['input']>>;
+  _gt?: InputMaybe<Array<Scalars['String']['input']>>;
+  _gte?: InputMaybe<Array<Scalars['String']['input']>>;
+  _in?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Array<Scalars['String']['input']>>;
+  _lte?: InputMaybe<Array<Scalars['String']['input']>>;
+  _neq?: InputMaybe<Array<Scalars['String']['input']>>;
+  _nin?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -303,6 +340,397 @@ export enum Cursor_Ordering {
   Desc = 'DESC'
 }
 
+/** columns and relationships of "facebook_audiences" */
+export type Facebook_Audiences = {
+  __typename?: 'facebook_audiences';
+  created_at: Scalars['timestamptz']['output'];
+  device_platforms: Array<Scalars['String']['output']>;
+  facebook_positions: Array<Scalars['String']['output']>;
+  genders?: Maybe<Array<Scalars['Int']['output']>>;
+  geo_locations: Scalars['jsonb']['output'];
+  id: Scalars['uuid']['output'];
+  interests?: Maybe<Scalars['jsonb']['output']>;
+  max_age?: Maybe<Scalars['numeric']['output']>;
+  min_age?: Maybe<Scalars['numeric']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  project_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  projects_facebook_audiences: Projects;
+  publisher_platforms: Array<Scalars['String']['output']>;
+  updated_at: Scalars['timestamptz']['output'];
+};
+
+
+/** columns and relationships of "facebook_audiences" */
+export type Facebook_AudiencesGeo_LocationsArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** columns and relationships of "facebook_audiences" */
+export type Facebook_AudiencesInterestsArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregated selection of "facebook_audiences" */
+export type Facebook_Audiences_Aggregate = {
+  __typename?: 'facebook_audiences_aggregate';
+  aggregate?: Maybe<Facebook_Audiences_Aggregate_Fields>;
+  nodes: Array<Facebook_Audiences>;
+};
+
+/** aggregate fields of "facebook_audiences" */
+export type Facebook_Audiences_Aggregate_Fields = {
+  __typename?: 'facebook_audiences_aggregate_fields';
+  avg?: Maybe<Facebook_Audiences_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Facebook_Audiences_Max_Fields>;
+  min?: Maybe<Facebook_Audiences_Min_Fields>;
+  stddev?: Maybe<Facebook_Audiences_Stddev_Fields>;
+  stddev_pop?: Maybe<Facebook_Audiences_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Facebook_Audiences_Stddev_Samp_Fields>;
+  sum?: Maybe<Facebook_Audiences_Sum_Fields>;
+  var_pop?: Maybe<Facebook_Audiences_Var_Pop_Fields>;
+  var_samp?: Maybe<Facebook_Audiences_Var_Samp_Fields>;
+  variance?: Maybe<Facebook_Audiences_Variance_Fields>;
+};
+
+
+/** aggregate fields of "facebook_audiences" */
+export type Facebook_Audiences_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Facebook_Audiences_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Facebook_Audiences_Append_Input = {
+  geo_locations?: InputMaybe<Scalars['jsonb']['input']>;
+  interests?: InputMaybe<Scalars['jsonb']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Facebook_Audiences_Avg_Fields = {
+  __typename?: 'facebook_audiences_avg_fields';
+  max_age?: Maybe<Scalars['Float']['output']>;
+  min_age?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "facebook_audiences". All fields are combined with a logical 'AND'. */
+export type Facebook_Audiences_Bool_Exp = {
+  _and?: InputMaybe<Array<Facebook_Audiences_Bool_Exp>>;
+  _not?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+  _or?: InputMaybe<Array<Facebook_Audiences_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  device_platforms?: InputMaybe<String_Array_Comparison_Exp>;
+  facebook_positions?: InputMaybe<String_Array_Comparison_Exp>;
+  genders?: InputMaybe<Int_Array_Comparison_Exp>;
+  geo_locations?: InputMaybe<Jsonb_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  interests?: InputMaybe<Jsonb_Comparison_Exp>;
+  max_age?: InputMaybe<Numeric_Comparison_Exp>;
+  min_age?: InputMaybe<Numeric_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  project_id?: InputMaybe<Uuid_Comparison_Exp>;
+  projects_facebook_audiences?: InputMaybe<Projects_Bool_Exp>;
+  publisher_platforms?: InputMaybe<String_Array_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "facebook_audiences" */
+export enum Facebook_Audiences_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  FacebookAudiencesPkey = 'facebook_audiences_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Facebook_Audiences_Delete_At_Path_Input = {
+  geo_locations?: InputMaybe<Array<Scalars['String']['input']>>;
+  interests?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Facebook_Audiences_Delete_Elem_Input = {
+  geo_locations?: InputMaybe<Scalars['Int']['input']>;
+  interests?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Facebook_Audiences_Delete_Key_Input = {
+  geo_locations?: InputMaybe<Scalars['String']['input']>;
+  interests?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** input type for incrementing numeric columns in table "facebook_audiences" */
+export type Facebook_Audiences_Inc_Input = {
+  max_age?: InputMaybe<Scalars['numeric']['input']>;
+  min_age?: InputMaybe<Scalars['numeric']['input']>;
+};
+
+/** input type for inserting data into table "facebook_audiences" */
+export type Facebook_Audiences_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  device_platforms?: InputMaybe<Array<Scalars['String']['input']>>;
+  facebook_positions?: InputMaybe<Array<Scalars['String']['input']>>;
+  genders?: InputMaybe<Array<Scalars['Int']['input']>>;
+  geo_locations?: InputMaybe<Scalars['jsonb']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  interests?: InputMaybe<Scalars['jsonb']['input']>;
+  max_age?: InputMaybe<Scalars['numeric']['input']>;
+  min_age?: InputMaybe<Scalars['numeric']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  projects_facebook_audiences?: InputMaybe<Projects_Obj_Rel_Insert_Input>;
+  publisher_platforms?: InputMaybe<Array<Scalars['String']['input']>>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Facebook_Audiences_Max_Fields = {
+  __typename?: 'facebook_audiences_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  device_platforms?: Maybe<Array<Scalars['String']['output']>>;
+  facebook_positions?: Maybe<Array<Scalars['String']['output']>>;
+  genders?: Maybe<Array<Scalars['Int']['output']>>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  max_age?: Maybe<Scalars['numeric']['output']>;
+  min_age?: Maybe<Scalars['numeric']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  project_id?: Maybe<Scalars['uuid']['output']>;
+  publisher_platforms?: Maybe<Array<Scalars['String']['output']>>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Facebook_Audiences_Min_Fields = {
+  __typename?: 'facebook_audiences_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  device_platforms?: Maybe<Array<Scalars['String']['output']>>;
+  facebook_positions?: Maybe<Array<Scalars['String']['output']>>;
+  genders?: Maybe<Array<Scalars['Int']['output']>>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  max_age?: Maybe<Scalars['numeric']['output']>;
+  min_age?: Maybe<Scalars['numeric']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  project_id?: Maybe<Scalars['uuid']['output']>;
+  publisher_platforms?: Maybe<Array<Scalars['String']['output']>>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** response of any mutation on the table "facebook_audiences" */
+export type Facebook_Audiences_Mutation_Response = {
+  __typename?: 'facebook_audiences_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Facebook_Audiences>;
+};
+
+/** on_conflict condition type for table "facebook_audiences" */
+export type Facebook_Audiences_On_Conflict = {
+  constraint: Facebook_Audiences_Constraint;
+  update_columns?: Array<Facebook_Audiences_Update_Column>;
+  where?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "facebook_audiences". */
+export type Facebook_Audiences_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  device_platforms?: InputMaybe<Order_By>;
+  facebook_positions?: InputMaybe<Order_By>;
+  genders?: InputMaybe<Order_By>;
+  geo_locations?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  interests?: InputMaybe<Order_By>;
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  projects_facebook_audiences?: InputMaybe<Projects_Order_By>;
+  publisher_platforms?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: facebook_audiences */
+export type Facebook_Audiences_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Facebook_Audiences_Prepend_Input = {
+  geo_locations?: InputMaybe<Scalars['jsonb']['input']>;
+  interests?: InputMaybe<Scalars['jsonb']['input']>;
+};
+
+/** select columns of table "facebook_audiences" */
+export enum Facebook_Audiences_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  DevicePlatforms = 'device_platforms',
+  /** column name */
+  FacebookPositions = 'facebook_positions',
+  /** column name */
+  Genders = 'genders',
+  /** column name */
+  GeoLocations = 'geo_locations',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Interests = 'interests',
+  /** column name */
+  MaxAge = 'max_age',
+  /** column name */
+  MinAge = 'min_age',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  PublisherPlatforms = 'publisher_platforms',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "facebook_audiences" */
+export type Facebook_Audiences_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  device_platforms?: InputMaybe<Array<Scalars['String']['input']>>;
+  facebook_positions?: InputMaybe<Array<Scalars['String']['input']>>;
+  genders?: InputMaybe<Array<Scalars['Int']['input']>>;
+  geo_locations?: InputMaybe<Scalars['jsonb']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  interests?: InputMaybe<Scalars['jsonb']['input']>;
+  max_age?: InputMaybe<Scalars['numeric']['input']>;
+  min_age?: InputMaybe<Scalars['numeric']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  publisher_platforms?: InputMaybe<Array<Scalars['String']['input']>>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Facebook_Audiences_Stddev_Fields = {
+  __typename?: 'facebook_audiences_stddev_fields';
+  max_age?: Maybe<Scalars['Float']['output']>;
+  min_age?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Facebook_Audiences_Stddev_Pop_Fields = {
+  __typename?: 'facebook_audiences_stddev_pop_fields';
+  max_age?: Maybe<Scalars['Float']['output']>;
+  min_age?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Facebook_Audiences_Stddev_Samp_Fields = {
+  __typename?: 'facebook_audiences_stddev_samp_fields';
+  max_age?: Maybe<Scalars['Float']['output']>;
+  min_age?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "facebook_audiences" */
+export type Facebook_Audiences_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Facebook_Audiences_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Facebook_Audiences_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  device_platforms?: InputMaybe<Array<Scalars['String']['input']>>;
+  facebook_positions?: InputMaybe<Array<Scalars['String']['input']>>;
+  genders?: InputMaybe<Array<Scalars['Int']['input']>>;
+  geo_locations?: InputMaybe<Scalars['jsonb']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  interests?: InputMaybe<Scalars['jsonb']['input']>;
+  max_age?: InputMaybe<Scalars['numeric']['input']>;
+  min_age?: InputMaybe<Scalars['numeric']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  publisher_platforms?: InputMaybe<Array<Scalars['String']['input']>>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Facebook_Audiences_Sum_Fields = {
+  __typename?: 'facebook_audiences_sum_fields';
+  max_age?: Maybe<Scalars['numeric']['output']>;
+  min_age?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** update columns of table "facebook_audiences" */
+export enum Facebook_Audiences_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  DevicePlatforms = 'device_platforms',
+  /** column name */
+  FacebookPositions = 'facebook_positions',
+  /** column name */
+  Genders = 'genders',
+  /** column name */
+  GeoLocations = 'geo_locations',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Interests = 'interests',
+  /** column name */
+  MaxAge = 'max_age',
+  /** column name */
+  MinAge = 'min_age',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  PublisherPlatforms = 'publisher_platforms',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Facebook_Audiences_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<Facebook_Audiences_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<Facebook_Audiences_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<Facebook_Audiences_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<Facebook_Audiences_Delete_Key_Input>;
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Facebook_Audiences_Inc_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<Facebook_Audiences_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Facebook_Audiences_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Facebook_Audiences_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Facebook_Audiences_Var_Pop_Fields = {
+  __typename?: 'facebook_audiences_var_pop_fields';
+  max_age?: Maybe<Scalars['Float']['output']>;
+  min_age?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Facebook_Audiences_Var_Samp_Fields = {
+  __typename?: 'facebook_audiences_var_samp_fields';
+  max_age?: Maybe<Scalars['Float']['output']>;
+  min_age?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Facebook_Audiences_Variance_Fields = {
+  __typename?: 'facebook_audiences_variance_fields';
+  max_age?: Maybe<Scalars['Float']['output']>;
+  min_age?: Maybe<Scalars['Float']['output']>;
+};
+
 /** Invitations from teams to users */
 export type Invitations = {
   __typename?: 'invitations';
@@ -494,6 +922,34 @@ export type Invitations_Updates = {
   where: Invitations_Bool_Exp;
 };
 
+export type Jsonb_Cast_Exp = {
+  String?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
+export type Jsonb_Comparison_Exp = {
+  _cast?: InputMaybe<Jsonb_Cast_Exp>;
+  /** is the column contained in the given json value */
+  _contained_in?: InputMaybe<Scalars['jsonb']['input']>;
+  /** does the column contain the given json value at the top level */
+  _contains?: InputMaybe<Scalars['jsonb']['input']>;
+  _eq?: InputMaybe<Scalars['jsonb']['input']>;
+  _gt?: InputMaybe<Scalars['jsonb']['input']>;
+  _gte?: InputMaybe<Scalars['jsonb']['input']>;
+  /** does the string exist as a top-level key in the column */
+  _has_key?: InputMaybe<Scalars['String']['input']>;
+  /** do all of these strings exist as top-level keys in the column */
+  _has_keys_all?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** do any of these strings exist as top-level keys in the column */
+  _has_keys_any?: InputMaybe<Array<Scalars['String']['input']>>;
+  _in?: InputMaybe<Array<Scalars['jsonb']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['jsonb']['input']>;
+  _lte?: InputMaybe<Scalars['jsonb']['input']>;
+  _neq?: InputMaybe<Scalars['jsonb']['input']>;
+  _nin?: InputMaybe<Array<Scalars['jsonb']['input']>>;
+};
+
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
@@ -506,6 +962,10 @@ export type Mutation_Root = {
   delete_contact_form_submissions?: Maybe<Contact_Form_Submissions_Mutation_Response>;
   /** delete single row from the table: "contact_form_submissions" */
   delete_contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
+  /** delete data from the table: "facebook_audiences" */
+  delete_facebook_audiences?: Maybe<Facebook_Audiences_Mutation_Response>;
+  /** delete single row from the table: "facebook_audiences" */
+  delete_facebook_audiences_by_pk?: Maybe<Facebook_Audiences>;
   /** delete data from the table: "invitations" */
   delete_invitations?: Maybe<Invitations_Mutation_Response>;
   /** delete single row from the table: "invitations" */
@@ -535,10 +995,15 @@ export type Mutation_Root = {
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
   destroyUser: Scalars['Boolean']['output'];
+  facebookAPIGet: Scalars['json']['output'];
   /** insert data into the table: "contact_form_submissions" */
   insert_contact_form_submissions?: Maybe<Contact_Form_Submissions_Mutation_Response>;
   /** insert a single row into the table: "contact_form_submissions" */
   insert_contact_form_submissions_one?: Maybe<Contact_Form_Submissions>;
+  /** insert data into the table: "facebook_audiences" */
+  insert_facebook_audiences?: Maybe<Facebook_Audiences_Mutation_Response>;
+  /** insert a single row into the table: "facebook_audiences" */
+  insert_facebook_audiences_one?: Maybe<Facebook_Audiences>;
   /** insert data into the table: "invitations" */
   insert_invitations?: Maybe<Invitations_Mutation_Response>;
   /** insert a single row into the table: "invitations" */
@@ -582,6 +1047,12 @@ export type Mutation_Root = {
   update_contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
   /** update multiples rows of table: "contact_form_submissions" */
   update_contact_form_submissions_many?: Maybe<Array<Maybe<Contact_Form_Submissions_Mutation_Response>>>;
+  /** update data of the table: "facebook_audiences" */
+  update_facebook_audiences?: Maybe<Facebook_Audiences_Mutation_Response>;
+  /** update single row of the table: "facebook_audiences" */
+  update_facebook_audiences_by_pk?: Maybe<Facebook_Audiences>;
+  /** update multiples rows of table: "facebook_audiences" */
+  update_facebook_audiences_many?: Maybe<Array<Maybe<Facebook_Audiences_Mutation_Response>>>;
   /** update data of the table: "invitations" */
   update_invitations?: Maybe<Invitations_Mutation_Response>;
   /** update single row of the table: "invitations" */
@@ -663,6 +1134,18 @@ export type Mutation_RootDelete_Contact_Form_SubmissionsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Contact_Form_Submissions_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Facebook_AudiencesArgs = {
+  where: Facebook_Audiences_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Facebook_Audiences_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -761,6 +1244,12 @@ export type Mutation_RootDestroyUserArgs = {
 
 
 /** mutation root */
+export type Mutation_RootFacebookApiGetArgs = {
+  url: Scalars['String']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Contact_Form_SubmissionsArgs = {
   objects: Array<Contact_Form_Submissions_Insert_Input>;
   on_conflict?: InputMaybe<Contact_Form_Submissions_On_Conflict>;
@@ -771,6 +1260,20 @@ export type Mutation_RootInsert_Contact_Form_SubmissionsArgs = {
 export type Mutation_RootInsert_Contact_Form_Submissions_OneArgs = {
   object: Contact_Form_Submissions_Insert_Input;
   on_conflict?: InputMaybe<Contact_Form_Submissions_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Facebook_AudiencesArgs = {
+  objects: Array<Facebook_Audiences_Insert_Input>;
+  on_conflict?: InputMaybe<Facebook_Audiences_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Facebook_Audiences_OneArgs = {
+  object: Facebook_Audiences_Insert_Input;
+  on_conflict?: InputMaybe<Facebook_Audiences_On_Conflict>;
 };
 
 
@@ -933,6 +1436,38 @@ export type Mutation_RootUpdate_Contact_Form_Submissions_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Facebook_AudiencesArgs = {
+  _append?: InputMaybe<Facebook_Audiences_Append_Input>;
+  _delete_at_path?: InputMaybe<Facebook_Audiences_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Facebook_Audiences_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Facebook_Audiences_Delete_Key_Input>;
+  _inc?: InputMaybe<Facebook_Audiences_Inc_Input>;
+  _prepend?: InputMaybe<Facebook_Audiences_Prepend_Input>;
+  _set?: InputMaybe<Facebook_Audiences_Set_Input>;
+  where: Facebook_Audiences_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Facebook_Audiences_By_PkArgs = {
+  _append?: InputMaybe<Facebook_Audiences_Append_Input>;
+  _delete_at_path?: InputMaybe<Facebook_Audiences_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Facebook_Audiences_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Facebook_Audiences_Delete_Key_Input>;
+  _inc?: InputMaybe<Facebook_Audiences_Inc_Input>;
+  _prepend?: InputMaybe<Facebook_Audiences_Prepend_Input>;
+  _set?: InputMaybe<Facebook_Audiences_Set_Input>;
+  pk_columns: Facebook_Audiences_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Facebook_Audiences_ManyArgs = {
+  updates: Array<Facebook_Audiences_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_InvitationsArgs = {
   _set?: InputMaybe<Invitations_Set_Input>;
   where: Invitations_Bool_Exp;
@@ -1075,6 +1610,19 @@ export type Mutation_RootUpdate_Users_ManyArgs = {
 /** mutation root */
 export type Mutation_RootVerifyEmailArgs = {
   code: Scalars['String']['input'];
+};
+
+/** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
+export type Numeric_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['numeric']['input']>;
+  _gt?: InputMaybe<Scalars['numeric']['input']>;
+  _gte?: InputMaybe<Scalars['numeric']['input']>;
+  _in?: InputMaybe<Array<Scalars['numeric']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['numeric']['input']>;
+  _lte?: InputMaybe<Scalars['numeric']['input']>;
+  _neq?: InputMaybe<Scalars['numeric']['input']>;
+  _nin?: InputMaybe<Array<Scalars['numeric']['input']>>;
 };
 
 /** column ordering options */
@@ -1376,6 +1924,12 @@ export type Query_Root = {
   contact_form_submissions_aggregate: Contact_Form_Submissions_Aggregate;
   /** fetch data from the table: "contact_form_submissions" using primary key columns */
   contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
+  /** fetch data from the table: "facebook_audiences" */
+  facebook_audiences: Array<Facebook_Audiences>;
+  /** fetch aggregated fields from the table: "facebook_audiences" */
+  facebook_audiences_aggregate: Facebook_Audiences_Aggregate;
+  /** fetch data from the table: "facebook_audiences" using primary key columns */
+  facebook_audiences_by_pk?: Maybe<Facebook_Audiences>;
   /** An array relationship */
   invitations: Array<Invitations>;
   /** An aggregate relationship */
@@ -1440,6 +1994,29 @@ export type Query_RootContact_Form_Submissions_AggregateArgs = {
 
 
 export type Query_RootContact_Form_Submissions_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootFacebook_AudiencesArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Audiences_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Audiences_Order_By>>;
+  where?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+};
+
+
+export type Query_RootFacebook_Audiences_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Audiences_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Audiences_Order_By>>;
+  where?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+};
+
+
+export type Query_RootFacebook_Audiences_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -1617,6 +2194,14 @@ export type Subscription_Root = {
   contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
   /** fetch data from the table in a streaming manner: "contact_form_submissions" */
   contact_form_submissions_stream: Array<Contact_Form_Submissions>;
+  /** fetch data from the table: "facebook_audiences" */
+  facebook_audiences: Array<Facebook_Audiences>;
+  /** fetch aggregated fields from the table: "facebook_audiences" */
+  facebook_audiences_aggregate: Facebook_Audiences_Aggregate;
+  /** fetch data from the table: "facebook_audiences" using primary key columns */
+  facebook_audiences_by_pk?: Maybe<Facebook_Audiences>;
+  /** fetch data from the table in a streaming manner: "facebook_audiences" */
+  facebook_audiences_stream: Array<Facebook_Audiences>;
   /** An array relationship */
   invitations: Array<Invitations>;
   /** An aggregate relationship */
@@ -1703,6 +2288,36 @@ export type Subscription_RootContact_Form_Submissions_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Contact_Form_Submissions_Stream_Cursor_Input>>;
   where?: InputMaybe<Contact_Form_Submissions_Bool_Exp>;
+};
+
+
+export type Subscription_RootFacebook_AudiencesArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Audiences_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Audiences_Order_By>>;
+  where?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+};
+
+
+export type Subscription_RootFacebook_Audiences_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Audiences_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Audiences_Order_By>>;
+  where?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+};
+
+
+export type Subscription_RootFacebook_Audiences_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootFacebook_Audiences_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Facebook_Audiences_Stream_Cursor_Input>>;
+  where?: InputMaybe<Facebook_Audiences_Bool_Exp>;
 };
 
 
@@ -3081,6 +3696,28 @@ export type SubmitContactFormMutationVariables = Exact<{
 
 export type SubmitContactFormMutation = { __typename?: 'mutation_root', insert_contact_form_submissions?: { __typename?: 'contact_form_submissions_mutation_response', affected_rows: number } | null };
 
+export type FacebookApiGetMutationVariables = Exact<{
+  url: Scalars['String']['input'];
+}>;
+
+
+export type FacebookApiGetMutation = { __typename?: 'mutation_root', facebookAPIGet: any };
+
+export type UpdateFacebookAudiencesByProjectIdMutationVariables = Exact<{
+  geo_locations: Scalars['jsonb']['input'];
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type UpdateFacebookAudiencesByProjectIdMutation = { __typename?: 'mutation_root', update_facebook_audiences_by_pk?: { __typename?: 'facebook_audiences', geo_locations: any, id: any } | null };
+
+export type GetFacebookAudiencesByProjectIdQueryVariables = Exact<{
+  projectId: Scalars['uuid']['input'];
+}>;
+
+
+export type GetFacebookAudiencesByProjectIdQuery = { __typename?: 'query_root', facebook_audiences: Array<{ __typename?: 'facebook_audiences', geo_locations: any, id: any }> };
+
 export type CreateProjectMutationVariables = Exact<{
   name: Scalars['String']['input'];
   team_id: Scalars['uuid']['input'];
@@ -3185,6 +3822,9 @@ export const SendPasswordResetEmailDocument = {"kind":"Document","definitions":[
 export const VerifyEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}}]}]}}]} as unknown as DocumentNode<VerifyEmailMutation, VerifyEmailMutationVariables>;
 export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"newPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}}}]}]}}]} as unknown as DocumentNode<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const SubmitContactFormDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SubmitContactForm"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"message"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_contact_form_submissions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"message"},"value":{"kind":"Variable","name":{"kind":"Name","value":"message"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<SubmitContactFormMutation, SubmitContactFormMutationVariables>;
+export const FacebookApiGetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FacebookAPIGet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"url"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebookAPIGet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"url"},"value":{"kind":"Variable","name":{"kind":"Name","value":"url"}}}]}]}}]} as unknown as DocumentNode<FacebookApiGetMutation, FacebookApiGetMutationVariables>;
+export const UpdateFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"jsonb"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_facebook_audiences_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"geo_locations"},"value":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateFacebookAudiencesByProjectIdMutation, UpdateFacebookAudiencesByProjectIdMutationVariables>;
+export const GetFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_audiences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetFacebookAudiencesByProjectIdQuery, GetFacebookAudiencesByProjectIdQueryVariables>;
 export const CreateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"team_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"team_id"}}]}}]}}]} as unknown as DocumentNode<CreateProjectMutation, CreateProjectMutationVariables>;
 export const DeleteProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteProjectMutation, DeleteProjectMutationVariables>;
 export const UpdateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"objective"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"branding"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"platform"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectType"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startTime"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"stopTime"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"objective"},"value":{"kind":"Variable","name":{"kind":"Name","value":"objective"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"branding"},"value":{"kind":"Variable","name":{"kind":"Name","value":"branding"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"platform"},"value":{"kind":"Variable","name":{"kind":"Name","value":"platform"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"project_type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectType"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_time"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startTime"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"stop_time"},"value":{"kind":"Variable","name":{"kind":"Name","value":"stopTime"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"is_draft"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}}]}}]}}]} as unknown as DocumentNode<UpdateProjectMutation, UpdateProjectMutationVariables>;

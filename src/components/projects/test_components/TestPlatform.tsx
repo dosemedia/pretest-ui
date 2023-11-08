@@ -3,9 +3,6 @@ import { Projects as Project } from "../../../gql/graphql";
 import { useEffect, useState } from "react";
 const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
   const [platform, setPlatform] = useState(project.platform || '')
-  const pageStyle = {
-    fontWeight: '500'
-  }
   interface Platform {
     label: string,
     value: string,
@@ -54,7 +51,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
   return (
     <>
       <div>
-        <div className="text-lg mb-4" style={pageStyle}>
+        <div className="text-lg mb-4 configuration-title">
           Where would you like to test?
         </div>
         <div className="flex flex-wrap gap-y-10 gap-x-10">

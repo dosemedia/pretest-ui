@@ -10,6 +10,7 @@ import TestBranding from "./test_components/TestBranding";
 import TestPlatform from "./test_components/TestPlatform";
 import TestRuntime from "./test_components/TestRuntime";
 import TestAudience from "./test_components/TestAudience";
+import '../../css/draft_project.css'
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams] = useSearchParams();

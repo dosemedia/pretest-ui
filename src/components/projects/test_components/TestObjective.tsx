@@ -100,7 +100,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
   }
   return (
     <div>
-      <div className="text-lg">
+      <div className="text-lg configuration-title">
         What type of test are you creating?
       </div>
       <div>

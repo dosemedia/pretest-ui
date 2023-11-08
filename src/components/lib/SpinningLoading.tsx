@@ -1,7 +1,7 @@
-export const SpinningLoading: React.FC<{ isLoading: boolean }> = ({ isLoading = false }) => {
+export const SpinningLoading: React.FC<{ isLoading: boolean, size?: string }> = ({ isLoading = false, size='xs' }) => {
   return (
     <>
-      { isLoading && <span className="loading loading-xs"></span> }
+      { isLoading && <span className={`loading loading-${size}`}></span> }
     </>
   )
 }

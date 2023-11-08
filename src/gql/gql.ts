@@ -24,6 +24,9 @@ const documents = {
     "\n    mutation VerifyEmail($code: String!) {\n      verifyEmail(code: $code)\n    }": types.VerifyEmailDocument,
     "\n    mutation ResetPassword($code: String!, $email: String!, $newPassword: String!) {\n      resetPassword(code: $code, email: $email, newPassword: $newPassword)\n    }": types.ResetPasswordDocument,
     "\n    mutation SubmitContactForm($name: String!, $email: String!, $message: String!) {\n      insert_contact_form_submissions(objects: {email: $email, message: $message, name: $name}) {\n        affected_rows\n      }\n    }\n    ": types.SubmitContactFormDocument,
+    "\n    mutation FacebookAPIGet($url: String!) {\n      facebookAPIGet(url: $url)\n    }\n    ": types.FacebookApiGetDocument,
+    "\n      mutation UpdateFacebookAudiencesByProjectID($geo_locations: jsonb!, $id: uuid!) {\n        update_facebook_audiences_by_pk(pk_columns: {id: $id}, _set: {geo_locations: $geo_locations}) {\n          geo_locations\n          id\n        }\n      }\n    ": types.UpdateFacebookAudiencesByProjectIdDocument,
+    "\n      query GetFacebookAudiencesByProjectID($projectId: uuid!) {\n        facebook_audiences(where: {project_id: {_eq: $projectId}}) {\n          geo_locations\n          id\n        }\n      }\n    ": types.GetFacebookAudiencesByProjectIdDocument,
     "\n    mutation CreateProject($name: String!, $team_id: uuid!) {\n      createProject(team_id: $team_id, name: $name) {\n        id\n        name\n        team_id\n      }\n    }\n    ": types.CreateProjectDocument,
     "\n    mutation DeleteProject($id: uuid!) {\n      delete_projects_by_pk(id: $id) {\n        id\n      }\n    }\n    ": types.DeleteProjectDocument,
     "\n      mutation UpdateProject($projectId: uuid!, $name: String, $objective: String, $branding: String, $platform: String, $projectType: String, $startTime: timestamptz, $stopTime: timestamptz) {\n        update_projects_by_pk(pk_columns: {id: $projectId}, _set: {name: $name, objective: $objective, branding: $branding, platform: $platform, project_type: $projectType, start_time: $startTime, stop_time: $stopTime}) {\n          name\n          objective\n          branding\n          platform\n          project_type\n          is_draft\n          updated_at\n          start_time\n          stop_time\n        }\n      }\n      ": types.UpdateProjectDocument,
@@ -96,6 +99,18 @@ export function graphql(source: "\n    mutation ResetPassword($code: String!, $e
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    mutation SubmitContactForm($name: String!, $email: String!, $message: String!) {\n      insert_contact_form_submissions(objects: {email: $email, message: $message, name: $name}) {\n        affected_rows\n      }\n    }\n    "): (typeof documents)["\n    mutation SubmitContactForm($name: String!, $email: String!, $message: String!) {\n      insert_contact_form_submissions(objects: {email: $email, message: $message, name: $name}) {\n        affected_rows\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation FacebookAPIGet($url: String!) {\n      facebookAPIGet(url: $url)\n    }\n    "): (typeof documents)["\n    mutation FacebookAPIGet($url: String!) {\n      facebookAPIGet(url: $url)\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      mutation UpdateFacebookAudiencesByProjectID($geo_locations: jsonb!, $id: uuid!) {\n        update_facebook_audiences_by_pk(pk_columns: {id: $id}, _set: {geo_locations: $geo_locations}) {\n          geo_locations\n          id\n        }\n      }\n    "): (typeof documents)["\n      mutation UpdateFacebookAudiencesByProjectID($geo_locations: jsonb!, $id: uuid!) {\n        update_facebook_audiences_by_pk(pk_columns: {id: $id}, _set: {geo_locations: $geo_locations}) {\n          geo_locations\n          id\n        }\n      }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      query GetFacebookAudiencesByProjectID($projectId: uuid!) {\n        facebook_audiences(where: {project_id: {_eq: $projectId}}) {\n          geo_locations\n          id\n        }\n      }\n    "): (typeof documents)["\n      query GetFacebookAudiencesByProjectID($projectId: uuid!) {\n        facebook_audiences(where: {project_id: {_eq: $projectId}}) {\n          geo_locations\n          id\n        }\n      }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
