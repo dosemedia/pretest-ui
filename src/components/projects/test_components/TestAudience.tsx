@@ -92,20 +92,22 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
             Create your own audience
           </div>
           {isLoading && <SpinningLoading isLoading={isLoading} size="lg" />}
-          <div className="flex flex-col gap-y-6 mt-4">
-            <div>
-              <label className="label">
-                <span className="text-sm opacity-60">Name*</span>
-              </label>
-              <input type="text" className="input w-10/12" placeholder="Name" value={audienceName} onChange={(e) => { setAudienceName(e.target.value); onUpdate({ name: e.target.value } as FacebookAudience, true) }} />
+          {!isLoading &&
+            <div className="flex flex-col gap-y-6 mt-4">
+              <div>
+                <label className="label">
+                  <span className="text-sm opacity-60">Name*</span>
+                </label>
+                <input type="text" className="input w-10/12" placeholder="Name" value={audienceName} onChange={(e) => { setAudienceName(e.target.value); onUpdate({ name: e.target.value } as FacebookAudience, true) }} />
+              </div>
+              {facebookAudienceData && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+              {facebookAudienceData && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+              {facebookAudienceData && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+              {facebookAudienceData && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+              {facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+              {facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
             </div>
-            {!isLoading && facebookAudienceData && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {!isLoading && facebookAudienceData && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {!isLoading && facebookAudienceData && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {!isLoading && facebookAudienceData && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {!isLoading && facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {!isLoading && facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-          </div>
+          }
           {isAudienceComplete && <div>
             <button className="btn mt-5 btn-info normal-case text-white" disabled={projectFacebookAudienceMutation.isLoading} onClick={() => getReachEstimateMutation.mutate()}>Click to get reach estimate<SpinningLoading isLoading={getReachEstimateMutation.isLoading} /></button>
           </div>
