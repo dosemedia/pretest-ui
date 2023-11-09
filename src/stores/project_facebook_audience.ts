@@ -15,9 +15,10 @@ export class ProjectFacebookAudience {
   async updateFacebookAudiencesByID({ id, payload }: { id: string, payload: object }): Promise<FacebookAudience> {
     const facebookAudienceData = payload as FacebookAudience
     const result = await client.mutation(graphql(`
-      mutation UpdateFacebookAudiencesByProjectID($geo_locations: jsonb!, $genders: [Int!], $id: uuid!, $min_age: numeric, $max_age: numeric, $device_platforms: [String!], $facebook_positions: [String!], $interests: jsonb!) {
-        update_facebook_audiences_by_pk(pk_columns: {id: $id}, _set: {geo_locations: $geo_locations, genders: $genders, min_age: $min_age, max_age: $max_age, device_platforms: $device_platforms, facebook_positions: $facebook_positions, interests: $interests}) {
+      mutation UpdateFacebookAudiencesByProjectID($geo_locations: jsonb!, $name: String, $genders: [Int!], $id: uuid!, $min_age: numeric, $max_age: numeric, $device_platforms: [String!], $facebook_positions: [String!], $interests: jsonb!) {
+        update_facebook_audiences_by_pk(pk_columns: {id: $id}, _set: {geo_locations: $geo_locations, name: $name, genders: $genders, min_age: $min_age, max_age: $max_age, device_platforms: $device_platforms, facebook_positions: $facebook_positions, interests: $interests}) {
           id
+          name
           geo_locations
           genders
           interests
@@ -28,7 +29,7 @@ export class ProjectFacebookAudience {
           updated_at
         }
       }
-    `), { geo_locations: facebookAudienceData.geo_locations, id, genders: facebookAudienceData.genders, min_age: facebookAudienceData.min_age, max_age: facebookAudienceData.max_age, device_platforms: facebookAudienceData.device_platforms, facebook_positions: facebookAudienceData.facebook_positions, interests: facebookAudienceData.interests })
+    `), { geo_locations: facebookAudienceData.geo_locations, id, genders: facebookAudienceData.genders, min_age: facebookAudienceData.min_age, max_age: facebookAudienceData.max_age, device_platforms: facebookAudienceData.device_platforms, facebook_positions: facebookAudienceData.facebook_positions, interests: facebookAudienceData.interests, name: facebookAudienceData.name })
     if (result.error) {
       throw result.error
     }
@@ -44,6 +45,7 @@ export class ProjectFacebookAudience {
       mutation CreateFacebookAudience($geo_locations: jsonb!, $name: String!, $projectId: uuid!, $publisher_platforms: [String!]) {
         insert_facebook_audiences_one(object: {name: $name, geo_locations: $geo_locations, project_id: $projectId, publisher_platforms: $publisher_platforms}) {
           id
+          name
           geo_locations
           device_platforms
           interests
@@ -60,11 +62,12 @@ export class ProjectFacebookAudience {
     }
     return result.data?.insert_facebook_audiences_one as FacebookAudience
   }
-  async getFacebookAudiencesByProjectID({ project, createIfDoesNotExist }: { project: Project, createIfDoesNotExist?: boolean }): Promise<FacebookAudience[]> {
+  async getFacebookAudiencesByProjectID({ project, createIfDoesNotExist }: { project: Project, createIfDoesNotExist?: boolean }): Promise<FacebookAudience | null> {
     const result = await client.query(graphql(`
       query GetFacebookAudiencesByProjectID($projectId: uuid!) {
         facebook_audiences(where: {project_id: {_eq: $projectId}}) {
           id
+          name
           geo_locations
           device_platforms
           interests
@@ -82,10 +85,10 @@ export class ProjectFacebookAudience {
     if (result.data?.facebook_audiences.length === 0 && createIfDoesNotExist) {
       const audience = await this.createFacebookAudience({ project, name: 'My Custom Audience' })
       if (audience) {
-        return [audience]
+        return audience
       }
-      return []
+      return null
     }
-    return result.data?.facebook_audiences as FacebookAudience[]
+    return result.data?.facebook_audiences && result.data.facebook_audiences[0] ? result.data.facebook_audiences[0] as FacebookAudience : null
   }
 }

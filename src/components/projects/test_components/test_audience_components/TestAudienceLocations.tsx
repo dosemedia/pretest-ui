@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FacebookContext } from "../../../../stores/stores";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import _ from "lodash";
 import { FacebookAudienceGeolocation } from "../../../../stores/facebook";
 import { SpinningLoading } from "../../../lib/SpinningLoading";
@@ -19,19 +19,22 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
     retry: false,
     queryFn: () =>  facebookStore.getAudienceLocationsByKeys({ geo_locations: projectFacebookAudience.geo_locations as ProjectFacebookAudienceGeolocation })
   })
-  const facebookLocationsMutations = useMutation({
-    mutationKey: ['facebookLocations'],
-    mutationFn: (search: string) => facebookStore.getAudienceLocationsBySearch({ search })
+  const { data: facebookLocations, refetch, isLoading: facebookLocationsIsLoading, isRefetching: facebookLocationsIsRefetching } = useQuery({
+    queryKey: ['facebookLocations'],
+    queryFn: async () => { 
+      const result = await facebookStore.getAudienceLocationsBySearch({ search: locationSearch })
+      setSelectedLocation(result[0])
+      return result
+    }
   })
   const onLocationSearch = useMemo(() => _.debounce((value: string) => {
     if (value) {
-      facebookLocationsMutations.mutate(value)
+      refetch()
     }
   }, 1000), [])
   function addLocation() {
-    const location = selectedLocation || (facebookLocationsMutations.data && facebookLocationsMutations.data[0])
-    if (location) {
-      setLocations((prev) => [...prev, location])
+    if (selectedLocation) {
+      setLocations((prev) => [...prev, selectedLocation])
     }
     setLocationSearch('')
     setIsUpdated(true)
@@ -47,12 +50,6 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
     setLocations(list)
     setIsUpdated(true)
   }
-
-  useEffect(() => {
-    if (!locationSearch) {
-      facebookLocationsMutations.mutate('')
-    }
-  }, [locationSearch])
 
   useEffect(() => {
     if (projectFacebookAudienceData) {
@@ -87,13 +84,13 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
           <span className="text-sm opacity-60">Location*</span>
         </label>
         <div className="flex items-center">
-          <input type="text" className="input" placeholder="Search for location..." value={locationSearch} onChange={(e) => { setLocationSearch(e.target.value); onLocationSearch(e?.target.value) }} />
+          <input type="text" className="input w-10/12" placeholder="Search for location..." value={locationSearch} onChange={(e) => { setLocationSearch(e.target.value); onLocationSearch(e?.target.value) }} />
           <div className="ml-2">
-            {facebookLocationsMutations.isLoading && <SpinningLoading isLoading={facebookLocationsMutations.isLoading} size='lg' />}
-            {facebookLocationsMutations.data && facebookLocationsMutations.data.length > 0 && locationSearch &&
+            {(facebookLocationsIsLoading || facebookLocationsIsRefetching) && <SpinningLoading isLoading={facebookLocationsIsLoading || facebookLocationsIsRefetching} size='lg' />}
+            {facebookLocations && facebookLocations.length > 0 && locationSearch && !facebookLocationsIsLoading && !facebookLocationsIsRefetching &&
               <div className="flex gap-x-2">
                 <select className="select select-bordered w-full max-w-xs" onChange={(e) => setSelectedLocation(JSON.parse(e.target.value))}>
-                  {facebookLocationsMutations.data.filter((item) => !locations.map((loc) => loc.key).includes(item.key)).map((item) => <option key={item.key} value={JSON.stringify(item)} >{item.name} ({item.type})</option>)}
+                  {facebookLocations.filter((item) => !locations.map((loc) => loc.key).includes(item.key)).map((item) => <option key={item.key} value={JSON.stringify(item)} >{item.name} ({item.type})</option>)}
                 </select>
                 <button className="btn normal-case bg-blue-600 text-white border-none" onClick={() => addLocation()}>Add</button>
               </div>

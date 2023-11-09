@@ -25,7 +25,7 @@ export interface FacebookAudienceEstimatedReach {
 export class Facebook {
   constructor() {
   }
-  async getReachEstimate({ audience }: { audience: FacebookAudience | null }): Promise<FacebookAudienceEstimatedReach> {
+  async getReachEstimate({ audience }: { audience: FacebookAudience | null | undefined }): Promise<FacebookAudienceEstimatedReach> {
     if (!audience) {
       return {} as FacebookAudienceEstimatedReach
     }

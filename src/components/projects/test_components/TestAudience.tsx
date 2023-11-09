@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import TestAudienceLocations from "./test_audience_components/TestAudienceLocations";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FacebookContext, ProjectFacebookAudienceContext, ToastsContext } from "../../../stores/stores";
 import { SpinningLoading } from "../../lib/SpinningLoading";
 import { Facebook_Audiences as FacebookAudience } from "../../../gql/graphql";
@@ -18,21 +18,22 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   const facebookStore = useContext(FacebookContext)
   const toastsStore = useContext(ToastsContext)
   const reachModalId = 'reach_modal'
-  const { data: facebookAudienceData, isLoading, refetch } = useQuery({
+  const [isAudienceComplete, setIsAudienceComplete] = useState(false)
+  const [audienceName, setAudienceName] = useState('')
+  const { data: facebookAudienceData, isLoading } = useQuery({
     queryKey: ['getProjectFacebookAudienceLocations'],
     retry: false,
     queryFn: () => {
       if (project.platform) {
-        return projectFacebookAudienceStore.getFacebookAudiencesByProjectID({ project, createIfDoesNotExist: true }) 
+        return projectFacebookAudienceStore.getFacebookAudiencesByProjectID({ project, createIfDoesNotExist: true })
       }
-      return []
+      return null
     },
   })
   const getReachEstimateMutation = useMutation({
     mutationKey: ['getReachEstimate'],
     mutationFn: () => {
-      const audience = facebookAudienceData && facebookAudienceData?.length > 0 ? facebookAudienceData[0] : null
-      return facebookStore.getReachEstimate({ audience })
+      return facebookStore.getReachEstimate({ audience: facebookAudienceData })
     },
     onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: 'error' }) },
     onSuccess: () => { (document.getElementById(reachModalId) as HTMLDialogElement).show() }
@@ -40,37 +41,48 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   const projectFacebookAudienceMutation = useMutation({
     mutationKey: ['projectFacebookAudienceMutation'],
     mutationFn: ({ payload, audience }: { payload: FacebookAudience, audience: FacebookAudience }) => projectFacebookAudienceStore.updateFacebookAudiencesByID({ id: audience.id, payload: { ...audience, ...payload } }),
-    onSuccess: () => refetch(),
     onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: 'error' }) },
   })
 
   const onUpdate = _.debounce((payload: FacebookAudience, isUpdated: boolean) => {
     // Only update if there are updates
-    if (facebookAudienceData && facebookAudienceData[0] && isUpdated) {
-      projectFacebookAudienceMutation.mutate({ payload, audience: facebookAudienceData[0] })
+    if (facebookAudienceData && isUpdated) {
+      checkIsAudienceComplete({ ...facebookAudienceData, ...payload })
+      projectFacebookAudienceMutation.mutate({ payload, audience: facebookAudienceData })
       onSave({})
     }
-  }, 200)
+  }, 500)
 
-  function isAudienceComplete(): boolean {
-    const audience = (facebookAudienceData && facebookAudienceData[0]) ? facebookAudienceData[0] : null
+  function checkIsAudienceComplete(audience: FacebookAudience): void {
     if (audience) {
       if ((audience.geo_locations?.countries?.length === 0) && Object.keys(audience.geo_locations?.regions).length === 0) {
-        return false
+        setIsAudienceComplete(false)
       } else if (audience.genders?.length === 0) {
-        return false
+        setIsAudienceComplete(false)
+        return
       } else if (!audience.interests || Object.keys(audience.interests).length === 0) {
-        return false
+        setIsAudienceComplete(false)
       } else if (audience.device_platforms.length === 0) {
-        return false
+        setIsAudienceComplete(false)
+      } else if (!audience.name) {
+        setIsAudienceComplete(false)
+      } else {
+        setIsAudienceComplete(true)
       }
-      return true
+    } else {
+      setIsAudienceComplete(false)
     }
-    return false
   }
 
   useEffect(() => {
-    onAudienceComplete(isAudienceComplete())
+    onAudienceComplete(isAudienceComplete)
+  }, [isAudienceComplete])
+
+  useEffect(() => {
+    if (facebookAudienceData) {
+      setAudienceName(facebookAudienceData.name || '')
+      checkIsAudienceComplete(facebookAudienceData)
+    }
   }, [facebookAudienceData])
   return (
     <>
@@ -81,14 +93,20 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
           </div>
           {isLoading && <SpinningLoading isLoading={isLoading} size="lg" />}
           <div className="flex flex-col gap-y-6 mt-4">
-            {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
-            {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
-            {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
-            {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
-            {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
-            {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
+            <div>
+              <label className="label">
+                <span className="text-sm opacity-60">Name*</span>
+              </label>
+              <input type="text" className="input w-10/12" placeholder="Name" value={audienceName} onChange={(e) => { setAudienceName(e.target.value); onUpdate({ name: e.target.value } as FacebookAudience, true) }} />
+            </div>
+            {!isLoading && facebookAudienceData && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {!isLoading && facebookAudienceData && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {!isLoading && facebookAudienceData && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {!isLoading && facebookAudienceData && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {!isLoading && facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {!isLoading && facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
           </div>
-          {isAudienceComplete() && <div>
+          {isAudienceComplete && <div>
             <button className="btn mt-5 btn-info normal-case text-white" disabled={projectFacebookAudienceMutation.isLoading} onClick={() => getReachEstimateMutation.mutate()}>Click to get reach estimate<SpinningLoading isLoading={getReachEstimateMutation.isLoading} /></button>
           </div>
           }
