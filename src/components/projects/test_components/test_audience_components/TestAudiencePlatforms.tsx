@@ -36,7 +36,7 @@ const TestAudiencePlatforms = observer(({ onUpdate, projectFacebookAudience }: {
   return (
     <div>
      <label className="label">
-        <span className="text-sm opacity-60">Device Platforms</span>
+        <span className="text-sm opacity-60">Device Platforms*</span>
       </label>
       <div className="flex gap-x-4 gap-y-4">
           {availableDevicePlatforms.map((item) => selectionCard(item))}

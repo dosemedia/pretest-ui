@@ -84,7 +84,7 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
     <div>
       <div className="form-control">
         <label className="label">
-          <span className="text-sm opacity-60">Location</span>
+          <span className="text-sm opacity-60">Location*</span>
         </label>
         <div className="flex items-center">
           <input type="text" className="input" placeholder="Search for location..." value={locationSearch} onChange={(e) => { setLocationSearch(e.target.value); onLocationSearch(e?.target.value) }} />

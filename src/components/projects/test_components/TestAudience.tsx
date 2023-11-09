@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import TestAudienceLocations from "./test_audience_components/TestAudienceLocations";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FacebookContext, ProjectFacebookAudienceContext, ToastsContext } from "../../../stores/stores";
 import { useParams } from "react-router-dom";
 import { SpinningLoading } from "../../lib/SpinningLoading";
@@ -14,7 +14,7 @@ import ErrorMessage from "../../lib/Error";
 import TestAudiencePlatforms from "./test_audience_components/TestAudiencePlatforms";
 import TestAudiencePositions from "./test_audience_components/TestAudiencePositions";
 import TestAudienceInterests from "./test_audience_components/TestAudienceInterests";
-const TestAudience = observer(({ onSave, project }: { onSave: (payload: object) => void, project: Project }) => {
+const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSave: (payload: object) => void, onAudienceComplete: (complete: boolean) => void, project: Project, }) => {
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
   const facebookStore = useContext(FacebookContext)
   const toastsStore = useContext(ToastsContext)
@@ -38,7 +38,7 @@ const TestAudience = observer(({ onSave, project }: { onSave: (payload: object) 
     mutationKey: ['projectFacebookAudienceMutation'],
     mutationFn: ({ payload, audience }: { payload: FacebookAudience, audience: FacebookAudience }) => projectFacebookAudienceStore.updateFacebookAudiencesByID({ id: audience.id, payload: { ...audience, ...payload } }),
     onSuccess: () => refetch(),
-    onError: (error: Error) => console.log(error)
+    onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: 'error' }) },
   })
 
   const onUpdate = _.debounce((payload: FacebookAudience, isUpdated: boolean) => {
@@ -48,6 +48,26 @@ const TestAudience = observer(({ onSave, project }: { onSave: (payload: object) 
       onSave({})
     }
   }, 200)
+
+  function isAudienceComplete(): boolean {
+    const audience = (facebookAudienceData && facebookAudienceData[0]) ? facebookAudienceData[0] : null
+    if (audience) {
+      if ((audience.geo_locations.countries.length === 0) && Object.keys(audience.geo_locations.regions).length === 0) {
+        return false
+      } else if (audience.genders?.length === 0) {
+        return false
+      } else if (Object.keys(audience.interests).length === 0) {
+        return false
+      } else if (audience.device_platforms.length === 0) {
+        return false
+      }
+    }
+    return true
+  }
+
+  useEffect(() => {
+    onAudienceComplete(isAudienceComplete())
+  }, [facebookAudienceData])
   return (
     <>
       {!project.platform ? <ErrorMessage message="You must complete the Platform step before moving to audience" /> :
@@ -64,9 +84,10 @@ const TestAudience = observer(({ onSave, project }: { onSave: (payload: object) 
             {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
             {!isLoading && facebookAudienceData && facebookAudienceData.length > 0 && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData[0] as FacebookAudience} />}
           </div>
-          <div>
+          {isAudienceComplete() && <div>
             <button className="btn mt-5 btn-info normal-case text-white" disabled={projectFacebookAudienceMutation.isLoading} onClick={() => getReachEstimateMutation.mutate()}>Click to get reach estimate<SpinningLoading isLoading={getReachEstimateMutation.isLoading} /></button>
           </div>
+          }
         </div>
       }
       <dialog id={reachModalId} className="modal">

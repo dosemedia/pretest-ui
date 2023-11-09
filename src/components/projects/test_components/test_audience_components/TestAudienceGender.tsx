@@ -24,7 +24,7 @@ const TestAudienceGender = observer(({ onUpdate, projectFacebookAudience }: { on
   return (
     <div>
      <label className="label">
-        <span className="text-sm opacity-60">Gender</span>
+        <span className="text-sm opacity-60">Gender*</span>
       </label>
       <div className="flex">
         <input type="checkbox" className="checkbox" checked={genders.includes(1)} onChange={() => handleCheck(1)} />

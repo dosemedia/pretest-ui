@@ -15,6 +15,7 @@ import '../../css/draft_project.css'
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams] = useSearchParams();
   const projectStore = useContext(ProjectsContext)
+  const [audienceComplete, setAudienceComplete] = useState(false)
   const navigate = useNavigate()
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
@@ -58,6 +59,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         label: 'Audience',
         value: 'audience',
         step: 4,
+        isComplete: Boolean(audienceComplete),
         icon: 'mdi mdi-account-group-outline'
       },
       {
@@ -98,7 +100,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           {step === 1 && <TestObjective project={project} onSave={onSave} />}
           {step === 2 && <TestBranding project={project} onSave={onSave} />}
           {step === 3 && <TestPlatform project={project} onSave={onSave} />}
-          {step === 4 && <TestAudience project={project} onSave={onSave} />}
+          {step === 4 && <TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} />}
           {step === 5 && <TestRuntime project={project} onSave={onSave} />}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setStep((prev) => prev -= 1)}>
