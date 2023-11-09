@@ -82,7 +82,7 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
 
   return (
     <div>
-      <div className="form-control" style={{ marginTop: 20 }}>
+      <div className="form-control">
         <label className="label">
           <span className="text-sm opacity-60">Location</span>
         </label>
