@@ -3,7 +3,6 @@ import TestAudienceLocations from "./test_audience_components/TestAudienceLocati
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
 import { FacebookContext, ProjectFacebookAudienceContext, ToastsContext } from "../../../stores/stores";
-import { useParams } from "react-router-dom";
 import { SpinningLoading } from "../../lib/SpinningLoading";
 import { Facebook_Audiences as FacebookAudience } from "../../../gql/graphql";
 import TestAudienceGender from "./test_audience_components/TestAudienceGender";
@@ -18,12 +17,16 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
   const facebookStore = useContext(FacebookContext)
   const toastsStore = useContext(ToastsContext)
-  const { projectId } = useParams() as { projectId: string }
   const reachModalId = 'reach_modal'
   const { data: facebookAudienceData, isLoading, refetch } = useQuery({
     queryKey: ['getProjectFacebookAudienceLocations'],
     retry: false,
-    queryFn: () => projectFacebookAudienceStore.getFacebookAudiencesByProjectID({ projectId, createIfDoesNotExist: true }),
+    queryFn: () => {
+      if (project.platform) {
+        return projectFacebookAudienceStore.getFacebookAudiencesByProjectID({ project, createIfDoesNotExist: true }) 
+      }
+      return []
+    },
   })
   const getReachEstimateMutation = useMutation({
     mutationKey: ['getReachEstimate'],
@@ -61,8 +64,9 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
       } else if (audience.device_platforms.length === 0) {
         return false
       }
+      return true
     }
-    return true
+    return false
   }
 
   useEffect(() => {
