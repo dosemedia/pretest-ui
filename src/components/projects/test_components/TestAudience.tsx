@@ -52,11 +52,11 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   function isAudienceComplete(): boolean {
     const audience = (facebookAudienceData && facebookAudienceData[0]) ? facebookAudienceData[0] : null
     if (audience) {
-      if ((audience.geo_locations.countries.length === 0) && Object.keys(audience.geo_locations.regions).length === 0) {
+      if ((audience.geo_locations?.countries?.length === 0) && Object.keys(audience.geo_locations?.regions).length === 0) {
         return false
       } else if (audience.genders?.length === 0) {
         return false
-      } else if (Object.keys(audience.interests).length === 0) {
+      } else if (!audience.interests || Object.keys(audience.interests).length === 0) {
         return false
       } else if (audience.device_platforms.length === 0) {
         return false
