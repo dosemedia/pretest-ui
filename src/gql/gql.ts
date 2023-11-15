@@ -13,6 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n    mutation updateAngle($id: uuid!, $name: String!) {\n      update_themes_angles_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {\n        id\n      }\n    }\n    ": types.UpdateAngleDocument,
+    "\n    mutation createAngle($name: String!, $themeId: uuid!) {\n      insert_themes_angles_one(object: {name: $name, theme_id: $themeId}) {\n        name\n        id\n      }\n    }\n    ": types.CreateAngleDocument,
     "mutation UpdateDisplayName($id: uuid!, $avatar_file_key: String) {\n          update_users_by_pk(pk_columns: {id: $id}, _set: {avatar_file_key: $avatar_file_key}) {\n            avatar_file_key\n            email\n            display_name\n          }\n        }": types.UpdateDisplayNameDocument,
     "\n    mutation DestroyUser($password: String!) {\n      destroyUser(password: $password)\n    }\n    ": types.DestroyUserDocument,
     "\n    mutation ChangePassword($oldPassword: String!, $newPassword: String!) {\n      changePassword(oldPassword: $oldPassword, newPassword: $newPassword)\n    }\n    ": types.ChangePasswordDocument,
@@ -40,6 +42,10 @@ const documents = {
     "\n    query checkMembership($teamId: uuid!, $userId: uuid!) {\n      teams_users(where: {_and: {team_id: {_eq: $teamId}, user_id: {_eq: $userId}}}) {\n        team_id\n      }\n    }": types.CheckMembershipDocument,
     "\n      mutation leaveTeam($teamId: uuid!) {\n        leaveTeam(teamId: $teamId)\n      }\n      ": types.LeaveTeamDocument,
     "\n      mutation joinTeam($teamId: uuid!) {\n        joinTeam(teamId: $teamId)\n      }\n      ": types.JoinTeamDocument,
+    "\n    query fetchThemes($projectId: uuid!) {\n      projects_themes(where: {project_id: {_eq: $projectId}}, order_by: {id: desc}) {\n        id\n        name\n        angles(order_by: {id: desc}) {\n          id\n          name\n        }\n      }\n    }\n    ": types.FetchThemesDocument,
+    "\n    mutation updateTheme($id: uuid!, $name: String!) {\n      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {\n        id\n      }\n    }\n    ": types.UpdateThemeDocument,
+    "\n    mutation deleteTheme($id: uuid!) {\n      delete_projects_themes_by_pk(id: $id) {\n        id\n      }\n    }\n    ": types.DeleteThemeDocument,
+    "\n    mutation createTheme($name: String!, $projectId: uuid!) {\n      insert_projects_themes_one(object: {name: $name, project_id: $projectId}) {\n        name\n        id\n      }\n    }\n    ": types.CreateThemeDocument,
 };
 
 /**
@@ -56,6 +62,14 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation updateAngle($id: uuid!, $name: String!) {\n      update_themes_angles_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {\n        id\n      }\n    }\n    "): (typeof documents)["\n    mutation updateAngle($id: uuid!, $name: String!) {\n      update_themes_angles_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {\n        id\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation createAngle($name: String!, $themeId: uuid!) {\n      insert_themes_angles_one(object: {name: $name, theme_id: $themeId}) {\n        name\n        id\n      }\n    }\n    "): (typeof documents)["\n    mutation createAngle($name: String!, $themeId: uuid!) {\n      insert_themes_angles_one(object: {name: $name, theme_id: $themeId}) {\n        name\n        id\n      }\n    }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -164,6 +178,22 @@ export function graphql(source: "\n      mutation leaveTeam($teamId: uuid!) {\n 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n      mutation joinTeam($teamId: uuid!) {\n        joinTeam(teamId: $teamId)\n      }\n      "): (typeof documents)["\n      mutation joinTeam($teamId: uuid!) {\n        joinTeam(teamId: $teamId)\n      }\n      "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    query fetchThemes($projectId: uuid!) {\n      projects_themes(where: {project_id: {_eq: $projectId}}, order_by: {id: desc}) {\n        id\n        name\n        angles(order_by: {id: desc}) {\n          id\n          name\n        }\n      }\n    }\n    "): (typeof documents)["\n    query fetchThemes($projectId: uuid!) {\n      projects_themes(where: {project_id: {_eq: $projectId}}, order_by: {id: desc}) {\n        id\n        name\n        angles(order_by: {id: desc}) {\n          id\n          name\n        }\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation updateTheme($id: uuid!, $name: String!) {\n      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {\n        id\n      }\n    }\n    "): (typeof documents)["\n    mutation updateTheme($id: uuid!, $name: String!) {\n      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {\n        id\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation deleteTheme($id: uuid!) {\n      delete_projects_themes_by_pk(id: $id) {\n        id\n      }\n    }\n    "): (typeof documents)["\n    mutation deleteTheme($id: uuid!) {\n      delete_projects_themes_by_pk(id: $id) {\n        id\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation createTheme($name: String!, $projectId: uuid!) {\n      insert_projects_themes_one(object: {name: $name, project_id: $projectId}) {\n        name\n        id\n      }\n    }\n    "): (typeof documents)["\n    mutation createTheme($name: String!, $projectId: uuid!) {\n      insert_projects_themes_one(object: {name: $name, project_id: $projectId}) {\n        name\n        id\n      }\n    }\n    "];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

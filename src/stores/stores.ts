@@ -6,6 +6,8 @@ import { Teams } from './teams'
 import { Projects } from './projects'
 import { Facebook } from './facebook'
 import { ProjectFacebookAudience } from './project_facebook_audience'
+import { Themes } from './themes'
+import { ThemesAngles } from './angles'
 
 export const authStore = new Auth()
 export const AuthContext = createContext<Auth>(authStore)
@@ -27,4 +29,10 @@ export const FacebookContext = createContext<Facebook>(facebookStore)
 
 export const projectFacebookAudienceStore = new ProjectFacebookAudience()
 export const ProjectFacebookAudienceContext = createContext<ProjectFacebookAudience>(projectFacebookAudienceStore)
+
+export const themes = new Themes()
+export const ThemesContext = createContext<Themes>(themes)
+
+export const themesAngles = new ThemesAngles()
+export const ThemesAnglesContext = createContext<ThemesAngles>(themesAngles)
 

@@ -11,6 +11,7 @@ import TestPlatform from "./test_components/TestPlatform";
 import TestRuntime from "./test_components/TestRuntime";
 import TestAudience from "./test_components/TestAudience";
 import '../../css/draft_project.css'
+import TestThemes from "./test_components/creatives/TestThemes";
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams] = useSearchParams();
@@ -23,7 +24,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     mutationFn: (payload: object) => projectStore.updateProject({ projectId: project.id, payload: { ...project, ...payload } }),
     onSuccess: (data) => {
       setUpdatedAt(data?.updated_at);
-      onUpdate(); 
+      onUpdate();
     }
   })
   const onSave = _.debounce((payload: object) => {
@@ -70,6 +71,34 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         icon: 'mdi mdi-clock-outline'
       }
     ]
+  },
+  {
+    label: 'Creative',
+    value: 'creative',
+    icon: 'mdi mdi-brush',
+    children: [
+      {
+        label: 'Ad template',
+        step: 6,
+        isComplete: false,
+        value: 'ad_template',
+        icon: 'mdi mdi-image-multiple'
+      },
+      {
+        label: 'Ad copy matrix',
+        value: 'ad_copy_matrix',
+        step: 7,
+        isComplete: false,
+        icon: 'mdi mdi-file-document-edit'
+      },
+      {
+        label: 'Landing page',
+        value: 'landing_page',
+        step: 8,
+        isComplete: false,
+        icon: 'mdi mdi-beaker'
+      }
+    ]
   }]
   useEffect(() => {
     navigate(`/project/${project.id}?step=${step}`, { replace: true })
@@ -102,6 +131,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           {step === 3 && <TestPlatform project={project} onSave={onSave} />}
           {step === 4 && <TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} />}
           {step === 5 && <TestRuntime project={project} onSave={onSave} />}
+          {step === 7 && <TestThemes project={project} onSave={onSave} />}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setStep((prev) => prev -= 1)}>
               <span className="mdi mdi-chevron-left text-base" /> Go Back

@@ -974,6 +974,10 @@ export type Mutation_Root = {
   delete_projects?: Maybe<Projects_Mutation_Response>;
   /** delete single row from the table: "projects" */
   delete_projects_by_pk?: Maybe<Projects>;
+  /** delete data from the table: "projects_themes" */
+  delete_projects_themes?: Maybe<Projects_Themes_Mutation_Response>;
+  /** delete single row from the table: "projects_themes" */
+  delete_projects_themes_by_pk?: Maybe<Projects_Themes>;
   /** delete data from the table: "teams" */
   delete_teams?: Maybe<Teams_Mutation_Response>;
   /** delete single row from the table: "teams" */
@@ -990,6 +994,10 @@ export type Mutation_Root = {
   delete_teams_users?: Maybe<Teams_Users_Mutation_Response>;
   /** delete single row from the table: "teams_users" */
   delete_teams_users_by_pk?: Maybe<Teams_Users>;
+  /** delete data from the table: "themes_angles" */
+  delete_themes_angles?: Maybe<Themes_Angles_Mutation_Response>;
+  /** delete single row from the table: "themes_angles" */
+  delete_themes_angles_by_pk?: Maybe<Themes_Angles>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
@@ -1012,6 +1020,10 @@ export type Mutation_Root = {
   insert_projects?: Maybe<Projects_Mutation_Response>;
   /** insert a single row into the table: "projects" */
   insert_projects_one?: Maybe<Projects>;
+  /** insert data into the table: "projects_themes" */
+  insert_projects_themes?: Maybe<Projects_Themes_Mutation_Response>;
+  /** insert a single row into the table: "projects_themes" */
+  insert_projects_themes_one?: Maybe<Projects_Themes>;
   /** insert data into the table: "teams" */
   insert_teams?: Maybe<Teams_Mutation_Response>;
   /** insert a single row into the table: "teams" */
@@ -1028,6 +1040,10 @@ export type Mutation_Root = {
   insert_teams_users?: Maybe<Teams_Users_Mutation_Response>;
   /** insert a single row into the table: "teams_users" */
   insert_teams_users_one?: Maybe<Teams_Users>;
+  /** insert data into the table: "themes_angles" */
+  insert_themes_angles?: Maybe<Themes_Angles_Mutation_Response>;
+  /** insert a single row into the table: "themes_angles" */
+  insert_themes_angles_one?: Maybe<Themes_Angles>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
@@ -1065,6 +1081,12 @@ export type Mutation_Root = {
   update_projects_by_pk?: Maybe<Projects>;
   /** update multiples rows of table: "projects" */
   update_projects_many?: Maybe<Array<Maybe<Projects_Mutation_Response>>>;
+  /** update data of the table: "projects_themes" */
+  update_projects_themes?: Maybe<Projects_Themes_Mutation_Response>;
+  /** update single row of the table: "projects_themes" */
+  update_projects_themes_by_pk?: Maybe<Projects_Themes>;
+  /** update multiples rows of table: "projects_themes" */
+  update_projects_themes_many?: Maybe<Array<Maybe<Projects_Themes_Mutation_Response>>>;
   /** update data of the table: "teams" */
   update_teams?: Maybe<Teams_Mutation_Response>;
   /** update single row of the table: "teams" */
@@ -1089,6 +1111,12 @@ export type Mutation_Root = {
   update_teams_users_by_pk?: Maybe<Teams_Users>;
   /** update multiples rows of table: "teams_users" */
   update_teams_users_many?: Maybe<Array<Maybe<Teams_Users_Mutation_Response>>>;
+  /** update data of the table: "themes_angles" */
+  update_themes_angles?: Maybe<Themes_Angles_Mutation_Response>;
+  /** update single row of the table: "themes_angles" */
+  update_themes_angles_by_pk?: Maybe<Themes_Angles>;
+  /** update multiples rows of table: "themes_angles" */
+  update_themes_angles_many?: Maybe<Array<Maybe<Themes_Angles_Mutation_Response>>>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
@@ -1176,6 +1204,18 @@ export type Mutation_RootDelete_Projects_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Projects_ThemesArgs = {
+  where: Projects_Themes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Projects_Themes_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_TeamsArgs = {
   where: Teams_Bool_Exp;
 };
@@ -1222,6 +1262,18 @@ export type Mutation_RootDelete_Teams_UsersArgs = {
 export type Mutation_RootDelete_Teams_Users_By_PkArgs = {
   team_id: Scalars['uuid']['input'];
   user_id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Themes_AnglesArgs = {
+  where: Themes_Angles_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Themes_Angles_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1306,6 +1358,20 @@ export type Mutation_RootInsert_Projects_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Projects_ThemesArgs = {
+  objects: Array<Projects_Themes_Insert_Input>;
+  on_conflict?: InputMaybe<Projects_Themes_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Projects_Themes_OneArgs = {
+  object: Projects_Themes_Insert_Input;
+  on_conflict?: InputMaybe<Projects_Themes_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_TeamsArgs = {
   objects: Array<Teams_Insert_Input>;
   on_conflict?: InputMaybe<Teams_On_Conflict>;
@@ -1358,6 +1424,20 @@ export type Mutation_RootInsert_Teams_UsersArgs = {
 export type Mutation_RootInsert_Teams_Users_OneArgs = {
   object: Teams_Users_Insert_Input;
   on_conflict?: InputMaybe<Teams_Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Themes_AnglesArgs = {
+  objects: Array<Themes_Angles_Insert_Input>;
+  on_conflict?: InputMaybe<Themes_Angles_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Themes_Angles_OneArgs = {
+  object: Themes_Angles_Insert_Input;
+  on_conflict?: InputMaybe<Themes_Angles_On_Conflict>;
 };
 
 
@@ -1508,6 +1588,26 @@ export type Mutation_RootUpdate_Projects_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Projects_ThemesArgs = {
+  _set?: InputMaybe<Projects_Themes_Set_Input>;
+  where: Projects_Themes_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Projects_Themes_By_PkArgs = {
+  _set?: InputMaybe<Projects_Themes_Set_Input>;
+  pk_columns: Projects_Themes_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Projects_Themes_ManyArgs = {
+  updates: Array<Projects_Themes_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_TeamsArgs = {
   _set?: InputMaybe<Teams_Set_Input>;
   where: Teams_Bool_Exp;
@@ -1584,6 +1684,26 @@ export type Mutation_RootUpdate_Teams_Users_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Teams_Users_ManyArgs = {
   updates: Array<Teams_Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Themes_AnglesArgs = {
+  _set?: InputMaybe<Themes_Angles_Set_Input>;
+  where: Themes_Angles_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Themes_Angles_By_PkArgs = {
+  _set?: InputMaybe<Themes_Angles_Set_Input>;
+  pk_columns: Themes_Angles_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Themes_Angles_ManyArgs = {
+  updates: Array<Themes_Angles_Updates>;
 };
 
 
@@ -1883,6 +2003,216 @@ export type Projects_Stream_Cursor_Value_Input = {
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
+/** Themes associated with a project */
+export type Projects_Themes = {
+  __typename?: 'projects_themes';
+  /** An array relationship */
+  angles: Array<Themes_Angles>;
+  /** An aggregate relationship */
+  angles_aggregate: Themes_Angles_Aggregate;
+  created_at: Scalars['timestamptz']['output'];
+  id: Scalars['uuid']['output'];
+  name: Scalars['String']['output'];
+  /** An object relationship */
+  project: Projects;
+  project_id: Scalars['uuid']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+};
+
+
+/** Themes associated with a project */
+export type Projects_ThemesAnglesArgs = {
+  distinct_on?: InputMaybe<Array<Themes_Angles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Themes_Angles_Order_By>>;
+  where?: InputMaybe<Themes_Angles_Bool_Exp>;
+};
+
+
+/** Themes associated with a project */
+export type Projects_ThemesAngles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Themes_Angles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Themes_Angles_Order_By>>;
+  where?: InputMaybe<Themes_Angles_Bool_Exp>;
+};
+
+/** aggregated selection of "projects_themes" */
+export type Projects_Themes_Aggregate = {
+  __typename?: 'projects_themes_aggregate';
+  aggregate?: Maybe<Projects_Themes_Aggregate_Fields>;
+  nodes: Array<Projects_Themes>;
+};
+
+/** aggregate fields of "projects_themes" */
+export type Projects_Themes_Aggregate_Fields = {
+  __typename?: 'projects_themes_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Projects_Themes_Max_Fields>;
+  min?: Maybe<Projects_Themes_Min_Fields>;
+};
+
+
+/** aggregate fields of "projects_themes" */
+export type Projects_Themes_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Projects_Themes_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "projects_themes". All fields are combined with a logical 'AND'. */
+export type Projects_Themes_Bool_Exp = {
+  _and?: InputMaybe<Array<Projects_Themes_Bool_Exp>>;
+  _not?: InputMaybe<Projects_Themes_Bool_Exp>;
+  _or?: InputMaybe<Array<Projects_Themes_Bool_Exp>>;
+  angles?: InputMaybe<Themes_Angles_Bool_Exp>;
+  angles_aggregate?: InputMaybe<Themes_Angles_Aggregate_Bool_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  project?: InputMaybe<Projects_Bool_Exp>;
+  project_id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "projects_themes" */
+export enum Projects_Themes_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  ProjectsThemesPkey = 'projects_themes_pkey'
+}
+
+/** input type for inserting data into table "projects_themes" */
+export type Projects_Themes_Insert_Input = {
+  angles?: InputMaybe<Themes_Angles_Arr_Rel_Insert_Input>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  project?: InputMaybe<Projects_Obj_Rel_Insert_Input>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Projects_Themes_Max_Fields = {
+  __typename?: 'projects_themes_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  project_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Projects_Themes_Min_Fields = {
+  __typename?: 'projects_themes_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  project_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** response of any mutation on the table "projects_themes" */
+export type Projects_Themes_Mutation_Response = {
+  __typename?: 'projects_themes_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Projects_Themes>;
+};
+
+/** input type for inserting object relation for remote table "projects_themes" */
+export type Projects_Themes_Obj_Rel_Insert_Input = {
+  data: Projects_Themes_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Projects_Themes_On_Conflict>;
+};
+
+/** on_conflict condition type for table "projects_themes" */
+export type Projects_Themes_On_Conflict = {
+  constraint: Projects_Themes_Constraint;
+  update_columns?: Array<Projects_Themes_Update_Column>;
+  where?: InputMaybe<Projects_Themes_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "projects_themes". */
+export type Projects_Themes_Order_By = {
+  angles_aggregate?: InputMaybe<Themes_Angles_Aggregate_Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project?: InputMaybe<Projects_Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: projects_themes */
+export type Projects_Themes_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "projects_themes" */
+export enum Projects_Themes_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "projects_themes" */
+export type Projects_Themes_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** Streaming cursor of the table "projects_themes" */
+export type Projects_Themes_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Projects_Themes_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Projects_Themes_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** update columns of table "projects_themes" */
+export enum Projects_Themes_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Projects_Themes_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Projects_Themes_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Projects_Themes_Bool_Exp;
+};
+
 /** update columns of table "projects" */
 export enum Projects_Update_Column {
   /** column name */
@@ -1942,6 +2272,12 @@ export type Query_Root = {
   projects_aggregate: Projects_Aggregate;
   /** fetch data from the table: "projects" using primary key columns */
   projects_by_pk?: Maybe<Projects>;
+  /** fetch data from the table: "projects_themes" */
+  projects_themes: Array<Projects_Themes>;
+  /** fetch aggregated fields from the table: "projects_themes" */
+  projects_themes_aggregate: Projects_Themes_Aggregate;
+  /** fetch data from the table: "projects_themes" using primary key columns */
+  projects_themes_by_pk?: Maybe<Projects_Themes>;
   /** fetch data from the table: "teams" */
   teams: Array<Teams>;
   /** fetch aggregated fields from the table: "teams" */
@@ -1966,6 +2302,12 @@ export type Query_Root = {
   teams_users_aggregate: Teams_Users_Aggregate;
   /** fetch data from the table: "teams_users" using primary key columns */
   teams_users_by_pk?: Maybe<Teams_Users>;
+  /** fetch data from the table: "themes_angles" */
+  themes_angles: Array<Themes_Angles>;
+  /** fetch aggregated fields from the table: "themes_angles" */
+  themes_angles_aggregate: Themes_Angles_Aggregate;
+  /** fetch data from the table: "themes_angles" using primary key columns */
+  themes_angles_by_pk?: Maybe<Themes_Angles>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -2068,6 +2410,29 @@ export type Query_RootProjects_By_PkArgs = {
 };
 
 
+export type Query_RootProjects_ThemesArgs = {
+  distinct_on?: InputMaybe<Array<Projects_Themes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Projects_Themes_Order_By>>;
+  where?: InputMaybe<Projects_Themes_Bool_Exp>;
+};
+
+
+export type Query_RootProjects_Themes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Projects_Themes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Projects_Themes_Order_By>>;
+  where?: InputMaybe<Projects_Themes_Bool_Exp>;
+};
+
+
+export type Query_RootProjects_Themes_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
 export type Query_RootTeamsArgs = {
   distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2162,6 +2527,29 @@ export type Query_RootTeams_Users_By_PkArgs = {
 };
 
 
+export type Query_RootThemes_AnglesArgs = {
+  distinct_on?: InputMaybe<Array<Themes_Angles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Themes_Angles_Order_By>>;
+  where?: InputMaybe<Themes_Angles_Bool_Exp>;
+};
+
+
+export type Query_RootThemes_Angles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Themes_Angles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Themes_Angles_Order_By>>;
+  where?: InputMaybe<Themes_Angles_Bool_Exp>;
+};
+
+
+export type Query_RootThemes_Angles_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
 export type Query_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2218,6 +2606,14 @@ export type Subscription_Root = {
   projects_by_pk?: Maybe<Projects>;
   /** fetch data from the table in a streaming manner: "projects" */
   projects_stream: Array<Projects>;
+  /** fetch data from the table: "projects_themes" */
+  projects_themes: Array<Projects_Themes>;
+  /** fetch aggregated fields from the table: "projects_themes" */
+  projects_themes_aggregate: Projects_Themes_Aggregate;
+  /** fetch data from the table: "projects_themes" using primary key columns */
+  projects_themes_by_pk?: Maybe<Projects_Themes>;
+  /** fetch data from the table in a streaming manner: "projects_themes" */
+  projects_themes_stream: Array<Projects_Themes>;
   /** fetch data from the table: "teams" */
   teams: Array<Teams>;
   /** fetch aggregated fields from the table: "teams" */
@@ -2250,6 +2646,14 @@ export type Subscription_Root = {
   teams_users_by_pk?: Maybe<Teams_Users>;
   /** fetch data from the table in a streaming manner: "teams_users" */
   teams_users_stream: Array<Teams_Users>;
+  /** fetch data from the table: "themes_angles" */
+  themes_angles: Array<Themes_Angles>;
+  /** fetch aggregated fields from the table: "themes_angles" */
+  themes_angles_aggregate: Themes_Angles_Aggregate;
+  /** fetch data from the table: "themes_angles" using primary key columns */
+  themes_angles_by_pk?: Maybe<Themes_Angles>;
+  /** fetch data from the table in a streaming manner: "themes_angles" */
+  themes_angles_stream: Array<Themes_Angles>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -2382,6 +2786,36 @@ export type Subscription_RootProjects_StreamArgs = {
 };
 
 
+export type Subscription_RootProjects_ThemesArgs = {
+  distinct_on?: InputMaybe<Array<Projects_Themes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Projects_Themes_Order_By>>;
+  where?: InputMaybe<Projects_Themes_Bool_Exp>;
+};
+
+
+export type Subscription_RootProjects_Themes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Projects_Themes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Projects_Themes_Order_By>>;
+  where?: InputMaybe<Projects_Themes_Bool_Exp>;
+};
+
+
+export type Subscription_RootProjects_Themes_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootProjects_Themes_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Projects_Themes_Stream_Cursor_Input>>;
+  where?: InputMaybe<Projects_Themes_Bool_Exp>;
+};
+
+
 export type Subscription_RootTeamsArgs = {
   distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2501,6 +2935,36 @@ export type Subscription_RootTeams_Users_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Teams_Users_Stream_Cursor_Input>>;
   where?: InputMaybe<Teams_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootThemes_AnglesArgs = {
+  distinct_on?: InputMaybe<Array<Themes_Angles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Themes_Angles_Order_By>>;
+  where?: InputMaybe<Themes_Angles_Bool_Exp>;
+};
+
+
+export type Subscription_RootThemes_Angles_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Themes_Angles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Themes_Angles_Order_By>>;
+  where?: InputMaybe<Themes_Angles_Bool_Exp>;
+};
+
+
+export type Subscription_RootThemes_Angles_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootThemes_Angles_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Themes_Angles_Stream_Cursor_Input>>;
+  where?: InputMaybe<Themes_Angles_Bool_Exp>;
 };
 
 
@@ -3306,6 +3770,224 @@ export type Teams_Users_Updates = {
   where: Teams_Users_Bool_Exp;
 };
 
+/** Angles associated with a given theme */
+export type Themes_Angles = {
+  __typename?: 'themes_angles';
+  created_at: Scalars['timestamptz']['output'];
+  id: Scalars['uuid']['output'];
+  name: Scalars['String']['output'];
+  /** An object relationship */
+  theme: Projects_Themes;
+  theme_id: Scalars['uuid']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "themes_angles" */
+export type Themes_Angles_Aggregate = {
+  __typename?: 'themes_angles_aggregate';
+  aggregate?: Maybe<Themes_Angles_Aggregate_Fields>;
+  nodes: Array<Themes_Angles>;
+};
+
+export type Themes_Angles_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Themes_Angles_Aggregate_Bool_Exp_Count>;
+};
+
+export type Themes_Angles_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Themes_Angles_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Themes_Angles_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "themes_angles" */
+export type Themes_Angles_Aggregate_Fields = {
+  __typename?: 'themes_angles_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Themes_Angles_Max_Fields>;
+  min?: Maybe<Themes_Angles_Min_Fields>;
+};
+
+
+/** aggregate fields of "themes_angles" */
+export type Themes_Angles_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Themes_Angles_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "themes_angles" */
+export type Themes_Angles_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Themes_Angles_Max_Order_By>;
+  min?: InputMaybe<Themes_Angles_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "themes_angles" */
+export type Themes_Angles_Arr_Rel_Insert_Input = {
+  data: Array<Themes_Angles_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Themes_Angles_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "themes_angles". All fields are combined with a logical 'AND'. */
+export type Themes_Angles_Bool_Exp = {
+  _and?: InputMaybe<Array<Themes_Angles_Bool_Exp>>;
+  _not?: InputMaybe<Themes_Angles_Bool_Exp>;
+  _or?: InputMaybe<Array<Themes_Angles_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  theme?: InputMaybe<Projects_Themes_Bool_Exp>;
+  theme_id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "themes_angles" */
+export enum Themes_Angles_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  ThemesAnglesPkey = 'themes_angles_pkey'
+}
+
+/** input type for inserting data into table "themes_angles" */
+export type Themes_Angles_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  theme?: InputMaybe<Projects_Themes_Obj_Rel_Insert_Input>;
+  theme_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Themes_Angles_Max_Fields = {
+  __typename?: 'themes_angles_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  theme_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by max() on columns of table "themes_angles" */
+export type Themes_Angles_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  theme_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Themes_Angles_Min_Fields = {
+  __typename?: 'themes_angles_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  theme_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by min() on columns of table "themes_angles" */
+export type Themes_Angles_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  theme_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "themes_angles" */
+export type Themes_Angles_Mutation_Response = {
+  __typename?: 'themes_angles_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Themes_Angles>;
+};
+
+/** on_conflict condition type for table "themes_angles" */
+export type Themes_Angles_On_Conflict = {
+  constraint: Themes_Angles_Constraint;
+  update_columns?: Array<Themes_Angles_Update_Column>;
+  where?: InputMaybe<Themes_Angles_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "themes_angles". */
+export type Themes_Angles_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  theme?: InputMaybe<Projects_Themes_Order_By>;
+  theme_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: themes_angles */
+export type Themes_Angles_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "themes_angles" */
+export enum Themes_Angles_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  ThemeId = 'theme_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "themes_angles" */
+export type Themes_Angles_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  theme_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** Streaming cursor of the table "themes_angles" */
+export type Themes_Angles_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Themes_Angles_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Themes_Angles_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  theme_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** update columns of table "themes_angles" */
+export enum Themes_Angles_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  ThemeId = 'theme_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Themes_Angles_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Themes_Angles_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Themes_Angles_Bool_Exp;
+};
+
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -3609,6 +4291,22 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
 
+export type UpdateAngleMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type UpdateAngleMutation = { __typename?: 'mutation_root', update_themes_angles_by_pk?: { __typename?: 'themes_angles', id: any } | null };
+
+export type CreateAngleMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  themeId: Scalars['uuid']['input'];
+}>;
+
+
+export type CreateAngleMutation = { __typename?: 'mutation_root', insert_themes_angles_one?: { __typename?: 'themes_angles', name: string, id: any } | null };
+
 export type UpdateDisplayNameMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
   avatar_file_key?: InputMaybe<Scalars['String']['input']>;
@@ -3827,7 +4525,39 @@ export type JoinTeamMutationVariables = Exact<{
 
 export type JoinTeamMutation = { __typename?: 'mutation_root', joinTeam: boolean };
 
+export type FetchThemesQueryVariables = Exact<{
+  projectId: Scalars['uuid']['input'];
+}>;
 
+
+export type FetchThemesQuery = { __typename?: 'query_root', projects_themes: Array<{ __typename?: 'projects_themes', id: any, name: string, angles: Array<{ __typename?: 'themes_angles', id: any, name: string }> }> };
+
+export type UpdateThemeMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type UpdateThemeMutation = { __typename?: 'mutation_root', update_projects_themes_by_pk?: { __typename?: 'projects_themes', id: any } | null };
+
+export type DeleteThemeMutationVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type DeleteThemeMutation = { __typename?: 'mutation_root', delete_projects_themes_by_pk?: { __typename?: 'projects_themes', id: any } | null };
+
+export type CreateThemeMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  projectId: Scalars['uuid']['input'];
+}>;
+
+
+export type CreateThemeMutation = { __typename?: 'mutation_root', insert_projects_themes_one?: { __typename?: 'projects_themes', name: string, id: any } | null };
+
+
+export const UpdateAngleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateAngle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_themes_angles_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateAngleMutation, UpdateAngleMutationVariables>;
+export const CreateAngleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createAngle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"themeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_themes_angles_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"theme_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"themeId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateAngleMutation, CreateAngleMutationVariables>;
 export const UpdateDisplayNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDisplayName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"avatar_file_key"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_users_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"avatar_file_key"},"value":{"kind":"Variable","name":{"kind":"Name","value":"avatar_file_key"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar_file_key"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}}]}}]}}]} as unknown as DocumentNode<UpdateDisplayNameMutation, UpdateDisplayNameMutationVariables>;
 export const DestroyUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DestroyUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"destroyUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}]}}]} as unknown as DocumentNode<DestroyUserMutation, DestroyUserMutationVariables>;
 export const ChangePasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ChangePassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"oldPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changePassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"oldPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"oldPassword"}}},{"kind":"Argument","name":{"kind":"Name","value":"newPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}}}]}]}}]} as unknown as DocumentNode<ChangePasswordMutation, ChangePasswordMutationVariables>;
@@ -3855,3 +4585,7 @@ export const FetchTeamDocument = {"kind":"Document","definitions":[{"kind":"Oper
 export const CheckMembershipDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"checkMembership"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams_users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"team_id"}}]}}]}}]} as unknown as DocumentNode<CheckMembershipQuery, CheckMembershipQueryVariables>;
 export const LeaveTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"leaveTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"leaveTeam"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"teamId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}]}}]} as unknown as DocumentNode<LeaveTeamMutation, LeaveTeamMutationVariables>;
 export const JoinTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"joinTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"joinTeam"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"teamId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}]}}]} as unknown as DocumentNode<JoinTeamMutation, JoinTeamMutationVariables>;
+export const FetchThemesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchThemes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects_themes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"angles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<FetchThemesQuery, FetchThemesQueryVariables>;
+export const UpdateThemeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateTheme"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_projects_themes_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateThemeMutation, UpdateThemeMutationVariables>;
+export const DeleteThemeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteTheme"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_projects_themes_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteThemeMutation, DeleteThemeMutationVariables>;
+export const CreateThemeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createTheme"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_projects_themes_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateThemeMutation, CreateThemeMutationVariables>;
