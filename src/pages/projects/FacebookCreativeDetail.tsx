@@ -37,6 +37,9 @@ const facebookCreativeDetail = observer(() => {
       // Prevent save trigger from this initial load
       setIgnoreSave(true)
       setFormData(creative?.data)
+      if (creative?.data) {
+        setValidFormData(creative?.data)
+      }
       return creative
     }
   })
