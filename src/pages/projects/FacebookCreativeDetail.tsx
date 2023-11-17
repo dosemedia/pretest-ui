@@ -50,15 +50,16 @@ const facebookCreativeDetail = observer(() => {
     // Prevent save when not loaded from wiping out data
     if (facebookCreative && formData) {
       if (formRef.current?.validateForm()) {
+        console.log('~~ ignore save', ignoreSave)
         if (!ignoreSave) {
           updateCreative.mutate(debouncedFormData)
         }
-        setIgnoreSave(false)
         setValidFormData(debouncedFormData)
       } else {
         console.log('form is invalid')
       }
     }
+    setIgnoreSave(false)
   }, [debouncedFormData])
 
   const updateCreative = useMutation({

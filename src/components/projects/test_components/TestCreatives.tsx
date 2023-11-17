@@ -17,7 +17,7 @@ const TestObjective = observer(({ project }: { project: Project, onSave: (payloa
     queryKey: ['getProjectFacebookAudienceLocations'],
     retry: false,
     queryFn: () => {
-      if (project.platform === 'facebook') {
+      if ((project.platform === 'facebook') || (project.platform === 'instagram') || (project.platform === 'facebook_instagram')) {
         return facebookCreativeTemplatesStore.fetchTemplates()
       }
       return null
@@ -28,7 +28,7 @@ const TestObjective = observer(({ project }: { project: Project, onSave: (payloa
     queryKey: ['getFacebookCreatives', project.id],
     retry: false,
     queryFn: () => {
-      if (project.platform === 'facebook') {
+      if ((project.platform === 'facebook') || (project.platform === 'instagram') || (project.platform === 'facebook_instagram')) {
         return facebookCreativesStore.fetchFacebookCreativesByProject({ project })
       }
       return null
@@ -54,7 +54,7 @@ const TestObjective = observer(({ project }: { project: Project, onSave: (payloa
 
         <div>Facebook Templates Count : { facebookCreativeTemplates?.length }</div>
         <div className="grid grid-cols-3 gap-4">
-          { facebookCreativeTemplates && facebookCreativeTemplates.map((template) => {
+          { facebookCreativeTemplates && facebookCreativeTemplates.length > 0 && facebookCreativeTemplates.map((template) => {
             return (
               <div key={ template.id } className="flex flex-col">
                 <img src={`https://creatomate.com/files/previews/${template.creatomate_template_id}?v=1683746204095`} />

@@ -33,14 +33,16 @@ import TeamsPage from './pages/teams/TeamsPage.tsx'
 import TeamMembers from './pages/teams/TeamMembers.tsx'
 import JoinTeamPage from './pages/teams/JoinTeamPage.tsx'
 import ContactPage from './pages/ContactPage.tsx'
+import LoginPage from './pages/auth/LoginPage.tsx'
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route errorElement={<ErrorPage />}>
       <Route path="/" element={<RootLayout><HomePage /></RootLayout>} />
       <Route path="auth/register" element={<LoginExcludedRoute><RegisterPage /></LoginExcludedRoute>} />
-      <Route path="auth/login" element={<LoginExcludedRoute><RegisterPage /></LoginExcludedRoute>} />
-      <Route path="auth/forgot" element={<LoginExcludedRoute><RegisterPage /></LoginExcludedRoute>} />
+      <Route path="auth/login" element={<LoginExcludedRoute><LoginPage /></LoginExcludedRoute>} />
+      <Route path="auth/forgot" element={<LoginExcludedRoute><ForgotPasswordPage /></LoginExcludedRoute>} />
       <Route path="me/profile" element={<LoginRequiredRoute><RootLayout><ProfilePage /></RootLayout></LoginRequiredRoute>} />
       <Route path="drafts" element={<LoginRequiredRoute><RootLayout><DraftsPage /></RootLayout></LoginRequiredRoute>} />
       <Route path="verify-email/:code" element={<VerifyEmailLandingPage />} />
