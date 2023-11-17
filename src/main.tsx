@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
+  createRoutesFromElements,
+  Route,
   RouterProvider,
 } from 'react-router-dom'
 import { authStore, AuthContext } from './stores/stores'
@@ -20,208 +22,38 @@ import {
 import './css/index.css'
 import { Toasts } from './components/lib/Toast.tsx'
 import LoginRequiredRoute from './components/auth/LoginRequiredRoute.tsx'
+import RegisterPage from './pages/auth/RegisterPage.tsx'
+import ProfilePage from './pages/auth/ProfilePage.tsx'
+import DraftsPage from './pages/DraftsPage.tsx'
+import VerifyEmailLandingPage from './pages/auth/VerifyEmailLandingPage.tsx'
+import ResetPasswordPage from './pages/auth/ResetPasswordPage.tsx'
+import ProjectDetail from './pages/projects/ProjectDetail.tsx'
+import FacebookCreativeDetail from './pages/projects/FacebookCreativeDetail.tsx'
+import TeamsPage from './pages/teams/TeamsPage.tsx'
+import TeamMembers from './pages/teams/TeamMembers.tsx'
+import JoinTeamPage from './pages/teams/JoinTeamPage.tsx'
+import ContactPage from './pages/ContactPage.tsx'
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    errorElement: <ErrorPage />,
-    children: [
-      { index: true, element: <><RootLayout><HomePage /></RootLayout></> },
-      {
-        path: "/auth/register",
-        async lazy() {
-          const RegisterPage = await import('./pages/auth/RegisterPage.tsx')
-          return {
-            Component: () => {
-              return (
-                <LoginExcludedRoute>
-                  <RegisterPage.default />
-                </LoginExcludedRoute>
-              );
-            },
-          }
-        }
-      },
-      {
-        path: "/auth/login",
-        async lazy() {
-          const LoginPage = await import('./pages/auth/LoginPage.tsx')
-          return {
-            Component: () => {
-              return (
-                <LoginExcludedRoute>
-                  <LoginPage.default />
-                </LoginExcludedRoute>
-              );
-            },
-          }
-        }
-      },
-      {
-        path: "/auth/forgot",
-        async lazy() {
-          const ForgotPasswordPage = await import('./pages/auth/ForgotPasswordPage.tsx')
-          return {
-            Component: () => {
-              return (
-                <LoginExcludedRoute>
-                  <ForgotPasswordPage.default />
-                </LoginExcludedRoute>
-              );
-            },
-          }
-        }
-      },
-      {
-        path: "/me/profile",
-        async lazy() {
-          const ProfilePage = await import('./pages/auth/ProfilePage.tsx')
-          return {
-            Component: () => {
-              return (
-                <>
-                  <LoginRequiredRoute>
-                    <RootLayout>
-                      <ProfilePage.default />
-                    </RootLayout>
-                  </LoginRequiredRoute>
-                </>
-              );
-            },
-          }
-        }
-      },
-      {
-        path: "/drafts",
-        async lazy() {
-          const DraftsPage = await import('./pages/DraftsPage.tsx')
-          return {
-            Component: () => {
-              return (
-                <>
-                  <LoginRequiredRoute>
-                    <RootLayout>
-                      <DraftsPage.default />
-                    </RootLayout>
-                  </LoginRequiredRoute>
-                </>
-              );
-            },
-          }
-        }
-      },
-      {
-        path: "/verify-email/:code",
-        async lazy() {
-          const VerifyEmailLandingPage = await import('./pages/auth/VerifyEmailLandingPage.tsx')
-          return {
-            Component: VerifyEmailLandingPage.default
-          }
-        }
-      },
-      {
-        path: "/reset-password/:code",
-        async lazy() {
-          const ResetPasswordPage = await import('./pages/auth/ResetPasswordPage.tsx')
-          return {
-            Component: ResetPasswordPage.default
-          }
-        }
-      },
-      {
-        path: "/project/:projectId",
-        async lazy() {
-          const ProjectDetail = await import('./pages/projects/ProjectDetail.tsx')
-          return {
-            Component: () => {
-              return (
-                <>
-                  <LoginRequiredRoute>
-                    <RootLayout>
-                      <ProjectDetail.default />
-                    </RootLayout>
-                  </LoginRequiredRoute>
-                </>
-              )
-            }
-          }
-        }
-      },
-      {
-        path: "/teams",
-        async lazy() {
-          const TeamsPage = await import('./pages/teams/TeamsPage.tsx')
-          return {
-            Component: () => {
-              return (
-                <>
-                  <LoginRequiredRoute>
-                    <RootLayout>
-                      <TeamsPage.default />
-                    </RootLayout>
-                  </LoginRequiredRoute>
-                </>
-              )
-            }
-          }
-        }
-      },
-      {
-        path: "/team/:teamId",
-        async lazy() {
-          const JoinTeamPage = await import('./pages/teams/TeamMembers.tsx')
-          return {
-            Component: () => {
-              return (
-                <>
-                  <LoginRequiredRoute>
-                    <RootLayout>
-                      <JoinTeamPage.default />
-                    </RootLayout>
-                  </LoginRequiredRoute>
-                </>
-              )
-            }
-          }
-        }
-      },
-      {
-        path: "/team/:teamId/join",
-        async lazy() {
-          const JoinTeamPage = await import('./pages/teams/JoinTeamPage.tsx')
-          return {
-            Component: () => {
-              return (
-                <>
-                  <LoginRequiredRoute>
-                    <RootLayout>
-                      <JoinTeamPage.default />
-                    </RootLayout>
-                  </LoginRequiredRoute>
-                </>
-              )
-            }
-          }
-        }
-      },
-      {
-        path: "/contact",
-        async lazy() {
-          const ContactPage = await import('./pages/ContactPage.tsx')
-          return {
-            Component: () => {
-              return (
-                <>
-                  <RootLayout><ContactPage.default /></RootLayout>
-                </>
-              )
-            }
-          }
-        }
-      },
-    ]
-  },
-]);
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route errorElement={<ErrorPage />}>
+      <Route path="/" element={<RootLayout><HomePage /></RootLayout>} />
+      <Route path="auth/register" element={<LoginExcludedRoute><RegisterPage /></LoginExcludedRoute>} />
+      <Route path="auth/login" element={<LoginExcludedRoute><RegisterPage /></LoginExcludedRoute>} />
+      <Route path="auth/forgot" element={<LoginExcludedRoute><RegisterPage /></LoginExcludedRoute>} />
+      <Route path="me/profile" element={<LoginRequiredRoute><RootLayout><ProfilePage /></RootLayout></LoginRequiredRoute>} />
+      <Route path="drafts" element={<LoginRequiredRoute><RootLayout><DraftsPage /></RootLayout></LoginRequiredRoute>} />
+      <Route path="verify-email/:code" element={<VerifyEmailLandingPage />} />
+      <Route path="reset-password/:code" element={<ResetPasswordPage />} />
+      <Route path="project/:projectId" element={<LoginRequiredRoute><RootLayout><ProjectDetail /></RootLayout></LoginRequiredRoute>} />
+      <Route path="project/:projectId/facebook_creative/:facebookCreativeId" element={<LoginRequiredRoute><RootLayout><FacebookCreativeDetail /></RootLayout></LoginRequiredRoute>} />
+      <Route path="teams" element={<LoginRequiredRoute><RootLayout><TeamsPage /></RootLayout></LoginRequiredRoute>} />
+      <Route path="team/:teamId" element={<LoginRequiredRoute><RootLayout><TeamMembers /></RootLayout></LoginRequiredRoute>} />
+      <Route path="team/:teamId/join" element={<LoginRequiredRoute><RootLayout><JoinTeamPage /></RootLayout></LoginRequiredRoute>} />
+      <Route path="contact" element={<RootLayout><ContactPage /></RootLayout>} />
+    </Route>
+  ),
+)
 
 const queryClient = new QueryClient()
 

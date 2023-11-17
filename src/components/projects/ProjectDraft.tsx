@@ -10,6 +10,7 @@ import TestBranding from "./test_components/TestBranding";
 import TestPlatform from "./test_components/TestPlatform";
 import TestRuntime from "./test_components/TestRuntime";
 import TestAudience from "./test_components/TestAudience";
+import TestCreatives from "./test_components/TestCreatives";
 import '../../css/draft_project.css'
 import TestThemes from "./test_components/creatives/TestThemes";
 
@@ -131,6 +132,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           {step === 3 && <TestPlatform project={project} onSave={onSave} />}
           {step === 4 && <TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} />}
           {step === 5 && <TestRuntime project={project} onSave={onSave} />}
+          {step === 6 && <TestCreatives project={project} onSave={onSave} />}
           {step === 7 && <TestThemes project={project} onSave={onSave} />}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setStep((prev) => prev -= 1)}>

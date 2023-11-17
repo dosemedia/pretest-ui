@@ -379,6 +379,17 @@ export type Facebook_Audiences_Aggregate = {
   nodes: Array<Facebook_Audiences>;
 };
 
+export type Facebook_Audiences_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Facebook_Audiences_Aggregate_Bool_Exp_Count>;
+};
+
+export type Facebook_Audiences_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Facebook_Audiences_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "facebook_audiences" */
 export type Facebook_Audiences_Aggregate_Fields = {
   __typename?: 'facebook_audiences_aggregate_fields';
@@ -402,10 +413,32 @@ export type Facebook_Audiences_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "facebook_audiences" */
+export type Facebook_Audiences_Aggregate_Order_By = {
+  avg?: InputMaybe<Facebook_Audiences_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Facebook_Audiences_Max_Order_By>;
+  min?: InputMaybe<Facebook_Audiences_Min_Order_By>;
+  stddev?: InputMaybe<Facebook_Audiences_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Facebook_Audiences_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Facebook_Audiences_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Facebook_Audiences_Sum_Order_By>;
+  var_pop?: InputMaybe<Facebook_Audiences_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Facebook_Audiences_Var_Samp_Order_By>;
+  variance?: InputMaybe<Facebook_Audiences_Variance_Order_By>;
+};
+
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type Facebook_Audiences_Append_Input = {
   geo_locations?: InputMaybe<Scalars['jsonb']['input']>;
   interests?: InputMaybe<Scalars['jsonb']['input']>;
+};
+
+/** input type for inserting array relation for remote table "facebook_audiences" */
+export type Facebook_Audiences_Arr_Rel_Insert_Input = {
+  data: Array<Facebook_Audiences_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Facebook_Audiences_On_Conflict>;
 };
 
 /** aggregate avg on columns */
@@ -413,6 +446,12 @@ export type Facebook_Audiences_Avg_Fields = {
   __typename?: 'facebook_audiences_avg_fields';
   max_age?: Maybe<Scalars['Float']['output']>;
   min_age?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Avg_Order_By = {
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "facebook_audiences". All fields are combined with a logical 'AND'. */
@@ -500,6 +539,21 @@ export type Facebook_Audiences_Max_Fields = {
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
+/** order by max() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  device_platforms?: InputMaybe<Order_By>;
+  facebook_positions?: InputMaybe<Order_By>;
+  genders?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  publisher_platforms?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Facebook_Audiences_Min_Fields = {
   __typename?: 'facebook_audiences_min_fields';
@@ -514,6 +568,21 @@ export type Facebook_Audiences_Min_Fields = {
   project_id?: Maybe<Scalars['uuid']['output']>;
   publisher_platforms?: Maybe<Array<Scalars['String']['output']>>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by min() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  device_platforms?: InputMaybe<Order_By>;
+  facebook_positions?: InputMaybe<Order_By>;
+  genders?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  publisher_platforms?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "facebook_audiences" */
@@ -615,6 +684,12 @@ export type Facebook_Audiences_Stddev_Fields = {
   min_age?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Stddev_Order_By = {
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type Facebook_Audiences_Stddev_Pop_Fields = {
   __typename?: 'facebook_audiences_stddev_pop_fields';
@@ -622,11 +697,23 @@ export type Facebook_Audiences_Stddev_Pop_Fields = {
   min_age?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Stddev_Pop_Order_By = {
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type Facebook_Audiences_Stddev_Samp_Fields = {
   __typename?: 'facebook_audiences_stddev_samp_fields';
   max_age?: Maybe<Scalars['Float']['output']>;
   min_age?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Stddev_Samp_Order_By = {
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "facebook_audiences" */
@@ -659,6 +746,12 @@ export type Facebook_Audiences_Sum_Fields = {
   __typename?: 'facebook_audiences_sum_fields';
   max_age?: Maybe<Scalars['numeric']['output']>;
   min_age?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** order by sum() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Sum_Order_By = {
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "facebook_audiences" */
@@ -717,6 +810,12 @@ export type Facebook_Audiences_Var_Pop_Fields = {
   min_age?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Var_Pop_Order_By = {
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type Facebook_Audiences_Var_Samp_Fields = {
   __typename?: 'facebook_audiences_var_samp_fields';
@@ -724,11 +823,596 @@ export type Facebook_Audiences_Var_Samp_Fields = {
   min_age?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_samp() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Var_Samp_Order_By = {
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type Facebook_Audiences_Variance_Fields = {
   __typename?: 'facebook_audiences_variance_fields';
   max_age?: Maybe<Scalars['Float']['output']>;
   min_age?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "facebook_audiences" */
+export type Facebook_Audiences_Variance_Order_By = {
+  max_age?: InputMaybe<Order_By>;
+  min_age?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "facebook_creative_templates" */
+export type Facebook_Creative_Templates = {
+  __typename?: 'facebook_creative_templates';
+  created_at: Scalars['timestamptz']['output'];
+  creatomate_template_id: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  enabled: Scalars['Boolean']['output'];
+  /** An array relationship */
+  facebook_creatives: Array<Facebook_Creatives>;
+  /** An aggregate relationship */
+  facebook_creatives_aggregate: Facebook_Creatives_Aggregate;
+  id: Scalars['uuid']['output'];
+  json_schema: Scalars['jsonb']['output'];
+  name: Scalars['String']['output'];
+  ui_schema?: Maybe<Scalars['jsonb']['output']>;
+  updated_at: Scalars['timestamptz']['output'];
+};
+
+
+/** columns and relationships of "facebook_creative_templates" */
+export type Facebook_Creative_TemplatesFacebook_CreativesArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creatives_Order_By>>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+};
+
+
+/** columns and relationships of "facebook_creative_templates" */
+export type Facebook_Creative_TemplatesFacebook_Creatives_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creatives_Order_By>>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+};
+
+
+/** columns and relationships of "facebook_creative_templates" */
+export type Facebook_Creative_TemplatesJson_SchemaArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** columns and relationships of "facebook_creative_templates" */
+export type Facebook_Creative_TemplatesUi_SchemaArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregated selection of "facebook_creative_templates" */
+export type Facebook_Creative_Templates_Aggregate = {
+  __typename?: 'facebook_creative_templates_aggregate';
+  aggregate?: Maybe<Facebook_Creative_Templates_Aggregate_Fields>;
+  nodes: Array<Facebook_Creative_Templates>;
+};
+
+/** aggregate fields of "facebook_creative_templates" */
+export type Facebook_Creative_Templates_Aggregate_Fields = {
+  __typename?: 'facebook_creative_templates_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Facebook_Creative_Templates_Max_Fields>;
+  min?: Maybe<Facebook_Creative_Templates_Min_Fields>;
+};
+
+
+/** aggregate fields of "facebook_creative_templates" */
+export type Facebook_Creative_Templates_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Facebook_Creative_Templates_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Facebook_Creative_Templates_Append_Input = {
+  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
+  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "facebook_creative_templates". All fields are combined with a logical 'AND'. */
+export type Facebook_Creative_Templates_Bool_Exp = {
+  _and?: InputMaybe<Array<Facebook_Creative_Templates_Bool_Exp>>;
+  _not?: InputMaybe<Facebook_Creative_Templates_Bool_Exp>;
+  _or?: InputMaybe<Array<Facebook_Creative_Templates_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  creatomate_template_id?: InputMaybe<String_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  enabled?: InputMaybe<Boolean_Comparison_Exp>;
+  facebook_creatives?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+  facebook_creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Bool_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  json_schema?: InputMaybe<Jsonb_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  ui_schema?: InputMaybe<Jsonb_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "facebook_creative_templates" */
+export enum Facebook_Creative_Templates_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  FacebookCreativeTemplatesPkey = 'facebook_creative_templates_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Facebook_Creative_Templates_Delete_At_Path_Input = {
+  json_schema?: InputMaybe<Array<Scalars['String']['input']>>;
+  ui_schema?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Facebook_Creative_Templates_Delete_Elem_Input = {
+  json_schema?: InputMaybe<Scalars['Int']['input']>;
+  ui_schema?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Facebook_Creative_Templates_Delete_Key_Input = {
+  json_schema?: InputMaybe<Scalars['String']['input']>;
+  ui_schema?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** input type for inserting data into table "facebook_creative_templates" */
+export type Facebook_Creative_Templates_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  creatomate_template_id?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  facebook_creatives?: InputMaybe<Facebook_Creatives_Arr_Rel_Insert_Input>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Facebook_Creative_Templates_Max_Fields = {
+  __typename?: 'facebook_creative_templates_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  creatomate_template_id?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Facebook_Creative_Templates_Min_Fields = {
+  __typename?: 'facebook_creative_templates_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  creatomate_template_id?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** response of any mutation on the table "facebook_creative_templates" */
+export type Facebook_Creative_Templates_Mutation_Response = {
+  __typename?: 'facebook_creative_templates_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Facebook_Creative_Templates>;
+};
+
+/** input type for inserting object relation for remote table "facebook_creative_templates" */
+export type Facebook_Creative_Templates_Obj_Rel_Insert_Input = {
+  data: Facebook_Creative_Templates_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Facebook_Creative_Templates_On_Conflict>;
+};
+
+/** on_conflict condition type for table "facebook_creative_templates" */
+export type Facebook_Creative_Templates_On_Conflict = {
+  constraint: Facebook_Creative_Templates_Constraint;
+  update_columns?: Array<Facebook_Creative_Templates_Update_Column>;
+  where?: InputMaybe<Facebook_Creative_Templates_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "facebook_creative_templates". */
+export type Facebook_Creative_Templates_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  creatomate_template_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  enabled?: InputMaybe<Order_By>;
+  facebook_creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Order_By>;
+  id?: InputMaybe<Order_By>;
+  json_schema?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  ui_schema?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: facebook_creative_templates */
+export type Facebook_Creative_Templates_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Facebook_Creative_Templates_Prepend_Input = {
+  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
+  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
+};
+
+/** select columns of table "facebook_creative_templates" */
+export enum Facebook_Creative_Templates_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatomateTemplateId = 'creatomate_template_id',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Enabled = 'enabled',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  JsonSchema = 'json_schema',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UiSchema = 'ui_schema',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "facebook_creative_templates" */
+export type Facebook_Creative_Templates_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  creatomate_template_id?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** Streaming cursor of the table "facebook_creative_templates" */
+export type Facebook_Creative_Templates_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Facebook_Creative_Templates_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Facebook_Creative_Templates_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  creatomate_template_id?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** update columns of table "facebook_creative_templates" */
+export enum Facebook_Creative_Templates_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatomateTemplateId = 'creatomate_template_id',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Enabled = 'enabled',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  JsonSchema = 'json_schema',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UiSchema = 'ui_schema',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Facebook_Creative_Templates_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<Facebook_Creative_Templates_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<Facebook_Creative_Templates_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<Facebook_Creative_Templates_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<Facebook_Creative_Templates_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<Facebook_Creative_Templates_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Facebook_Creative_Templates_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Facebook_Creative_Templates_Bool_Exp;
+};
+
+/** columns and relationships of "facebook_creatives" */
+export type Facebook_Creatives = {
+  __typename?: 'facebook_creatives';
+  created_at: Scalars['timestamptz']['output'];
+  data?: Maybe<Scalars['jsonb']['output']>;
+  /** An object relationship */
+  facebook_creative_template: Facebook_Creative_Templates;
+  id: Scalars['uuid']['output'];
+  /** An object relationship */
+  project: Projects;
+  project_id: Scalars['uuid']['output'];
+  template_id: Scalars['uuid']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+};
+
+
+/** columns and relationships of "facebook_creatives" */
+export type Facebook_CreativesDataArgs = {
+  path?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregated selection of "facebook_creatives" */
+export type Facebook_Creatives_Aggregate = {
+  __typename?: 'facebook_creatives_aggregate';
+  aggregate?: Maybe<Facebook_Creatives_Aggregate_Fields>;
+  nodes: Array<Facebook_Creatives>;
+};
+
+export type Facebook_Creatives_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Facebook_Creatives_Aggregate_Bool_Exp_Count>;
+};
+
+export type Facebook_Creatives_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "facebook_creatives" */
+export type Facebook_Creatives_Aggregate_Fields = {
+  __typename?: 'facebook_creatives_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Facebook_Creatives_Max_Fields>;
+  min?: Maybe<Facebook_Creatives_Min_Fields>;
+};
+
+
+/** aggregate fields of "facebook_creatives" */
+export type Facebook_Creatives_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "facebook_creatives" */
+export type Facebook_Creatives_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Facebook_Creatives_Max_Order_By>;
+  min?: InputMaybe<Facebook_Creatives_Min_Order_By>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Facebook_Creatives_Append_Input = {
+  data?: InputMaybe<Scalars['jsonb']['input']>;
+};
+
+/** input type for inserting array relation for remote table "facebook_creatives" */
+export type Facebook_Creatives_Arr_Rel_Insert_Input = {
+  data: Array<Facebook_Creatives_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Facebook_Creatives_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "facebook_creatives". All fields are combined with a logical 'AND'. */
+export type Facebook_Creatives_Bool_Exp = {
+  _and?: InputMaybe<Array<Facebook_Creatives_Bool_Exp>>;
+  _not?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+  _or?: InputMaybe<Array<Facebook_Creatives_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  data?: InputMaybe<Jsonb_Comparison_Exp>;
+  facebook_creative_template?: InputMaybe<Facebook_Creative_Templates_Bool_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  project?: InputMaybe<Projects_Bool_Exp>;
+  project_id?: InputMaybe<Uuid_Comparison_Exp>;
+  template_id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "facebook_creatives" */
+export enum Facebook_Creatives_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  FacebookCreativesPkey = 'facebook_creatives_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Facebook_Creatives_Delete_At_Path_Input = {
+  data?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Facebook_Creatives_Delete_Elem_Input = {
+  data?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Facebook_Creatives_Delete_Key_Input = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** input type for inserting data into table "facebook_creatives" */
+export type Facebook_Creatives_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  data?: InputMaybe<Scalars['jsonb']['input']>;
+  facebook_creative_template?: InputMaybe<Facebook_Creative_Templates_Obj_Rel_Insert_Input>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  project?: InputMaybe<Projects_Obj_Rel_Insert_Input>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  template_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Facebook_Creatives_Max_Fields = {
+  __typename?: 'facebook_creatives_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  project_id?: Maybe<Scalars['uuid']['output']>;
+  template_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by max() on columns of table "facebook_creatives" */
+export type Facebook_Creatives_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  template_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Facebook_Creatives_Min_Fields = {
+  __typename?: 'facebook_creatives_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  project_id?: Maybe<Scalars['uuid']['output']>;
+  template_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by min() on columns of table "facebook_creatives" */
+export type Facebook_Creatives_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  template_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "facebook_creatives" */
+export type Facebook_Creatives_Mutation_Response = {
+  __typename?: 'facebook_creatives_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Facebook_Creatives>;
+};
+
+/** on_conflict condition type for table "facebook_creatives" */
+export type Facebook_Creatives_On_Conflict = {
+  constraint: Facebook_Creatives_Constraint;
+  update_columns?: Array<Facebook_Creatives_Update_Column>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "facebook_creatives". */
+export type Facebook_Creatives_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  data?: InputMaybe<Order_By>;
+  facebook_creative_template?: InputMaybe<Facebook_Creative_Templates_Order_By>;
+  id?: InputMaybe<Order_By>;
+  project?: InputMaybe<Projects_Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  template_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: facebook_creatives */
+export type Facebook_Creatives_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Facebook_Creatives_Prepend_Input = {
+  data?: InputMaybe<Scalars['jsonb']['input']>;
+};
+
+/** select columns of table "facebook_creatives" */
+export enum Facebook_Creatives_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Data = 'data',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  TemplateId = 'template_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "facebook_creatives" */
+export type Facebook_Creatives_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  data?: InputMaybe<Scalars['jsonb']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  template_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** Streaming cursor of the table "facebook_creatives" */
+export type Facebook_Creatives_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Facebook_Creatives_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Facebook_Creatives_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  data?: InputMaybe<Scalars['jsonb']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  template_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** update columns of table "facebook_creatives" */
+export enum Facebook_Creatives_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Data = 'data',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  TemplateId = 'template_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Facebook_Creatives_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<Facebook_Creatives_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<Facebook_Creatives_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<Facebook_Creatives_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<Facebook_Creatives_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<Facebook_Creatives_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Facebook_Creatives_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Facebook_Creatives_Bool_Exp;
 };
 
 /** Invitations from teams to users */
@@ -966,6 +1650,14 @@ export type Mutation_Root = {
   delete_facebook_audiences?: Maybe<Facebook_Audiences_Mutation_Response>;
   /** delete single row from the table: "facebook_audiences" */
   delete_facebook_audiences_by_pk?: Maybe<Facebook_Audiences>;
+  /** delete data from the table: "facebook_creative_templates" */
+  delete_facebook_creative_templates?: Maybe<Facebook_Creative_Templates_Mutation_Response>;
+  /** delete single row from the table: "facebook_creative_templates" */
+  delete_facebook_creative_templates_by_pk?: Maybe<Facebook_Creative_Templates>;
+  /** delete data from the table: "facebook_creatives" */
+  delete_facebook_creatives?: Maybe<Facebook_Creatives_Mutation_Response>;
+  /** delete single row from the table: "facebook_creatives" */
+  delete_facebook_creatives_by_pk?: Maybe<Facebook_Creatives>;
   /** delete data from the table: "invitations" */
   delete_invitations?: Maybe<Invitations_Mutation_Response>;
   /** delete single row from the table: "invitations" */
@@ -1012,6 +1704,14 @@ export type Mutation_Root = {
   insert_facebook_audiences?: Maybe<Facebook_Audiences_Mutation_Response>;
   /** insert a single row into the table: "facebook_audiences" */
   insert_facebook_audiences_one?: Maybe<Facebook_Audiences>;
+  /** insert data into the table: "facebook_creative_templates" */
+  insert_facebook_creative_templates?: Maybe<Facebook_Creative_Templates_Mutation_Response>;
+  /** insert a single row into the table: "facebook_creative_templates" */
+  insert_facebook_creative_templates_one?: Maybe<Facebook_Creative_Templates>;
+  /** insert data into the table: "facebook_creatives" */
+  insert_facebook_creatives?: Maybe<Facebook_Creatives_Mutation_Response>;
+  /** insert a single row into the table: "facebook_creatives" */
+  insert_facebook_creatives_one?: Maybe<Facebook_Creatives>;
   /** insert data into the table: "invitations" */
   insert_invitations?: Maybe<Invitations_Mutation_Response>;
   /** insert a single row into the table: "invitations" */
@@ -1069,6 +1769,18 @@ export type Mutation_Root = {
   update_facebook_audiences_by_pk?: Maybe<Facebook_Audiences>;
   /** update multiples rows of table: "facebook_audiences" */
   update_facebook_audiences_many?: Maybe<Array<Maybe<Facebook_Audiences_Mutation_Response>>>;
+  /** update data of the table: "facebook_creative_templates" */
+  update_facebook_creative_templates?: Maybe<Facebook_Creative_Templates_Mutation_Response>;
+  /** update single row of the table: "facebook_creative_templates" */
+  update_facebook_creative_templates_by_pk?: Maybe<Facebook_Creative_Templates>;
+  /** update multiples rows of table: "facebook_creative_templates" */
+  update_facebook_creative_templates_many?: Maybe<Array<Maybe<Facebook_Creative_Templates_Mutation_Response>>>;
+  /** update data of the table: "facebook_creatives" */
+  update_facebook_creatives?: Maybe<Facebook_Creatives_Mutation_Response>;
+  /** update single row of the table: "facebook_creatives" */
+  update_facebook_creatives_by_pk?: Maybe<Facebook_Creatives>;
+  /** update multiples rows of table: "facebook_creatives" */
+  update_facebook_creatives_many?: Maybe<Array<Maybe<Facebook_Creatives_Mutation_Response>>>;
   /** update data of the table: "invitations" */
   update_invitations?: Maybe<Invitations_Mutation_Response>;
   /** update single row of the table: "invitations" */
@@ -1174,6 +1886,30 @@ export type Mutation_RootDelete_Facebook_AudiencesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Facebook_Audiences_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Facebook_Creative_TemplatesArgs = {
+  where: Facebook_Creative_Templates_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Facebook_Creative_Templates_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Facebook_CreativesArgs = {
+  where: Facebook_Creatives_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Facebook_Creatives_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -1326,6 +2062,34 @@ export type Mutation_RootInsert_Facebook_AudiencesArgs = {
 export type Mutation_RootInsert_Facebook_Audiences_OneArgs = {
   object: Facebook_Audiences_Insert_Input;
   on_conflict?: InputMaybe<Facebook_Audiences_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Facebook_Creative_TemplatesArgs = {
+  objects: Array<Facebook_Creative_Templates_Insert_Input>;
+  on_conflict?: InputMaybe<Facebook_Creative_Templates_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Facebook_Creative_Templates_OneArgs = {
+  object: Facebook_Creative_Templates_Insert_Input;
+  on_conflict?: InputMaybe<Facebook_Creative_Templates_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Facebook_CreativesArgs = {
+  objects: Array<Facebook_Creatives_Insert_Input>;
+  on_conflict?: InputMaybe<Facebook_Creatives_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Facebook_Creatives_OneArgs = {
+  object: Facebook_Creatives_Insert_Input;
+  on_conflict?: InputMaybe<Facebook_Creatives_On_Conflict>;
 };
 
 
@@ -1548,6 +2312,66 @@ export type Mutation_RootUpdate_Facebook_Audiences_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Facebook_Creative_TemplatesArgs = {
+  _append?: InputMaybe<Facebook_Creative_Templates_Append_Input>;
+  _delete_at_path?: InputMaybe<Facebook_Creative_Templates_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Facebook_Creative_Templates_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Facebook_Creative_Templates_Delete_Key_Input>;
+  _prepend?: InputMaybe<Facebook_Creative_Templates_Prepend_Input>;
+  _set?: InputMaybe<Facebook_Creative_Templates_Set_Input>;
+  where: Facebook_Creative_Templates_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Facebook_Creative_Templates_By_PkArgs = {
+  _append?: InputMaybe<Facebook_Creative_Templates_Append_Input>;
+  _delete_at_path?: InputMaybe<Facebook_Creative_Templates_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Facebook_Creative_Templates_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Facebook_Creative_Templates_Delete_Key_Input>;
+  _prepend?: InputMaybe<Facebook_Creative_Templates_Prepend_Input>;
+  _set?: InputMaybe<Facebook_Creative_Templates_Set_Input>;
+  pk_columns: Facebook_Creative_Templates_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Facebook_Creative_Templates_ManyArgs = {
+  updates: Array<Facebook_Creative_Templates_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Facebook_CreativesArgs = {
+  _append?: InputMaybe<Facebook_Creatives_Append_Input>;
+  _delete_at_path?: InputMaybe<Facebook_Creatives_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Facebook_Creatives_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Facebook_Creatives_Delete_Key_Input>;
+  _prepend?: InputMaybe<Facebook_Creatives_Prepend_Input>;
+  _set?: InputMaybe<Facebook_Creatives_Set_Input>;
+  where: Facebook_Creatives_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Facebook_Creatives_By_PkArgs = {
+  _append?: InputMaybe<Facebook_Creatives_Append_Input>;
+  _delete_at_path?: InputMaybe<Facebook_Creatives_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Facebook_Creatives_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Facebook_Creatives_Delete_Key_Input>;
+  _prepend?: InputMaybe<Facebook_Creatives_Prepend_Input>;
+  _set?: InputMaybe<Facebook_Creatives_Set_Input>;
+  pk_columns: Facebook_Creatives_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Facebook_Creatives_ManyArgs = {
+  updates: Array<Facebook_Creatives_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_InvitationsArgs = {
   _set?: InputMaybe<Invitations_Set_Input>;
   where: Invitations_Bool_Exp;
@@ -1764,8 +2588,16 @@ export enum Order_By {
 /** columns and relationships of "projects" */
 export type Projects = {
   __typename?: 'projects';
+  /** An array relationship */
+  audiences: Array<Facebook_Audiences>;
+  /** An aggregate relationship */
+  audiences_aggregate: Facebook_Audiences_Aggregate;
   branding?: Maybe<Scalars['String']['output']>;
   created_at: Scalars['timestamptz']['output'];
+  /** An array relationship */
+  creatives: Array<Facebook_Creatives>;
+  /** An aggregate relationship */
+  creatives_aggregate: Facebook_Creatives_Aggregate;
   id: Scalars['uuid']['output'];
   is_draft: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
@@ -1778,7 +2610,51 @@ export type Projects = {
   teams_projects: Array<Teams_Projects>;
   /** An aggregate relationship */
   teams_projects_aggregate: Teams_Projects_Aggregate;
+  /** An array relationship */
+  themes: Array<Projects_Themes>;
+  /** An aggregate relationship */
+  themes_aggregate: Projects_Themes_Aggregate;
   updated_at: Scalars['timestamptz']['output'];
+};
+
+
+/** columns and relationships of "projects" */
+export type ProjectsAudiencesArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Audiences_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Audiences_Order_By>>;
+  where?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+};
+
+
+/** columns and relationships of "projects" */
+export type ProjectsAudiences_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Audiences_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Audiences_Order_By>>;
+  where?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+};
+
+
+/** columns and relationships of "projects" */
+export type ProjectsCreativesArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creatives_Order_By>>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+};
+
+
+/** columns and relationships of "projects" */
+export type ProjectsCreatives_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creatives_Order_By>>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
 };
 
 
@@ -1799,6 +2675,26 @@ export type ProjectsTeams_Projects_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Teams_Projects_Order_By>>;
   where?: InputMaybe<Teams_Projects_Bool_Exp>;
+};
+
+
+/** columns and relationships of "projects" */
+export type ProjectsThemesArgs = {
+  distinct_on?: InputMaybe<Array<Projects_Themes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Projects_Themes_Order_By>>;
+  where?: InputMaybe<Projects_Themes_Bool_Exp>;
+};
+
+
+/** columns and relationships of "projects" */
+export type ProjectsThemes_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Projects_Themes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Projects_Themes_Order_By>>;
+  where?: InputMaybe<Projects_Themes_Bool_Exp>;
 };
 
 /** aggregated selection of "projects" */
@@ -1828,8 +2724,12 @@ export type Projects_Bool_Exp = {
   _and?: InputMaybe<Array<Projects_Bool_Exp>>;
   _not?: InputMaybe<Projects_Bool_Exp>;
   _or?: InputMaybe<Array<Projects_Bool_Exp>>;
+  audiences?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+  audiences_aggregate?: InputMaybe<Facebook_Audiences_Aggregate_Bool_Exp>;
   branding?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  creatives?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+  creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   is_draft?: InputMaybe<Boolean_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
@@ -1840,6 +2740,8 @@ export type Projects_Bool_Exp = {
   stop_time?: InputMaybe<Timestamptz_Comparison_Exp>;
   teams_projects?: InputMaybe<Teams_Projects_Bool_Exp>;
   teams_projects_aggregate?: InputMaybe<Teams_Projects_Aggregate_Bool_Exp>;
+  themes?: InputMaybe<Projects_Themes_Bool_Exp>;
+  themes_aggregate?: InputMaybe<Projects_Themes_Aggregate_Bool_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -1851,8 +2753,10 @@ export enum Projects_Constraint {
 
 /** input type for inserting data into table "projects" */
 export type Projects_Insert_Input = {
+  audiences?: InputMaybe<Facebook_Audiences_Arr_Rel_Insert_Input>;
   branding?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  creatives?: InputMaybe<Facebook_Creatives_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   is_draft?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1862,6 +2766,7 @@ export type Projects_Insert_Input = {
   start_time?: InputMaybe<Scalars['timestamptz']['input']>;
   stop_time?: InputMaybe<Scalars['timestamptz']['input']>;
   teams_projects?: InputMaybe<Teams_Projects_Arr_Rel_Insert_Input>;
+  themes?: InputMaybe<Projects_Themes_Arr_Rel_Insert_Input>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
@@ -1920,8 +2825,10 @@ export type Projects_On_Conflict = {
 
 /** Ordering options when selecting data from "projects". */
 export type Projects_Order_By = {
+  audiences_aggregate?: InputMaybe<Facebook_Audiences_Aggregate_Order_By>;
   branding?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
   is_draft?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
@@ -1931,6 +2838,7 @@ export type Projects_Order_By = {
   start_time?: InputMaybe<Order_By>;
   stop_time?: InputMaybe<Order_By>;
   teams_projects_aggregate?: InputMaybe<Teams_Projects_Aggregate_Order_By>;
+  themes_aggregate?: InputMaybe<Projects_Themes_Aggregate_Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
 
@@ -2046,6 +2954,17 @@ export type Projects_Themes_Aggregate = {
   nodes: Array<Projects_Themes>;
 };
 
+export type Projects_Themes_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Projects_Themes_Aggregate_Bool_Exp_Count>;
+};
+
+export type Projects_Themes_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Projects_Themes_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Projects_Themes_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "projects_themes" */
 export type Projects_Themes_Aggregate_Fields = {
   __typename?: 'projects_themes_aggregate_fields';
@@ -2059,6 +2978,20 @@ export type Projects_Themes_Aggregate_Fields = {
 export type Projects_Themes_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Projects_Themes_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "projects_themes" */
+export type Projects_Themes_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Projects_Themes_Max_Order_By>;
+  min?: InputMaybe<Projects_Themes_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "projects_themes" */
+export type Projects_Themes_Arr_Rel_Insert_Input = {
+  data: Array<Projects_Themes_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Projects_Themes_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "projects_themes". All fields are combined with a logical 'AND'. */
@@ -2103,6 +3036,15 @@ export type Projects_Themes_Max_Fields = {
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
+/** order by max() on columns of table "projects_themes" */
+export type Projects_Themes_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Projects_Themes_Min_Fields = {
   __typename?: 'projects_themes_min_fields';
@@ -2111,6 +3053,15 @@ export type Projects_Themes_Min_Fields = {
   name?: Maybe<Scalars['String']['output']>;
   project_id?: Maybe<Scalars['uuid']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by min() on columns of table "projects_themes" */
+export type Projects_Themes_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "projects_themes" */
@@ -2260,6 +3211,18 @@ export type Query_Root = {
   facebook_audiences_aggregate: Facebook_Audiences_Aggregate;
   /** fetch data from the table: "facebook_audiences" using primary key columns */
   facebook_audiences_by_pk?: Maybe<Facebook_Audiences>;
+  /** fetch data from the table: "facebook_creative_templates" */
+  facebook_creative_templates: Array<Facebook_Creative_Templates>;
+  /** fetch aggregated fields from the table: "facebook_creative_templates" */
+  facebook_creative_templates_aggregate: Facebook_Creative_Templates_Aggregate;
+  /** fetch data from the table: "facebook_creative_templates" using primary key columns */
+  facebook_creative_templates_by_pk?: Maybe<Facebook_Creative_Templates>;
+  /** An array relationship */
+  facebook_creatives: Array<Facebook_Creatives>;
+  /** An aggregate relationship */
+  facebook_creatives_aggregate: Facebook_Creatives_Aggregate;
+  /** fetch data from the table: "facebook_creatives" using primary key columns */
+  facebook_creatives_by_pk?: Maybe<Facebook_Creatives>;
   /** An array relationship */
   invitations: Array<Invitations>;
   /** An aggregate relationship */
@@ -2359,6 +3322,52 @@ export type Query_RootFacebook_Audiences_AggregateArgs = {
 
 
 export type Query_RootFacebook_Audiences_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootFacebook_Creative_TemplatesArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creative_Templates_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creative_Templates_Order_By>>;
+  where?: InputMaybe<Facebook_Creative_Templates_Bool_Exp>;
+};
+
+
+export type Query_RootFacebook_Creative_Templates_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creative_Templates_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creative_Templates_Order_By>>;
+  where?: InputMaybe<Facebook_Creative_Templates_Bool_Exp>;
+};
+
+
+export type Query_RootFacebook_Creative_Templates_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootFacebook_CreativesArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creatives_Order_By>>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+};
+
+
+export type Query_RootFacebook_Creatives_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creatives_Order_By>>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+};
+
+
+export type Query_RootFacebook_Creatives_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -2590,6 +3599,22 @@ export type Subscription_Root = {
   facebook_audiences_by_pk?: Maybe<Facebook_Audiences>;
   /** fetch data from the table in a streaming manner: "facebook_audiences" */
   facebook_audiences_stream: Array<Facebook_Audiences>;
+  /** fetch data from the table: "facebook_creative_templates" */
+  facebook_creative_templates: Array<Facebook_Creative_Templates>;
+  /** fetch aggregated fields from the table: "facebook_creative_templates" */
+  facebook_creative_templates_aggregate: Facebook_Creative_Templates_Aggregate;
+  /** fetch data from the table: "facebook_creative_templates" using primary key columns */
+  facebook_creative_templates_by_pk?: Maybe<Facebook_Creative_Templates>;
+  /** fetch data from the table in a streaming manner: "facebook_creative_templates" */
+  facebook_creative_templates_stream: Array<Facebook_Creative_Templates>;
+  /** An array relationship */
+  facebook_creatives: Array<Facebook_Creatives>;
+  /** An aggregate relationship */
+  facebook_creatives_aggregate: Facebook_Creatives_Aggregate;
+  /** fetch data from the table: "facebook_creatives" using primary key columns */
+  facebook_creatives_by_pk?: Maybe<Facebook_Creatives>;
+  /** fetch data from the table in a streaming manner: "facebook_creatives" */
+  facebook_creatives_stream: Array<Facebook_Creatives>;
   /** An array relationship */
   invitations: Array<Invitations>;
   /** An aggregate relationship */
@@ -2722,6 +3747,66 @@ export type Subscription_RootFacebook_Audiences_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Facebook_Audiences_Stream_Cursor_Input>>;
   where?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+};
+
+
+export type Subscription_RootFacebook_Creative_TemplatesArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creative_Templates_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creative_Templates_Order_By>>;
+  where?: InputMaybe<Facebook_Creative_Templates_Bool_Exp>;
+};
+
+
+export type Subscription_RootFacebook_Creative_Templates_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creative_Templates_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creative_Templates_Order_By>>;
+  where?: InputMaybe<Facebook_Creative_Templates_Bool_Exp>;
+};
+
+
+export type Subscription_RootFacebook_Creative_Templates_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootFacebook_Creative_Templates_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Facebook_Creative_Templates_Stream_Cursor_Input>>;
+  where?: InputMaybe<Facebook_Creative_Templates_Bool_Exp>;
+};
+
+
+export type Subscription_RootFacebook_CreativesArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creatives_Order_By>>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+};
+
+
+export type Subscription_RootFacebook_Creatives_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Facebook_Creatives_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Facebook_Creatives_Order_By>>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
+};
+
+
+export type Subscription_RootFacebook_Creatives_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootFacebook_Creatives_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Facebook_Creatives_Stream_Cursor_Input>>;
+  where?: InputMaybe<Facebook_Creatives_Bool_Exp>;
 };
 
 
@@ -3404,9 +4489,7 @@ export enum Teams_Roles_Constraint {
 }
 
 export enum Teams_Roles_Enum {
-  /** Admin permissions for a team */
-  Admin = 'admin',
-  /** View permissions for a team */
+  /** An ordinary team member. */
   Member = 'member'
 }
 
@@ -4401,6 +5484,11 @@ export type FacebookApiGetMutationVariables = Exact<{
 
 export type FacebookApiGetMutation = { __typename?: 'mutation_root', facebookAPIGet: any };
 
+export type FetchFacebookCreativeTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FetchFacebookCreativeTemplatesQuery = { __typename?: 'query_root', facebook_creative_templates: Array<{ __typename?: 'facebook_creative_templates', name: string, ui_schema?: any | null, json_schema: any, updated_at: any, created_at: any, description?: string | null, creatomate_template_id: string, id: any }> };
+
 export type UpdateFacebookAudiencesByProjectIdMutationVariables = Exact<{
   geo_locations: Scalars['jsonb']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
@@ -4432,6 +5520,36 @@ export type GetFacebookAudiencesByProjectIdQueryVariables = Exact<{
 
 
 export type GetFacebookAudiencesByProjectIdQuery = { __typename?: 'query_root', facebook_audiences: Array<{ __typename?: 'facebook_audiences', id: any, name?: string | null, geo_locations: any, device_platforms: Array<string>, interests?: any | null, facebook_positions: Array<string>, genders?: Array<number> | null, min_age?: any | null, max_age?: any | null, updated_at: any }> };
+
+export type CreateFacebookCreativeMutationVariables = Exact<{
+  projectId: Scalars['uuid']['input'];
+  templateId: Scalars['uuid']['input'];
+}>;
+
+
+export type CreateFacebookCreativeMutation = { __typename?: 'mutation_root', insert_facebook_creatives?: { __typename?: 'facebook_creatives_mutation_response', returning: Array<{ __typename?: 'facebook_creatives', id: any, created_at: any, data?: any | null, project_id: any, template_id: any, updated_at: any }> } | null };
+
+export type FetchFacebookCreativesByProjectIdQueryVariables = Exact<{
+  projectId: Scalars['uuid']['input'];
+}>;
+
+
+export type FetchFacebookCreativesByProjectIdQuery = { __typename?: 'query_root', facebook_creatives: Array<{ __typename?: 'facebook_creatives', project_id: any, template_id: any, updated_at: any, id: any, data?: any | null, created_at: any, facebook_creative_template: { __typename?: 'facebook_creative_templates', created_at: any, creatomate_template_id: string, description?: string | null, id: any, json_schema: any, name: string, ui_schema?: any | null, updated_at: any } }> };
+
+export type FetchFacebookCreativeWithTemplateQueryVariables = Exact<{
+  facebookCreativeId: Scalars['uuid']['input'];
+}>;
+
+
+export type FetchFacebookCreativeWithTemplateQuery = { __typename?: 'query_root', facebook_creatives_by_pk?: { __typename?: 'facebook_creatives', created_at: any, data?: any | null, id: any, project_id: any, template_id: any, updated_at: any, facebook_creative_template: { __typename?: 'facebook_creative_templates', created_at: any, creatomate_template_id: string, description?: string | null, id: any, json_schema: any, name: string, ui_schema?: any | null, updated_at: any } } | null };
+
+export type UpdateFacebookCreativeMutationVariables = Exact<{
+  facebookCreativeId: Scalars['uuid']['input'];
+  data: Scalars['jsonb']['input'];
+}>;
+
+
+export type UpdateFacebookCreativeMutation = { __typename?: 'mutation_root', update_facebook_creatives_by_pk?: { __typename?: 'facebook_creatives', id: any, data?: any | null } | null };
 
 export type CreateProjectMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -4570,9 +5688,14 @@ export const VerifyEmailDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"newPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}}}]}]}}]} as unknown as DocumentNode<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const SubmitContactFormDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SubmitContactForm"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"message"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_contact_form_submissions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"message"},"value":{"kind":"Variable","name":{"kind":"Name","value":"message"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<SubmitContactFormMutation, SubmitContactFormMutationVariables>;
 export const FacebookApiGetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FacebookAPIGet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"url"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebookAPIGet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"url"},"value":{"kind":"Variable","name":{"kind":"Name","value":"url"}}}]}]}}]} as unknown as DocumentNode<FacebookApiGetMutation, FacebookApiGetMutationVariables>;
+export const FetchFacebookCreativeTemplatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFacebookCreativeTemplates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_creative_templates"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ui_schema"}},{"kind":"Field","name":{"kind":"Name","value":"json_schema"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"creatomate_template_id"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<FetchFacebookCreativeTemplatesQuery, FetchFacebookCreativeTemplatesQueryVariables>;
 export const UpdateFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"jsonb"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"genders"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"min_age"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"numeric"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"max_age"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"numeric"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"device_platforms"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"facebook_positions"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"interests"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"jsonb"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_facebook_audiences_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"geo_locations"},"value":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"genders"},"value":{"kind":"Variable","name":{"kind":"Name","value":"genders"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"min_age"},"value":{"kind":"Variable","name":{"kind":"Name","value":"min_age"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"max_age"},"value":{"kind":"Variable","name":{"kind":"Name","value":"max_age"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"device_platforms"},"value":{"kind":"Variable","name":{"kind":"Name","value":"device_platforms"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"facebook_positions"},"value":{"kind":"Variable","name":{"kind":"Name","value":"facebook_positions"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"interests"},"value":{"kind":"Variable","name":{"kind":"Name","value":"interests"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<UpdateFacebookAudiencesByProjectIdMutation, UpdateFacebookAudiencesByProjectIdMutationVariables>;
 export const CreateFacebookAudienceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateFacebookAudience"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"jsonb"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"publisher_platforms"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_facebook_audiences_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"geo_locations"},"value":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"publisher_platforms"},"value":{"kind":"Variable","name":{"kind":"Name","value":"publisher_platforms"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"publisher_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<CreateFacebookAudienceMutation, CreateFacebookAudienceMutationVariables>;
 export const GetFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_audiences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<GetFacebookAudiencesByProjectIdQuery, GetFacebookAudiencesByProjectIdQueryVariables>;
+export const CreateFacebookCreativeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateFacebookCreative"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"templateId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_facebook_creatives"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"template_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"templateId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_id"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<CreateFacebookCreativeMutation, CreateFacebookCreativeMutationVariables>;
+export const FetchFacebookCreativesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFacebookCreativesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_creatives"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_id"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_creative_template"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creatomate_template_id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"json_schema"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ui_schema"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<FetchFacebookCreativesByProjectIdQuery, FetchFacebookCreativesByProjectIdQueryVariables>;
+export const FetchFacebookCreativeWithTemplateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFacebookCreativeWithTemplate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"facebookCreativeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_creatives_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"facebookCreativeId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_id"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_creative_template"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creatomate_template_id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"json_schema"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ui_schema"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<FetchFacebookCreativeWithTemplateQuery, FetchFacebookCreativeWithTemplateQueryVariables>;
+export const UpdateFacebookCreativeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateFacebookCreative"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"facebookCreativeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"jsonb"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_facebook_creatives_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"facebookCreativeId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}}]}}]}}]} as unknown as DocumentNode<UpdateFacebookCreativeMutation, UpdateFacebookCreativeMutationVariables>;
 export const CreateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"team_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"team_id"}}]}}]}}]} as unknown as DocumentNode<CreateProjectMutation, CreateProjectMutationVariables>;
 export const DeleteProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteProjectMutation, DeleteProjectMutationVariables>;
 export const UpdateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"objective"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"branding"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"platform"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectType"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startTime"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"stopTime"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"objective"},"value":{"kind":"Variable","name":{"kind":"Name","value":"objective"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"branding"},"value":{"kind":"Variable","name":{"kind":"Name","value":"branding"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"platform"},"value":{"kind":"Variable","name":{"kind":"Name","value":"platform"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"project_type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectType"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"start_time"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startTime"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"stop_time"},"value":{"kind":"Variable","name":{"kind":"Name","value":"stopTime"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"is_draft"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}}]}}]}}]} as unknown as DocumentNode<UpdateProjectMutation, UpdateProjectMutationVariables>;
