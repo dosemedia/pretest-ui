@@ -1,19 +1,19 @@
 import { makeAutoObservable } from 'mobx'
 import { client } from '../graphql'
 import { graphql } from '../gql'
-import { Themes_Angles as ThemeAngle } from "../gql/graphql";
+import { Themes_Angles as ThemeAngle, Themes_Angles_Set_Input } from "../gql/graphql";
 export class ThemesAngles {
   constructor() {
     makeAutoObservable(this)
   }
-  async updateAngle({ id, name }: { id: string, name: string }): Promise<boolean> {
+  async updateAngle({ id, payload }: { id: string, payload: ThemeAngle }): Promise<boolean> {
     const result = await client.mutation(graphql(`
-    mutation updateAngle($id: uuid!, $name: String!) {
-      update_themes_angles_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {
+    mutation updateAngle($id: uuid!, $updates: themes_angles_set_input) {
+      update_themes_angles_by_pk(pk_columns: {id: $id}, _set: $updates) {
         id
       }
     }
-    `), { id, name })
+    `), { id, updates: payload as Themes_Angles_Set_Input})
     if (result.error) {
       throw result.error
     }

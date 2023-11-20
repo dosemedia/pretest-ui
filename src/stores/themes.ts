@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { client } from '../graphql'
 import { graphql } from '../gql'
-import { Projects_Themes as ProjectTheme } from "../gql/graphql";
+import { Projects_Themes as ProjectTheme, Projects_Themes_Set_Input } from "../gql/graphql";
 import { themesAngles } from './stores';
 import { angles } from '../components/lib/constants/MatrixPreset';
 export class Themes {
@@ -27,14 +27,14 @@ export class Themes {
     return result.data?.projects_themes as ProjectTheme[]
   }
 
-  async updateTheme({ id, name }: { id: string, name: string }): Promise<boolean> {
+  async updateTheme({ id, payload }: { id: string, payload: ProjectTheme }): Promise<boolean> {
     const result = await client.mutation(graphql(`
-    mutation updateTheme($id: uuid!, $name: String!) {
-      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {
+    mutation updateTheme($id: uuid!, $updates: projects_themes_set_input) {
+      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: $updates) {
         id
       }
     }
-    `), { id, name })
+    `), { id, updates: payload as Projects_Themes_Set_Input})
     if (result.error) {
       throw result.error
     }

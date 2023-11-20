@@ -17,12 +17,12 @@ const TestMatrix = observer(({ project, onUpdate }: { project: Project, onUpdate
   })
   const updateAngleMutation = useMutation({
     mutationKey: ['updateAngle'],
-    mutationFn: ({ name, angleId }: { name: string, angleId: string }) => anglesStore.updateAngle({ id: angleId, name }),
+    mutationFn: ({ name, angleId }: { name: string, angleId: string }) => anglesStore.updateAngle({ id: angleId,payload: { name } as ThemeAngle }),
     onSuccess: () => { refetch(), onUpdate() }
   })
   const updateThemeMutation = useMutation({
     mutationKey: ['updateTheme'],
-    mutationFn: ({ name, themeId }: { name: string, themeId: string }) => themesStore.updateTheme({ id: themeId, name }),
+    mutationFn: ({ name, themeId }: { name: string, themeId: string }) => themesStore.updateTheme({ id: themeId, payload: { name } as ProjectTheme }),
     onSuccess: () => { refetch(), onUpdate() }
   })
   const handleAngleChange = (value: string, angleId: string) => {

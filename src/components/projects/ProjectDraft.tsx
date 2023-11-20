@@ -3,8 +3,8 @@ import { Projects as Project } from "../../gql/graphql";
 import TestObjective from "./test_components/TestObjective";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { ProjectsContext } from "../../stores/stores";
-import { useMutation } from "@tanstack/react-query";
+import { ProjectFacebookAudienceContext, ProjectsContext } from "../../stores/stores";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import _ from "lodash";
 import TestBranding from "./test_components/TestBranding";
 import TestPlatform from "./test_components/TestPlatform";
@@ -16,14 +16,25 @@ import TestThemes from "./test_components/creatives/TestThemes";
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams] = useSearchParams();
   const projectStore = useContext(ProjectsContext)
+  const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
   const [audienceComplete, setAudienceComplete] = useState(false)
   const navigate = useNavigate()
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
+  const { data: facebookAudienceData } = useQuery({
+    queryKey: ['getProjectFacebookAudience'],
+    retry: false,
+    queryFn: () => {
+      if (project.platform) {
+        return projectFacebookAudienceStore.getFacebookAudiencesByProjectID({ project, createIfDoesNotExist: true })
+      }
+      return null
+    },
+  })
   const projectMutation = useMutation({
-    mutationFn: (payload: object) => projectStore.updateProject({ projectId: project.id, payload: { ...project, ...payload } }),
-    onSuccess: (data) => {
-      setUpdatedAt(data?.updated_at);
+    mutationFn: (payload: object) => projectStore.updateProject({ id: project.id, payload: payload as Project }),
+    onSuccess: () => {
+      setUpdatedAt(Date.now());
       onUpdate();
     }
   })
@@ -100,6 +111,11 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
       }
     ]
   }]
+  useEffect(() => {
+    if (facebookAudienceData) {
+      setAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(facebookAudienceData))
+    }
+  }, [facebookAudienceData])
   useEffect(() => {
     navigate(`/project/${project.id}?step=${step}`, { replace: true })
   }, [step])

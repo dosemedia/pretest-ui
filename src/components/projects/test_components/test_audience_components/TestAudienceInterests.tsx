@@ -57,27 +57,11 @@ const TestAudienceInterests = observer(({ onUpdate, projectFacebookAudience }: {
     if (projectFacebookAudience.interests) {
       setInterests(projectFacebookAudience.interests)
     }
-  }, [projectFacebookAudience])
+  }, [])
 
   useEffect(() => {
     onUpdate({ interests } as FacebookAudience, isUpdated)
   }, [interests])
-
-
-  // function formatLocations() {
-  //   const formattedLocations = {
-  //     countries: [] as string[],
-  //     regions: {} as Record<Exclude<string, "known" | "field">, string | object>
-  //   }
-  //   for (const location of locations) {
-  //     if (location.type === 'country' && !formattedLocations['countries'].includes(location.country_code)) {
-  //       formattedLocations['countries'].push(location.key)
-  //     } else if (location.type === 'region' && !formattedLocations['regions'][location.key]) {
-  //       formattedLocations['regions'][location.key] = { key: location.key, name: location.name }
-  //     }
-  //   }
-  //   return formattedLocations
-  // }
 
   return (
     <div>

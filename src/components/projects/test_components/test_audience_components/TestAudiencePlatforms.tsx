@@ -13,7 +13,7 @@ const TestAudiencePlatforms = observer(({ onUpdate, projectFacebookAudience }: {
     if (projectFacebookAudience.device_platforms) {
       setDevicePlatforms(projectFacebookAudience.device_platforms)
     }
-  }, [projectFacebookAudience])
+  }, [])
   const handleSelection = (value: string) => {
     setIsUpdated(true)
     if (!devicePlatforms.includes(value)) {

@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import TestAudienceLocations from "./test_audience_components/TestAudienceLocations";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { FacebookContext, ProjectFacebookAudienceContext, ToastsContext } from "../../../stores/stores";
 import { SpinningLoading } from "../../lib/SpinningLoading";
 import { Facebook_Audiences as FacebookAudience } from "../../../gql/graphql";
@@ -21,7 +21,7 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   const [isAudienceComplete, setIsAudienceComplete] = useState(false)
   const [audienceName, setAudienceName] = useState('')
   const { data: facebookAudienceData, isLoading } = useQuery({
-    queryKey: ['getProjectFacebookAudienceLocations'],
+    queryKey: ['getProjectFacebookAudience'],
     retry: false,
     queryFn: () => {
       if (project.platform) {
@@ -40,39 +40,18 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   })
   const projectFacebookAudienceMutation = useMutation({
     mutationKey: ['projectFacebookAudienceMutation'],
-    mutationFn: ({ payload, audience }: { payload: FacebookAudience, audience: FacebookAudience }) => projectFacebookAudienceStore.updateFacebookAudiencesByID({ id: audience.id, payload: { ...audience, ...payload } }),
+    mutationFn: ({ payload, audience }: { payload: FacebookAudience, audience: FacebookAudience }) => projectFacebookAudienceStore.updateFacebookAudiencesByID({ id: audience.id, payload: payload as FacebookAudience }),
     onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: 'error' }) },
   })
 
-  const onUpdate = _.debounce((payload: FacebookAudience, isUpdated: boolean) => {
+  const onUpdate = useCallback(_.debounce(async (payload: FacebookAudience, isUpdated: boolean) => {
     // Only update if there are updates
     if (facebookAudienceData && isUpdated) {
-      checkIsAudienceComplete({ ...facebookAudienceData, ...payload })
-      projectFacebookAudienceMutation.mutate({ payload, audience: facebookAudienceData })
-      onSave({})
+      await projectFacebookAudienceMutation.mutateAsync({ payload, audience: facebookAudienceData })
+      setIsAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete({ ...facebookAudienceData, ...payload }))
+      onSave({ name: project.name })
     }
-  }, 500)
-
-  function checkIsAudienceComplete(audience: FacebookAudience): void {
-    if (audience) {
-      if ((audience.geo_locations?.countries?.length === 0) && Object.keys(audience.geo_locations?.regions).length === 0) {
-        setIsAudienceComplete(false)
-      } else if (audience.genders?.length === 0) {
-        setIsAudienceComplete(false)
-        return
-      } else if (!audience.interests || Object.keys(audience.interests).length === 0) {
-        setIsAudienceComplete(false)
-      } else if (audience.device_platforms.length === 0) {
-        setIsAudienceComplete(false)
-      } else if (!audience.name) {
-        setIsAudienceComplete(false)
-      } else {
-        setIsAudienceComplete(true)
-      }
-    } else {
-      setIsAudienceComplete(false)
-    }
-  }
+  }, 300), [facebookAudienceData])
 
   useEffect(() => {
     onAudienceComplete(isAudienceComplete)
@@ -80,8 +59,8 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
 
   useEffect(() => {
     if (facebookAudienceData) {
+      setIsAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(facebookAudienceData))
       setAudienceName(facebookAudienceData.name || '')
-      checkIsAudienceComplete(facebookAudienceData)
     }
   }, [facebookAudienceData])
   return (

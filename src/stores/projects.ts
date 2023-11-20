@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { client } from '../graphql'
 import { graphql } from '../gql'
-import { Projects as Project } from "../gql/graphql";
+import { Projects as Project, Projects_Set_Input } from "../gql/graphql";
 export class Projects {
   projects: Project[] = []
   constructor() {
@@ -38,11 +38,11 @@ export class Projects {
     }
     return true
   }
-  async updateProject({ projectId, payload }: { projectId: string, payload: object }): Promise<Project | undefined> {
-    const project: Project = payload as Project
+  async updateProject({ id, payload }: { 
+    id: string, payload: Project }): Promise<Project | undefined> {
     const result = await client.mutation(graphql(`
-      mutation UpdateProject($projectId: uuid!, $name: String, $objective: String, $branding: String, $platform: String, $projectType: String, $startTime: timestamptz, $stopTime: timestamptz) {
-        update_projects_by_pk(pk_columns: {id: $projectId}, _set: {name: $name, objective: $objective, branding: $branding, platform: $platform, project_type: $projectType, start_time: $startTime, stop_time: $stopTime}) {
+      mutation UpdateProject($id: uuid!, $updates: projects_set_input) {
+        update_projects_by_pk(pk_columns: {id: $id}, _set: $updates) {
           name
           objective
           branding
@@ -54,7 +54,7 @@ export class Projects {
           stop_time
         }
       }
-      `), { projectId, name: project.name, objective: project.objective, branding: project.branding, platform: project.platform, startTime: project.start_time, stopTime: project.stop_time, projectType: project.project_type })
+      `), { id, updates: payload as Projects_Set_Input })
     if (result.error) {
       throw result.error
     }

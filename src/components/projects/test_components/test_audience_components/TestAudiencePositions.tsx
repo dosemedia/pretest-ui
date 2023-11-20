@@ -23,7 +23,7 @@ const TestAudiencePositions = observer(({ onUpdate, projectFacebookAudience }: {
     if (projectFacebookAudience.facebook_positions) {
       setPositions(projectFacebookAudience.facebook_positions)
     }
-  }, [projectFacebookAudience])
+  }, [])
   return (
     <div>
       <label className="label">

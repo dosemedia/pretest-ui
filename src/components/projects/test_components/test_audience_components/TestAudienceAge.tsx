@@ -26,7 +26,7 @@ const TestAudienceAge = observer(({ onUpdate, projectFacebookAudience }: { onUpd
     if (projectFacebookAudience.min_age) {
       setAgeMax(projectFacebookAudience.max_age)
     }
-  }, [projectFacebookAudience])
+  }, [])
   return (
     <div>
       <label className="label">
