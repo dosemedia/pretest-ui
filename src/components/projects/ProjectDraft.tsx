@@ -89,7 +89,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         label: 'Ad copy matrix',
         value: 'ad_copy_matrix',
         step: 7,
-        isComplete: false,
+        isComplete: Boolean(project.themes?.length === 3),
         icon: 'mdi mdi-file-document-edit'
       },
       {
