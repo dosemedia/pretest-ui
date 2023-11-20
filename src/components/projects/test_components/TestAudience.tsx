@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import TestAudienceLocations from "./test_audience_components/TestAudienceLocations";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { FacebookContext, ProjectFacebookAudienceContext, ToastsContext } from "../../../stores/stores";
 import { SpinningLoading } from "../../lib/SpinningLoading";
@@ -18,18 +18,9 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   const facebookStore = useContext(FacebookContext)
   const toastsStore = useContext(ToastsContext)
   const reachModalId = 'reach_modal'
+  const [facebookAudienceData, setFacebookAudienceData] = useState(project.facebook_audiences[0])
   const [isAudienceComplete, setIsAudienceComplete] = useState(false)
   const [audienceName, setAudienceName] = useState('')
-  const { data: facebookAudienceData, isLoading } = useQuery({
-    queryKey: ['getProjectFacebookAudience'],
-    retry: false,
-    queryFn: () => {
-      if (project.platform) {
-        return projectFacebookAudienceStore.getFacebookAudiencesByProjectID({ project, createIfDoesNotExist: true })
-      }
-      return null
-    },
-  })
   const getReachEstimateMutation = useMutation({
     mutationKey: ['getReachEstimate'],
     mutationFn: () => {
@@ -37,6 +28,12 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
     },
     onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: 'error' }) },
     onSuccess: () => { (document.getElementById(reachModalId) as HTMLDialogElement).show() }
+  })
+  const createProjectFacebookAudienceMutation = useMutation({
+    mutationKey: ['createProjectFacebookAudienceMutation'],
+    mutationFn: () => projectFacebookAudienceStore.createFacebookAudience({ project, name: 'My Custom Audience' }),
+    onSuccess: (audience: FacebookAudience | null) => { if (audience) setFacebookAudienceData(audience)},
+    onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: 'error' }) },
   })
   const projectFacebookAudienceMutation = useMutation({
     mutationKey: ['projectFacebookAudienceMutation'],
@@ -58,6 +55,9 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   }, [isAudienceComplete])
 
   useEffect(() => {
+    if (!facebookAudienceData) {
+      createProjectFacebookAudienceMutation.mutate()
+    }
     if (facebookAudienceData) {
       setIsAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(facebookAudienceData))
       setAudienceName(facebookAudienceData.name || '')
@@ -70,8 +70,6 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
           <div className="text-lg configuration-title">
             Create your own audience
           </div>
-          {isLoading && <SpinningLoading isLoading={isLoading} size="lg" />}
-          {!isLoading &&
             <div className="flex flex-col gap-y-6 mt-4">
               <div>
                 <label className="label">
@@ -86,7 +84,6 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
               {facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
               {facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
             </div>
-          }
           {isAudienceComplete && <div>
             <button className="btn mt-5 btn-info normal-case text-white" disabled={projectFacebookAudienceMutation.isLoading} onClick={() => getReachEstimateMutation.mutate()}>Click to get reach estimate<SpinningLoading isLoading={getReachEstimateMutation.isLoading} /></button>
           </div>

@@ -83,6 +83,49 @@ export class Projects {
     }
     return result.data?.projects_by_pk as Project
   }
+  async fetchFullProject({ projectId }: { projectId: string }): Promise<Project | undefined> {
+    const result = await client.query(graphql(`
+      query FetchFullProject($projectId: uuid!) {
+        projects_by_pk(id: $projectId) {
+          id
+          name
+          objective
+          branding
+          platform
+          project_type
+          is_draft
+          created_at
+          updated_at
+          start_time
+          stop_time
+          facebook_audiences {
+            device_platforms
+            facebook_positions
+            genders
+            geo_locations
+            id
+            interests
+            max_age
+            min_age
+            name
+            publisher_platforms
+          }
+          themes {
+            name
+            id
+            angles {
+              name
+              id
+            }
+          }
+        }
+      }
+      `), { projectId })
+    if (result.error) {
+      throw result.error
+    }
+    return result.data?.projects_by_pk as Project
+  }
   async fetchProjects({ teamId }: { teamId: string }): Promise<Project[] | undefined> {
     const result = await client.query(graphql(`
     query fetchProjects($teamId: uuid!) {

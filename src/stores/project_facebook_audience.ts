@@ -78,7 +78,7 @@ export class ProjectFacebookAudience {
     }
     return result.data?.insert_facebook_audiences_one as FacebookAudience
   }
-  async getFacebookAudiencesByProjectID({ project, createIfDoesNotExist }: { project: Project, createIfDoesNotExist?: boolean }): Promise<FacebookAudience | null> {
+  async getFacebookAudiencesByProjectID({ project }: { project: Project }): Promise<FacebookAudience | null> {
     const result = await client.query(graphql(`
       query GetFacebookAudiencesByProjectID($projectId: uuid!) {
         facebook_audiences(where: {project_id: {_eq: $projectId}}) {
@@ -97,13 +97,6 @@ export class ProjectFacebookAudience {
     `), { projectId: project.id })
     if (result.error) {
       throw result.error
-    }
-    if (result.data?.facebook_audiences.length === 0 && createIfDoesNotExist) {
-      const audience = await this.createFacebookAudience({ project, name: 'My Custom Audience' })
-      if (audience) {
-        return audience
-      }
-      return null
     }
     return result.data?.facebook_audiences && result.data.facebook_audiences[0] ? result.data.facebook_audiences[0] as FacebookAudience : null
   }

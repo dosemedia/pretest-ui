@@ -13,7 +13,8 @@ const projectDetail = observer(() => {
   const projectStore = useContext(ProjectsContext)
   const { data, error, refetch, isLoading } = useQuery<Promise<Project | undefined>, Error, Project, QueryKey>({
     queryKey: ['project', projectId],
-    queryFn: () => projectStore.fetchProject({ projectId })
+    retry: false,
+    queryFn: () => projectStore.fetchFullProject({ projectId })
   })
   return (
   <>
