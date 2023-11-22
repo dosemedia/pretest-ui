@@ -98,7 +98,7 @@ export class Projects {
           updated_at
           start_time
           stop_time
-          facebook_audiences {
+          audiences {
             device_platforms
             facebook_positions
             genders

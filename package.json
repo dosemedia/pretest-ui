@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@mdi/font": "^7.3.67",
+    "@rjsf/core": "^5.14.1",
+    "@rjsf/utils": "^5.14.1",
+    "@rjsf/validator-ajv8": "^5.14.1",
     "@tanstack/react-query": "^4.35.3",
     "axios": "^1.5.1",
     "lodash": "^4.17.21",
@@ -22,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "urql": "^4.0.5",
+    "usehooks-ts": "^2.9.1",
     "validator": "^13.11.0"
   },
   "devDependencies": {

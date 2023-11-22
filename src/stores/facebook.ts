@@ -34,7 +34,7 @@ export class Facebook {
       facebookAPIGet(url: $url)
     }
     `), {
-      url: `/act_${import.meta.env.VITE_FACEBOOK_AD_ACCOUNT_ID}/reachestimate?targeting_spec=${encodeURI(JSON.stringify({ geo_locations: audience.geo_locations, genders: audience.genders, interests: audience.interests, device_platforms: audience.device_platforms }))}`
+      url: `/act_{{FACEBOOK_AD_ACCOUNT_ID}}/reachestimate?targeting_spec=${encodeURI(JSON.stringify({ geo_locations: audience.geo_locations, genders: audience.genders, interests: audience.interests, device_platforms: audience.device_platforms }))}`
     })
     if (result.error) {
       throw result.error
