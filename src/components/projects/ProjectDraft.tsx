@@ -103,8 +103,8 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     ]
   }]
   useEffect(() => {
-    if (project.facebook_audiences?.length) {
-      setAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(project.facebook_audiences[0]))
+    if (project.audiences?.length) {
+      setAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(project.audiences[0]))
     }
   }, [project])
   useEffect(() => {
