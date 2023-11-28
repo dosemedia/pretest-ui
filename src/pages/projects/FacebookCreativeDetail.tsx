@@ -1,6 +1,5 @@
 import { QueryKey, useQuery, useMutation } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
-import { useParams } from "react-router-dom";
 import { useContext, useState, useEffect, createRef } from 'react'
 import ErrorMessage from "../../components/lib/Error";
 import { Projects as Project, Facebook_Creatives as FacebookCreative } from "../../gql/graphql";
@@ -12,25 +11,24 @@ import Form from '@rjsf/core'
 import { RegistryFieldsType } from '@rjsf/utils' // UiSchema
 import { useDebounce } from "usehooks-ts";
 import FileUrlField from "../../components/rjsf/FileUrlField";
+import CreatomateTemplates from "../../components/CreatomateTemplates";
 
-const facebookCreativeDetail = observer(() => {
+const facebookCreativeDetail = observer(({ projectId, facebookCreativeId }: { projectId: string, facebookCreativeId: string }) => {
   const [formData, setFormData] = useState(null);
   const [ignoreSave, setIgnoreSave] = useState(false);
   // https://rjsf-team.github.io/react-jsonschema-form/docs/usage/validation
   const [validFormData, setValidFormData] = useState(null);
   // const [formErrors, setFormErrors] = useState([] as Array<RJSFValidationError>);
   const formRef = createRef<Form>();
-  const { projectId, facebookCreativeId } = useParams() as { projectId: string, facebookCreativeId: string }
-  
   const projectStore = useContext(ProjectsContext)
   const facebookCreativesStore = useContext(ProjectFacebookCreativesContext)
 
-  const { data : project, error: projectError, isLoading: isLoadingProject } = useQuery<Promise<Project | undefined>, Error, Project, QueryKey>({
+  const { data: project, error: projectError, isLoading: isLoadingProject } = useQuery<Promise<Project | undefined>, Error, Project, QueryKey>({
     queryKey: ['project', projectId],
     queryFn: () => projectStore.fetchProject({ projectId })
   })
 
-  const { data : facebookCreative, error: facebookCreativeError, isLoading: isLoadingFacebookCreative } = useQuery<Promise<FacebookCreative | undefined>, Error, FacebookCreative, QueryKey>({
+  const { data: facebookCreative, error: facebookCreativeError, isLoading: isLoadingFacebookCreative } = useQuery<Promise<FacebookCreative | undefined>, Error, FacebookCreative, QueryKey>({
     queryKey: ['facebookCreative', facebookCreativeId],
     queryFn: async () => {
       const creative = await facebookCreativesStore.fetchFacebookCreativeWithTemplate(facebookCreativeId)
@@ -87,34 +85,39 @@ const facebookCreativeDetail = observer(() => {
   // }
 
   return (
-  <>
-    <div className="m-8">
-      { isLoadingProject && <SpinningLoading isLoading={isLoadingProject} /> }
-      { projectError && <ErrorMessage message={projectError.message} />}
-      { project && <div>Project : {project.name}</div> }
-      
-      { isLoadingFacebookCreative && <SpinningLoading isLoading={isLoadingFacebookCreative} /> }
-      { facebookCreativeError && <ErrorMessage message={facebookCreativeError.message} />}
-      { facebookCreative && <div>Facebook Creative : {facebookCreative.id}</div> }
-      { facebookCreative &&
-        // We could also use this which is very similar : https://jsonforms.io/docs/integrations/react/
-        <Form
-          schema={facebookCreative?.facebook_creative_template.json_schema}
-          validator={validator}
-          formData={formData}
-          onChange={(e) => {setFormData(e.formData)}}
-          // onError={(e) => {setFormErrors(e)}}
-          ref={formRef}
-          fields={customFields}
-          uiSchema={facebookCreative?.facebook_creative_template.ui_schema}
-        >
-          <div>{ /* Hide submit form! */}</div>
-        </Form>
-      }
-      { validFormData && <div className="mt-5">Data : {JSON.stringify(validFormData)}</div> }
-      { updateCreative.isLoading && <div>Saving...</div> }
-    </div>
-  </>
+    <>
+      <div className="m-8">
+        {isLoadingProject && <SpinningLoading isLoading={isLoadingProject} />}
+        {projectError && <ErrorMessage message={projectError.message} />}
+        <div className="flex">
+          <div>
+            {project && <div>Project : {project.name}</div>}
+
+            {isLoadingFacebookCreative && <SpinningLoading isLoading={isLoadingFacebookCreative} />}
+            {facebookCreativeError && <ErrorMessage message={facebookCreativeError.message} />}
+            {facebookCreative && <div>Facebook Creative : {facebookCreative.id}</div>}
+            {facebookCreative &&
+              // We could also use this which is very similar : https://jsonforms.io/docs/integrations/react/
+              <Form
+                schema={facebookCreative?.facebook_creative_template.json_schema}
+                validator={validator}
+                formData={formData}
+                onChange={(e) => { setFormData(e.formData) }}
+                // onError={(e) => {setFormErrors(e)}}
+                ref={formRef}
+                fields={customFields}
+                uiSchema={facebookCreative?.facebook_creative_template.ui_schema}
+              >
+                <div>{ /* Hide submit form! */}</div>
+              </Form>
+            }
+            {validFormData && <div className="mt-5">Data : {JSON.stringify(validFormData)}</div>}
+            {updateCreative.isLoading && <div>Saving...</div>}
+          </div>
+          <CreatomateTemplates templateId={facebookCreative?.facebook_creative_template.creatomate_template_id} />
+        </div>
+      </div>
+    </>
   )
 })
 

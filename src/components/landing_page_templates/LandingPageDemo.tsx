@@ -7,17 +7,19 @@ const LandingPageDemo: React.FC<{ data: any }> = ({ data }) => {
   
   return (
     <div>
-      <div className="grid grid-cols-2 gap-4" style={{
-        backgroundImage: 'linear-gradient(to right, ' + data.ctaColor1 + ' , ' + data.ctaColor2 + ')'
-      }}>
-        <div>
-          <div className="text-lg">{ data.ctaTitle }</div>
-          <div>{ data.ctaSubtitle }</div>
+      { data && 
+        <div className="grid grid-cols-2 gap-4" style={{
+          backgroundImage: 'linear-gradient(to right, ' + data.ctaColor1 + ' , ' + data.ctaColor2 + ')'
+        }}>
+          <div>
+            <div className="text-lg">{ data.ctaTitle }</div>
+            <div>{ data.ctaSubtitle }</div>
+          </div>
+          <div>
+            <img src={data.ctaImageUrl} alt="CTA" className='w-full' />
+          </div>
         </div>
-        <div>
-          <img src={data.ctaImageUrl} alt="CTA" className='w-full' />
-        </div>
-      </div>
+      }
 
       <div>TODO - poll options...</div>
     </div>
