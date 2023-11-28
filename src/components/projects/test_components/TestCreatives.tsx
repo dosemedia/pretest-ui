@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import { Projects as Project, Facebook_Creative_Templates as FacebookCreativeTemplate } from "../../../gql/graphql";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
-import { FacebookCreativeTemplatesContext, ProjectFacebookCreativesContext } from "../../../stores/stores";
-import FacebookCreativeDetail from "../../../pages/projects/FacebookCreativeDetail";
+import { FacebookCreativeTemplatesContext, ProjectFacebookCreativeTemplatesContext } from "../../../stores/stores";
+import ProjectFacebookCreativeTemplateDetail from "../../../pages/projects/ProjectFacebookCreativeTemplateDetail";
 import ErrorMessage from "../../lib/Error";
 import '../../../css/creative.css'
 
@@ -11,10 +11,10 @@ import '../../../css/creative.css'
 const TestObjective = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
 
   const facebookCreativeTemplatesStore = useContext(FacebookCreativeTemplatesContext)
-  const facebookCreativesStore = useContext(ProjectFacebookCreativesContext)
+  const projectFacebookCreativesStore = useContext(ProjectFacebookCreativeTemplatesContext)
 
   const { data: facebookCreativeTemplates, isLoading: isLoadingFacebookCreativeTemplates } = useQuery({
-    queryKey: ['getProjectFacebookAudienceLocations'],
+    queryKey: ['getFacebookCreativeTemplates'],
     retry: false,
     queryFn: () => {
       if ((project.platform === 'facebook') || (project.platform === 'instagram') || (project.platform === 'facebook_instagram')) {
@@ -24,19 +24,19 @@ const TestObjective = observer(({ project }: { project: Project, onSave: (payloa
     },
   })
 
-  const { data: facebookCreatives, isLoading: isLoadingFacebookCreatives } = useQuery({
+  const { data: projectFacebookCreativeTemplates, isLoading: isLoadingFacebookCreatives } = useQuery({
     queryKey: ['getFacebookCreatives', project.id],
     retry: false,
     queryFn: () => {
       if ((project.platform === 'facebook') || (project.platform === 'instagram') || (project.platform === 'facebook_instagram')) {
-        return facebookCreativesStore.fetchFacebookCreativesByProject({ project })
+        return projectFacebookCreativesStore.fetchProjectFacebookCreativeTemplatesByProject({ project })
       }
       return null
     },
   })
 
-  const createCreative = useMutation({
-    mutationFn: (payload: { project: Project, template: FacebookCreativeTemplate }) => facebookCreativesStore.createFacebookCreativeFromTemplate(payload)
+  const createProjectFacebookCreativeTemplate = useMutation({
+    mutationFn: (payload: { project: Project, template: FacebookCreativeTemplate }) => projectFacebookCreativesStore.createProjectFacebookCreativeTemplateFromTemplate(payload)
   })
 
   return (
@@ -47,9 +47,9 @@ const TestObjective = observer(({ project }: { project: Project, onSave: (payloa
           Choose an ad template
         </div>
         <div className="flex gap-x-4">
-          {facebookCreativeTemplates && facebookCreativeTemplates.length > 0 && facebookCreatives?.length === 0 && facebookCreativeTemplates.map((template) => {
+          {facebookCreativeTemplates && facebookCreativeTemplates.length > 0 && projectFacebookCreativeTemplates?.length === 0 && facebookCreativeTemplates.map((template) => {
             return (
-              <div key={template.id} className="flex flex-col cursor-pointer" style={{ width: 174 }} onClick={() => createCreative.mutate({ project, template })}>
+              <div key={template.id} className="flex flex-col cursor-pointer" style={{ width: 174 }} onClick={() => createProjectFacebookCreativeTemplate.mutate({ project, template })}>
                 <img className="creative-template-list-item" src={`https://creatomate.com/files/previews/${template.creatomate_template_id}?v=1683746204095`} />
                 <div className="text-md font-bold mt-3">
                   {template.name}
@@ -66,13 +66,13 @@ const TestObjective = observer(({ project }: { project: Project, onSave: (payloa
             )
           })}
         </div>
-        {createCreative.isError && <ErrorMessage message={(createCreative.error as Error).message} />}
-        {facebookCreatives && facebookCreatives?.length > 0 &&
+        {createProjectFacebookCreativeTemplate.isError && <ErrorMessage message={(createProjectFacebookCreativeTemplate.error as Error).message} />}
+        {projectFacebookCreativeTemplates && projectFacebookCreativeTemplates?.length > 0 &&
           <div>
             {isLoadingFacebookCreatives && <div>Loading...</div>}
-            <div>Facebook Creatives Count : {facebookCreatives?.length}</div>
+            {/* <div>Facebook Creatives Count : {facebookCreatives?.length}</div> */}
             <div>
-              <FacebookCreativeDetail projectId={project.id} facebookCreativeId={facebookCreatives[0].id} />
+              <ProjectFacebookCreativeTemplateDetail projectId={project.id} projectFacebookCreativeTemplateId={projectFacebookCreativeTemplates[0].id} />
             </div>
           </div>
         }

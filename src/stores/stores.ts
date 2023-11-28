@@ -10,6 +10,7 @@ import { Themes } from './themes'
 import { ThemesAngles } from './angles'
 import { FacebookCreativeTemplates } from './facebook_creative_templates'
 import { ProjectFacebookCreatives } from './project_facebook_creatives'
+import { ProjectFacebookCreativeTemplates } from './project_facebook_creative_templates'
 
 export const authStore = new Auth()
 export const AuthContext = createContext<Auth>(authStore)
@@ -43,3 +44,6 @@ export const FacebookCreativeTemplatesContext = createContext<FacebookCreativeTe
 
 export const projectFacebookCreatives = new ProjectFacebookCreatives()
 export const ProjectFacebookCreativesContext = createContext<ProjectFacebookCreatives>(projectFacebookCreatives)
+
+export const projectFacebookCreativeTemplates = new ProjectFacebookCreativeTemplates()
+export const ProjectFacebookCreativeTemplatesContext = createContext<ProjectFacebookCreativeTemplates>(projectFacebookCreativeTemplates)
