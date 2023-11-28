@@ -1,6 +1,6 @@
 import { QueryKey, useQuery, useMutation } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useContext, useState, useEffect, createRef } from 'react'
 import ErrorMessage from "../../components/lib/Error";
 import { Projects as Project, Landing_Pages as LandingPage } from "../../gql/graphql";
@@ -117,6 +117,8 @@ const LandingPageDetail = observer(() => {
       { !updateLandingPage.isLoading && <div>Saved</div> }
 
       <hr/>
+
+      <Link to={`/page/${landingPageId}`} className="btn my-5" target="_blank">Open Page</Link>
 
       { landingPage && !isLoadingLandingPage &&
         <LandingPageRender data={validFormData} component={landingPage.landing_page_template.component} />

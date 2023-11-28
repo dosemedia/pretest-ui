@@ -19,7 +19,7 @@ const LandingPageDemo: React.FC<{ data: any }> = ({ data }) => {
         </div>
       </div>
 
-      <div>Data: { JSON.stringify(data) }</div>
+      <div>TODO - poll options...</div>
     </div>
   );
 }
