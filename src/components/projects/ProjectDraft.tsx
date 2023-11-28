@@ -11,6 +11,7 @@ import TestPlatform from "./test_components/TestPlatform";
 import TestRuntime from "./test_components/TestRuntime";
 import TestAudience from "./test_components/TestAudience";
 import TestCreatives from "./test_components/TestCreatives";
+import TestLandingPages from "./test_components/TestLandingPages";
 import '../../css/draft_project.css'
 import TestThemes from "./test_components/creatives/TestThemes";
 
@@ -103,8 +104,8 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     ]
   }]
   useEffect(() => {
-    if (project.audiences?.length) {
-      setAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(project.audiences[0]))
+    if (project.facebook_audiences?.length) {
+      setAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(project.facebook_audiences[0]))
     }
   }, [project])
   useEffect(() => {
@@ -140,12 +141,13 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           {step === 5 && <TestRuntime project={project} onSave={onSave} />}
           {step === 6 && <TestCreatives project={project} onSave={onSave} />}
           {step === 7 && <TestThemes project={project} onSave={onSave} />}
+          {step === 8 && <TestLandingPages project={project} onSave={onSave} />}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setStep((prev) => prev -= 1)}>
               <span className="mdi mdi-chevron-left text-base" /> Go Back
             </button>
             }
-            {step != 5 &&
+            {step < 8 &&
               <button className="btn action-button text-base" onClick={() => setStep((prev) => prev += 1)}>
                 Next <span className="mdi mdi-chevron-right text-base" />
               </button>

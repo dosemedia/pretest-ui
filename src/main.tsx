@@ -29,12 +29,14 @@ import VerifyEmailLandingPage from './pages/auth/VerifyEmailLandingPage.tsx'
 import ResetPasswordPage from './pages/auth/ResetPasswordPage.tsx'
 import ProjectDetail from './pages/projects/ProjectDetail.tsx'
 import FacebookCreativeDetail from './pages/projects/ProjectFacebookCreativeTemplateDetail.tsx'
+import LandingPageDetail from './pages/projects/LandingPageDetail.tsx'
 import TeamsPage from './pages/teams/TeamsPage.tsx'
 import TeamMembers from './pages/teams/TeamMembers.tsx'
 import JoinTeamPage from './pages/teams/JoinTeamPage.tsx'
 import ContactPage from './pages/ContactPage.tsx'
 import LoginPage from './pages/auth/LoginPage.tsx'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage.tsx'
+import LandingPage from './pages/LandingPage.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -49,10 +51,12 @@ const router = createBrowserRouter(
       <Route path="reset-password/:code" element={<ResetPasswordPage />} />
       <Route path="project/:projectId" element={<LoginRequiredRoute><RootLayout><ProjectDetail /></RootLayout></LoginRequiredRoute>} />
       <Route path="project/:projectId/facebook_creative/:facebookCreativeId" element={<LoginRequiredRoute><RootLayout><FacebookCreativeDetail /></RootLayout></LoginRequiredRoute>} />
+      <Route path="project/:projectId/landing_page/:landingPageId" element={<LoginRequiredRoute><RootLayout><LandingPageDetail /></RootLayout></LoginRequiredRoute>} />
       <Route path="teams" element={<LoginRequiredRoute><RootLayout><TeamsPage /></RootLayout></LoginRequiredRoute>} />
       <Route path="team/:teamId" element={<LoginRequiredRoute><RootLayout><TeamMembers /></RootLayout></LoginRequiredRoute>} />
       <Route path="team/:teamId/join" element={<LoginRequiredRoute><RootLayout><JoinTeamPage /></RootLayout></LoginRequiredRoute>} />
       <Route path="contact" element={<RootLayout><ContactPage /></RootLayout>} />
+      <Route path="page/:landingPageId" element={<LandingPage />} />
     </Route>
   ),
 )

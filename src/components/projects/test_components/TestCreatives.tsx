@@ -8,7 +8,7 @@ import ErrorMessage from "../../lib/Error";
 import '../../../css/creative.css'
 
 // TODO - Use onSave?
-const TestObjective = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
+const TestCreatives = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
 
   const facebookCreativeTemplatesStore = useContext(FacebookCreativeTemplatesContext)
   const projectFacebookCreativesStore = useContext(ProjectFacebookCreativeTemplatesContext)
@@ -81,4 +81,4 @@ const TestObjective = observer(({ project }: { project: Project, onSave: (payloa
   )
 })
 
-export default TestObjective
+export default TestCreatives
