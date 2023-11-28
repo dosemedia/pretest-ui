@@ -12,7 +12,7 @@ const FileUrlField: React.FC<FieldProps> = ({ formData, onChange }) => {
     // and then:
     setBusy(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    const newUrl = 'https://some.random.com/' + new Date().getTime() + '.jpg'
+    const newUrl = 'https://picsum.photos/300?rnd=' + new Date().getTime()
     onChange(newUrl)
     setBusy(false);
   }

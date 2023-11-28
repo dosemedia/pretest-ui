@@ -7,14 +7,14 @@ import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "../../lib/Error";
 
 // TODO - Use onSave?
-const TestObjective = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
+const TestCreatives = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
 
   const facebookCreativeTemplatesStore = useContext(FacebookCreativeTemplatesContext)
   const facebookCreativesStore = useContext(ProjectFacebookCreativesContext)
   const navigate = useNavigate()
 
   const { data: facebookCreativeTemplates, isLoading : isLoadingFacebookCreativeTemplates } = useQuery({
-    queryKey: ['getProjectFacebookAudienceLocations'],
+    queryKey: ['getFacebookLandingPageTemplates'],
     retry: false,
     queryFn: () => {
       if ((project.platform === 'facebook') || (project.platform === 'instagram') || (project.platform === 'facebook_instagram')) {
@@ -91,4 +91,4 @@ const TestObjective = observer(({ project }: { project: Project, onSave: (payloa
   )
 })
 
-export default TestObjective
+export default TestCreatives
