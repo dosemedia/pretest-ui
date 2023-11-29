@@ -27,6 +27,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
   const [projectFacebookCreativeTemplateId, setProjectFacebookCreativeTemplateId] = useState('')
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
+  const [currentStepItem, setCurrentStepItem] = useState({})
   const projectMutation = useMutation({
     mutationFn: (payload: object) => projectStore.updateProject({ id: project.id, payload: payload as Project }),
     onSuccess: () => {
@@ -107,6 +108,16 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
       }
     ]
   }]
+  function findCurrentStepItem() {
+    for (const item of configurationMenu) {
+      for (const child of item.children) {
+        if (child.steps.includes(step)) {
+          setCurrentStepItem(child)
+          break
+        }
+      }
+    }
+  }
   useEffect(() => {
     const stepParam = searchParams.get('step')
     const projectFacebookCreativeTemplateIdParam = searchParams.get('project_facebook_creative_template_id')
@@ -121,9 +132,12 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     if (project.facebook_audiences?.length) {
       setAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(project.facebook_audiences[0]))
     }
-    console.log(project.project_facebook_creative_templates?.length)
     setAdTemplateComplete(project.project_facebook_creative_templates?.length ? true : false)
+    findCurrentStepItem()
   }, [project])
+  useEffect(() => {
+    findCurrentStepItem()
+  }, [audienceComplete, adTemplateComplete])
   return (
     <>
       <div className="flex flex-wrap justify-between gap-y-12 gap-x-4">
@@ -163,7 +177,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
             </button>
             }
             {step < 10 && step != 6 &&
-              <button className="btn action-button text-base" onClick={() => setSearchParams({ step: (step + 1).toString() })}>
+              <button className="btn action-button text-base" onClick={() => setSearchParams({ step: (step + 1).toString() })} disabled={!currentStepItem?.isComplete}>
                 Next <span className="mdi mdi-chevron-right text-base" />
               </button>
             }

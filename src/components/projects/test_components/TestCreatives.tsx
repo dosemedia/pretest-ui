@@ -44,7 +44,8 @@ const TestCreatives = observer(({ project }: { project: Project, onSave: (payloa
 
   function goToProjectFacebookCreativeTemplate(template: FacebookCreativeTemplate) {
     if (isUsingTemplate(template.id) && projectFacebookCreativeTemplates && projectFacebookCreativeTemplates.length > 0) {
-      setSearchParams({ step: '7', 'project_facebook_creative_template_id': projectFacebookCreativeTemplates[0].id });
+      const foundProjectFacebookCreativeTemplate = _.find(projectFacebookCreativeTemplates, (item: ProjectFacebookCreativeTemplate) => item.template_id === template.id)
+      setSearchParams({ step: '7', 'project_facebook_creative_template_id': foundProjectFacebookCreativeTemplate?.id });
     } else {
       createProjectFacebookCreativeTemplate.mutate({ project, template })
     }

@@ -58,7 +58,7 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
     onSuccess: () => refetch()
   })
 
-  const customFields: RegistryFieldsType = { fileUrl: FileUrlField, colorPicker: ColorPickerField }
+  const customFields: RegistryFieldsType = { fileUrl: FileUrlField , colorPicker: ColorPickerField }
 
   useEffect(() => {
     if (!searchParams.get('project_facebook_creative_template_id')) {
