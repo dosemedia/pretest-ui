@@ -1,10 +1,11 @@
 import React from "react"
-import LandingPageDemo from './landing_page_templates/LandingPageDemo.tsx';
+import LandingPageTemplates from './landing_page_templates/LandingPageTemplates';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const templates: { [key: string]: React.FC<{ data: any }> } = {
-  LandingPageDemo: LandingPageDemo
-};
+const templates: { [key: string]: React.FC<{ data: any }> } = {};
+for (const template of LandingPageTemplates) {
+  templates[template.name] = template.render;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LandingPageRender: React.FC<{ data: any, component: string }> = ({ data, component }) => {
@@ -22,11 +23,6 @@ export default LandingPageRender;
 
 // import React, { Suspense } from "react"
 // // import LandingPageDemo from './landing_page_templates/LandingPageDemo.tsx';
-
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// // const templates: { [key: string]: React.FC<{ data: any }> } = {
-// //   LandingPageDemo: LandingPageDemo
-// // };
 
 // // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // const LandingPageRender: React.FC<{ data: any, component: string }> = ({ data, component }) => {

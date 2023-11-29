@@ -2,12 +2,7 @@ import { client } from '../graphql'
 import { graphql } from '../gql'
 import { makeAutoObservable } from 'mobx';
 import { Projects as Project } from '../gql/graphql';
-import { Landing_Page_Templates as LandingPageTemplate } from "../gql/graphql";
 import { Landing_Pages as LandingPage } from '../gql/graphql';
-
-export interface LandingPageWithTemplate extends LandingPage {
-  landing_page_template: LandingPageTemplate; 
-}
 
 export class ProjectLandingPages {
   
@@ -15,21 +10,21 @@ export class ProjectLandingPages {
     makeAutoObservable(this)
   }
   
-  async createLandingPageFromTemplate({ project, template } : { project: Project, template : LandingPageTemplate }): Promise<LandingPage> {
+  async createLandingPageFromTemplate({ project, templateName } : { project: Project, templateName : string }): Promise<LandingPage> {
     const result = await client.mutation(graphql(`
-    mutation CreateLandingPage($projectId: uuid!, $templateId: uuid!) {
-      insert_landing_pages(objects: {project_id: $projectId, template_id: $templateId}) {
+    mutation CreateLandingPage($projectId: uuid!, $templateName: String!) {
+      insert_landing_pages(objects: {project_id: $projectId, template_name: $templateName}) {
         returning {
           id
           created_at
           data
           project_id
-          template_id
+          template_name
           updated_at
         }
       }
     }
-    `), { projectId: project.id, templateId: template.id })
+    `), { projectId: project.id, templateName })
     if (result.error) {
       throw result.error
     }
@@ -39,33 +34,23 @@ export class ProjectLandingPages {
     throw new Error('Failed to create landing page')
   }
 
-  async fetchLandingPagesByProject({ project }: { project: Project }): Promise<Array<LandingPageWithTemplate>> {
+  async fetchLandingPagesByProject({ project }: { project: Project }): Promise<Array<LandingPage>> {
     const result = await client.query(graphql(`
       query FetchLandingPageByProjectID($projectId: uuid!) {
         landing_pages(where: {project_id: {_eq: $projectId}}) {
           project_id
-          template_id
+          template_name
           updated_at
           id
           data
           created_at
-          landing_page_template {
-            created_at
-            component
-            description
-            id
-            json_schema
-            name
-            ui_schema
-            updated_at
-          }
         }
       }
     `), { projectId: project.id })
     if (result.error) {
       throw result.error
     }
-    return result.data?.landing_pages as LandingPageWithTemplate[]
+    return result.data?.landing_pages as LandingPage[]
   }
 
   async fetchLandingPageWithTemplate(landingPageId: string) : Promise<LandingPage> {
@@ -76,25 +61,15 @@ export class ProjectLandingPages {
         data
         id
         project_id
-        template_id
+        template_name
         updated_at
-        landing_page_template {
-          created_at
-          component
-          description
-          id
-          json_schema
-          name
-          ui_schema
-          updated_at
-        }
       }
     }
     `), { landingPageId })
     if (result.error) {
       throw result.error
     }
-    return result.data?.landing_pages_by_pk as LandingPageWithTemplate
+    return result.data?.landing_pages_by_pk as LandingPage
   }
 
   async updateLandingPage(landingPageId: string, data: object) : Promise<void> {

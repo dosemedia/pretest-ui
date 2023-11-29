@@ -1,24 +1,17 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project, Landing_Page_Templates as LandingPageTemplate } from "../../../gql/graphql";
+import { Projects as Project } from "../../../gql/graphql";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
-import { ProjectLandingPagesContext, LandingPageTemplatesContext } from "../../../stores/stores";
+import { ProjectLandingPagesContext } from "../../../stores/stores";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "../../lib/Error";
 
+import LandingPageTemplates from '../../landing_page_templates/LandingPageTemplates';
+
 const TestLandingPages = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
 
-  const landingPageTemplatesStore = useContext(LandingPageTemplatesContext)
   const landingPagesStore = useContext(ProjectLandingPagesContext)
   const navigate = useNavigate()
-
-  const { data: landingPageTemplates, isLoading : isLoadingLandingPageTemplates } = useQuery({
-    queryKey: ['getFacebookLandingPageTemplates'],
-    retry: false,
-    queryFn: () => {
-      return landingPageTemplatesStore.fetchTemplates()
-    },
-  })
 
   const { data: landingPages, isLoading: isLoadingLandingPages } = useQuery({
     queryKey: ['getLandingPages', project.id],
@@ -29,7 +22,7 @@ const TestLandingPages = observer(({ project }: { project: Project, onSave: (pay
   })
 
   const createLandingPage = useMutation({
-    mutationFn: (payload : { project: Project, template: LandingPageTemplate }) => landingPagesStore.createLandingPageFromTemplate(payload),
+    mutationFn: (payload : { project: Project, templateName: string }) => landingPagesStore.createLandingPageFromTemplate(payload),
     onSuccess: (data) => {
       if (data?.id) {
         navigate(`/project/${project.id}/landing_page/${data.id}`)
@@ -40,20 +33,19 @@ const TestLandingPages = observer(({ project }: { project: Project, onSave: (pay
   return (
     <>
       <div>
-        { isLoadingLandingPageTemplates && <div>Loading...</div> }
         <div className="text-lg configuration-title mb-4">
           Choose a landing page template
         </div>
 
-        <div>Landing Page Templates Count : { landingPageTemplates?.length }</div>
         <div className="grid grid-cols-3 gap-4">
-          { landingPageTemplates && landingPageTemplates.length > 0 && landingPageTemplates.map((template) => {
+          { LandingPageTemplates.map((template) => {
             return (
-              <div key={ template.id } className="flex flex-col">
-                <img src={`/src/assets/landing_page_templates/${template.component}.jpg`} />
+              <div key={ template.name } className="flex flex-col">
+                <img src={`/src/assets/landing_page_templates/${template.name}.jpg`} />
+                <div>{ template.description }</div>
                 <button 
                   className="btn mt-5 btn-info normal-case text-white"
-                  onClick={() => createLandingPage.mutate({project, template})}
+                  onClick={() => createLandingPage.mutate({project, templateName: template.name})}
                   disabled={createLandingPage.isLoading}
                 >Customize Template</button>
               </div>
