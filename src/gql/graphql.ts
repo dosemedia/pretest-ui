@@ -1634,317 +1634,16 @@ export type Jsonb_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['jsonb']['input']>>;
 };
 
-/** columns and relationships of "landing_page_templates" */
-export type Landing_Page_Templates = {
-  __typename?: 'landing_page_templates';
-  component: Scalars['String']['output'];
-  created_at: Scalars['timestamptz']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  enabled: Scalars['Boolean']['output'];
-  id: Scalars['uuid']['output'];
-  json_schema: Scalars['jsonb']['output'];
-  /** An array relationship */
-  landing_pages: Array<Landing_Pages>;
-  /** An aggregate relationship */
-  landing_pages_aggregate: Landing_Pages_Aggregate;
-  name: Scalars['String']['output'];
-  ui_schema?: Maybe<Scalars['jsonb']['output']>;
-  updated_at: Scalars['timestamptz']['output'];
-};
-
-
-/** columns and relationships of "landing_page_templates" */
-export type Landing_Page_TemplatesJson_SchemaArgs = {
-  path?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-/** columns and relationships of "landing_page_templates" */
-export type Landing_Page_TemplatesLanding_PagesArgs = {
-  distinct_on?: InputMaybe<Array<Landing_Pages_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Landing_Pages_Order_By>>;
-  where?: InputMaybe<Landing_Pages_Bool_Exp>;
-};
-
-
-/** columns and relationships of "landing_page_templates" */
-export type Landing_Page_TemplatesLanding_Pages_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Landing_Pages_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Landing_Pages_Order_By>>;
-  where?: InputMaybe<Landing_Pages_Bool_Exp>;
-};
-
-
-/** columns and relationships of "landing_page_templates" */
-export type Landing_Page_TemplatesUi_SchemaArgs = {
-  path?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregated selection of "landing_page_templates" */
-export type Landing_Page_Templates_Aggregate = {
-  __typename?: 'landing_page_templates_aggregate';
-  aggregate?: Maybe<Landing_Page_Templates_Aggregate_Fields>;
-  nodes: Array<Landing_Page_Templates>;
-};
-
-/** aggregate fields of "landing_page_templates" */
-export type Landing_Page_Templates_Aggregate_Fields = {
-  __typename?: 'landing_page_templates_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Landing_Page_Templates_Max_Fields>;
-  min?: Maybe<Landing_Page_Templates_Min_Fields>;
-};
-
-
-/** aggregate fields of "landing_page_templates" */
-export type Landing_Page_Templates_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Landing_Page_Templates_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** append existing jsonb value of filtered columns with new jsonb value */
-export type Landing_Page_Templates_Append_Input = {
-  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
-  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
-};
-
-/** Boolean expression to filter rows from the table "landing_page_templates". All fields are combined with a logical 'AND'. */
-export type Landing_Page_Templates_Bool_Exp = {
-  _and?: InputMaybe<Array<Landing_Page_Templates_Bool_Exp>>;
-  _not?: InputMaybe<Landing_Page_Templates_Bool_Exp>;
-  _or?: InputMaybe<Array<Landing_Page_Templates_Bool_Exp>>;
-  component?: InputMaybe<String_Comparison_Exp>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-  description?: InputMaybe<String_Comparison_Exp>;
-  enabled?: InputMaybe<Boolean_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  json_schema?: InputMaybe<Jsonb_Comparison_Exp>;
-  landing_pages?: InputMaybe<Landing_Pages_Bool_Exp>;
-  landing_pages_aggregate?: InputMaybe<Landing_Pages_Aggregate_Bool_Exp>;
-  name?: InputMaybe<String_Comparison_Exp>;
-  ui_schema?: InputMaybe<Jsonb_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "landing_page_templates" */
-export enum Landing_Page_Templates_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  LandingPageTemplatesPkey = 'landing_page_templates_pkey'
-}
-
-/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-export type Landing_Page_Templates_Delete_At_Path_Input = {
-  json_schema?: InputMaybe<Array<Scalars['String']['input']>>;
-  ui_schema?: InputMaybe<Array<Scalars['String']['input']>>;
-};
-
-/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-export type Landing_Page_Templates_Delete_Elem_Input = {
-  json_schema?: InputMaybe<Scalars['Int']['input']>;
-  ui_schema?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-export type Landing_Page_Templates_Delete_Key_Input = {
-  json_schema?: InputMaybe<Scalars['String']['input']>;
-  ui_schema?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** input type for inserting data into table "landing_page_templates" */
-export type Landing_Page_Templates_Insert_Input = {
-  component?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  enabled?: InputMaybe<Scalars['Boolean']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
-  landing_pages?: InputMaybe<Landing_Pages_Arr_Rel_Insert_Input>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
-};
-
-/** aggregate max on columns */
-export type Landing_Page_Templates_Max_Fields = {
-  __typename?: 'landing_page_templates_max_fields';
-  component?: Maybe<Scalars['String']['output']>;
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
-};
-
-/** aggregate min on columns */
-export type Landing_Page_Templates_Min_Fields = {
-  __typename?: 'landing_page_templates_min_fields';
-  component?: Maybe<Scalars['String']['output']>;
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
-};
-
-/** response of any mutation on the table "landing_page_templates" */
-export type Landing_Page_Templates_Mutation_Response = {
-  __typename?: 'landing_page_templates_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Landing_Page_Templates>;
-};
-
-/** input type for inserting object relation for remote table "landing_page_templates" */
-export type Landing_Page_Templates_Obj_Rel_Insert_Input = {
-  data: Landing_Page_Templates_Insert_Input;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Landing_Page_Templates_On_Conflict>;
-};
-
-/** on_conflict condition type for table "landing_page_templates" */
-export type Landing_Page_Templates_On_Conflict = {
-  constraint: Landing_Page_Templates_Constraint;
-  update_columns?: Array<Landing_Page_Templates_Update_Column>;
-  where?: InputMaybe<Landing_Page_Templates_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "landing_page_templates". */
-export type Landing_Page_Templates_Order_By = {
-  component?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  description?: InputMaybe<Order_By>;
-  enabled?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  json_schema?: InputMaybe<Order_By>;
-  landing_pages_aggregate?: InputMaybe<Landing_Pages_Aggregate_Order_By>;
-  name?: InputMaybe<Order_By>;
-  ui_schema?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: landing_page_templates */
-export type Landing_Page_Templates_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** prepend existing jsonb value of filtered columns with new jsonb value */
-export type Landing_Page_Templates_Prepend_Input = {
-  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
-  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
-};
-
-/** select columns of table "landing_page_templates" */
-export enum Landing_Page_Templates_Select_Column {
-  /** column name */
-  Component = 'component',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Description = 'description',
-  /** column name */
-  Enabled = 'enabled',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  JsonSchema = 'json_schema',
-  /** column name */
-  Name = 'name',
-  /** column name */
-  UiSchema = 'ui_schema',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-/** input type for updating data in table "landing_page_templates" */
-export type Landing_Page_Templates_Set_Input = {
-  component?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  enabled?: InputMaybe<Scalars['Boolean']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
-};
-
-/** Streaming cursor of the table "landing_page_templates" */
-export type Landing_Page_Templates_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Landing_Page_Templates_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Landing_Page_Templates_Stream_Cursor_Value_Input = {
-  component?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  enabled?: InputMaybe<Scalars['Boolean']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  json_schema?: InputMaybe<Scalars['jsonb']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  ui_schema?: InputMaybe<Scalars['jsonb']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
-};
-
-/** update columns of table "landing_page_templates" */
-export enum Landing_Page_Templates_Update_Column {
-  /** column name */
-  Component = 'component',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Description = 'description',
-  /** column name */
-  Enabled = 'enabled',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  JsonSchema = 'json_schema',
-  /** column name */
-  Name = 'name',
-  /** column name */
-  UiSchema = 'ui_schema',
-  /** column name */
-  UpdatedAt = 'updated_at'
-}
-
-export type Landing_Page_Templates_Updates = {
-  /** append existing jsonb value of filtered columns with new jsonb value */
-  _append?: InputMaybe<Landing_Page_Templates_Append_Input>;
-  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-  _delete_at_path?: InputMaybe<Landing_Page_Templates_Delete_At_Path_Input>;
-  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-  _delete_elem?: InputMaybe<Landing_Page_Templates_Delete_Elem_Input>;
-  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
-  _delete_key?: InputMaybe<Landing_Page_Templates_Delete_Key_Input>;
-  /** prepend existing jsonb value of filtered columns with new jsonb value */
-  _prepend?: InputMaybe<Landing_Page_Templates_Prepend_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Landing_Page_Templates_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Landing_Page_Templates_Bool_Exp;
-};
-
 /** columns and relationships of "landing_pages" */
 export type Landing_Pages = {
   __typename?: 'landing_pages';
   created_at: Scalars['timestamptz']['output'];
-  data: Scalars['jsonb']['output'];
+  data?: Maybe<Scalars['jsonb']['output']>;
   id: Scalars['uuid']['output'];
-  /** An object relationship */
-  landing_page_template: Landing_Page_Templates;
   /** An object relationship */
   project: Projects;
   project_id: Scalars['uuid']['output'];
-  template_id: Scalars['uuid']['output'];
+  template_name: Scalars['String']['output'];
   updated_at: Scalars['timestamptz']['output'];
 };
 
@@ -2014,10 +1713,9 @@ export type Landing_Pages_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   data?: InputMaybe<Jsonb_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
-  landing_page_template?: InputMaybe<Landing_Page_Templates_Bool_Exp>;
   project?: InputMaybe<Projects_Bool_Exp>;
   project_id?: InputMaybe<Uuid_Comparison_Exp>;
-  template_id?: InputMaybe<Uuid_Comparison_Exp>;
+  template_name?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -2047,10 +1745,9 @@ export type Landing_Pages_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   data?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
-  landing_page_template?: InputMaybe<Landing_Page_Templates_Obj_Rel_Insert_Input>;
   project?: InputMaybe<Projects_Obj_Rel_Insert_Input>;
   project_id?: InputMaybe<Scalars['uuid']['input']>;
-  template_id?: InputMaybe<Scalars['uuid']['input']>;
+  template_name?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
@@ -2060,7 +1757,7 @@ export type Landing_Pages_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   project_id?: Maybe<Scalars['uuid']['output']>;
-  template_id?: Maybe<Scalars['uuid']['output']>;
+  template_name?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
@@ -2069,7 +1766,7 @@ export type Landing_Pages_Max_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   project_id?: InputMaybe<Order_By>;
-  template_id?: InputMaybe<Order_By>;
+  template_name?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
 
@@ -2079,7 +1776,7 @@ export type Landing_Pages_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   project_id?: Maybe<Scalars['uuid']['output']>;
-  template_id?: Maybe<Scalars['uuid']['output']>;
+  template_name?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
@@ -2088,7 +1785,7 @@ export type Landing_Pages_Min_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   project_id?: InputMaybe<Order_By>;
-  template_id?: InputMaybe<Order_By>;
+  template_name?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
 
@@ -2113,10 +1810,9 @@ export type Landing_Pages_Order_By = {
   created_at?: InputMaybe<Order_By>;
   data?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  landing_page_template?: InputMaybe<Landing_Page_Templates_Order_By>;
   project?: InputMaybe<Projects_Order_By>;
   project_id?: InputMaybe<Order_By>;
-  template_id?: InputMaybe<Order_By>;
+  template_name?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
 
@@ -2141,7 +1837,7 @@ export enum Landing_Pages_Select_Column {
   /** column name */
   ProjectId = 'project_id',
   /** column name */
-  TemplateId = 'template_id',
+  TemplateName = 'template_name',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -2152,7 +1848,7 @@ export type Landing_Pages_Set_Input = {
   data?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   project_id?: InputMaybe<Scalars['uuid']['input']>;
-  template_id?: InputMaybe<Scalars['uuid']['input']>;
+  template_name?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
@@ -2170,7 +1866,7 @@ export type Landing_Pages_Stream_Cursor_Value_Input = {
   data?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   project_id?: InputMaybe<Scalars['uuid']['input']>;
-  template_id?: InputMaybe<Scalars['uuid']['input']>;
+  template_name?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
@@ -2185,7 +1881,7 @@ export enum Landing_Pages_Update_Column {
   /** column name */
   ProjectId = 'project_id',
   /** column name */
-  TemplateId = 'template_id',
+  TemplateName = 'template_name',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -2235,10 +1931,6 @@ export type Mutation_Root = {
   delete_invitations?: Maybe<Invitations_Mutation_Response>;
   /** delete single row from the table: "invitations" */
   delete_invitations_by_pk?: Maybe<Invitations>;
-  /** delete data from the table: "landing_page_templates" */
-  delete_landing_page_templates?: Maybe<Landing_Page_Templates_Mutation_Response>;
-  /** delete single row from the table: "landing_page_templates" */
-  delete_landing_page_templates_by_pk?: Maybe<Landing_Page_Templates>;
   /** delete data from the table: "landing_pages" */
   delete_landing_pages?: Maybe<Landing_Pages_Mutation_Response>;
   /** delete single row from the table: "landing_pages" */
@@ -2297,10 +1989,6 @@ export type Mutation_Root = {
   insert_invitations?: Maybe<Invitations_Mutation_Response>;
   /** insert a single row into the table: "invitations" */
   insert_invitations_one?: Maybe<Invitations>;
-  /** insert data into the table: "landing_page_templates" */
-  insert_landing_page_templates?: Maybe<Landing_Page_Templates_Mutation_Response>;
-  /** insert a single row into the table: "landing_page_templates" */
-  insert_landing_page_templates_one?: Maybe<Landing_Page_Templates>;
   /** insert data into the table: "landing_pages" */
   insert_landing_pages?: Maybe<Landing_Pages_Mutation_Response>;
   /** insert a single row into the table: "landing_pages" */
@@ -2376,12 +2064,6 @@ export type Mutation_Root = {
   update_invitations_by_pk?: Maybe<Invitations>;
   /** update multiples rows of table: "invitations" */
   update_invitations_many?: Maybe<Array<Maybe<Invitations_Mutation_Response>>>;
-  /** update data of the table: "landing_page_templates" */
-  update_landing_page_templates?: Maybe<Landing_Page_Templates_Mutation_Response>;
-  /** update single row of the table: "landing_page_templates" */
-  update_landing_page_templates_by_pk?: Maybe<Landing_Page_Templates>;
-  /** update multiples rows of table: "landing_page_templates" */
-  update_landing_page_templates_many?: Maybe<Array<Maybe<Landing_Page_Templates_Mutation_Response>>>;
   /** update data of the table: "landing_pages" */
   update_landing_pages?: Maybe<Landing_Pages_Mutation_Response>;
   /** update single row of the table: "landing_pages" */
@@ -2525,18 +2207,6 @@ export type Mutation_RootDelete_InvitationsArgs = {
 export type Mutation_RootDelete_Invitations_By_PkArgs = {
   email: Scalars['String']['input'];
   team_id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Landing_Page_TemplatesArgs = {
-  where: Landing_Page_Templates_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Landing_Page_Templates_By_PkArgs = {
-  id: Scalars['uuid']['input'];
 };
 
 
@@ -2729,20 +2399,6 @@ export type Mutation_RootInsert_InvitationsArgs = {
 export type Mutation_RootInsert_Invitations_OneArgs = {
   object: Invitations_Insert_Input;
   on_conflict?: InputMaybe<Invitations_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Landing_Page_TemplatesArgs = {
-  objects: Array<Landing_Page_Templates_Insert_Input>;
-  on_conflict?: InputMaybe<Landing_Page_Templates_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Landing_Page_Templates_OneArgs = {
-  object: Landing_Page_Templates_Insert_Input;
-  on_conflict?: InputMaybe<Landing_Page_Templates_On_Conflict>;
 };
 
 
@@ -3041,36 +2697,6 @@ export type Mutation_RootUpdate_Invitations_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Invitations_ManyArgs = {
   updates: Array<Invitations_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Landing_Page_TemplatesArgs = {
-  _append?: InputMaybe<Landing_Page_Templates_Append_Input>;
-  _delete_at_path?: InputMaybe<Landing_Page_Templates_Delete_At_Path_Input>;
-  _delete_elem?: InputMaybe<Landing_Page_Templates_Delete_Elem_Input>;
-  _delete_key?: InputMaybe<Landing_Page_Templates_Delete_Key_Input>;
-  _prepend?: InputMaybe<Landing_Page_Templates_Prepend_Input>;
-  _set?: InputMaybe<Landing_Page_Templates_Set_Input>;
-  where: Landing_Page_Templates_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Landing_Page_Templates_By_PkArgs = {
-  _append?: InputMaybe<Landing_Page_Templates_Append_Input>;
-  _delete_at_path?: InputMaybe<Landing_Page_Templates_Delete_At_Path_Input>;
-  _delete_elem?: InputMaybe<Landing_Page_Templates_Delete_Elem_Input>;
-  _delete_key?: InputMaybe<Landing_Page_Templates_Delete_Key_Input>;
-  _prepend?: InputMaybe<Landing_Page_Templates_Prepend_Input>;
-  _set?: InputMaybe<Landing_Page_Templates_Set_Input>;
-  pk_columns: Landing_Page_Templates_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Landing_Page_Templates_ManyArgs = {
-  updates: Array<Landing_Page_Templates_Updates>;
 };
 
 
@@ -3970,12 +3596,6 @@ export type Query_Root = {
   invitations_aggregate: Invitations_Aggregate;
   /** fetch data from the table: "invitations" using primary key columns */
   invitations_by_pk?: Maybe<Invitations>;
-  /** fetch data from the table: "landing_page_templates" */
-  landing_page_templates: Array<Landing_Page_Templates>;
-  /** fetch aggregated fields from the table: "landing_page_templates" */
-  landing_page_templates_aggregate: Landing_Page_Templates_Aggregate;
-  /** fetch data from the table: "landing_page_templates" using primary key columns */
-  landing_page_templates_by_pk?: Maybe<Landing_Page_Templates>;
   /** An array relationship */
   landing_pages: Array<Landing_Pages>;
   /** An aggregate relationship */
@@ -4146,29 +3766,6 @@ export type Query_RootInvitations_AggregateArgs = {
 export type Query_RootInvitations_By_PkArgs = {
   email: Scalars['String']['input'];
   team_id: Scalars['uuid']['input'];
-};
-
-
-export type Query_RootLanding_Page_TemplatesArgs = {
-  distinct_on?: InputMaybe<Array<Landing_Page_Templates_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Landing_Page_Templates_Order_By>>;
-  where?: InputMaybe<Landing_Page_Templates_Bool_Exp>;
-};
-
-
-export type Query_RootLanding_Page_Templates_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Landing_Page_Templates_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Landing_Page_Templates_Order_By>>;
-  where?: InputMaybe<Landing_Page_Templates_Bool_Exp>;
-};
-
-
-export type Query_RootLanding_Page_Templates_By_PkArgs = {
-  id: Scalars['uuid']['input'];
 };
 
 
@@ -4422,14 +4019,6 @@ export type Subscription_Root = {
   invitations_by_pk?: Maybe<Invitations>;
   /** fetch data from the table in a streaming manner: "invitations" */
   invitations_stream: Array<Invitations>;
-  /** fetch data from the table: "landing_page_templates" */
-  landing_page_templates: Array<Landing_Page_Templates>;
-  /** fetch aggregated fields from the table: "landing_page_templates" */
-  landing_page_templates_aggregate: Landing_Page_Templates_Aggregate;
-  /** fetch data from the table: "landing_page_templates" using primary key columns */
-  landing_page_templates_by_pk?: Maybe<Landing_Page_Templates>;
-  /** fetch data from the table in a streaming manner: "landing_page_templates" */
-  landing_page_templates_stream: Array<Landing_Page_Templates>;
   /** An array relationship */
   landing_pages: Array<Landing_Pages>;
   /** An aggregate relationship */
@@ -4653,36 +4242,6 @@ export type Subscription_RootInvitations_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Invitations_Stream_Cursor_Input>>;
   where?: InputMaybe<Invitations_Bool_Exp>;
-};
-
-
-export type Subscription_RootLanding_Page_TemplatesArgs = {
-  distinct_on?: InputMaybe<Array<Landing_Page_Templates_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Landing_Page_Templates_Order_By>>;
-  where?: InputMaybe<Landing_Page_Templates_Bool_Exp>;
-};
-
-
-export type Subscription_RootLanding_Page_Templates_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Landing_Page_Templates_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Landing_Page_Templates_Order_By>>;
-  where?: InputMaybe<Landing_Page_Templates_Bool_Exp>;
-};
-
-
-export type Subscription_RootLanding_Page_Templates_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootLanding_Page_Templates_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Landing_Page_Templates_Stream_Cursor_Input>>;
-  where?: InputMaybe<Landing_Page_Templates_Bool_Exp>;
 };
 
 
@@ -6364,11 +5923,6 @@ export type FetchFacebookCreativeTemplatesQueryVariables = Exact<{ [key: string]
 
 export type FetchFacebookCreativeTemplatesQuery = { __typename?: 'query_root', facebook_creative_templates: Array<{ __typename?: 'facebook_creative_templates', name: string, ui_schema?: any | null, json_schema: any, updated_at: any, created_at: any, description?: string | null, creatomate_template_id: string, id: any }> };
 
-export type FetchLandingPageTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FetchLandingPageTemplatesQuery = { __typename?: 'query_root', landing_page_templates: Array<{ __typename?: 'landing_page_templates', name: string, ui_schema?: any | null, json_schema: any, updated_at: any, created_at: any, description?: string | null, component: string, id: any }> };
-
 export type UpdateFacebookAudiencesByProjectIdMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
   updates?: InputMaybe<Facebook_Audiences_Set_Input>;
@@ -6426,25 +5980,25 @@ export type UpdateFacebookCreativeMutation = { __typename?: 'mutation_root', upd
 
 export type CreateLandingPageMutationVariables = Exact<{
   projectId: Scalars['uuid']['input'];
-  templateId: Scalars['uuid']['input'];
+  templateName: Scalars['String']['input'];
 }>;
 
 
-export type CreateLandingPageMutation = { __typename?: 'mutation_root', insert_landing_pages?: { __typename?: 'landing_pages_mutation_response', returning: Array<{ __typename?: 'landing_pages', id: any, created_at: any, data: any, project_id: any, template_id: any, updated_at: any }> } | null };
+export type CreateLandingPageMutation = { __typename?: 'mutation_root', insert_landing_pages?: { __typename?: 'landing_pages_mutation_response', returning: Array<{ __typename?: 'landing_pages', id: any, created_at: any, data?: any | null, project_id: any, template_name: string, updated_at: any }> } | null };
 
 export type FetchLandingPageByProjectIdQueryVariables = Exact<{
   projectId: Scalars['uuid']['input'];
 }>;
 
 
-export type FetchLandingPageByProjectIdQuery = { __typename?: 'query_root', landing_pages: Array<{ __typename?: 'landing_pages', project_id: any, template_id: any, updated_at: any, id: any, data: any, created_at: any, landing_page_template: { __typename?: 'landing_page_templates', created_at: any, component: string, description?: string | null, id: any, json_schema: any, name: string, ui_schema?: any | null, updated_at: any } }> };
+export type FetchLandingPageByProjectIdQuery = { __typename?: 'query_root', landing_pages: Array<{ __typename?: 'landing_pages', project_id: any, template_name: string, updated_at: any, id: any, data?: any | null, created_at: any }> };
 
 export type FetchLandingPageWithTemplateQueryVariables = Exact<{
   landingPageId: Scalars['uuid']['input'];
 }>;
 
 
-export type FetchLandingPageWithTemplateQuery = { __typename?: 'query_root', landing_pages_by_pk?: { __typename?: 'landing_pages', created_at: any, data: any, id: any, project_id: any, template_id: any, updated_at: any, landing_page_template: { __typename?: 'landing_page_templates', created_at: any, component: string, description?: string | null, id: any, json_schema: any, name: string, ui_schema?: any | null, updated_at: any } } | null };
+export type FetchLandingPageWithTemplateQuery = { __typename?: 'query_root', landing_pages_by_pk?: { __typename?: 'landing_pages', created_at: any, data?: any | null, id: any, project_id: any, template_name: string, updated_at: any } | null };
 
 export type UpdateLandingPageMutationVariables = Exact<{
   landingPageId: Scalars['uuid']['input'];
@@ -6452,7 +6006,7 @@ export type UpdateLandingPageMutationVariables = Exact<{
 }>;
 
 
-export type UpdateLandingPageMutation = { __typename?: 'mutation_root', update_landing_pages_by_pk?: { __typename?: 'landing_pages', id: any, data: any } | null };
+export type UpdateLandingPageMutation = { __typename?: 'mutation_root', update_landing_pages_by_pk?: { __typename?: 'landing_pages', id: any, data?: any | null } | null };
 
 export type CreateProjectMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -6593,7 +6147,6 @@ export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"
 export const SubmitContactFormDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SubmitContactForm"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"message"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_contact_form_submissions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"message"},"value":{"kind":"Variable","name":{"kind":"Name","value":"message"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<SubmitContactFormMutation, SubmitContactFormMutationVariables>;
 export const FacebookApiGetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FacebookAPIGet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"url"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebookAPIGet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"url"},"value":{"kind":"Variable","name":{"kind":"Name","value":"url"}}}]}]}}]} as unknown as DocumentNode<FacebookApiGetMutation, FacebookApiGetMutationVariables>;
 export const FetchFacebookCreativeTemplatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFacebookCreativeTemplates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_creative_templates"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ui_schema"}},{"kind":"Field","name":{"kind":"Name","value":"json_schema"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"creatomate_template_id"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<FetchFacebookCreativeTemplatesQuery, FetchFacebookCreativeTemplatesQueryVariables>;
-export const FetchLandingPageTemplatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchLandingPageTemplates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"landing_page_templates"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ui_schema"}},{"kind":"Field","name":{"kind":"Name","value":"json_schema"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"component"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<FetchLandingPageTemplatesQuery, FetchLandingPageTemplatesQueryVariables>;
 export const UpdateFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"facebook_audiences_set_input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_facebook_audiences_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<UpdateFacebookAudiencesByProjectIdMutation, UpdateFacebookAudiencesByProjectIdMutationVariables>;
 export const CreateFacebookAudienceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateFacebookAudience"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"jsonb"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"publisher_platforms"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_facebook_audiences_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"geo_locations"},"value":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"publisher_platforms"},"value":{"kind":"Variable","name":{"kind":"Name","value":"publisher_platforms"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"publisher_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<CreateFacebookAudienceMutation, CreateFacebookAudienceMutationVariables>;
 export const GetFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_audiences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<GetFacebookAudiencesByProjectIdQuery, GetFacebookAudiencesByProjectIdQueryVariables>;
@@ -6601,9 +6154,9 @@ export const CreateFacebookCreativeDocument = {"kind":"Document","definitions":[
 export const FetchFacebookCreativesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFacebookCreativesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_creatives"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_id"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_creative_template"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creatomate_template_id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"json_schema"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ui_schema"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<FetchFacebookCreativesByProjectIdQuery, FetchFacebookCreativesByProjectIdQueryVariables>;
 export const FetchFacebookCreativeWithTemplateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFacebookCreativeWithTemplate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"facebookCreativeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_creatives_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"facebookCreativeId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_id"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_creative_template"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creatomate_template_id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"json_schema"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ui_schema"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<FetchFacebookCreativeWithTemplateQuery, FetchFacebookCreativeWithTemplateQueryVariables>;
 export const UpdateFacebookCreativeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateFacebookCreative"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"facebookCreativeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"jsonb"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_facebook_creatives_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"facebookCreativeId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}}]}}]}}]} as unknown as DocumentNode<UpdateFacebookCreativeMutation, UpdateFacebookCreativeMutationVariables>;
-export const CreateLandingPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateLandingPage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"templateId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_landing_pages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"template_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"templateId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_id"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<CreateLandingPageMutation, CreateLandingPageMutationVariables>;
-export const FetchLandingPageByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchLandingPageByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"landing_pages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_id"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"landing_page_template"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"component"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"json_schema"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ui_schema"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<FetchLandingPageByProjectIdQuery, FetchLandingPageByProjectIdQueryVariables>;
-export const FetchLandingPageWithTemplateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchLandingPageWithTemplate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"landingPageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"landing_pages_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"landingPageId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_id"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"landing_page_template"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"component"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"json_schema"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ui_schema"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<FetchLandingPageWithTemplateQuery, FetchLandingPageWithTemplateQueryVariables>;
+export const CreateLandingPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateLandingPage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"templateName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_landing_pages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"template_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"templateName"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<CreateLandingPageMutation, CreateLandingPageMutationVariables>;
+export const FetchLandingPageByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchLandingPageByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"landing_pages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchLandingPageByProjectIdQuery, FetchLandingPageByProjectIdQueryVariables>;
+export const FetchLandingPageWithTemplateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchLandingPageWithTemplate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"landingPageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"landing_pages_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"landingPageId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<FetchLandingPageWithTemplateQuery, FetchLandingPageWithTemplateQueryVariables>;
 export const UpdateLandingPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateLandingPage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"landingPageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"jsonb"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_landing_pages_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"landingPageId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}}]}}]}}]} as unknown as DocumentNode<UpdateLandingPageMutation, UpdateLandingPageMutationVariables>;
 export const CreateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"team_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"team_id"}}]}}]}}]} as unknown as DocumentNode<CreateProjectMutation, CreateProjectMutationVariables>;
 export const DeleteProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteProjectMutation, DeleteProjectMutationVariables>;

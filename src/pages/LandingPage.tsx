@@ -28,7 +28,7 @@ const LandingPageDetail = observer(() => {
       { landingPageError && <ErrorMessage message={landingPageError.message} />}
 
       { landingPage &&
-      <LandingPageRender data={landingPage.data} component={landingPage.landing_page_template.component} />
+      <LandingPageRender data={landingPage.data} component={landingPage.template_name} />
       }
     </div>
   </>
