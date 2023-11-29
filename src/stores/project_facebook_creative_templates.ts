@@ -97,6 +97,20 @@ export class ProjectFacebookCreativeTemplates {
     return result.data?.project_facebook_creative_templates_by_pk as FacebookCreativeWithTemplate
   }
 
+  async deleteProjectFacebookCreativeTemplate(id: string): Promise<boolean> {
+    const result = await client.mutation(graphql(`
+      mutation DeleteProjectFacebookCreativeTemplateMutation($id: uuid!) {
+        delete_project_facebook_creative_templates_by_pk(id: $id) {
+          id
+        }
+      }
+    `), { id })
+    if (result.error) {
+      throw result.error
+    }
+    return true
+  }
+
   async updateProjectFacebookCreativeTemplate(projectFacebookCreativeTemplateId: string, data: object) : Promise<void> {
     const result = await client.mutation(graphql(`
     mutation UpdateProjectFacebookCreativeTemplate($projectFacebookCreativeTemplateId: uuid!, $data: jsonb!) {

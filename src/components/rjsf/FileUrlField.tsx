@@ -48,9 +48,9 @@ const FileUrlField: React.FC<FieldProps> = ({ formData, onChange, name }) => {
     <div>
       {busy && <SpinningLoading isLoading={busy} />}
       <label className="label">
-        <span className="text-sm opacity-60">{name}</span>
+        <span>{name}</span>
       </label>
-      {formData ? <img src={formData} style={{ width: 150 }} /> : <input type="file" className="file-input w-full max-w-xs" onChange={(e) => uploadCreativeAssetMutation.mutate(e.target.files)} />}
+      {formData ? <div><img src={formData} style={{ width: 150 }} /><button className="btn btn-error text-white mt-3" onClick={() => onChange(null)}>Remove</button></div> : <input type="file" className="file-input w-full max-w-xs" onChange={(e) => uploadCreativeAssetMutation.mutate(e.target.files)} />}
     </div>
   );
 }

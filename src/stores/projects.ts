@@ -110,6 +110,12 @@ export class Projects {
             name
             publisher_platforms
           }
+          project_facebook_creative_templates {
+            id
+            data
+            project_id
+            template_id
+          }
           themes {
             name
             id

@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Projects as Project } from "../../gql/graphql";
 import TestObjective from "./test_components/TestObjective";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ProjectFacebookAudienceContext, ProjectsContext } from "../../stores/stores";
 import { useMutation } from "@tanstack/react-query";
@@ -14,14 +14,17 @@ import TestCreatives from "./test_components/TestCreatives";
 import TestLandingPages from "./test_components/TestLandingPages";
 import '../../css/draft_project.css'
 import TestThemes from "./test_components/creatives/TestThemes";
+import ProjectFacebookCreativeTemplateDetail from "../../pages/projects/ProjectFacebookCreativeTemplateDetail";
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const projectStore = useContext(ProjectsContext)
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
   const [audienceComplete, setAudienceComplete] = useState(false)
-  const navigate = useNavigate()
+  const [adTemplateComplete, setAdTemplateComplete] = useState(false)
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
+  const [projectFacebookCreativeTemplateId, setProjectFacebookCreativeTemplateId] = useState('')
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
   const projectMutation = useMutation({
     mutationFn: (payload: object) => projectStore.updateProject({ id: project.id, payload: payload as Project }),
@@ -40,7 +43,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     children: [
       {
         label: 'Test Objective',
-        step: 1,
+        steps: [1],
         isComplete: Boolean(project.name && project.objective),
         value: 'test_objective',
         icon: 'mdi mdi-flask-outline'
@@ -48,28 +51,28 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
       {
         label: 'Brandness',
         value: 'brandness',
-        step: 2,
+        steps: [2],
         isComplete: Boolean(project.branding),
         icon: 'mdi mdi-brush-variant'
       },
       {
         label: 'Platform',
         value: 'platform',
-        step: 3,
+        steps: [3],
         isComplete: Boolean(project.platform),
         icon: 'mdi mdi-facebook'
       },
       {
         label: 'Audience',
         value: 'audience',
-        step: 4,
+        steps: [4],
         isComplete: Boolean(audienceComplete),
         icon: 'mdi mdi-account-group-outline'
       },
       {
         label: 'Runtime',
         value: 'runtime',
-        step: 5,
+        steps: [5],
         isComplete: Boolean(project.start_time && project.stop_time),
         icon: 'mdi mdi-clock-outline'
       }
@@ -82,35 +85,44 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     children: [
       {
         label: 'Ad template',
-        step: 6,
-        isComplete: false,
+        steps: [6, 7],
+        isComplete: adTemplateComplete,
         value: 'ad_template',
         icon: 'mdi mdi-image-multiple'
       },
       {
         label: 'Ad copy matrix',
         value: 'ad_copy_matrix',
-        step: 7,
+        steps: [8],
         isComplete: Boolean(project.themes?.length === 3),
         icon: 'mdi mdi-file-document-edit'
       },
       {
         label: 'Landing page',
         value: 'landing_page',
-        step: 8,
+        steps: [9],
         isComplete: false,
         icon: 'mdi mdi-beaker'
       }
     ]
   }]
   useEffect(() => {
+    const stepParam = searchParams.get('step')
+    const projectFacebookCreativeTemplateIdParam = searchParams.get('project_facebook_creative_template_id')
+    if (stepParam) {
+      setStep(parseInt(stepParam))
+    } if (projectFacebookCreativeTemplateIdParam) {
+      setProjectFacebookCreativeTemplateId(projectFacebookCreativeTemplateIdParam)
+    }
+    onSave({}) // dummy project update
+  }, [location])
+  useEffect(() => {
     if (project.facebook_audiences?.length) {
       setAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(project.facebook_audiences[0]))
     }
+    console.log(project.project_facebook_creative_templates?.length)
+    setAdTemplateComplete(project.project_facebook_creative_templates?.length ? true : false)
   }, [project])
-  useEffect(() => {
-    navigate(`/project/${project.id}?step=${step}`, { replace: true })
-  }, [step])
   return (
     <>
       <div className="flex flex-wrap justify-between gap-y-12 gap-x-4">
@@ -125,7 +137,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
                   <summary><span className={item.icon}></span>{item.label}</summary>
                   <ul>
                     {item.children.map((child) =>
-                      <li key={child.value} className={`project-menu-item ${child.step === step && 'active'}`} onClick={() => setStep(child.step)}><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>
+                      <li key={child.value} className={`project-menu-item ${child.steps?.includes(step) && 'active'}`} onClick={() => { searchParams.set('step', child.steps[0].toString()); setSearchParams(searchParams) }} ><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>
                     )}
                   </ul>
                 </details>
@@ -140,15 +152,16 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           {step === 4 && <TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} />}
           {step === 5 && <TestRuntime project={project} onSave={onSave} />}
           {step === 6 && <TestCreatives project={project} onSave={onSave} />}
-          {step === 7 && <TestThemes project={project} onSave={onSave} />}
-          {step === 8 && <TestLandingPages project={project} onSave={onSave} />}
+          {step === 7 && projectFacebookCreativeTemplateId && <ProjectFacebookCreativeTemplateDetail projectFacebookCreativeTemplateId={projectFacebookCreativeTemplateId} />}
+          {step === 8 && <TestThemes project={project} onSave={onSave} />}
+          {step === 9 && <TestLandingPages project={project} onSave={onSave} />}
           <div className="mt-5 flex gap-4">
-            {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setStep((prev) => prev -= 1)}>
+            {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setSearchParams({ step: (step - 1).toString() })}>
               <span className="mdi mdi-chevron-left text-base" /> Go Back
             </button>
             }
-            {step < 8 &&
-              <button className="btn action-button text-base" onClick={() => setStep((prev) => prev += 1)}>
+            {step < 9 && step != 6 &&
+              <button className="btn action-button text-base" onClick={() => setSearchParams({ step: (step + 1).toString() })}>
                 Next <span className="mdi mdi-chevron-right text-base" />
               </button>
             }
