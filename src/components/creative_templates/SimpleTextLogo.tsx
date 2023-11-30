@@ -4,7 +4,7 @@ import axios from 'axios'
 import { AuthContext } from '../../stores/stores';
 import { useMutation } from '@tanstack/react-query';
 import { SpinningLoading } from '../lib/SpinningLoading';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SimpleTextLogoRender = () => {

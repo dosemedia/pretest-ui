@@ -72,7 +72,7 @@ const TestAudienceInterests = observer(({ onUpdate, projectFacebookAudience }: {
         <div className="flex items-center">
           <input type="text" className="input" placeholder="Search for interests..." value={search} onChange={(e) => { setSearch(e.target.value); onSearch(e?.target.value) }} />
           <div className="ml-2">
-            {isLoading || isRefetching && <SpinningLoading isLoading={isLoading || isRefetching} size='lg' />}
+            {isLoading || isRefetching && <SpinningLoading isLoading={isLoading || isRefetching} size='loading-lg' />}
             {facebookInterestsMutation && facebookInterestsMutation.length > 0 && search && !isLoading && !isRefetching &&
               <div className="flex gap-x-2">
                 <select className="select select-bordered w-full max-w-xs" onChange={(e) => setSelectedInterest(JSON.parse(e.target.value))}>

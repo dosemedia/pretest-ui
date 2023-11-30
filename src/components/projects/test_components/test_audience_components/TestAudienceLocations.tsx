@@ -86,7 +86,7 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
         <div className="flex items-center">
           <input type="text" className="input w-10/12" placeholder="Search for location..." value={locationSearch} onChange={(e) => { setLocationSearch(e.target.value); onLocationSearch(e?.target.value) }} />
           <div className="ml-2">
-            {(facebookLocationsIsLoading || facebookLocationsIsRefetching) && <SpinningLoading isLoading={facebookLocationsIsLoading || facebookLocationsIsRefetching} size='lg' />}
+            {(facebookLocationsIsLoading || facebookLocationsIsRefetching) && <SpinningLoading isLoading={facebookLocationsIsLoading || facebookLocationsIsRefetching} size='loading-lg' />}
             {facebookLocations && facebookLocations.length > 0 && locationSearch && !facebookLocationsIsLoading && !facebookLocationsIsRefetching &&
               <div className="flex gap-x-2">
                 <select className="select select-bordered w-full max-w-xs" onChange={(e) => setSelectedLocation(JSON.parse(e.target.value))}>

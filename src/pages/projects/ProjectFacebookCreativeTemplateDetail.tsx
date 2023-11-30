@@ -20,7 +20,7 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
   }
 
   const { data: projectFacebookCreativeTemplate, error: facebookCreativeError, isLoading: isLoadingFacebookCreative } = useQuery<Promise<ProjectFacebookCreativeTemplate | undefined>, Error, ProjectFacebookCreativeTemplate, QueryKey>({
-    queryKey: ['facebookCreative', projectFacebookCreativeTemplateId],
+    queryKey: ['fetchProjectFacebookCreativeTemplate', projectFacebookCreativeTemplateId],
     queryFn: async () => {
       const creative = await projectFacebookCreativeTemplateStore.fetchProjectFacebookCreativeTemplateWithTemplate(projectFacebookCreativeTemplateId)
       // Prevent save trigger from this initial load
@@ -79,7 +79,7 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
             {projectFacebookCreativeTemplate &&
               // We could also use this which is very similar : https://jsonforms.io/docs/integrations/react/
               <div className="bg-gray-200 mt-8 rounded-md p-8">
-                <span>Edit this template below or <span className="link" onClick={() => { searchParams.set('project_facebook_creative_template_id', ''); setSearchParams() }}>go back to templates</span></span>
+                <span>Edit this template below or <span className="link" onClick={() => { searchParams.set('project_facebook_creative_template_id', ''); setSearchParams() }}>go back to templates</span></span>{updateCreative && <SpinningLoading isLoading={updateCreative.isLoading} size="loading-xs" />}
                 {Form &&
                   <Form
                     data={formData}
@@ -88,7 +88,6 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
                 }
               </div>
             }
-            {updateCreative.isLoading && <div>Saving...</div>}
           </div>
         </div>
       </div>
