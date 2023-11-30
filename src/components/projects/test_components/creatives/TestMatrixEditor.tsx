@@ -6,8 +6,10 @@ import '../../../../css/test_matrix_editor.css';
 import { useState } from "react";
 import FacebookPreviewContainer from "../../../social/FacebookPreviewContainer";
 import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../../../gql/graphql";
+import { useSearchParams } from "react-router-dom";
 const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
   const themes: ProjectTheme[] = project.themes
+  const [searchParams, setSearchParams] = useSearchParams()
   const [selectedAngle, setSelectedAngle] = useState<ThemeAngle | null>(null)
   const ctaOptions = ['SHOP NOW', 'LEARN MORE']
   const projectFacebookCreativeTemplates: ProjectFacebookCreativeTemplate[] = project.project_facebook_creative_templates
@@ -84,7 +86,7 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
           </div>
         </div>
         <div className="w-full md:w-5/12">
-          {projectFacebookCreativeTemplates && projectFacebookCreativeTemplates.length && <FacebookPreviewContainer template={projectFacebookCreativeTemplates[0]} data={{ ...projectFacebookCreativeTemplates[0].data, mainCopy: selectedAngle?.name }} />}
+          {projectFacebookCreativeTemplates && projectFacebookCreativeTemplates.length > 0 ? <FacebookPreviewContainer template={projectFacebookCreativeTemplates[0]} data={{ ...projectFacebookCreativeTemplates[0].data, mainCopy: selectedAngle?.name }} /> : <div className="alert alert-info text-white"><span>Select an <span className="link" onClick={() => setSearchParams({ ...searchParams, step: '6' })}>ad template</span> in order to see a preview.</span></div>}
         </div>
       </div>
     </>
