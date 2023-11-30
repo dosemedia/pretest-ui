@@ -77,7 +77,7 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
               <label className="label">
                 <span className="text-sm opacity-60">Button CTA</span>
               </label>
-              <select className="select w-full max-w-xs" style={{ background: 'white' }}>
+              <select className="select w-full max-w-xs" style={{ backgroundColor: 'white', border: '1px solid #E3E1D9' }}>
                 {ctaOptions.map((item) => <option>{item}</option>)}
               </select>
             </div>
