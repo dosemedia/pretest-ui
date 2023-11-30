@@ -1,26 +1,25 @@
-import { QueryKey, useQuery, useMutation } from "@tanstack/react-query";
+import { QueryKey, useMutation, useQuery } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
-import { useContext, useState, createRef, useEffect, useCallback } from 'react'
-import ErrorMessage from "../../components/lib/Error";
+import { useContext, useState, useEffect, useCallback } from 'react'
 import { ProjectFacebookCreativeTemplatesContext } from "../../stores/stores";
 import { SpinningLoading } from "../../components/lib/SpinningLoading";
-import validator from '@rjsf/validator-ajv8'
-import Form from '@rjsf/core'
 import { useSearchParams } from 'react-router-dom'
-import { RegistryFieldsType } from '@rjsf/utils' // UiSchema
-import FileUrlField from "../../components/rjsf/FileUrlField";
 import _ from 'lodash'
+import CreativeTemplates from "../../components/creative_templates/CreativeTemplates";
 import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../gql/graphql";
-import ColorPickerField from "../../components/rjsf/ColorPickerField";
+import ErrorMessage from "../../components/lib/Error";
 
 const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativeTemplateId }: { projectFacebookCreativeTemplateId: string }) => {
   const [formData, setFormData] = useState(null);
-  // https://rjsf-team.github.io/react-jsonschema-form/docs/usage/validation
-  const formRef = createRef<Form>();
   const [searchParams, setSearchParams] = useSearchParams()
   const projectFacebookCreativeTemplateStore = useContext(ProjectFacebookCreativeTemplatesContext)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const forms: { [key: string]: React.FC<{ data: any, onChange: (newData: any) => void }> } = {};
+  for (const template of CreativeTemplates) {
+    forms[template.name] = template.form;
+  }
 
-  const { data: projectFacebookCreativeTemplate, error: facebookCreativeError, isLoading: isLoadingFacebookCreative, refetch } = useQuery<Promise<ProjectFacebookCreativeTemplate | undefined>, Error, ProjectFacebookCreativeTemplate, QueryKey>({
+  const { data: projectFacebookCreativeTemplate, error: facebookCreativeError, isLoading: isLoadingFacebookCreative } = useQuery<Promise<ProjectFacebookCreativeTemplate | undefined>, Error, ProjectFacebookCreativeTemplate, QueryKey>({
     queryKey: ['facebookCreative', projectFacebookCreativeTemplateId],
     queryFn: async () => {
       const creative = await projectFacebookCreativeTemplateStore.fetchProjectFacebookCreativeTemplateWithTemplate(projectFacebookCreativeTemplateId)
@@ -29,6 +28,7 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
       return creative
     }
   })
+
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const debouncedFormData = useCallback(_.debounce((data: any) => {
@@ -47,24 +47,25 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mutationFn: async (data: any) => {
       console.log('~~ updateFacebookCreative')
-      for (const key of Object.keys(projectFacebookCreativeTemplate?.facebook_creative_template.ui_schema)) {
-        const item = projectFacebookCreativeTemplate?.facebook_creative_template.ui_schema[key]
-        if (item['ui:widget'] === 'hidden') {
-          data[key] = 'Place your copy here'
-        }
-      }
       return await projectFacebookCreativeTemplateStore.updateProjectFacebookCreativeTemplate(projectFacebookCreativeTemplate?.id, data)
-    },
-    onSuccess: () => refetch()
+    }
   })
 
-  const customFields: RegistryFieldsType = { fileUrl: FileUrlField , colorPicker: ColorPickerField }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onChange = (newData: any) => {
+    // setDataSaved(false)
+    setFormData(newData)
+    debouncedFormData(newData)
+  }
+
 
   useEffect(() => {
     if (!searchParams.get('project_facebook_creative_template_id')) {
       setSearchParams({ step: '6' })
     }
   }, [])
+
+  const Form = projectFacebookCreativeTemplate ? forms[projectFacebookCreativeTemplate.template_name] : null;
 
 
   return (
@@ -79,18 +80,12 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
               // We could also use this which is very similar : https://jsonforms.io/docs/integrations/react/
               <div className="bg-gray-200 mt-8 rounded-md p-8">
                 <span>Edit this template below or <span className="link" onClick={() => { searchParams.set('project_facebook_creative_template_id', ''); setSearchParams() }}>go back to templates</span></span>
-                <Form
-                  schema={projectFacebookCreativeTemplate?.facebook_creative_template.json_schema}
-                  validator={validator}
-                  formData={formData}
-                  onChange={(e) => { debouncedFormData(e.formData) }}
-                  ref={formRef}
-                  fields={customFields}
-                  className="text-sm opacity-60"
-                  uiSchema={projectFacebookCreativeTemplate?.facebook_creative_template.ui_schema}
-                >
-                  <div>{ /* Hide submit form! */}</div>
-                </Form>
+                {Form &&
+                  <Form
+                    data={formData}
+                    onChange={onChange}
+                  />
+                }
               </div>
             }
             {updateCreative.isLoading && <div>Saving...</div>}

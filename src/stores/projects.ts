@@ -114,7 +114,7 @@ export class Projects {
             id
             data
             project_id
-            template_id
+            template_name
           }
           themes {
             name

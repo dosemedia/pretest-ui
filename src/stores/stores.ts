@@ -8,7 +8,6 @@ import { Facebook } from './facebook'
 import { ProjectFacebookAudience } from './project_facebook_audience'
 import { Themes } from './themes'
 import { ThemesAngles } from './angles'
-import { FacebookCreativeTemplates } from './facebook_creative_templates'
 import { ProjectFacebookCreatives } from './project_facebook_creatives'
 import { ProjectFacebookCreativeTemplates } from './project_facebook_creative_templates'
 import { ProjectLandingPages } from './project_landing_pages'
@@ -39,9 +38,6 @@ export const ThemesContext = createContext<Themes>(themes)
 
 export const themesAngles = new ThemesAngles()
 export const ThemesAnglesContext = createContext<ThemesAngles>(themesAngles)
-
-export const facebookCreativeTemplates = new FacebookCreativeTemplates()
-export const FacebookCreativeTemplatesContext = createContext<FacebookCreativeTemplates>(facebookCreativeTemplates)
 
 export const projectFacebookCreatives = new ProjectFacebookCreatives()
 export const ProjectFacebookCreativesContext = createContext<ProjectFacebookCreatives>(projectFacebookCreatives)

@@ -2,12 +2,9 @@ import { client } from '../graphql'
 import { graphql } from '../gql'
 import { makeAutoObservable } from 'mobx';
 import { Projects as Project } from '../gql/graphql';
-import { Facebook_Creative_Templates as FacebookCreativeTemplate } from "../gql/graphql";
 import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from '../gql/graphql';
+import CreativeTemplate from '../components/creative_templates/CreativeTemplate';
 
-export interface FacebookCreativeWithTemplate extends ProjectFacebookCreativeTemplate {
-  facebook_creative_template: FacebookCreativeTemplate; 
-}
 
 export class ProjectFacebookCreativeTemplates {
   
@@ -15,21 +12,21 @@ export class ProjectFacebookCreativeTemplates {
     makeAutoObservable(this)
   }
   
-  async createProjectFacebookCreativeTemplateFromTemplate({ project, template } : { project: Project, template : FacebookCreativeTemplate }): Promise<ProjectFacebookCreativeTemplate> {
+  async createProjectFacebookCreativeTemplateFromTemplate({ project, creativeTemplate } : { project: Project, creativeTemplate : CreativeTemplate }): Promise<ProjectFacebookCreativeTemplate> {
     const result = await client.mutation(graphql(`
-    mutation CreateProjectFacebookCreativeTemplate($projectId: uuid!, $templateId: uuid!) {
-      insert_project_facebook_creative_templates(objects: {project_id: $projectId, template_id: $templateId}) {
+    mutation CreateProjectFacebookCreativeTemplate($projectId: uuid!, $templateName: String!) {
+      insert_project_facebook_creative_templates(objects: {project_id: $projectId, template_name: $templateName}) {
         returning {
           id
           created_at
           data
           project_id
-          template_id
+          template_name
           updated_at
         }
       }
     }
-    `), { projectId: project.id, templateId: template.id })
+    `), { projectId: project.id, templateName: creativeTemplate.name })
     if (result.error) {
       throw result.error
     }
@@ -39,33 +36,23 @@ export class ProjectFacebookCreativeTemplates {
     throw new Error('Failed to create creative')
   }
 
-  async fetchProjectFacebookCreativeTemplatesByProject({ project }: { project: Project }): Promise<Array<FacebookCreativeWithTemplate>> {
+  async fetchProjectFacebookCreativeTemplatesByProject({ project }: { project: Project }): Promise<ProjectFacebookCreativeTemplate[]> {
     const result = await client.query(graphql(`
       query FetchProjectFacebookCreativeTemplateByProjectID($projectId: uuid!) {
         project_facebook_creative_templates(where: {project_id: {_eq: $projectId}}) {
           project_id
-          template_id
+          template_name
           updated_at
           id
           data
           created_at
-          facebook_creative_template {
-            created_at
-            creatomate_template_id
-            description
-            id
-            json_schema
-            name
-            ui_schema
-            updated_at
-          }
         }
       }
     `), { projectId: project.id })
     if (result.error) {
       throw result.error
     }
-    return result.data?.project_facebook_creative_templates as FacebookCreativeWithTemplate[]
+    return result.data?.project_facebook_creative_templates as ProjectFacebookCreativeTemplate[]
   }
 
   async fetchProjectFacebookCreativeTemplateWithTemplate(projectFacebookCreativeId: string) : Promise<ProjectFacebookCreativeTemplate> {
@@ -76,25 +63,15 @@ export class ProjectFacebookCreativeTemplates {
         data
         id
         project_id
-        template_id
+        template_name
         updated_at
-        facebook_creative_template {
-          created_at
-          creatomate_template_id
-          description
-          id
-          json_schema
-          name
-          ui_schema
-          updated_at
-        }
       }
     }
     `), { projectFacebookCreativeId })
     if (result.error) {
       throw result.error
     }
-    return result.data?.project_facebook_creative_templates_by_pk as FacebookCreativeWithTemplate
+    return result.data?.project_facebook_creative_templates_by_pk as ProjectFacebookCreativeTemplate
   }
 
   async deleteProjectFacebookCreativeTemplate(id: string): Promise<boolean> {
