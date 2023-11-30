@@ -84,7 +84,7 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
           </div>
         </div>
         <div className="w-full md:w-5/12">
-          {projectFacebookCreativeTemplates && projectFacebookCreativeTemplates.length && <FacebookPreviewContainer data={projectFacebookCreativeTemplates[0].data} />}
+          {projectFacebookCreativeTemplates && projectFacebookCreativeTemplates.length && <FacebookPreviewContainer template={projectFacebookCreativeTemplates[0]} data={{ ...projectFacebookCreativeTemplates[0].data, mainCopy: selectedAngle?.name }} />}
         </div>
       </div>
     </>
