@@ -6,7 +6,7 @@ import ErrorMessage from "../../components/lib/Error";
 import { Projects as Project, Landing_Pages as LandingPage } from "../../gql/graphql";
 import { ProjectsContext, ProjectLandingPagesContext } from "../../stores/stores";
 import { SpinningLoading } from "../../components/lib/SpinningLoading";
-import LandingPageRender from "../../components/LandingPageRender";
+import LandingPageRender from "../../components/renders/LandingPageRender";
 import _ from "lodash";
 import LandingPageTemplates from '../../components/landing_page_templates/LandingPageTemplates';
 

@@ -13,7 +13,7 @@ function DeleteModal({ element_id, model, model_type, onDelete }: { element_id: 
               <span className="text-sm opacity-60">Type <span className="font-bold">{model.name}</span> in order to delete</span>
             </label>
             <div>
-              <input className="input w-full" value={validationName} onChange={(e) => setValidationName(e.target.value)} />
+              <input className="input w-full" value={validationName} onChange={(e) => setValidationName(e.target.value)} onKeyUp={(e) => e.key === 'Enter' && onDelete()} />
             </div>
             <div className="modal-action">
               <button className="btn btn-error text-white mr-3" onClick={() => onDelete()} disabled={validationName !== model.name}>Delete</button>

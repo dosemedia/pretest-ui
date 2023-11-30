@@ -3,7 +3,7 @@
 }
 
 .project-menu-item a {
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 8px 8px 0;
 }
 
 .project-menu-item a:hover {
@@ -15,7 +15,7 @@
 }
 
 .project-menu-item.active {
-  border-left-width: 6px;
+  border-left-width: 8px;
   border-image: linear-gradient(351deg, #AB2160 -4.8%, #EF4136 94.68%) 1 100%;
 }
 

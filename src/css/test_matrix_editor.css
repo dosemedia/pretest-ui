@@ -1,0 +1,9 @@
+.angle-container.selected {
+  background-color: #F0EEE7;
+}
+
+.angle-container-border {
+  border-radius: 4px 0px 0px 4px;
+  width: 8px;
+  background: linear-gradient(351deg, #AB2160 -4.8%, #EF4136 94.68%);
+}

@@ -12,10 +12,10 @@ import TestRuntime from "./test_components/TestRuntime";
 import TestAudience from "./test_components/TestAudience";
 import TestCreatives from "./test_components/TestCreatives";
 import TestLandingPages from "./test_components/TestLandingPages";
-import '../../css/draft_project.css'
+import '../../css/project_draft.css'
 import TestThemes from "./test_components/creatives/TestThemes";
-import ProjectFacebookCreativeTemplateDetail from "../../pages/projects/ProjectFacebookCreativeTemplateDetail";
-import TestMatrixEditor from "./test_components/creatives/TestMatrixEditor";
+import ProjectFacebookCreativeTemplateDetail from '../../pages/projects/ProjectFacebookCreativeTemplateDetail'
+import TestMatrixEditor from './test_components/creatives/TestMatrixEditor'
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,7 +27,8 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
   const [projectFacebookCreativeTemplateId, setProjectFacebookCreativeTemplateId] = useState('')
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
-  const [currentStepItem, setCurrentStepItem] = useState({})
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [currentStepItem, setCurrentStepItem] = useState<any>()
   const projectMutation = useMutation({
     mutationFn: (payload: object) => projectStore.updateProject({ id: project.id, payload: payload as Project }),
     onSuccess: () => {

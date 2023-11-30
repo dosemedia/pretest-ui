@@ -7,10 +7,23 @@ import { SpinningLoading } from '../lib/SpinningLoading';
 import { useParams } from 'react-router-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SimpleTextLogoRender = () => {
+const SimpleTextLogoRender: React.FC<{ data: any }> = ({ data }) => {
   return (
-    <div>
-      // TODO Creative Render
+    <div className="flex items-center justify-center" style={{ backgroundColor: data.background, width: '100%', height: 400 }}>
+      <div className="bg-white rounded-xl w-10/12 p-8">
+        <div className="flex items-center gap-x-6">
+          <img src={data.logoImage} style={{ borderRadius: '100%', width: 60 }} />
+          <div>
+            <span className="font-bold">Elisabeth Parker<span className="mdi mdi-check-decagram text-blue-500 ml-2" /></span>
+            <p className="text-gray-600 text-xxs">
+              @elisabethparker
+            </p>
+          </div>
+        </div>
+        <div className="mt-6">
+          {data.mainCopy}
+        </div>
+      </div>
     </div>
   );
 }
@@ -27,7 +40,6 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
       form.append('project_id', projectId)
       form.append('model', 'project_facebook_creative_template')
       form.append('project_assets', file)
-      console.log(form)
       try {
         const response = await axios.post(authStore.filesBaseUrl + '/files/project-assets', form, {
           headers: {
@@ -49,9 +61,9 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
   })
 
   const formData = data || {
-    backgroundColor: '#298493',
-    logoImage: null,
-    mainCopy: 'This is some test copy'
+    background: '#298493',
+    logoImage: 'https://creatomate.com/files/assets/d6628425-8e35-4fee-9de8-a18d21309546',
+    mainCopy: 'Cultivate an optimistic mind, use your imagination, always consider alternatives, and dare to believe that you can make possible what others think is impossible.'
   };
 
   return (
@@ -64,9 +76,8 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
           </label>
           <input
             type="color"
-            placeholder="Enter page title here"
-            value={formData.ctaTitle}
-            onChange={(e) => onChange({ ...formData, ctaTitle: e.target.value })}
+            value={formData.background}
+            onChange={(e) => onChange({ ...formData, background: e.target.value })}
           />
         </div>
 
@@ -87,7 +98,7 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
 const SimpleTextLogo = {
   name: 'SimpleTextLogo',
   title: 'Simple Text and Logo',
-  creatomate_template_id: '28a7bbff-d9fa-45e6-a503-b2c4960049e3',
+  creatomate_template_id: '114d9542-c437-4bb3-91bd-d4543eeecea8',
   description: 'This creative contains a main body of text and logo on the right side of the page',
   render: SimpleTextLogoRender,
   form: SimpleTextLogoForm

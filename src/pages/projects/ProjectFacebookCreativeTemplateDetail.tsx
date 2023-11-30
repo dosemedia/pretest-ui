@@ -8,6 +8,7 @@ import _ from 'lodash'
 import CreativeTemplates from "../../components/creative_templates/CreativeTemplates";
 import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../gql/graphql";
 import ErrorMessage from "../../components/lib/Error";
+import CreativeTemplateRender from "../../components/renders/CreativeTemplateRender";
 
 const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativeTemplateId }: { projectFacebookCreativeTemplateId: string }) => {
   const [formData, setFormData] = useState(null);
@@ -20,7 +21,7 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
   }
 
   const { data: projectFacebookCreativeTemplate, error: facebookCreativeError, isLoading: isLoadingFacebookCreative } = useQuery<Promise<ProjectFacebookCreativeTemplate | undefined>, Error, ProjectFacebookCreativeTemplate, QueryKey>({
-    queryKey: ['fetchProjectFacebookCreativeTemplate', projectFacebookCreativeTemplateId],
+    queryKey: ['fetchProjectFacebookCreativeTemplate'],
     queryFn: async () => {
       const creative = await projectFacebookCreativeTemplateStore.fetchProjectFacebookCreativeTemplateWithTemplate(projectFacebookCreativeTemplateId)
       // Prevent save trigger from this initial load
@@ -79,7 +80,7 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
             {projectFacebookCreativeTemplate &&
               // We could also use this which is very similar : https://jsonforms.io/docs/integrations/react/
               <div className="bg-gray-200 mt-8 rounded-md p-8">
-                <span>Edit this template below or <span className="link" onClick={() => { searchParams.set('project_facebook_creative_template_id', ''); setSearchParams() }}>go back to templates</span></span>{updateCreative && <SpinningLoading isLoading={updateCreative.isLoading} size="loading-xs" />}
+                <span>Edit this template below or <span className="link" onClick={() => { searchParams.delete('project_facebook_creative_template_id'); setSearchParams({ ...searchParams, step: '6' }) }}>go back to templates</span></span>{updateCreative && <SpinningLoading isLoading={updateCreative.isLoading} size="loading-xs" />}
                 {Form &&
                   <Form
                     data={formData}
@@ -88,6 +89,9 @@ const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativ
                 }
               </div>
             }
+          </div>
+          <div className="w-5/12">
+            {projectFacebookCreativeTemplate && formData ? <CreativeTemplateRender data={formData} component={projectFacebookCreativeTemplate.template_name} /> : <div className="alert alert-info text-white">Edit one of the fields to see a preview</div>}
           </div>
         </div>
       </div>
