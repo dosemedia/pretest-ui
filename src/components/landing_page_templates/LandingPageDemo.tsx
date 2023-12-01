@@ -1,10 +1,20 @@
 import React from 'react';
 import LandingPageTemplate from './LandingPageTemplate';
+import {Helmet} from "react-helmet"
+import { useLocation } from 'react-router-dom'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LandingPageDemoRender: React.FC<{ data: any }> = ({ data }) => {
+  const location = useLocation()
+
   return (
     <div>
+      <Helmet>
+        {/* Don't modify page title in landing page editor, only on actual landing page: */}
+        { !location.pathname.includes('project') &&
+          <title>{ data.ctaTitle }</title>
+        }
+      </Helmet>
       { data && 
         <div className="grid grid-cols-2 gap-4" style={{
           backgroundImage: 'linear-gradient(to right, ' + data.ctaColor1 + ' , ' + data.ctaColor2 + ')'
