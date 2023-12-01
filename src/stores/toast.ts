@@ -1,9 +1,12 @@
 import { makeAutoObservable } from "mobx"
+export enum ToastType {
+  ERROR = 'error',
+  SUCCESS = 'success'
+}
 export type Toast = {
   message: string
   id: number,
-  type: string
-
+  type: ToastType
 }
 export class Toasts {
   toasts: Toast[] = []
@@ -11,7 +14,7 @@ export class Toasts {
     makeAutoObservable(this)
   }
 
-  addToast ({ message, type, duration = 5000 }: { message: string, type: string, duration?: number }) {
+  addToast ({ message, type, duration = 5000 }: { message: string, type: ToastType, duration?: number }) {
     const toast: Toast = {
       id: Date.now(),
       message,

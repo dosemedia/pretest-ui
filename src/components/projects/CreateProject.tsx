@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { ProjectsContext, TeamsContext, ToastsContext } from "../../stores/stores";
 import { useNavigate } from "react-router-dom";
+import { ToastType } from "../../stores/toast";
 
 const createProject = observer(() => {
   const projects = useContext(ProjectsContext)
@@ -22,12 +23,12 @@ const createProject = observer(() => {
     onSuccess: (data) => {
       (document.getElementById(element_id) as HTMLDialogElement).close()
       removeFields()
-      toasts.addToast({ message: 'Project successfully created', type: 'success' })
+      toasts.addToast({ message: 'Project successfully created', type: ToastType.SUCCESS })
       if (data?.id) {
         navigate(`/project/${data.id}`)
       }
     },
-    onError: (error: Error) => { toasts.addToast({ message: error.message, type: 'error' }) }
+    onError: (error: Error) => { toasts.addToast({ message: error.message, type: ToastType.ERROR }) }
   })
   return (
     <>

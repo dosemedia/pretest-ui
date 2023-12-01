@@ -1,10 +1,10 @@
 import { observer } from "mobx-react-lite";
 import CreativeTemplateRender from "../renders/CreativeTemplateRender";
-import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../gql/graphql";
 import { useNavigate, useParams } from "react-router-dom";
+import { Facebook_Creatives as FacebookCreative } from "../../gql/graphql";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FacebookPreviewContainer = observer(({ data, template }: { data: any, template: ProjectFacebookCreativeTemplate }) => {
+const FacebookPreviewContainer = observer(({ data, template }: { data: any, template: FacebookCreative }) => {
   const navigate = useNavigate()
   const { projectId } = useParams() as { projectId: string }
   return (

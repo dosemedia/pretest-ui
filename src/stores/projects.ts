@@ -122,6 +122,10 @@ export class Projects {
             angles {
               name
               id
+              facebook_creatives {
+                template_name
+                data
+              }
             }
           }
         }

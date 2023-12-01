@@ -21,9 +21,9 @@ const InviteUser = observer(() => {
     onSuccess: () => {
       (document.getElementById(element_id) as HTMLDialogElement).close()
       removeFields()
-      toastsStore.addToast({ message: 'User successfully invited', type: 'success' })
+      toastsStore.addToast({ message: 'User successfully invited', type: ToastType.SUCCESS })
     },
-    onError: (error: Error) => { toastsStore.addToast({ message: error.message, type: 'error' }) }
+    onError: (error: Error) => { toastsStore.addToast({ message: error.message, type: ToastType.ERROR }) }
   })
   return (
     <>

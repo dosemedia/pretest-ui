@@ -5,14 +5,14 @@ import { Themes_Angles as ThemeAngle } from "../../../../gql/graphql";
 import '../../../../css/test_matrix_editor.css';
 import { useState } from "react";
 import FacebookPreviewContainer from "../../../social/FacebookPreviewContainer";
-import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../../../gql/graphql";
+import { Facebook_Creatives as FacebookCreative } from "../../../../gql/graphql";
 import { useSearchParams } from "react-router-dom";
 const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
   const themes: ProjectTheme[] = project.themes
   const [searchParams, setSearchParams] = useSearchParams()
   const [selectedAngle, setSelectedAngle] = useState<ThemeAngle | null>(null)
   const ctaOptions = ['SHOP NOW', 'LEARN MORE']
-  const projectFacebookCreativeTemplates: ProjectFacebookCreativeTemplate[] = project.project_facebook_creative_templates
+  const [selectedCreative, setSelectedCreative] = useState<FacebookCreative | null>(null)
   function themeContainer(theme: ProjectTheme, index: number) {
     return (
       <div key={theme.id} className="flex flex-col w-full">
@@ -23,30 +23,26 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
     )
   }
   function angleContainer(angle: ThemeAngle, index: number) {
+    const creative: FacebookCreative = angle.facebook_creatives[0] // There is only one creative associated with an angle
     return (
-      <div className="flex">
+      <div key={angle.id} className="flex">
         {selectedAngle?.id === angle.id && <div className="angle-container-border" />}
-        <div className={`angle-container ${selectedAngle?.id === angle.id && 'selected'} ${index % 2 === 0 ? 'bg-white' : 'bg-transparent'} p-4 cursor-pointer w-full`} onClick={() => setSelectedAngle(angle)}>
+        <div className={`angle-container ${selectedAngle?.id === angle.id && 'selected'} ${index % 2 === 0 ? 'bg-white' : 'bg-transparent'} p-4 cursor-pointer w-full`} onClick={() => { setSelectedAngle(angle), setSelectedCreative(angle.facebook_creatives[0]) }}>
           <div className="text-md">
             {angle.name}
           </div>
           <div className="opacity-60 text-xxs mx-5 mt-2">
-            <div className="flex gap-x-8">
+            {Object.keys(creative.data).map((key) =>
+            (<div key={key} className="flex gap-x-8">
               <div className="font-bold w-[40px]">
-                Header
+                {key}
               </div>
               <div>
-                Emotional Appeal related header
+                {creative.data[key]}
               </div>
-            </div>
-            <div className="flex gap-x-8">
-              <div className="font-bold w-[40px]">
-                Claim
-              </div>
-              <div>
-                This [product] brings me {angle.name} because it's...
-              </div>
-            </div>
+            </div>)
+            )
+            }
           </div>
         </div>
       </div>
@@ -57,38 +53,40 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
       <div className="text-lg configuration-title mb-4">
         Build your test matrix
       </div>
-      <div className="flex justify-between">
-        <div className="w-full md:w-5/12">
-          <div className="flex flex-col items-start gap-y-6">
-            {themes?.map((item: ProjectTheme) => themeContainer(item, themes.indexOf(item)))}
+      {themes && themes[0].angles[0].facebook_creatives?.length === 0 ? <div className="alert alert-warning"><span>You must <span className="link" onClick={() => setSearchParams({ step: (parseInt(searchParams.get('step')!) - 1).toString() })}>generate</span> creatives before moving on to this step</span></div> :
+        <div className="flex flex-wrap gap-y-8 justify-between">
+          <div className="w-full md:w-5/12">
+            <div className="flex flex-col items-start gap-y-6">
+              {themes?.map((item: ProjectTheme) => themeContainer(item, themes.indexOf(item)))}
+            </div>
+            <div className="flex flex-col gap-y-6 mt-4">
+              <div>
+                <label className="label">
+                  <span className="text-sm opacity-60">Social copy</span>
+                </label>
+                <textarea className="textarea w-full" />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="text-sm opacity-60">CTA text</span>
+                </label>
+                <textarea className="textarea w-full" />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="text-sm opacity-60">Button CTA</span>
+                </label>
+                <select className="select w-full max-w-xs" style={{ backgroundColor: 'white', border: '1px solid #E3E1D9' }}>
+                  {ctaOptions.map((item) => <option key={item}>{item}</option>)}
+                </select>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col gap-y-6 mt-4">
-            <div>
-              <label className="label">
-                <span className="text-sm opacity-60">Social copy</span>
-              </label>
-              <textarea className="textarea w-full" />
-            </div>
-            <div>
-              <label className="label">
-                <span className="text-sm opacity-60">CTA text</span>
-              </label>
-              <textarea className="textarea w-full" />
-            </div>
-            <div>
-              <label className="label">
-                <span className="text-sm opacity-60">Button CTA</span>
-              </label>
-              <select className="select w-full max-w-xs" style={{ backgroundColor: 'white', border: '1px solid #E3E1D9' }}>
-                {ctaOptions.map((item) => <option>{item}</option>)}
-              </select>
-            </div>
+          <div className="w-full md:w-5/12">
+            {selectedCreative ? <FacebookPreviewContainer template={selectedCreative} data={selectedCreative.data} /> : <div className="alert alert-info text-white"><span>Click on a creative in order to see a preview.</span></div>}
           </div>
         </div>
-        <div className="w-full md:w-5/12">
-          {projectFacebookCreativeTemplates && projectFacebookCreativeTemplates.length > 0 ? <FacebookPreviewContainer template={projectFacebookCreativeTemplates[0]} data={{ ...projectFacebookCreativeTemplates[0].data, mainCopy: selectedAngle?.name }} /> : <div className="alert alert-info text-white"><span>Select an <span className="link" onClick={() => setSearchParams({ ...searchParams, step: '6' })}>ad template</span> in order to see a preview.</span></div>}
-        </div>
-      </div>
+      }
     </>
   )
 })

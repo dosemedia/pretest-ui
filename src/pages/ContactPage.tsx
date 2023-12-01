@@ -5,6 +5,7 @@ import { ContactContext, ToastsContext } from "../stores/stores"
 import { AuthContext } from "../stores/stores"
 import validator from 'validator'
 import { useMutation } from "@tanstack/react-query";
+import { ToastType } from "../stores/toast";
 
 const ContactPage = observer(() => {
   const contact = useContext(ContactContext)
@@ -23,11 +24,11 @@ const ContactPage = observer(() => {
   const submitContactForm = useMutation({
     mutationFn: () => contact.submitContactForm(name, email, message),
     onSuccess: () => {
-      toastStore.addToast({ message: 'Message has been delivered', type: 'success' })
+      toastStore.addToast({ message: 'Message has been delivered', type: ToastType.SUCCESS })
       setSubmitted(true)
     }, 
     onError: (error) => {
-      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: ToastType.ERROR })
     }
   })
 

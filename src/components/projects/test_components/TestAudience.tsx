@@ -27,19 +27,19 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
     mutationFn: () => {
       return facebookStore.getReachEstimate({ audience: facebookAudienceData })
     },
-    onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: 'error' }) },
+    onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: ToastType.ERROR }) },
     onSuccess: () => { (document.getElementById(reachModalId) as HTMLDialogElement).show() }
   })
   const createProjectFacebookAudienceMutation = useMutation({
     mutationKey: ['createProjectFacebookAudienceMutation'],
     mutationFn: () => projectFacebookAudienceStore.createFacebookAudience({ project, name: 'My Custom Audience' }),
     onSuccess: (audience: FacebookAudience | null) => { if (audience) setFacebookAudienceData(audience)},
-    onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: 'error' }) },
+    onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: ToastType.ERROR }) },
   })
   const projectFacebookAudienceMutation = useMutation({
     mutationKey: ['projectFacebookAudienceMutation'],
     mutationFn: ({ payload, audience }: { payload: FacebookAudience, audience: FacebookAudience }) => projectFacebookAudienceStore.updateFacebookAudiencesByID({ id: audience.id, payload: payload as FacebookAudience }),
-    onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: 'error' }) },
+    onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: ToastType.ERROR }) },
   })
 
   const onUpdate = useCallback(_.debounce(async (payload: FacebookAudience, isUpdated: boolean) => {
