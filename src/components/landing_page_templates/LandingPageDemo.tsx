@@ -1,8 +1,22 @@
 import React from 'react';
-import LandingPageTemplate from './LandingPageTemplate';
+import LandingPageTemplate from './LandingPageTemplate'
+import { useContext } from 'react'
+import { useLocation } from 'react-router-dom'
+import { AnalyticsContext } from "../../stores/stores"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const LandingPageDemoRender: React.FC<{ data: any }> = ({ data }) => {
+const LandingPageDemoRender: React.FC<{ landingPageId: string, data: any }> = ({ landingPageId, data }) => {
+  const analyticsStore = useContext(AnalyticsContext)
+  const location = useLocation()
+
+  async function onCtaClick() {  
+    // Don't track events in page editor
+    if (location.pathname.startsWith('/project')) {
+      return
+    }
+    await analyticsStore.trackEvent(landingPageId, 'button_click', 'cta', null, location)
+  }
+
   return (
     <div>
       { data && 
@@ -18,6 +32,8 @@ const LandingPageDemoRender: React.FC<{ data: any }> = ({ data }) => {
           </div>
         </div>
       }
+
+      <button className="btn btn-primary" onClick={onCtaClick}>Call to Action</button>
 
       <div>TODO - poll options...</div>
     </div>

@@ -90,7 +90,7 @@ const LandingPageDetail = observer(() => {
       <Link to={`/page/${landingPageId}`} className="btn my-5" target="_blank">Open Page</Link>
 
       { landingPage && !isLoadingLandingPage &&
-        <LandingPageRender data={formData} component={landingPage.template_name} />
+        <LandingPageRender landingPageId={landingPageId} data={formData} component={landingPage.template_name} />
       }
     </div>
   </>
