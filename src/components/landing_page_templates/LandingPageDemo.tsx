@@ -3,6 +3,7 @@ import LandingPageTemplate from './LandingPageTemplate'
 import { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AnalyticsContext } from "../../stores/stores"
+import {Helmet} from "react-helmet"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LandingPageDemoRender: React.FC<{ landingPageId: string, data: any }> = ({ landingPageId, data }) => {
@@ -19,6 +20,12 @@ const LandingPageDemoRender: React.FC<{ landingPageId: string, data: any }> = ({
 
   return (
     <div>
+      <Helmet>
+        {/* Don't modify page title in landing page editor, only on actual landing page: */}
+        { !location.pathname.includes('project') &&
+          <title>{ data.ctaTitle }</title>
+        }
+      </Helmet>
       { data && 
         <div className="grid grid-cols-2 gap-4" style={{
           backgroundImage: 'linear-gradient(to right, ' + data.ctaColor1 + ' , ' + data.ctaColor2 + ')'
