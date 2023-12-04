@@ -7,7 +7,7 @@ interface LandingPageTemplate {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: React.FC<{ data: any, onChange : (newData: any) => void }>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render: React.FC<{ data: any }>,
+  render: React.FC<{ landingPageId: string, data: any }>,
 }
 
 export default LandingPageTemplate;

@@ -11,6 +11,7 @@ import { ThemesAngles } from './angles'
 import { ProjectFacebookCreatives } from './project_facebook_creatives'
 import { ProjectFacebookCreativeTemplates } from './project_facebook_creative_templates'
 import { ProjectLandingPages } from './project_landing_pages'
+import { Analytics } from './analytics'
 
 export const authStore = new Auth()
 export const AuthContext = createContext<Auth>(authStore)
@@ -47,3 +48,6 @@ export const ProjectFacebookCreativeTemplatesContext = createContext<ProjectFace
 
 export const projectLandingPages = new ProjectLandingPages()
 export const ProjectLandingPagesContext = createContext<ProjectLandingPages>(projectLandingPages)
+
+export const analytics = new Analytics()
+export const AnalyticsContext = createContext<Analytics>(analytics)
