@@ -3,16 +3,16 @@ import { Projects as Project } from "../../../../gql/graphql";
 import { Projects_Themes as ProjectTheme } from "../../../../gql/graphql";
 import { Themes_Angles as ThemeAngle } from "../../../../gql/graphql";
 import '../../../../css/test_matrix_editor.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FacebookPreviewContainer from "../../../social/FacebookPreviewContainer";
 import { Facebook_Creatives as FacebookCreative } from "../../../../gql/graphql";
 import { useSearchParams } from "react-router-dom";
 const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
   const themes: ProjectTheme[] = project.themes
   const [searchParams, setSearchParams] = useSearchParams()
-  const [selectedAngle, setSelectedAngle] = useState<ThemeAngle | null>(null)
+  const [selectedAngle, setSelectedAngle] = useState<ThemeAngle | null>(themes[0]?.angles[0])
   const ctaOptions = ['SHOP NOW', 'LEARN MORE']
-  const [selectedCreative, setSelectedCreative] = useState<FacebookCreative | null>(null)
+  const [selectedCreative, setSelectedCreative] = useState<FacebookCreative | null>(selectedAngle?.facebook_creatives[0] as FacebookCreative)
   function themeContainer(theme: ProjectTheme, index: number) {
     return (
       <div key={theme.id} className="flex flex-col w-full">
@@ -22,12 +22,19 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
       </div>
     )
   }
+
+  useEffect(() => {
+    if (selectedAngle) {
+      console.log('nice')
+      setSelectedCreative(selectedAngle.facebook_creatives[0])
+    }
+  }, [selectedAngle])
   function angleContainer(angle: ThemeAngle, index: number) {
     const creative: FacebookCreative = angle.facebook_creatives[0] // There is only one creative associated with an angle
     return (
       <div key={angle.id} className="flex">
         {selectedAngle?.id === angle.id && <div className="angle-container-border" />}
-        <div className={`angle-container ${selectedAngle?.id === angle.id && 'selected'} ${index % 2 === 0 ? 'bg-white' : 'bg-transparent'} p-4 cursor-pointer w-full`} onClick={() => { setSelectedAngle(angle), setSelectedCreative(angle.facebook_creatives[0]) }}>
+        <div className={`angle-container ${selectedAngle?.id === angle.id && 'selected'} ${index % 2 === 0 ? 'bg-white' : 'bg-transparent'} p-4 cursor-pointer w-full`} onClick={() => { setSelectedAngle(angle) }}>
           <div className="text-md">
             {angle.name}
           </div>
