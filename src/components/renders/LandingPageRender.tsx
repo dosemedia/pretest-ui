@@ -2,18 +2,18 @@ import React from "react"
 import LandingPageTemplates from '../landing_page_templates/LandingPageTemplates';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const templates: { [key: string]: React.FC<{ data: any }> } = {};
+const templates: { [key: string]: React.FC<{ landingPageId: string, data: any }> } = {};
 for (const template of LandingPageTemplates) {
   templates[template.name] = template.render;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const LandingPageRender: React.FC<{ data: any, component: string }> = ({ data, component }) => {
+const LandingPageRender: React.FC<{ landingPageId: string, data: any, component: string }> = ({ landingPageId, data, component }) => {
 
   const Template = templates[component];
 
   return (
-    <Template data={data} />
+    <Template landingPageId={landingPageId} data={data} />
   );
 }
 
