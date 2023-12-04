@@ -19,6 +19,22 @@ export class ThemesAngles {
     }
     return Boolean(result.data?.update_themes_angles_by_pk)
   }
+  async createMultipleAngles ({ angleObjects }: { angleObjects: Themes_Angles_Set_Input }): Promise<ThemeAngle[]> {
+    const result = await client.mutation(graphql(`
+    mutation CreateMultipleAngles($angleObjects: [themes_angles_insert_input!]!) {
+      insert_themes_angles(objects: $angleObjects) {
+        returning {
+          id
+          name
+        }
+      }
+    }
+    `), { angleObjects })
+    if (result.error) {
+      throw result.error
+    }
+    return result.data?.insert_themes_angles?.returning as ThemeAngle[]
+  }
   async createAngle({ name, themeId }: { name: string, themeId: string }): Promise<ThemeAngle> {
     const result = await client.mutation(graphql(`
     mutation createAngle($name: String!, $themeId: uuid!) {

@@ -55,7 +55,7 @@ const TestCreatives = observer(({ project }: { project: Project, onSave: (payloa
           {CreativeTemplates.map((template) => {
             return (
               <div key={template.name} className="flex flex-col cursor-pointer" style={{ width: 174, position: 'relative' }} onClick={() => goToProjectFacebookCreativeTemplate(template)}>
-                <img className="creative-template-list-item" src={`https://creatomate.com/files/previews/${template.creatomate_template_id}?v=1683746204095`} />
+                <img className="creative-template-list-item" src={`https://creatomate.com/files/previews/${template.creatomate_template_id}?v=1683746204094`} />
                 <div className="text-md font-bold mt-3">
                   {template.title}
                 </div>

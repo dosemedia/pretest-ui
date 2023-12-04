@@ -25,7 +25,6 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
 
   useEffect(() => {
     if (selectedAngle) {
-      console.log('nice')
       setSelectedCreative(selectedAngle.facebook_creatives[0])
     }
   }, [selectedAngle])
@@ -64,7 +63,9 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
         <div className="flex flex-wrap gap-y-8 justify-between">
           <div className="w-full md:w-5/12">
             <div className="flex flex-col items-start gap-y-6">
-              {themes?.map((item: ProjectTheme) => themeContainer(item, themes.indexOf(item)))}
+              <div style={{ height: 600, overflow: 'scroll' }}>
+                {themes?.map((item: ProjectTheme) => themeContainer(item, themes.indexOf(item)))}
+              </div>
             </div>
             <div className="flex flex-col gap-y-6 mt-4">
               <div>

@@ -16,6 +16,7 @@ import '../../css/project_draft.css'
 import TestThemes from "./test_components/creatives/TestThemes";
 import ProjectFacebookCreativeTemplateDetail from '../../pages/projects/ProjectFacebookCreativeTemplateDetail'
 import TestMatrixEditor from './test_components/creatives/TestMatrixEditor'
+import TestMatrix from "./test_components/creatives/TestMatrix";
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -96,19 +97,29 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
       {
         label: 'Ad copy matrix',
         value: 'ad_copy_matrix',
-        steps: [8, 9],
-        isComplete: Boolean(project.themes?.length === 3),
+        steps: [8, 9, 10],
+        goToStep: () => goToAdCopyStep(),
+        isComplete: Boolean(project.themes?.length > 2),
         icon: 'mdi mdi-file-document-edit'
       },
       {
         label: 'Landing page',
         value: 'landing_page',
-        steps: [10],
+        steps: [11],
         isComplete: false,
         icon: 'mdi mdi-beaker'
       }
     ]
   }]
+  function goToAdCopyStep () {
+    if (project.themes && project?.themes.length > 2){
+      if (project.themes[0].angles[0]?.facebook_creatives[0]) {
+        return 10
+      }
+      return 9
+    }
+    return 8
+  }
   function findCurrentStepItem() {
     for (const item of configurationMenu) {
       for (const child of item.children) {
@@ -153,7 +164,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
                   <summary><span className={item.icon}></span>{item.label}</summary>
                   <ul>
                     {item.children.map((child) =>
-                      <li key={child.value} className={`project-menu-item ${child.steps?.includes(step) && 'active'}`} onClick={() => { setSearchParams({ step: child.steps[0].toString() }) }} ><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>
+                      <li key={child.value} className={`project-menu-item ${child.steps?.includes(step) && 'active'}`} onClick={() => { setSearchParams({ step: child.goToStep ? child.goToStep().toString() : child.steps[0].toString() }) }} ><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>
                     )}
                   </ul>
                 </details>
@@ -170,14 +181,15 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           {step === 6 && <TestCreatives project={project} onSave={onSave} />}
           {step === 7 && projectFacebookCreativeTemplateId && <ProjectFacebookCreativeTemplateDetail projectFacebookCreativeTemplateId={projectFacebookCreativeTemplateId} />}
           {step === 8 && <TestThemes project={project} onSave={onSave} />}
-          {step === 9 && <TestMatrixEditor project={project} onSave={onSave} />}
-          {step === 10 && <TestLandingPages project={project} onSave={onSave} />}
+          {step === 9 && <TestMatrix project={project} onSave={onSave} />}
+          {step === 10 && <TestMatrixEditor project={project} onSave={onSave} />}
+          {step === 11 && <TestLandingPages project={project} onSave={onSave} />}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setSearchParams({ step: (step - 1).toString() })}>
               <span className="mdi mdi-chevron-left text-base" /> Go Back
             </button>
             }
-            {step < 10 && step != 6 &&
+            {step < 11 && step != 6 &&
               <button className="btn action-button text-base" onClick={() => setSearchParams({ step: (step + 1).toString() })} disabled={!currentStepItem?.isComplete}>
                 Next <span className="mdi mdi-chevron-right text-base" />
               </button>
