@@ -108,7 +108,7 @@ const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (p
     <>
       {isLoading && <SpinningLoading isLoading={isLoading} size="loading-xl" />}
       {!isLoading && themes &&
-        <div className="card" style={{ backgroundColor: 'white', padding: 0 }}>
+        <div className="card" style={{ backgroundColor: 'white', padding: 0, width: 'auto' }}>
           <div className="card-body">
             <div className="mb-7">
               {facebookCreatives && facebookCreatives.length === 0 && <button className="btn btn-info border-none text-white normal-case w-[200px]" onClick={() => generateCreatives()}>Generate Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
@@ -122,8 +122,8 @@ const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (p
                 {themes.length < MAX_THEMES && <button className="btn flex-1 bg-white rounded-none ml-5" onClick={() => createThemeMutation.mutate()}><span className="mdi mdi-plus" /></button>}
               </div>
             </div>
-            <div className="flex w-full mt-3">
-              {<button className="btn flex-1 bg-white rounded-none ml-5" onClick={() => createAnglesMutation.mutate()}><span className="mdi mdi-plus" /></button>}
+            <div className={`flex ${themes?.length === 3 ? 'w-8/12': 'w-11/12'} mt-3`}>
+              {<button disabled={facebookCreatives && facebookCreatives.length > 0} className="btn flex-1 bg-white rounded-none" onClick={() => createAnglesMutation.mutate()}><span className="mdi mdi-plus" /></button>}
             </div>
           </div>
         </div>

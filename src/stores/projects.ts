@@ -123,8 +123,12 @@ export class Projects {
               name
               id
               facebook_creatives {
-                template_name
+                id
                 data
+                template_name
+                social_copy
+                cta_text
+                cta_type
               }
             }
           }

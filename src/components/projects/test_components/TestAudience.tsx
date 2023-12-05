@@ -13,6 +13,7 @@ import ErrorMessage from "../../lib/Error";
 import TestAudiencePlatforms from "./test_audience_components/TestAudiencePlatforms";
 import TestAudiencePositions from "./test_audience_components/TestAudiencePositions";
 import TestAudienceInterests from "./test_audience_components/TestAudienceInterests";
+import { ToastType } from "../../../stores/toast";
 
 const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSave: (payload: object) => void, onAudienceComplete: (complete: boolean) => void, project: Project, }) => {
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
