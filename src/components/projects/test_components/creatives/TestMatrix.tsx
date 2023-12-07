@@ -47,13 +47,13 @@ const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (p
     onMutate: () => (document.getElementById(element_id) as HTMLDialogElement).show(),
     mutationFn: ({ facebookCreativesInput }: { facebookCreativesInput: Facebook_Creatives_Insert_Input[] }) => projectFacebookCreativesStore.createProjectFacebookCreatives({ facebookCreativesInput }),
     onError: (error) => toastsStore.addToast({ message: error as string, type: ToastType.ERROR }),
-    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives(); (document.getElementById(element_id) as HTMLDialogElement).close() }
+    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives(); onSave({}); (document.getElementById(element_id) as HTMLDialogElement).close() }
   })
   const deleteProjectFacebookCreativesMutation = useMutation({
     mutationKey: ['deleteFacebookCreatives'],
     mutationFn: () => projectFacebookCreativesStore.deleteProjectFacebookCreativesByProjectID({ projectId: project.id }),
     onError: (error) => toastsStore.addToast({ message: error as string, type: ToastType.ERROR }),
-    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully deleted', type: ToastType.SUCCESS }); refetchFacebookCreatives() }
+    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully deleted', type: ToastType.SUCCESS }); onSave({}); refetchFacebookCreatives() }
   })
   const updateAngleMutation = useMutation({
     mutationKey: ['updateAngle'],

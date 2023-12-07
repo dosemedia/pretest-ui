@@ -16,9 +16,9 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
   const [searchParams, setSearchParams] = useSearchParams()
   const [selectedAngle, setSelectedAngle] = useState<ThemeAngle | null>(themes[0]?.angles[0])
   const ctaOptions = [null, 'SHOP NOW', 'LEARN MORE']
-  const [socialCopy, setSocialCopy] = useState(themes[0].angles[0].facebook_creatives[0].social_copy || '')
-  const [ctaText, setCtaText] = useState(themes[0].angles[0].facebook_creatives[0].cta_text || '')
-  const [ctaType, setCtaType] = useState(themes[0].angles[0].facebook_creatives[0].cta_type || '')
+  const [socialCopy, setSocialCopy] = useState(themes[0].angles[0].facebook_creatives[0]?.social_copy || '')
+  const [ctaText, setCtaText] = useState(themes[0].angles[0].facebook_creatives[0]?.cta_text || '')
+  const [ctaType, setCtaType] = useState(themes[0].angles[0].facebook_creatives[0]?.cta_type || '')
   const [selectedCreative, setSelectedCreative] = useState<FacebookCreative | null>(selectedAngle?.facebook_creatives[0] as FacebookCreative)
   function themeContainer(theme: ProjectTheme, index: number) {
     return (
