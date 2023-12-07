@@ -13,6 +13,7 @@ import _ from 'lodash'
 const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
   const themesStore = useContext(ThemesContext)
   const anglesStore = useContext(ThemesAnglesContext)
+  const element_id = 'generate_creatives_modal'
   const projectFacebookCreativeTemplatesStore = useContext(ProjectFacebookCreativeTemplatesContext)
   const projectFacebookCreativesStore = useContext(ProjectFacebookCreativesContext)
   const MAX_THEMES = 4
@@ -43,9 +44,10 @@ const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (p
   })
   const projectFacebookCreativesMutation = useMutation({
     mutationKey: ['createFacebookCreatives'],
+    onMutate: () => (document.getElementById(element_id) as HTMLDialogElement).show(),
     mutationFn: ({ facebookCreativesInput }: { facebookCreativesInput: Facebook_Creatives_Insert_Input[] }) => projectFacebookCreativesStore.createProjectFacebookCreatives({ facebookCreativesInput }),
     onError: (error) => toastsStore.addToast({ message: error as string, type: ToastType.ERROR }),
-    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives() }
+    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives(); (document.getElementById(element_id) as HTMLDialogElement).close() }
   })
   const deleteProjectFacebookCreativesMutation = useMutation({
     mutationKey: ['deleteFacebookCreatives'],
@@ -128,6 +130,17 @@ const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (p
           </div>
         </div>
       }
+      <dialog id={element_id} className="modal">
+        <div className="modal-box">
+          <div className="flex items-center gap-x-5 m-5">
+            <span className="loading loading-spinner loading-lg bg-primary" />
+            <div>
+              <div className="text-base opacity-60">Hang tight while we're</div>
+              <div className="text-xl font-bold">Generating your copy</div>
+            </div>
+          </div>
+        </div>
+      </dialog>
     </>
   )
 })
