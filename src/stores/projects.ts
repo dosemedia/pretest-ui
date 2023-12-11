@@ -155,6 +155,12 @@ export class Projects {
           brandness_approved
           platform_approved
           start_stop_time_approved
+          landing_pages {
+            id
+            template_name
+            data
+            approved
+          }
           facebook_audiences {
             device_platforms
             facebook_positions

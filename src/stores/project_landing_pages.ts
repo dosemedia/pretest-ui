@@ -1,7 +1,7 @@
 import { client } from '../graphql'
 import { graphql } from '../gql'
 import { makeAutoObservable } from 'mobx';
-import { Projects as Project } from '../gql/graphql';
+import { Landing_Pages_Set_Input, Projects as Project } from '../gql/graphql';
 import { Landing_Pages as LandingPage } from '../gql/graphql';
 
 export class ProjectLandingPages {
@@ -72,10 +72,10 @@ export class ProjectLandingPages {
     return result.data?.landing_pages_by_pk as LandingPage
   }
 
-  async updateLandingPage(landingPageId: string, data: object) : Promise<void> {
+  async updateLandingPage(landingPageId: string, data: Landing_Pages_Set_Input) : Promise<void> {
     const result = await client.mutation(graphql(`
-    mutation UpdateLandingPage($landingPageId: uuid!, $data: jsonb!) {
-      update_landing_pages_by_pk(pk_columns: {id: $landingPageId}, _set: {data: $data}) {
+    mutation UpdateLandingPage($landingPageId: uuid!, $data: landing_pages_set_input!) {
+      update_landing_pages_by_pk(pk_columns: {id: $landingPageId}, _set: $data) {
         id
         data
       }
