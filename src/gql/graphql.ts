@@ -390,6 +390,7 @@ export enum Cursor_Ordering {
 /** columns and relationships of "facebook_audiences" */
 export type Facebook_Audiences = {
   __typename?: 'facebook_audiences';
+  approved?: Maybe<Scalars['Boolean']['output']>;
   created_at: Scalars['timestamptz']['output'];
   device_platforms: Array<Scalars['String']['output']>;
   facebook_positions: Array<Scalars['String']['output']>;
@@ -427,7 +428,23 @@ export type Facebook_Audiences_Aggregate = {
 };
 
 export type Facebook_Audiences_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Facebook_Audiences_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Facebook_Audiences_Aggregate_Bool_Exp_Bool_Or>;
   count?: InputMaybe<Facebook_Audiences_Aggregate_Bool_Exp_Count>;
+};
+
+export type Facebook_Audiences_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Facebook_Audiences_Select_Column_Facebook_Audiences_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Facebook_Audiences_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Facebook_Audiences_Select_Column_Facebook_Audiences_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Facebook_Audiences_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
 };
 
 export type Facebook_Audiences_Aggregate_Bool_Exp_Count = {
@@ -506,6 +523,7 @@ export type Facebook_Audiences_Bool_Exp = {
   _and?: InputMaybe<Array<Facebook_Audiences_Bool_Exp>>;
   _not?: InputMaybe<Facebook_Audiences_Bool_Exp>;
   _or?: InputMaybe<Array<Facebook_Audiences_Bool_Exp>>;
+  approved?: InputMaybe<Boolean_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   device_platforms?: InputMaybe<String_Array_Comparison_Exp>;
   facebook_positions?: InputMaybe<String_Array_Comparison_Exp>;
@@ -554,6 +572,7 @@ export type Facebook_Audiences_Inc_Input = {
 
 /** input type for inserting data into table "facebook_audiences" */
 export type Facebook_Audiences_Insert_Input = {
+  approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   device_platforms?: InputMaybe<Array<Scalars['String']['input']>>;
   facebook_positions?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -650,6 +669,7 @@ export type Facebook_Audiences_On_Conflict = {
 
 /** Ordering options when selecting data from "facebook_audiences". */
 export type Facebook_Audiences_Order_By = {
+  approved?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   device_platforms?: InputMaybe<Order_By>;
   facebook_positions?: InputMaybe<Order_By>;
@@ -680,6 +700,8 @@ export type Facebook_Audiences_Prepend_Input = {
 /** select columns of table "facebook_audiences" */
 export enum Facebook_Audiences_Select_Column {
   /** column name */
+  Approved = 'approved',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   DevicePlatforms = 'device_platforms',
@@ -707,8 +729,21 @@ export enum Facebook_Audiences_Select_Column {
   UpdatedAt = 'updated_at'
 }
 
+/** select "facebook_audiences_aggregate_bool_exp_bool_and_arguments_columns" columns of table "facebook_audiences" */
+export enum Facebook_Audiences_Select_Column_Facebook_Audiences_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Approved = 'approved'
+}
+
+/** select "facebook_audiences_aggregate_bool_exp_bool_or_arguments_columns" columns of table "facebook_audiences" */
+export enum Facebook_Audiences_Select_Column_Facebook_Audiences_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Approved = 'approved'
+}
+
 /** input type for updating data in table "facebook_audiences" */
 export type Facebook_Audiences_Set_Input = {
+  approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   device_platforms?: InputMaybe<Array<Scalars['String']['input']>>;
   facebook_positions?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -773,6 +808,7 @@ export type Facebook_Audiences_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Facebook_Audiences_Stream_Cursor_Value_Input = {
+  approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   device_platforms?: InputMaybe<Array<Scalars['String']['input']>>;
   facebook_positions?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -803,6 +839,8 @@ export type Facebook_Audiences_Sum_Order_By = {
 
 /** update columns of table "facebook_audiences" */
 export enum Facebook_Audiences_Update_Column {
+  /** column name */
+  Approved = 'approved',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -1799,6 +1837,7 @@ export type Landing_Page_Events_Updates = {
 /** columns and relationships of "landing_pages" */
 export type Landing_Pages = {
   __typename?: 'landing_pages';
+  approved?: Maybe<Scalars['Boolean']['output']>;
   created_at: Scalars['timestamptz']['output'];
   data?: Maybe<Scalars['jsonb']['output']>;
   id: Scalars['uuid']['output'];
@@ -1847,7 +1886,23 @@ export type Landing_Pages_Aggregate = {
 };
 
 export type Landing_Pages_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Landing_Pages_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Landing_Pages_Aggregate_Bool_Exp_Bool_Or>;
   count?: InputMaybe<Landing_Pages_Aggregate_Bool_Exp_Count>;
+};
+
+export type Landing_Pages_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Landing_Pages_Select_Column_Landing_Pages_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Landing_Pages_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Landing_Pages_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Landing_Pages_Select_Column_Landing_Pages_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Landing_Pages_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
 };
 
 export type Landing_Pages_Aggregate_Bool_Exp_Count = {
@@ -1896,6 +1951,7 @@ export type Landing_Pages_Bool_Exp = {
   _and?: InputMaybe<Array<Landing_Pages_Bool_Exp>>;
   _not?: InputMaybe<Landing_Pages_Bool_Exp>;
   _or?: InputMaybe<Array<Landing_Pages_Bool_Exp>>;
+  approved?: InputMaybe<Boolean_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   data?: InputMaybe<Jsonb_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -1930,6 +1986,7 @@ export type Landing_Pages_Delete_Key_Input = {
 
 /** input type for inserting data into table "landing_pages" */
 export type Landing_Pages_Insert_Input = {
+  approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   data?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -2003,6 +2060,7 @@ export type Landing_Pages_On_Conflict = {
 
 /** Ordering options when selecting data from "landing_pages". */
 export type Landing_Pages_Order_By = {
+  approved?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   data?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
@@ -2026,6 +2084,8 @@ export type Landing_Pages_Prepend_Input = {
 /** select columns of table "landing_pages" */
 export enum Landing_Pages_Select_Column {
   /** column name */
+  Approved = 'approved',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Data = 'data',
@@ -2039,8 +2099,21 @@ export enum Landing_Pages_Select_Column {
   UpdatedAt = 'updated_at'
 }
 
+/** select "landing_pages_aggregate_bool_exp_bool_and_arguments_columns" columns of table "landing_pages" */
+export enum Landing_Pages_Select_Column_Landing_Pages_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Approved = 'approved'
+}
+
+/** select "landing_pages_aggregate_bool_exp_bool_or_arguments_columns" columns of table "landing_pages" */
+export enum Landing_Pages_Select_Column_Landing_Pages_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Approved = 'approved'
+}
+
 /** input type for updating data in table "landing_pages" */
 export type Landing_Pages_Set_Input = {
+  approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   data?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -2059,6 +2132,7 @@ export type Landing_Pages_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Landing_Pages_Stream_Cursor_Value_Input = {
+  approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   data?: InputMaybe<Scalars['jsonb']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -2069,6 +2143,8 @@ export type Landing_Pages_Stream_Cursor_Value_Input = {
 
 /** update columns of table "landing_pages" */
 export enum Landing_Pages_Update_Column {
+  /** column name */
+  Approved = 'approved',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -3466,6 +3542,7 @@ export type Project_Facebook_Creative_Templates_Updates = {
 export type Projects = {
   __typename?: 'projects';
   branding?: Maybe<Scalars['String']['output']>;
+  brandness_approved?: Maybe<Scalars['Boolean']['output']>;
   created_at: Scalars['timestamptz']['output'];
   /** An array relationship */
   creatives: Array<Facebook_Creatives>;
@@ -3482,13 +3559,18 @@ export type Projects = {
   /** An aggregate relationship */
   landing_pages_aggregate: Landing_Pages_Aggregate;
   name: Scalars['String']['output'];
+  name_approved?: Maybe<Scalars['Boolean']['output']>;
   objective?: Maybe<Scalars['String']['output']>;
+  objective_approved?: Maybe<Scalars['Boolean']['output']>;
   platform?: Maybe<Scalars['String']['output']>;
+  platform_approved?: Maybe<Scalars['Boolean']['output']>;
   /** An array relationship */
   project_facebook_creative_templates: Array<Project_Facebook_Creative_Templates>;
   /** An aggregate relationship */
   project_facebook_creative_templates_aggregate: Project_Facebook_Creative_Templates_Aggregate;
   project_type?: Maybe<Scalars['String']['output']>;
+  project_type_approved?: Maybe<Scalars['Boolean']['output']>;
+  start_stop_time_approved?: Maybe<Scalars['Boolean']['output']>;
   start_time?: Maybe<Scalars['timestamptz']['output']>;
   stop_time?: Maybe<Scalars['timestamptz']['output']>;
   /** An array relationship */
@@ -3650,6 +3732,7 @@ export type Projects_Bool_Exp = {
   _not?: InputMaybe<Projects_Bool_Exp>;
   _or?: InputMaybe<Array<Projects_Bool_Exp>>;
   branding?: InputMaybe<String_Comparison_Exp>;
+  brandness_approved?: InputMaybe<Boolean_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   creatives?: InputMaybe<Facebook_Creatives_Bool_Exp>;
   creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Bool_Exp>;
@@ -3660,11 +3743,16 @@ export type Projects_Bool_Exp = {
   landing_pages?: InputMaybe<Landing_Pages_Bool_Exp>;
   landing_pages_aggregate?: InputMaybe<Landing_Pages_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  name_approved?: InputMaybe<Boolean_Comparison_Exp>;
   objective?: InputMaybe<String_Comparison_Exp>;
+  objective_approved?: InputMaybe<Boolean_Comparison_Exp>;
   platform?: InputMaybe<String_Comparison_Exp>;
+  platform_approved?: InputMaybe<Boolean_Comparison_Exp>;
   project_facebook_creative_templates?: InputMaybe<Project_Facebook_Creative_Templates_Bool_Exp>;
   project_facebook_creative_templates_aggregate?: InputMaybe<Project_Facebook_Creative_Templates_Aggregate_Bool_Exp>;
   project_type?: InputMaybe<String_Comparison_Exp>;
+  project_type_approved?: InputMaybe<Boolean_Comparison_Exp>;
+  start_stop_time_approved?: InputMaybe<Boolean_Comparison_Exp>;
   start_time?: InputMaybe<Timestamptz_Comparison_Exp>;
   stop_time?: InputMaybe<Timestamptz_Comparison_Exp>;
   teams_projects?: InputMaybe<Teams_Projects_Bool_Exp>;
@@ -3683,6 +3771,7 @@ export enum Projects_Constraint {
 /** input type for inserting data into table "projects" */
 export type Projects_Insert_Input = {
   branding?: InputMaybe<Scalars['String']['input']>;
+  brandness_approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creatives?: InputMaybe<Facebook_Creatives_Arr_Rel_Insert_Input>;
   facebook_audiences?: InputMaybe<Facebook_Audiences_Arr_Rel_Insert_Input>;
@@ -3690,10 +3779,15 @@ export type Projects_Insert_Input = {
   is_draft?: InputMaybe<Scalars['Boolean']['input']>;
   landing_pages?: InputMaybe<Landing_Pages_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']['input']>;
+  name_approved?: InputMaybe<Scalars['Boolean']['input']>;
   objective?: InputMaybe<Scalars['String']['input']>;
+  objective_approved?: InputMaybe<Scalars['Boolean']['input']>;
   platform?: InputMaybe<Scalars['String']['input']>;
+  platform_approved?: InputMaybe<Scalars['Boolean']['input']>;
   project_facebook_creative_templates?: InputMaybe<Project_Facebook_Creative_Templates_Arr_Rel_Insert_Input>;
   project_type?: InputMaybe<Scalars['String']['input']>;
+  project_type_approved?: InputMaybe<Scalars['Boolean']['input']>;
+  start_stop_time_approved?: InputMaybe<Scalars['Boolean']['input']>;
   start_time?: InputMaybe<Scalars['timestamptz']['input']>;
   stop_time?: InputMaybe<Scalars['timestamptz']['input']>;
   teams_projects?: InputMaybe<Teams_Projects_Arr_Rel_Insert_Input>;
@@ -3757,6 +3851,7 @@ export type Projects_On_Conflict = {
 /** Ordering options when selecting data from "projects". */
 export type Projects_Order_By = {
   branding?: InputMaybe<Order_By>;
+  brandness_approved?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Order_By>;
   facebook_audiences_aggregate?: InputMaybe<Facebook_Audiences_Aggregate_Order_By>;
@@ -3764,10 +3859,15 @@ export type Projects_Order_By = {
   is_draft?: InputMaybe<Order_By>;
   landing_pages_aggregate?: InputMaybe<Landing_Pages_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
+  name_approved?: InputMaybe<Order_By>;
   objective?: InputMaybe<Order_By>;
+  objective_approved?: InputMaybe<Order_By>;
   platform?: InputMaybe<Order_By>;
+  platform_approved?: InputMaybe<Order_By>;
   project_facebook_creative_templates_aggregate?: InputMaybe<Project_Facebook_Creative_Templates_Aggregate_Order_By>;
   project_type?: InputMaybe<Order_By>;
+  project_type_approved?: InputMaybe<Order_By>;
+  start_stop_time_approved?: InputMaybe<Order_By>;
   start_time?: InputMaybe<Order_By>;
   stop_time?: InputMaybe<Order_By>;
   teams_projects_aggregate?: InputMaybe<Teams_Projects_Aggregate_Order_By>;
@@ -3785,6 +3885,8 @@ export enum Projects_Select_Column {
   /** column name */
   Branding = 'branding',
   /** column name */
+  BrandnessApproved = 'brandness_approved',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Id = 'id',
@@ -3793,11 +3895,21 @@ export enum Projects_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
+  NameApproved = 'name_approved',
+  /** column name */
   Objective = 'objective',
+  /** column name */
+  ObjectiveApproved = 'objective_approved',
   /** column name */
   Platform = 'platform',
   /** column name */
+  PlatformApproved = 'platform_approved',
+  /** column name */
   ProjectType = 'project_type',
+  /** column name */
+  ProjectTypeApproved = 'project_type_approved',
+  /** column name */
+  StartStopTimeApproved = 'start_stop_time_approved',
   /** column name */
   StartTime = 'start_time',
   /** column name */
@@ -3809,13 +3921,19 @@ export enum Projects_Select_Column {
 /** input type for updating data in table "projects" */
 export type Projects_Set_Input = {
   branding?: InputMaybe<Scalars['String']['input']>;
+  brandness_approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   is_draft?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  name_approved?: InputMaybe<Scalars['Boolean']['input']>;
   objective?: InputMaybe<Scalars['String']['input']>;
+  objective_approved?: InputMaybe<Scalars['Boolean']['input']>;
   platform?: InputMaybe<Scalars['String']['input']>;
+  platform_approved?: InputMaybe<Scalars['Boolean']['input']>;
   project_type?: InputMaybe<Scalars['String']['input']>;
+  project_type_approved?: InputMaybe<Scalars['Boolean']['input']>;
+  start_stop_time_approved?: InputMaybe<Scalars['Boolean']['input']>;
   start_time?: InputMaybe<Scalars['timestamptz']['input']>;
   stop_time?: InputMaybe<Scalars['timestamptz']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -3832,13 +3950,19 @@ export type Projects_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Projects_Stream_Cursor_Value_Input = {
   branding?: InputMaybe<Scalars['String']['input']>;
+  brandness_approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   is_draft?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  name_approved?: InputMaybe<Scalars['Boolean']['input']>;
   objective?: InputMaybe<Scalars['String']['input']>;
+  objective_approved?: InputMaybe<Scalars['Boolean']['input']>;
   platform?: InputMaybe<Scalars['String']['input']>;
+  platform_approved?: InputMaybe<Scalars['Boolean']['input']>;
   project_type?: InputMaybe<Scalars['String']['input']>;
+  project_type_approved?: InputMaybe<Scalars['Boolean']['input']>;
+  start_stop_time_approved?: InputMaybe<Scalars['Boolean']['input']>;
   start_time?: InputMaybe<Scalars['timestamptz']['input']>;
   stop_time?: InputMaybe<Scalars['timestamptz']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -3851,6 +3975,7 @@ export type Projects_Themes = {
   angles: Array<Themes_Angles>;
   /** An aggregate relationship */
   angles_aggregate: Themes_Angles_Aggregate;
+  approved?: Maybe<Scalars['Boolean']['output']>;
   created_at: Scalars['timestamptz']['output'];
   /** An array relationship */
   facebook_creatives: Array<Facebook_Creatives>;
@@ -3912,7 +4037,23 @@ export type Projects_Themes_Aggregate = {
 };
 
 export type Projects_Themes_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Projects_Themes_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Projects_Themes_Aggregate_Bool_Exp_Bool_Or>;
   count?: InputMaybe<Projects_Themes_Aggregate_Bool_Exp_Count>;
+};
+
+export type Projects_Themes_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Projects_Themes_Select_Column_Projects_Themes_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Projects_Themes_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Projects_Themes_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Projects_Themes_Select_Column_Projects_Themes_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Projects_Themes_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
 };
 
 export type Projects_Themes_Aggregate_Bool_Exp_Count = {
@@ -3958,6 +4099,7 @@ export type Projects_Themes_Bool_Exp = {
   _or?: InputMaybe<Array<Projects_Themes_Bool_Exp>>;
   angles?: InputMaybe<Themes_Angles_Bool_Exp>;
   angles_aggregate?: InputMaybe<Themes_Angles_Aggregate_Bool_Exp>;
+  approved?: InputMaybe<Boolean_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   facebook_creatives?: InputMaybe<Facebook_Creatives_Bool_Exp>;
   facebook_creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Bool_Exp>;
@@ -3977,6 +4119,7 @@ export enum Projects_Themes_Constraint {
 /** input type for inserting data into table "projects_themes" */
 export type Projects_Themes_Insert_Input = {
   angles?: InputMaybe<Themes_Angles_Arr_Rel_Insert_Input>;
+  approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   facebook_creatives?: InputMaybe<Facebook_Creatives_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -4050,6 +4193,7 @@ export type Projects_Themes_On_Conflict = {
 /** Ordering options when selecting data from "projects_themes". */
 export type Projects_Themes_Order_By = {
   angles_aggregate?: InputMaybe<Themes_Angles_Aggregate_Order_By>;
+  approved?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   facebook_creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
@@ -4067,6 +4211,8 @@ export type Projects_Themes_Pk_Columns_Input = {
 /** select columns of table "projects_themes" */
 export enum Projects_Themes_Select_Column {
   /** column name */
+  Approved = 'approved',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Id = 'id',
@@ -4078,8 +4224,21 @@ export enum Projects_Themes_Select_Column {
   UpdatedAt = 'updated_at'
 }
 
+/** select "projects_themes_aggregate_bool_exp_bool_and_arguments_columns" columns of table "projects_themes" */
+export enum Projects_Themes_Select_Column_Projects_Themes_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Approved = 'approved'
+}
+
+/** select "projects_themes_aggregate_bool_exp_bool_or_arguments_columns" columns of table "projects_themes" */
+export enum Projects_Themes_Select_Column_Projects_Themes_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Approved = 'approved'
+}
+
 /** input type for updating data in table "projects_themes" */
 export type Projects_Themes_Set_Input = {
+  approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -4097,6 +4256,7 @@ export type Projects_Themes_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Projects_Themes_Stream_Cursor_Value_Input = {
+  approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -4106,6 +4266,8 @@ export type Projects_Themes_Stream_Cursor_Value_Input = {
 
 /** update columns of table "projects_themes" */
 export enum Projects_Themes_Update_Column {
+  /** column name */
+  Approved = 'approved',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -4130,6 +4292,8 @@ export enum Projects_Update_Column {
   /** column name */
   Branding = 'branding',
   /** column name */
+  BrandnessApproved = 'brandness_approved',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Id = 'id',
@@ -4138,11 +4302,21 @@ export enum Projects_Update_Column {
   /** column name */
   Name = 'name',
   /** column name */
+  NameApproved = 'name_approved',
+  /** column name */
   Objective = 'objective',
+  /** column name */
+  ObjectiveApproved = 'objective_approved',
   /** column name */
   Platform = 'platform',
   /** column name */
+  PlatformApproved = 'platform_approved',
+  /** column name */
   ProjectType = 'project_type',
+  /** column name */
+  ProjectTypeApproved = 'project_type_approved',
+  /** column name */
+  StartStopTimeApproved = 'start_stop_time_approved',
   /** column name */
   StartTime = 'start_time',
   /** column name */
@@ -5638,10 +5812,8 @@ export enum Teams_Roles_Constraint {
 }
 
 export enum Teams_Roles_Enum {
-  /** Admin permissions for a team */
-  Admin = 'admin',
-  /** View permissions for a team */
-  Member = 'member'
+  /** Full control over team. */
+  Admin = 'admin'
 }
 
 /** Boolean expression to compare columns of type "teams_roles_enum". All fields are combined with logical 'AND'. */
@@ -6725,7 +6897,7 @@ export type UpdateFacebookAudiencesByProjectIdMutationVariables = Exact<{
 }>;
 
 
-export type UpdateFacebookAudiencesByProjectIdMutation = { __typename?: 'mutation_root', update_facebook_audiences_by_pk?: { __typename?: 'facebook_audiences', id: any, name?: string | null, geo_locations: any, genders?: Array<number> | null, interests?: any | null, device_platforms: Array<string>, facebook_positions: Array<string>, min_age?: any | null, max_age?: any | null, updated_at: any } | null };
+export type UpdateFacebookAudiencesByProjectIdMutation = { __typename?: 'mutation_root', update_facebook_audiences_by_pk?: { __typename?: 'facebook_audiences', id: any, name?: string | null, geo_locations: any, genders?: Array<number> | null, interests?: any | null, device_platforms: Array<string>, facebook_positions: Array<string>, min_age?: any | null, max_age?: any | null, approved?: boolean | null, updated_at: any } | null };
 
 export type CreateFacebookAudienceMutationVariables = Exact<{
   geo_locations: Scalars['jsonb']['input'];
@@ -6874,7 +7046,7 @@ export type FetchFullProjectQueryVariables = Exact<{
 }>;
 
 
-export type FetchFullProjectQuery = { __typename?: 'query_root', projects_by_pk?: { __typename?: 'projects', id: any, name: string, objective?: string | null, branding?: string | null, platform?: string | null, project_type?: string | null, is_draft: boolean, created_at: any, updated_at: any, start_time?: any | null, stop_time?: any | null, facebook_audiences: Array<{ __typename?: 'facebook_audiences', device_platforms: Array<string>, facebook_positions: Array<string>, genders?: Array<number> | null, geo_locations: any, id: any, interests?: any | null, max_age?: any | null, min_age?: any | null, name?: string | null, publisher_platforms: Array<string> }>, project_facebook_creative_templates: Array<{ __typename?: 'project_facebook_creative_templates', id: any, data?: any | null, project_id: any, template_name: string }>, themes: Array<{ __typename?: 'projects_themes', name: string, id: any, angles: Array<{ __typename?: 'themes_angles', name: string, id: any, facebook_creatives: Array<{ __typename?: 'facebook_creatives', id: any, data?: any | null, template_name: string, social_copy?: string | null, cta_text?: string | null, cta_type?: string | null }> }> }> } | null };
+export type FetchFullProjectQuery = { __typename?: 'query_root', projects_by_pk?: { __typename?: 'projects', id: any, name: string, objective?: string | null, branding?: string | null, platform?: string | null, project_type?: string | null, is_draft: boolean, created_at: any, updated_at: any, start_time?: any | null, stop_time?: any | null, name_approved?: boolean | null, objective_approved?: boolean | null, project_type_approved?: boolean | null, brandness_approved?: boolean | null, platform_approved?: boolean | null, start_stop_time_approved?: boolean | null, facebook_audiences: Array<{ __typename?: 'facebook_audiences', device_platforms: Array<string>, facebook_positions: Array<string>, genders?: Array<number> | null, geo_locations: any, id: any, interests?: any | null, max_age?: any | null, min_age?: any | null, name?: string | null, approved?: boolean | null, publisher_platforms: Array<string> }>, project_facebook_creative_templates: Array<{ __typename?: 'project_facebook_creative_templates', id: any, data?: any | null, project_id: any, template_name: string }>, themes: Array<{ __typename?: 'projects_themes', name: string, id: any, approved?: boolean | null, angles: Array<{ __typename?: 'themes_angles', name: string, id: any, facebook_creatives: Array<{ __typename?: 'facebook_creatives', id: any, data?: any | null, template_name: string, social_copy?: string | null, cta_text?: string | null, cta_type?: string | null }> }> }> } | null };
 
 export type FetchProjectsQueryVariables = Exact<{
   teamId: Scalars['uuid']['input'];
@@ -6978,7 +7150,7 @@ export const VerifyEmailDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"newPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}}}]}]}}]} as unknown as DocumentNode<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const SubmitContactFormDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SubmitContactForm"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"message"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_contact_form_submissions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"message"},"value":{"kind":"Variable","name":{"kind":"Name","value":"message"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<SubmitContactFormMutation, SubmitContactFormMutationVariables>;
 export const FacebookApiGetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FacebookAPIGet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"url"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebookAPIGet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"url"},"value":{"kind":"Variable","name":{"kind":"Name","value":"url"}}}]}]}}]} as unknown as DocumentNode<FacebookApiGetMutation, FacebookApiGetMutationVariables>;
-export const UpdateFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"facebook_audiences_set_input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_facebook_audiences_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<UpdateFacebookAudiencesByProjectIdMutation, UpdateFacebookAudiencesByProjectIdMutationVariables>;
+export const UpdateFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"facebook_audiences_set_input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_facebook_audiences_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<UpdateFacebookAudiencesByProjectIdMutation, UpdateFacebookAudiencesByProjectIdMutationVariables>;
 export const CreateFacebookAudienceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateFacebookAudience"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"jsonb"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"publisher_platforms"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_facebook_audiences_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"geo_locations"},"value":{"kind":"Variable","name":{"kind":"Name","value":"geo_locations"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"publisher_platforms"},"value":{"kind":"Variable","name":{"kind":"Name","value":"publisher_platforms"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"publisher_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<CreateFacebookAudienceMutation, CreateFacebookAudienceMutationVariables>;
 export const GetFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebook_audiences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<GetFacebookAudiencesByProjectIdQuery, GetFacebookAudiencesByProjectIdQueryVariables>;
 export const CreateProjectFacebookCreativeTemplateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateProjectFacebookCreativeTemplate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"templateName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_project_facebook_creative_templates"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"template_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"templateName"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]}}]} as unknown as DocumentNode<CreateProjectFacebookCreativeTemplateMutation, CreateProjectFacebookCreativeTemplateMutationVariables>;
@@ -6998,7 +7170,7 @@ export const CreateProjectDocument = {"kind":"Document","definitions":[{"kind":"
 export const DeleteProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteProjectMutation, DeleteProjectMutationVariables>;
 export const UpdateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"projects_set_input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"is_draft"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}}]}}]}}]} as unknown as DocumentNode<UpdateProjectMutation, UpdateProjectMutationVariables>;
 export const FetchProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"is_draft"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}}]}}]}}]} as unknown as DocumentNode<FetchProjectQuery, FetchProjectQueryVariables>;
-export const FetchFullProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFullProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"is_draft"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_audiences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"publisher_platforms"}}]}},{"kind":"Field","name":{"kind":"Name","value":"project_facebook_creative_templates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"themes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"angles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_creatives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"social_copy"}},{"kind":"Field","name":{"kind":"Name","value":"cta_text"}},{"kind":"Field","name":{"kind":"Name","value":"cta_type"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<FetchFullProjectQuery, FetchFullProjectQueryVariables>;
+export const FetchFullProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFullProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"is_draft"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}},{"kind":"Field","name":{"kind":"Name","value":"name_approved"}},{"kind":"Field","name":{"kind":"Name","value":"objective_approved"}},{"kind":"Field","name":{"kind":"Name","value":"project_type_approved"}},{"kind":"Field","name":{"kind":"Name","value":"brandness_approved"}},{"kind":"Field","name":{"kind":"Name","value":"platform_approved"}},{"kind":"Field","name":{"kind":"Name","value":"start_stop_time_approved"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_audiences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"publisher_platforms"}}]}},{"kind":"Field","name":{"kind":"Name","value":"project_facebook_creative_templates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"themes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"angles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_creatives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"social_copy"}},{"kind":"Field","name":{"kind":"Name","value":"cta_text"}},{"kind":"Field","name":{"kind":"Name","value":"cta_type"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<FetchFullProjectQuery, FetchFullProjectQueryVariables>;
 export const FetchProjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchProjects"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"teams_projects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"is_draft"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchProjectsQuery, FetchProjectsQueryVariables>;
 export const InviteUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"inviteUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_invitations_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<InviteUserMutation, InviteUserMutationVariables>;
 export const CreateTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTeam"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}]}}]} as unknown as DocumentNode<CreateTeamMutation, CreateTeamMutationVariables>;

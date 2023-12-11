@@ -1,62 +1,12 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../gql/graphql";
+import { Projects as Project } from "../../../../gql/graphql";
 import { useEffect, useState } from "react";
+import { TestTypeMenu, testTypeMenu } from "../../../../stores/projects";
 
 const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
   const [name, setName] = useState(project.name || '')
   const [objective, setObjective] = useState(project.objective || '')
   const [projectType, setProjectType] = useState(project.project_type || '')
-  interface TestTypeMenu {
-    label: string,
-    icon: string,
-    value: string,
-    description: string,
-    items: string[]
-  }
-  const testTypeMenu: TestTypeMenu[] = [
-    {
-      label: 'Upstream Consumer Behavior',
-      value: 'upstream_consumer_behavior',
-      icon: '/src/assets/magnifying_glass.svg',
-      description: 'Exploratory, Whitespace,\nProblems, Solutions, Innovations',
-      items: [
-        'What product should I create?',
-        'What motivates my consumer',
-        'What problems exist for my brand?',
-        'What is trending in the market?'
-      ]
-    },
-    {
-      label: 'Concept & Product Development',
-      value: 'concept_test',
-      icon: '/src/assets/egg.png',
-      description: 'Ideas, Validations',
-      items: [
-        'Which product idea is best?',
-        'What concept resonates with my consumer?'
-      ]
-    },
-    {
-      label: 'Feature & Benefits',
-      value: 'benefits_claims',
-      icon: '/src/assets/lightbulb.png',
-      description: 'Positioning, Features, Benefits, Claims',
-      items: [
-        'Which product/service features and benefits resonate most?',
-        'Which claim is most compelling to my audience?'
-      ]
-    },
-    {
-      label: 'Marketing Communication',
-      value: 'marketing_communication',
-      icon: '/src/assets/horseshoe.png',
-      description: 'Exploratory, Whitespace,\nProblems, Solutions, Innovations',
-      items: [
-        'How do I talk about and show my product or service?',
-        'What is the best way to bring to life and talk about my product/ service?'
-      ]
-    }
-  ]
   useEffect(() => {
     if (projectType === 'marketing_communication') {
       setProjectType('marketing_communication_language')

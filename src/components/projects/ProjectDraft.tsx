@@ -1,22 +1,23 @@
 import { observer } from "mobx-react-lite";
 import { Projects as Project } from "../../gql/graphql";
-import TestObjective from "./test_components/TestObjective";
+import TestObjective from "./test_components/configuration/TestObjective";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ProjectFacebookAudienceContext, ProjectsContext } from "../../stores/stores";
 import { useMutation } from "@tanstack/react-query";
 import _ from "lodash";
-import TestBranding from "./test_components/TestBranding";
-import TestPlatform from "./test_components/TestPlatform";
-import TestRuntime from "./test_components/TestRuntime";
-import TestAudience from "./test_components/TestAudience";
-import TestCreatives from "./test_components/TestCreatives";
-import TestLandingPages from "./test_components/TestLandingPages";
+import TestBranding from "./test_components/configuration/TestBranding";
+import TestPlatform from "./test_components/configuration/TestPlatform";
+import TestRuntime from "./test_components/configuration/TestRuntime";
+import TestAudience from "./test_components/configuration/TestAudience";
+import TestCreatives from "./test_components/creative/TestCreatives";
+import TestLandingPages from "./test_components/creative/TestLandingPages";
 import '../../css/project_draft.css'
-import TestThemes from "./test_components/creatives/TestThemes";
+import TestThemes from "./test_components/creative/TestThemes";
 import ProjectFacebookCreativeTemplateDetail from '../../pages/projects/ProjectFacebookCreativeTemplateDetail'
-import TestMatrixEditor from './test_components/creatives/TestMatrixEditor'
-import TestMatrix from "./test_components/creatives/TestMatrix";
+import TestMatrixEditor from './test_components/creative/TestMatrixEditor'
+import TestMatrix from "./test_components/creative/TestMatrix";
+import UserReview from "./test_components/review/UserReview";
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -110,9 +111,25 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
         icon: 'mdi mdi-beaker'
       }
     ]
+  },
+  {
+    label: 'Review',
+    value: 'review',
+    icon: 'mdi mdi-eye',
+    step: 12,
+    children: [
+    ]
+  },
+  {
+    label: 'Publish',
+    value: 'publish',
+    icon: 'mdi mdi-send-outline',
+    step: 13,
+    children: [
+    ]
   }]
-  function goToAdCopyStep () {
-    if (project.themes && project?.themes.length > 2){
+  function goToAdCopyStep() {
+    if (project.themes && project?.themes.length > 2) {
       if (project.themes[0].angles[0]?.facebook_creatives[0]) {
         return 10
       }
@@ -159,16 +176,19 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           </div>
           <ul className="menu w-56">
             {configurationMenu.map((item) =>
-              <li key={item.value}>
-                <details open>
-                  <summary><span className={item.icon}></span>{item.label}</summary>
-                  <ul>
-                    {item.children.map((child) =>
-                      <li key={child.value} className={`project-menu-item ${child.steps?.includes(step) && 'active'}`} onClick={() => { setSearchParams({ step: child.goToStep ? child.goToStep().toString() : child.steps[0].toString() }) }} ><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>
-                    )}
-                  </ul>
-                </details>
-              </li>
+              <div key={item.value} className="flex justify-end">
+                {item.step === step && <li className="flex flex-col" style={{ background: 'linear-gradient(351deg, #AB2160 -4.8%, #EF4136 94.68%)', borderRadius: '4px 0px 0px 4px', width: 6 }}><span></span></li> }
+                <li className={`w-full step-parent ${item.step === step && 'active'}`} onClick={() => item.children.length === 0 && setSearchParams({ step: item.step!.toString() })}>
+                  <details open={item.children.flatMap((item) => item.steps).includes(step)}>
+                    <summary><span className={item.icon}></span>{item.label}</summary>
+                    <ul>
+                      {item.children.map((child) =>
+                        <li key={child.value} className={`project-menu-item ${child.steps?.includes(step) && 'active'}`} onClick={() => { setSearchParams({ step: child.goToStep ? child.goToStep().toString() : child.steps[0].toString() }) }} ><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>
+                      )}
+                    </ul>
+                  </details>
+                </li>
+              </div>
             )}
           </ul>
         </div>
@@ -184,12 +204,13 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           {step === 9 && <TestMatrix project={project} onSave={onSave} />}
           {step === 10 && <TestMatrixEditor project={project} onSave={onSave} />}
           {step === 11 && <TestLandingPages project={project} onSave={onSave} />}
+          {step === 12 && <UserReview project={project} onSave={onSave} />}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setSearchParams({ step: (step - 1).toString() })}>
               <span className="mdi mdi-chevron-left text-base" /> Go Back
             </button>
             }
-            {step < 11 && step != 6 &&
+            {step < 12 && step != 6 &&
               <button className="btn action-button text-base" onClick={() => setSearchParams({ step: (step + 1).toString() })} disabled={!currentStepItem?.isComplete}>
                 Next <span className="mdi mdi-chevron-right text-base" />
               </button>

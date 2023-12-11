@@ -4,3 +4,7 @@
   background: #FFF;
   box-shadow: 0px 1px 2.4px 0px #FFF inset, 0px 2px 12px 0px rgba(80, 70, 37, 0.08); 
 }
+
+.test {
+  background-color: red;
+}

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../gql/graphql";
+import { Projects as Project } from "../../../../gql/graphql";
 import { ChangeEvent, useEffect, useState } from "react";
 import { DateTime } from "luxon"
 const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {

@@ -1,19 +1,19 @@
 import { observer } from "mobx-react-lite";
-import TestAudienceLocations from "./test_audience_components/TestAudienceLocations";
+import TestAudienceLocations from "../test_audience_components/TestAudienceLocations";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { FacebookContext, ProjectFacebookAudienceContext, ToastsContext } from "../../../stores/stores";
-import { SpinningLoading } from "../../lib/SpinningLoading";
-import { Facebook_Audiences as FacebookAudience } from "../../../gql/graphql";
-import TestAudienceGender from "./test_audience_components/TestAudienceGender";
+import { FacebookContext, ProjectFacebookAudienceContext, ToastsContext } from "../../../../stores/stores";
+import { SpinningLoading } from "../../../lib/SpinningLoading";
+import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql";
+import TestAudienceGender from "../test_audience_components/TestAudienceGender";
 import _ from 'lodash'
-import TestAudienceAge from "./test_audience_components/TestAudienceAge";
-import { Projects as Project } from "../../../gql/graphql";
-import ErrorMessage from "../../lib/Error";
-import TestAudiencePlatforms from "./test_audience_components/TestAudiencePlatforms";
-import TestAudiencePositions from "./test_audience_components/TestAudiencePositions";
-import TestAudienceInterests from "./test_audience_components/TestAudienceInterests";
-import { ToastType } from "../../../stores/toast";
+import TestAudienceAge from "../test_audience_components/TestAudienceAge";
+import { Projects as Project } from "../../../../gql/graphql";
+import ErrorMessage from "../../../lib/Error";
+import TestAudiencePlatforms from "../test_audience_components/TestAudiencePlatforms";
+import TestAudiencePositions from "../test_audience_components/TestAudiencePositions";
+import TestAudienceInterests from "../test_audience_components/TestAudienceInterests";
+import { ToastType } from "../../../../stores/toast";
 
 const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSave: (payload: object) => void, onAudienceComplete: (complete: boolean) => void, project: Project, }) => {
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)

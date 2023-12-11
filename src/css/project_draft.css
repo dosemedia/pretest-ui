@@ -23,6 +23,17 @@
   color: #030102;
   font-weight: 700;
 }
+.step-parent details summary:hover {
+  background: rgba(184, 173, 134, 0.17);
+  border-radius: 4;
+}
+.step-parent.active details summary {
+  background: rgba(184, 173, 134, 0.17);
+  border-radius: 0 4px 4px 0;
+}
+.step-parent.active details summary::after {
+  display: none;
+}
 
 .card-selected {
   background-color: #F8D8D6 !important;

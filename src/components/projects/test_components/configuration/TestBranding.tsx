@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../gql/graphql";
+import { Projects as Project } from "../../../../gql/graphql";
 import { useEffect, useState } from "react";
 const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
   const [branding, setBranding] = useState(project.branding || '')

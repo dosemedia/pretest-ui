@@ -42,6 +42,7 @@ export class ProjectFacebookAudience {
           facebook_positions
           min_age
           max_age
+          approved
           updated_at
         }
       }
