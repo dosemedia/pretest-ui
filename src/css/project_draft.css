@@ -19,6 +19,11 @@
   border-image: linear-gradient(351deg, #AB2160 -4.8%, #EF4136 94.68%) 1 100%;
 }
 
+.project-menu-item.disabled a {
+  pointer-events: none;
+  color: grey
+}
+
 .configuration-title {
   color: #030102;
   font-weight: 700;

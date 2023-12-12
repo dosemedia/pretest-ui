@@ -19,6 +19,17 @@ import TestMatrixEditor from './test_components/creative/TestMatrixEditor'
 import TestMatrix from "./test_components/creative/TestMatrix";
 import UserReview from "./test_components/review/UserReview";
 import ProjectStepContainer from "./ProjectStepContainer";
+import React from "react";
+
+export interface ProjectDraftMenu {
+  label: string,
+  value: string,
+  icon: string,
+  steps?: number[],
+  goToStep?: () => number,
+  isComplete?: boolean,
+  children?: ProjectDraftMenu[]
+}
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,8 +41,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const [updatedAt, setUpdatedAt] = useState(project.updated_at)
   const [projectFacebookCreativeTemplateId, setProjectFacebookCreativeTemplateId] = useState('')
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [currentStepItem, setCurrentStepItem] = useState<any>()
+  const [currentStepItem, setCurrentStepItem] = useState<ProjectDraftMenu | null | undefined>()
   const projectMutation = useMutation({
     mutationFn: (payload: object) => projectStore.updateProject({ id: project.id, payload: payload as Project }),
     onSuccess: () => {
@@ -42,13 +52,6 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const onSave = _.debounce((payload: object) => {
     projectMutation.mutate(payload)
   }, 1000)
-  interface ProjectDraftMenu {
-    label: string,
-    value: string,
-    icon: string,
-    step?: number,
-    children: { label: string, steps: number[], isComplete: boolean, value: string, icon: string, goToStep?: () => number }[]
-  }
   const configurationMenu: ProjectDraftMenu[] = [{
     label: 'Configuration',
     value: 'configuration',
@@ -124,7 +127,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     label: 'Review',
     value: 'review',
     icon: 'mdi mdi-eye',
-    step: 12,
+    steps: [12],
     children: [
     ]
   },
@@ -132,7 +135,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     label: 'Publish',
     value: 'publish',
     icon: 'mdi mdi-send-outline',
-    step: 13,
+    steps: [13],
     children: [
     ]
   }]
@@ -147,8 +150,8 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   }
   function findCurrentStepItem() {
     for (const item of configurationMenu) {
-      for (const child of item.children) {
-        if (child.steps.includes(step)) {
+      for (const child of item.children!) {
+        if (child.steps?.includes(step)) {
           setCurrentStepItem(child)
           break
         }
@@ -185,13 +188,13 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           <ul className="menu w-56">
             {configurationMenu.map((item) =>
               <div key={item.value} className="flex justify-end">
-                {item.step === step && <li className="flex flex-col" style={{ background: 'linear-gradient(351deg, #AB2160 -4.8%, #EF4136 94.68%)', borderRadius: '4px 0px 0px 4px', width: 6 }}><span></span></li> }
-                <li className={`w-full step-parent ${item.step === step && 'active'}`} onClick={() => item.children.length === 0 && setSearchParams({ step: item.step!.toString() })}>
-                  <details open={item.children.flatMap((item) => item.steps).includes(step)}>
+                {item.steps && item.steps[0] === step && <li className="flex flex-col" style={{ background: 'linear-gradient(351deg, #AB2160 -4.8%, #EF4136 94.68%)', borderRadius: '4px 0px 0px 4px', width: 6 }}><span></span></li>}
+                <li className={`w-full step-parent ${item.steps && item.steps[0] === step && 'active'}`} onClick={() => item.children?.length === 0 && setSearchParams({ step: item.steps![0].toString() })}>
+                  <details open={item.children?.flatMap((item) => item.steps).includes(step)}>
                     <summary><span className={item.icon}></span>{item.label}</summary>
                     <ul>
-                      {item.children.map((child) =>
-                        <li key={child.value} className={`project-menu-item ${child.steps?.includes(step) && 'active'}`} onClick={() => { setSearchParams({ step: child.goToStep ? child.goToStep().toString() : child.steps[0].toString() }) }} ><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>
+                      {item.children?.map((child) =>
+                        <li key={child.value} className={`project-menu-item ${child.steps?.includes(step) && 'active'}`} onClick={() => { setSearchParams({ step: child.goToStep ? child.goToStep().toString() : child.steps![0].toString() }) }} ><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>
                       )}
                     </ul>
                   </details>
@@ -201,29 +204,21 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           </ul>
         </div>
         <div className="flex-initial w-full md:w-8/12">
-          {step === 1 && <ProjectStepContainer title="What type of test are you creating"><TestObjective project={project} onSave={onSave} /></ProjectStepContainer>}
-          {step === 2 && <ProjectStepContainer title="Are you looking for an unbranded or branded test?"><TestBranding project={project} onSave={onSave} /></ProjectStepContainer>}
-          {step === 3 && <ProjectStepContainer title="Where would you like to test?"><TestPlatform project={project} onSave={onSave} /></ProjectStepContainer>}
-          {step === 4 && <ProjectStepContainer title="Create your own audience"><TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} /></ProjectStepContainer>}
-          {step === 5 && <ProjectStepContainer title="Set your test duration"><TestRuntime project={project} onSave={onSave} /></ProjectStepContainer>}
-          {step === 6 && <ProjectStepContainer title="Choose an ad template"><TestCreatives project={project} onSave={onSave} /></ProjectStepContainer>}
-          {step === 7 && projectFacebookCreativeTemplateId && <ProjectStepContainer title="Edit/Remove your template below"><ProjectFacebookCreativeTemplateDetail projectFacebookCreativeTemplateId={projectFacebookCreativeTemplateId} /></ProjectStepContainer>}
-          {step === 8 && <ProjectStepContainer title="Answer your big questions"><TestThemes project={project} onSave={onSave} /></ProjectStepContainer>}
-          {step === 9 && <ProjectStepContainer title=""><TestMatrix project={project} onSave={onSave} /></ProjectStepContainer>}
-          {step === 10 && <ProjectStepContainer title="Build your test matrix"><TestMatrixEditor project={project} onSave={onSave} /></ProjectStepContainer>}
-          {step === 11 && <ProjectStepContainer title="Choose a landing page template"><TestLandingPages project={project} onSave={onSave} /></ProjectStepContainer>}
-          {step === 12 && <ProjectStepContainer title="Review your test"><UserReview project={project} onSave={onSave} /></ProjectStepContainer>}
-          <div className="mt-5 flex gap-4">
-            {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setSearchParams({ step: (step - 1).toString() })}>
-              <span className="mdi mdi-chevron-left text-base" /> Go Back
-            </button>
-            }
-            {step < 12 && step != 6 &&
-              <button className="btn action-button text-base" onClick={() => setSearchParams({ step: (step + 1).toString() })} disabled={!currentStepItem?.isComplete}>
-                Next <span className="mdi mdi-chevron-right text-base" />
-              </button>
-            }
+          {currentStepItem && <div>
+            {step === 1 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="What type of test are you creating"><TestObjective project={project} onSave={onSave} /></ProjectStepContainer>}
+            {step === 2 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Are you looking for an unbranded or branded test?"><TestBranding project={project} onSave={onSave} /></ProjectStepContainer>}
+            {step === 3 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Where would you like to test?"><TestPlatform project={project} onSave={onSave} /></ProjectStepContainer>}
+            {step === 4 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Create your own audience"><TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} /></ProjectStepContainer>}
+            {step === 5 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Set your test duration"><TestRuntime project={project} onSave={onSave} /></ProjectStepContainer>}
+            {step === 6 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Choose an ad template"><TestCreatives project={project} onSave={onSave} /></ProjectStepContainer>}
+            {step === 7 && projectFacebookCreativeTemplateId && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Edit/Remove your template below"><ProjectFacebookCreativeTemplateDetail projectFacebookCreativeTemplateId={projectFacebookCreativeTemplateId} /></ProjectStepContainer>}
+            {step === 8 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Answer your big questions"><TestThemes project={project} onSave={onSave} /></ProjectStepContainer>}
+            {step === 9 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title=""><TestMatrix project={project} onSave={onSave} /></ProjectStepContainer>}
+            {step === 10 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Build your test matrix"><TestMatrixEditor project={project} onSave={onSave} /></ProjectStepContainer>}
+            {step === 11 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Choose a landing page template"><TestLandingPages project={project} onSave={onSave} /></ProjectStepContainer>}
+            {step === 12 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Review your test"><UserReview project={project} onSave={onSave} /></ProjectStepContainer>}
           </div>
+          }
         </div>
       </div>
     </>

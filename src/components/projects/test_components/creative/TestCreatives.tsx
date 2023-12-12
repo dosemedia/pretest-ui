@@ -15,9 +15,6 @@ const TestCreatives = observer(({ project }: { project: Project, onSave: (payloa
 
   const projectFacebookCreativesStore = useContext(ProjectFacebookCreativeTemplatesContext)
   const [searchParams, setSearchParams] = useSearchParams();
-  // const [projectFacebookCreativeTemplateId, setProjectFacebookCreativeTemplateId] = useState<string | null>(project_facebook_creative_template_id)
-
-
   const createProjectFacebookCreativeTemplate = useMutation({
     mutationFn: (payload: { project: Project, creativeTemplate: CreativeTemplate }) => projectFacebookCreativesStore.createProjectFacebookCreativeTemplateFromTemplate(payload),
     onSuccess: (data) => { setSearchParams({ step: '7', 'project_facebook_creative_template_id': data.id });}
@@ -48,9 +45,6 @@ const TestCreatives = observer(({ project }: { project: Project, onSave: (payloa
   return (
     <>
       <div>
-        <div className="text-lg configuration-title mb-4">
-          Choose an ad template
-        </div>
         <div className="flex gap-x-4">
           {CreativeTemplates.map((template) => {
             return (
