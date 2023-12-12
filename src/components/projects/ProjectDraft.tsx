@@ -140,7 +140,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     isComplete: isReviewComplete(),
     overrideNext: {
       name: 'Submit for review',
-      onNext: () => console.log('hi')
+      onNext: () => projectStore.sendReviewCompleteSlackMessage({ projectId: project.id, returnUrl: window.location.href })
     }
   },
   {

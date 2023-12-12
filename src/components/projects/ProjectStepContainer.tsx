@@ -20,7 +20,7 @@ const ProjectStepContainer: React.FC<{ children: ReactElement, title: string, cu
             </button>
             }
             {currentStep < 13 && currentStep != 6 &&
-              <button className="btn action-button text-base" onClick={() => setSearchParams({ step: (currentStep + 1).toString() })} disabled={!currentStepItem?.isComplete}>
+              <button className="btn action-button text-base" onClick={() => currentStepItem?.overrideNext?.onNext ? currentStepItem?.overrideNext?.onNext() : setSearchParams({ step: (currentStep + 1).toString() })} disabled={!currentStepItem?.isComplete}>
                 {currentStepItem?.overrideNext?.name || 'Next' } <span className="mdi mdi-chevron-right text-base" />
               </button>
             }

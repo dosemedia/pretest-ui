@@ -99,7 +99,7 @@ export class Projects {
           branding
           platform
           project_type
-          is_draft
+          status
           updated_at
           start_time
           stop_time
@@ -109,7 +109,6 @@ export class Projects {
     if (result.error) {
       throw result.error
     }
-    console.log(result)
     return result.data?.update_projects_by_pk as Project
   }
   async fetchProject({ projectId }: { projectId: string }): Promise<Project | undefined> {
@@ -122,7 +121,7 @@ export class Projects {
           branding
           platform
           project_type
-          is_draft
+          status
           created_at
           updated_at
           start_time
@@ -145,7 +144,7 @@ export class Projects {
           branding
           platform
           project_type
-          is_draft
+          status
           created_at
           updated_at
           start_time
@@ -212,7 +211,7 @@ export class Projects {
       projects(where: {teams_projects: {team_id: {_eq: $teamId}}}, order_by: {created_at: desc}) {
         name
         id
-        is_draft
+        status
         project_type
         start_time
         stop_time
@@ -224,5 +223,18 @@ export class Projects {
       throw result.error
     }
     return result.data?.projects as Project[]
+  }
+
+  async sendReviewCompleteSlackMessage({ projectId, returnUrl }: { projectId: string, returnUrl: string }): Promise<boolean>{
+    const result = await client.mutation(graphql(`
+      mutation SendReviewCompleteSlackMessage($projectId: uuid!, $returnUrl: String!) {
+        sendSlackAlertForTeamReview(projectId: $projectId, returnUrl: $returnUrl)
+      }
+    `), { projectId, returnUrl })
+    if (result.error) {
+      throw result.error
+    }
+    console.log(result)
+    return true
   }
 }
