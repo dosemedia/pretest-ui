@@ -37,7 +37,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
                   <span className="label-text">Copy</span>
                 </div>
                 <div>
-                  <input type="checkbox" style={{ verticalAlign: 'middle' }} className="toggle toggle-sm mr-2" checked={projectType === 'marketing_communication_visual'} onChange={() => { setProjectType(item.value + '_visual') }}/>
+                  <input type="checkbox" style={{ verticalAlign: 'middle' }} className="toggle toggle-sm mr-2" checked={projectType === 'marketing_communication_visual'} onChange={() => { setProjectType(item.value + '_visual') }} />
                   <span className="label-text">Visual Design</span>
                 </div>
               </div>
@@ -49,10 +49,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
     )
   }
   return (
-    <div>
-      <div className="text-lg configuration-title">
-        What type of test are you creating?
-      </div>
+    <>
       <div>
         <div className="form-control" style={{ marginTop: 20 }}>
           <label className="label">
@@ -74,7 +71,7 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
           {testTypeMenu.map((item) => selectionCard(item))}
         </div>
       </div>
-    </div>
+    </>
   )
 })
 

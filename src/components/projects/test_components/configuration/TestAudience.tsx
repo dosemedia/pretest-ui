@@ -34,7 +34,7 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   const createProjectFacebookAudienceMutation = useMutation({
     mutationKey: ['createProjectFacebookAudienceMutation'],
     mutationFn: () => projectFacebookAudienceStore.createFacebookAudience({ project, name: 'My Custom Audience' }),
-    onSuccess: (audience: FacebookAudience | null) => { if (audience) setFacebookAudienceData(audience)},
+    onSuccess: (audience: FacebookAudience | null) => { if (audience) setFacebookAudienceData(audience) },
     onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: ToastType.ERROR }) },
   })
   const projectFacebookAudienceMutation = useMutation({
@@ -69,23 +69,20 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
     <>
       {!project.platform ? <ErrorMessage message="You must complete the Platform step before moving to audience" /> :
         <div>
-          <div className="text-lg configuration-title">
-            Create your own audience
-          </div>
-            <div className="flex flex-col gap-y-6 mt-4">
-              <div>
-                <label className="label">
-                  <span className="text-sm opacity-60">Name*</span>
-                </label>
-                <input type="text" className="input w-10/12" placeholder="Name" value={audienceName} onChange={(e) => { setAudienceName(e.target.value); onUpdate({ name: e.target.value } as FacebookAudience, true) }} />
-              </div>
-              {facebookAudienceData && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-              {facebookAudienceData && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-              {facebookAudienceData && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-              {facebookAudienceData && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-              {facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-              {facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+          <div className="flex flex-col gap-y-6 mt-4">
+            <div>
+              <label className="label">
+                <span className="text-sm opacity-60">Name*</span>
+              </label>
+              <input type="text" className="input w-10/12" placeholder="Name" value={audienceName} onChange={(e) => { setAudienceName(e.target.value); onUpdate({ name: e.target.value } as FacebookAudience, true) }} />
             </div>
+            {facebookAudienceData && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {facebookAudienceData && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {facebookAudienceData && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {facebookAudienceData && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+          </div>
           {isAudienceComplete && <div>
             <button className="btn mt-5 btn-info normal-case text-white" disabled={projectFacebookAudienceMutation.isLoading} onClick={() => getReachEstimateMutation.mutate()}>Click to get reach estimate<SpinningLoading isLoading={getReachEstimateMutation.isLoading} /></button>
           </div>

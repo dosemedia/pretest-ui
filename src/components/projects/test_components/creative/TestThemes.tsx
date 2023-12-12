@@ -52,9 +52,6 @@ const TestThemes = observer(({ project, onSave }: { project: Project, onSave: (p
       {isLoading && <SpinningLoading isLoading={isLoading} />}
 
       <div>
-        <div className="text-lg configuration-title mb-4">
-          Choose your themes to help<br></br>answer your big questions
-        </div>
         <p className="my-4">
           Please choose up to 3 themes
         </p>

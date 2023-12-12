@@ -22,7 +22,7 @@ const TestLandingPages = observer(({ project }: { project: Project, onSave: (pay
   })
 
   const createLandingPage = useMutation({
-    mutationFn: (payload : { project: Project, templateName: string }) => landingPagesStore.createLandingPageFromTemplate(payload),
+    mutationFn: (payload: { project: Project, templateName: string }) => landingPagesStore.createLandingPageFromTemplate(payload),
     onSuccess: (data) => {
       if (data?.id) {
         navigate(`/project/${project.id}/landing_page/${data.id}`)
@@ -33,42 +33,38 @@ const TestLandingPages = observer(({ project }: { project: Project, onSave: (pay
   return (
     <>
       <div>
-        <div className="text-lg configuration-title mb-4">
-          Choose a landing page template
-        </div>
-
         <div className="grid grid-cols-3 gap-4">
-          { LandingPageTemplates.map((template) => {
+          {LandingPageTemplates.map((template) => {
             return (
-              <div key={ template.name } className="flex flex-col">
+              <div key={template.name} className="flex flex-col">
                 <img src={`/src/assets/landing_page_templates/${template.name}.jpg`} />
-                <div>{ template.description }</div>
-                <button 
+                <div>{template.description}</div>
+                <button
                   className="btn mt-5 btn-info normal-case text-white"
-                  onClick={() => createLandingPage.mutate({project, templateName: template.name})}
+                  onClick={() => createLandingPage.mutate({ project, templateName: template.name })}
                   disabled={createLandingPage.isLoading}
                 >Customize Template</button>
               </div>
             )
-          }) }
+          })}
         </div>
-        { createLandingPage.isError && <ErrorMessage message={(createLandingPage.error as Error).message} />}
+        {createLandingPage.isError && <ErrorMessage message={(createLandingPage.error as Error).message} />}
 
         <div className="text-lg configuration-title mb-4 mt-4">
           Landing Pages
         </div>
-        { isLoadingLandingPages && <div>Loading...</div> }
-        <div>Landing Pages Count : { landingPages?.length }</div>
+        {isLoadingLandingPages && <div>Loading...</div>}
+        <div>Landing Pages Count : {landingPages?.length}</div>
         <div className="grid grid-cols-3 gap-4">
-          { landingPages && landingPages.map((landingPage) => {
+          {landingPages && landingPages.map((landingPage) => {
             return (
-              <div key={ landingPage.id } className="flex flex-col">
+              <div key={landingPage.id} className="flex flex-col">
                 <Link to={`/project/${project.id}/landing_page/${landingPage.id}`}>
-                  { landingPage.id }
+                  {landingPage.id}
                 </Link>
               </div>
             )
-          }) }
+          })}
         </div>
 
       </div>

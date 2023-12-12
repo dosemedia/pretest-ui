@@ -83,9 +83,6 @@ const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (pay
   }
   return (
     <>
-      <div className="text-lg configuration-title mb-4">
-        Build your test matrix
-      </div>
       {themes && themes[0].angles[0].facebook_creatives?.length === 0 ? <div className="alert alert-warning"><span>You must <span className="link" onClick={() => setSearchParams({ step: (parseInt(searchParams.get('step')!) - 1).toString() })}>generate</span> creatives before moving on to this step</span></div> :
         <div className="flex flex-wrap gap-y-8 justify-between">
           <div className="w-full md:w-5/12">

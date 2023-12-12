@@ -55,10 +55,6 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
   return (
     <>
       <div>
-        <div className="text-lg configuration-title mb-4">
-          Review your test
-        </div>
-
         {/* Name Approval */}
         <label className="label mb-1">
           <span className="text-sm opacity-60">Name of your test</span>

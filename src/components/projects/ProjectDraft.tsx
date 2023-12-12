@@ -18,6 +18,7 @@ import ProjectFacebookCreativeTemplateDetail from '../../pages/projects/ProjectF
 import TestMatrixEditor from './test_components/creative/TestMatrixEditor'
 import TestMatrix from "./test_components/creative/TestMatrix";
 import UserReview from "./test_components/review/UserReview";
+import ProjectStepContainer from "./ProjectStepContainer";
 
 const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpdate: () => void }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,7 +42,14 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const onSave = _.debounce((payload: object) => {
     projectMutation.mutate(payload)
   }, 1000)
-  const configurationMenu = [{
+  interface ProjectDraftMenu {
+    label: string,
+    value: string,
+    icon: string,
+    step?: number,
+    children: { label: string, steps: number[], isComplete: boolean, value: string, icon: string, goToStep?: () => number }[]
+  }
+  const configurationMenu: ProjectDraftMenu[] = [{
     label: 'Configuration',
     value: 'configuration',
     icon: 'mdi mdi-cog',
@@ -193,18 +201,18 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           </ul>
         </div>
         <div className="flex-initial w-full md:w-8/12">
-          {step === 1 && <TestObjective project={project} onSave={onSave} />}
-          {step === 2 && <TestBranding project={project} onSave={onSave} />}
-          {step === 3 && <TestPlatform project={project} onSave={onSave} />}
-          {step === 4 && <TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} />}
-          {step === 5 && <TestRuntime project={project} onSave={onSave} />}
-          {step === 6 && <TestCreatives project={project} onSave={onSave} />}
-          {step === 7 && projectFacebookCreativeTemplateId && <ProjectFacebookCreativeTemplateDetail projectFacebookCreativeTemplateId={projectFacebookCreativeTemplateId} />}
-          {step === 8 && <TestThemes project={project} onSave={onSave} />}
-          {step === 9 && <TestMatrix project={project} onSave={onSave} />}
-          {step === 10 && <TestMatrixEditor project={project} onSave={onSave} />}
-          {step === 11 && <TestLandingPages project={project} onSave={onSave} />}
-          {step === 12 && <UserReview project={project} onSave={onSave} />}
+          {step === 1 && <ProjectStepContainer title="What type of test are you creating"><TestObjective project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 2 && <ProjectStepContainer title="Are you looking for an unbranded or branded test?"><TestBranding project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 3 && <ProjectStepContainer title="Where would you like to test?"><TestPlatform project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 4 && <ProjectStepContainer title="Create your own audience"><TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} /></ProjectStepContainer>}
+          {step === 5 && <ProjectStepContainer title="Set your test duration"><TestRuntime project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 6 && <ProjectStepContainer title="Choose an ad template"><TestCreatives project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 7 && projectFacebookCreativeTemplateId && <ProjectStepContainer title="Edit/Remove your template below"><ProjectFacebookCreativeTemplateDetail projectFacebookCreativeTemplateId={projectFacebookCreativeTemplateId} /></ProjectStepContainer>}
+          {step === 8 && <ProjectStepContainer title="Answer your big questions"><TestThemes project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 9 && <ProjectStepContainer title=""><TestMatrix project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 10 && <ProjectStepContainer title="Build your test matrix"><TestMatrixEditor project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 11 && <ProjectStepContainer title="Choose a landing page template"><TestLandingPages project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 12 && <ProjectStepContainer title="Review your test"><UserReview project={project} onSave={onSave} /></ProjectStepContainer>}
           <div className="mt-5 flex gap-4">
             {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setSearchParams({ step: (step - 1).toString() })}>
               <span className="mdi mdi-chevron-left text-base" /> Go Back

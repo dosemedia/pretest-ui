@@ -51,9 +51,6 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
   return (
     <>
       <div>
-        <div className="text-lg mb-4 configuration-title">
-          Where would you like to test?
-        </div>
         <div className="flex flex-wrap gap-y-10 gap-x-10">
           {items.map((item) => selectionCard(item))}
         </div>
