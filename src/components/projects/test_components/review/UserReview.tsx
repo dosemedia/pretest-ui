@@ -35,17 +35,20 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
 
   const updateThemeMutation = useMutation({
     mutationKey: ['UpdateThemeMutation'],
-    mutationFn: ({ id, approved }: { id: string, approved: boolean }) => projectThemesStore.updateTheme({ id, payload: { approved } as ProjectTheme })
+    mutationFn: ({ id, approved }: { id: string, approved: boolean }) => projectThemesStore.updateTheme({ id, payload: { approved } as ProjectTheme }),
+    onSuccess: () => onSave({})
   })
 
   const updateLandingPageMutation = useMutation({
     mutationKey: ['UpdateLandingPageMutation'],
-    mutationFn: ({ id, approved }: { id: string, approved: boolean }) => landingPagesStore.updateLandingPage(id, { approved } as LandingPage)
+    mutationFn: ({ id, approved }: { id: string, approved: boolean }) => landingPagesStore.updateLandingPage(id, { approved } as LandingPage),
+    onSuccess: () => onSave({})
   })
 
   const updateFacebookAudiencesApprovalMutation = useMutation({
     mutationKey: ['UpdateFacebookAudiencesApprovalMutation'],
-    mutationFn: ({ id, approved }: { id: string, approved: boolean }) => facebookAudiencesStore.updateFacebookAudiencesByID({ id, payload: { approved } as FacebookAudience })
+    mutationFn: ({ id, approved }: { id: string, approved: boolean }) => facebookAudiencesStore.updateFacebookAudiencesByID({ id, payload: { approved } as FacebookAudience }),
+    onSuccess: () => onSave({})
   })
 
   useEffect(() => {

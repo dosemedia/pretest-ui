@@ -19,13 +19,18 @@ import TestMatrixEditor from './test_components/creative/TestMatrixEditor'
 import TestMatrix from "./test_components/creative/TestMatrix";
 import UserReview from "./test_components/review/UserReview";
 import ProjectStepContainer from "./ProjectStepContainer";
-import React from "react";
+
+export interface NextButtonConfig {
+  name: string,
+  onNext: () => void
+}
 
 export interface ProjectDraftMenu {
   label: string,
   value: string,
   icon: string,
   steps?: number[],
+  overrideNext?: NextButtonConfig,
   goToStep?: () => number,
   isComplete?: boolean,
   children?: ProjectDraftMenu[]
@@ -44,9 +49,12 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const [currentStepItem, setCurrentStepItem] = useState<ProjectDraftMenu | null | undefined>()
   const projectMutation = useMutation({
     mutationFn: (payload: object) => projectStore.updateProject({ id: project.id, payload: payload as Project }),
-    onSuccess: () => {
-      setUpdatedAt(Date.now());
-      onUpdate();
+    onSuccess: (data) => {
+      if (data) {
+        setUpdatedAt(Date.now());
+        onUpdate();
+        findCurrentStepItem(configurationMenu)
+      }
     }
   })
   const onSave = _.debounce((payload: object) => {
@@ -128,17 +136,33 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     value: 'review',
     icon: 'mdi mdi-eye',
     steps: [12],
-    children: [
-    ]
+    children: [],
+    isComplete: isReviewComplete(),
+    overrideNext: {
+      name: 'Submit for review',
+      onNext: () => console.log('hi')
+    }
   },
   {
     label: 'Publish',
     value: 'publish',
     icon: 'mdi mdi-send-outline',
-    steps: [13],
-    children: [
-    ]
+    children: [],
+    steps: [13]
   }]
+
+  function isReviewComplete () {
+    if (!project.name_approved || !project.platform_approved || !project.brandness_approved || !project.project_type_approved || !project.start_stop_time_approved || !project.objective_approved) {
+      return false
+    }
+    if (_.find(project.themes, (theme) => !theme.approved)) {
+      return false
+    }
+    if (_.find(project.landing_pages, (page) => !page.approved)) {
+      return false
+    }
+    return true
+  }
   function goToAdCopyStep() {
     if (project.themes && project?.themes.length > 2) {
       if (project.themes[0].angles[0]?.facebook_creatives[0]) {
@@ -148,13 +172,13 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     }
     return 8
   }
-  function findCurrentStepItem() {
-    for (const item of configurationMenu) {
-      for (const child of item.children!) {
-        if (child.steps?.includes(step)) {
-          setCurrentStepItem(child)
-          break
-        }
+  function findCurrentStepItem(items: ProjectDraftMenu[]) {
+    for (const item of items) {
+      if (item.steps?.includes(step)) {
+        setCurrentStepItem({ ...item })
+        return
+      } else if (item.children) {
+        findCurrentStepItem(item.children)
       }
     }
   }
@@ -166,6 +190,7 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     } if (projectFacebookCreativeTemplateIdParam) {
       setProjectFacebookCreativeTemplateId(projectFacebookCreativeTemplateIdParam)
     }
+    findCurrentStepItem(configurationMenu)
     onSave({}) // dummy project update
   }, [location])
   useEffect(() => {
@@ -173,11 +198,8 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
       setAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete(project.facebook_audiences[0]))
     }
     setAdTemplateComplete(project.project_facebook_creative_templates?.length ? true : false)
-    findCurrentStepItem()
+    findCurrentStepItem(configurationMenu)
   }, [project])
-  useEffect(() => {
-    findCurrentStepItem()
-  }, [audienceComplete, adTemplateComplete])
   return (
     <>
       <div className="flex flex-wrap justify-between gap-y-12 gap-x-4">
@@ -204,21 +226,19 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
           </ul>
         </div>
         <div className="flex-initial w-full md:w-8/12">
-          {currentStepItem && <div>
-            {step === 1 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="What type of test are you creating"><TestObjective project={project} onSave={onSave} /></ProjectStepContainer>}
-            {step === 2 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Are you looking for an unbranded or branded test?"><TestBranding project={project} onSave={onSave} /></ProjectStepContainer>}
-            {step === 3 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Where would you like to test?"><TestPlatform project={project} onSave={onSave} /></ProjectStepContainer>}
-            {step === 4 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Create your own audience"><TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} /></ProjectStepContainer>}
-            {step === 5 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Set your test duration"><TestRuntime project={project} onSave={onSave} /></ProjectStepContainer>}
-            {step === 6 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Choose an ad template"><TestCreatives project={project} onSave={onSave} /></ProjectStepContainer>}
-            {step === 7 && projectFacebookCreativeTemplateId && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Edit/Remove your template below"><ProjectFacebookCreativeTemplateDetail projectFacebookCreativeTemplateId={projectFacebookCreativeTemplateId} /></ProjectStepContainer>}
-            {step === 8 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Answer your big questions"><TestThemes project={project} onSave={onSave} /></ProjectStepContainer>}
-            {step === 9 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title=""><TestMatrix project={project} onSave={onSave} /></ProjectStepContainer>}
-            {step === 10 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Build your test matrix"><TestMatrixEditor project={project} onSave={onSave} /></ProjectStepContainer>}
-            {step === 11 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Choose a landing page template"><TestLandingPages project={project} onSave={onSave} /></ProjectStepContainer>}
-            {step === 12 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Review your test"><UserReview project={project} onSave={onSave} /></ProjectStepContainer>}
-          </div>
-          }
+          {step === 1 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="What type of test are you creating"><TestObjective project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 2 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Are you looking for an unbranded or branded test?"><TestBranding project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 3 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Where would you like to test?"><TestPlatform project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 4 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Create your own audience"><TestAudience project={project} onSave={onSave} onAudienceComplete={(complete: boolean) => setAudienceComplete(complete)} /></ProjectStepContainer>}
+          {step === 5 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Set your test duration"><TestRuntime project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 6 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Choose an ad template"><TestCreatives project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 7 && projectFacebookCreativeTemplateId && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Edit/Remove your template below"><ProjectFacebookCreativeTemplateDetail projectFacebookCreativeTemplateId={projectFacebookCreativeTemplateId} /></ProjectStepContainer>}
+          {step === 8 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Answer your big questions"><TestThemes project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 9 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title=""><TestMatrix project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 10 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Build your test matrix"><TestMatrixEditor project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 11 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Choose a landing page template"><TestLandingPages project={project} onSave={onSave} /></ProjectStepContainer>}
+          {step === 12 && <ProjectStepContainer currentStepItem={currentStepItem} currentStep={step} title="Review your test"><UserReview project={project} onSave={onSave} /></ProjectStepContainer>}
+
         </div>
       </div>
     </>

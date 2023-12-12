@@ -21,7 +21,7 @@ const ProjectStepContainer: React.FC<{ children: ReactElement, title: string, cu
             }
             {currentStep < 13 && currentStep != 6 &&
               <button className="btn action-button text-base" onClick={() => setSearchParams({ step: (currentStep + 1).toString() })} disabled={!currentStepItem?.isComplete}>
-                Next <span className="mdi mdi-chevron-right text-base" />
+                {currentStepItem?.overrideNext?.name || 'Next' } <span className="mdi mdi-chevron-right text-base" />
               </button>
             }
           </div>

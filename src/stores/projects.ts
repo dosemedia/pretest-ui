@@ -109,6 +109,7 @@ export class Projects {
     if (result.error) {
       throw result.error
     }
+    console.log(result)
     return result.data?.update_projects_by_pk as Project
   }
   async fetchProject({ projectId }: { projectId: string }): Promise<Project | undefined> {
