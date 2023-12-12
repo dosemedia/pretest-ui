@@ -234,7 +234,6 @@ export class Projects {
     if (result.error) {
       throw result.error
     }
-    console.log(result)
     return true
   }
 }

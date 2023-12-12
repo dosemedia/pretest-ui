@@ -30,7 +30,7 @@ export interface ProjectDraftMenu {
   value: string,
   icon: string,
   steps?: number[],
-  overrideNext?: NextButtonConfig,
+  overrideNext?: NextButtonConfig | null,
   goToStep?: () => number,
   isComplete?: boolean,
   children?: ProjectDraftMenu[]
@@ -47,6 +47,9 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
   const [projectFacebookCreativeTemplateId, setProjectFacebookCreativeTemplateId] = useState('')
   const [step, setStep] = useState(parseInt(searchParams.get('step') || '1'))
   const [currentStepItem, setCurrentStepItem] = useState<ProjectDraftMenu | null | undefined>()
+  const onSave = _.debounce((payload: object) => {
+    projectMutation.mutate(payload)
+  }, 1000)
   const projectMutation = useMutation({
     mutationFn: (payload: object) => projectStore.updateProject({ id: project.id, payload: payload as Project }),
     onSuccess: (data) => {
@@ -57,9 +60,11 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
       }
     }
   })
-  const onSave = _.debounce((payload: object) => {
-    projectMutation.mutate(payload)
-  }, 1000)
+  const sendReviewCompleteMessageMutation = useMutation({
+    mutationKey: ['sendReviewCompleteMessageMutation'],
+    mutationFn: () => projectStore.sendReviewCompleteSlackMessage({ projectId: project.id, returnUrl: window.location.href }),
+    onSuccess: () => onSave({})
+  })
   const configurationMenu: ProjectDraftMenu[] = [{
     label: 'Configuration',
     value: 'configuration',
@@ -138,10 +143,10 @@ const ProjectDraft = observer(({ project, onUpdate }: { project: Project, onUpda
     steps: [12],
     children: [],
     isComplete: isReviewComplete(),
-    overrideNext: {
+    overrideNext: project.status === 'review' ? null : {
       name: 'Submit for review',
-      onNext: () => projectStore.sendReviewCompleteSlackMessage({ projectId: project.id, returnUrl: window.location.href })
-    }
+      onNext: async () => sendReviewCompleteMessageMutation.mutateAsync()
+    } as NextButtonConfig
   },
   {
     label: 'Publish',
