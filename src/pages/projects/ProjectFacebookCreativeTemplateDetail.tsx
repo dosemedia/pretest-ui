@@ -9,10 +9,12 @@ import CreativeTemplates from "../../components/creative_templates/CreativeTempl
 import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../gql/graphql";
 import ErrorMessage from "../../components/lib/Error";
 import CreativeTemplateRender from "../../components/renders/CreativeTemplateRender";
+import { ProjectStepChildProps } from "../../components/projects/ProjectStepContainer";
 
-const projectFacebookCreativeTemplateDetail = observer(({ projectFacebookCreativeTemplateId }: { projectFacebookCreativeTemplateId: string }) => {
+const projectFacebookCreativeTemplateDetail: React.FC<ProjectStepChildProps> = observer(() => {
   const [formData, setFormData] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams()
+  const projectFacebookCreativeTemplateId = searchParams.get('project_facebook_creative_template_id')!
   const projectFacebookCreativeTemplateStore = useContext(ProjectFacebookCreativeTemplatesContext)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const forms: { [key: string]: React.FC<{ data: any, onChange: (newData: any) => void }> } = {};

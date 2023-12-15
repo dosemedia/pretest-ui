@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../../gql/graphql";
 import { useEffect, useState } from "react";
-const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
-  const [branding, setBranding] = useState(project.branding || '')
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
+const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
+  const [branding, setBranding] = useState(props.project?.branding || '')
   interface Branding {
     label: string,
     value: string,
@@ -25,7 +25,9 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
   ]
 
   useEffect(() => {
-    onSave({ branding })
+    if (props.onSave) {
+      props.onSave({ branding })
+    }
   }, [branding])
   function selectionCard (item: Branding) {
     return (

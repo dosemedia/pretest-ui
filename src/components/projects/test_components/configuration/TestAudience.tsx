@@ -8,19 +8,19 @@ import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql"
 import TestAudienceGender from "../test_audience_components/TestAudienceGender";
 import _ from 'lodash'
 import TestAudienceAge from "../test_audience_components/TestAudienceAge";
-import { Projects as Project } from "../../../../gql/graphql";
 import ErrorMessage from "../../../lib/Error";
 import TestAudiencePlatforms from "../test_audience_components/TestAudiencePlatforms";
 import TestAudiencePositions from "../test_audience_components/TestAudiencePositions";
 import TestAudienceInterests from "../test_audience_components/TestAudienceInterests";
 import { ToastType } from "../../../../stores/toast";
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
 
-const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSave: (payload: object) => void, onAudienceComplete: (complete: boolean) => void, project: Project, }) => {
+const TestAudience:React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
   const facebookStore = useContext(FacebookContext)
   const toastsStore = useContext(ToastsContext)
   const reachModalId = 'reach_modal'
-  const [facebookAudienceData, setFacebookAudienceData] = useState(project.facebook_audiences[0])
+  const [facebookAudienceData, setFacebookAudienceData] = useState(props.project?.facebook_audiences[0])
   const [isAudienceComplete, setIsAudienceComplete] = useState(false)
   const [audienceName, setAudienceName] = useState('')
   const getReachEstimateMutation = useMutation({
@@ -33,7 +33,7 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   })
   const createProjectFacebookAudienceMutation = useMutation({
     mutationKey: ['createProjectFacebookAudienceMutation'],
-    mutationFn: () => projectFacebookAudienceStore.createFacebookAudience({ project, name: 'My Custom Audience' }),
+    mutationFn: () => projectFacebookAudienceStore.createFacebookAudience({ project: props.project!, name: 'My Custom Audience' }),
     onSuccess: (audience: FacebookAudience | null) => { if (audience) setFacebookAudienceData(audience) },
     onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: ToastType.ERROR }) },
   })
@@ -48,12 +48,14 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
     if (facebookAudienceData && isUpdated) {
       await projectFacebookAudienceMutation.mutateAsync({ payload, audience: facebookAudienceData })
       setIsAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete({ ...facebookAudienceData, ...payload }))
-      onSave({ name: project.name })
+      if (props.onSave) {
+        props.onSave({})
+      }
     }
   }, 300), [facebookAudienceData])
 
   useEffect(() => {
-    onAudienceComplete(isAudienceComplete)
+    // onAudienceComplete(isAudienceComplete)
   }, [isAudienceComplete])
 
   useEffect(() => {
@@ -67,7 +69,7 @@ const TestAudience = observer(({ onSave, onAudienceComplete, project, }: { onSav
   }, [facebookAudienceData])
   return (
     <>
-      {!project.platform ? <ErrorMessage message="You must complete the Platform step before moving to audience" /> :
+      {!props.project?.platform ? <ErrorMessage message="You must complete the Platform step before moving to audience" /> :
         <div>
           <div className="flex flex-col gap-y-6 mt-4">
             <div>

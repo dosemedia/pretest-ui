@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Facebook_Creatives_Updates, Projects as Project } from "../../../../gql/graphql";
+import { Facebook_Creatives_Updates } from "../../../../gql/graphql";
 import { Projects_Themes as ProjectTheme } from "../../../../gql/graphql";
 import { Themes_Angles as ThemeAngle } from "../../../../gql/graphql";
 import '../../../../css/test_matrix_editor.css';
@@ -10,8 +10,9 @@ import { useSearchParams } from "react-router-dom";
 import _ from 'lodash'
 import { ProjectFacebookCreativesContext } from "../../../../stores/stores";
 import { useMutation } from "@tanstack/react-query";
-const TestMatrixEditor = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
-  const themes: ProjectTheme[] = project.themes
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
+const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) =>{
+  const themes: ProjectTheme[] = props.project!.themes
   const facebookCreativesStore = useContext(ProjectFacebookCreativesContext)
   const [searchParams, setSearchParams] = useSearchParams()
   const [selectedAngle, setSelectedAngle] = useState<ThemeAngle | null>(themes[0]?.angles[0])

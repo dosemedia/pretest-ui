@@ -73,9 +73,9 @@ const ProjectsTable = observer(() => {
             <div className="card-title text-sm" style={{ opacity: 0.6, color: "#282828" }}>
               {teams.activeTeam?.name} --- Tests Overview
             </div>
-            {auth.user.display_name &&
+            {auth.user?.display_name &&
               <div className="text-lg font-bold">
-                Welcome, {auth.user.display_name}
+                Welcome, {auth.user?.display_name}
               </div>
             }
             <div className="card-body">

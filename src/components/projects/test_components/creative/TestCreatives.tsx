@@ -10,8 +10,8 @@ import _ from 'lodash'
 import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../../../gql/graphql";
 import CreativeTemplates from "../../../creative_templates/CreativeTemplates";
 import CreativeTemplate from "../../../creative_templates/CreativeTemplate";
-// TODO - Use onSave?
-const TestCreatives = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
+const TestCreatives: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
 
   const projectFacebookCreativesStore = useContext(ProjectFacebookCreativeTemplatesContext)
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,7 +22,7 @@ const TestCreatives = observer(({ project }: { project: Project, onSave: (payloa
 
   const { data: projectFacebookCreativeTemplates, refetch } = useQuery({
     queryKey: ['getProjectFacebookCreativeTemplates'],
-    queryFn: () => projectFacebookCreativesStore.fetchProjectFacebookCreativeTemplatesByProject({ project })
+    queryFn: () => projectFacebookCreativesStore.fetchProjectFacebookCreativeTemplatesByProject({ project: props.project! })
   })
 
   function isUsingTemplate(name: string) {
@@ -34,7 +34,7 @@ const TestCreatives = observer(({ project }: { project: Project, onSave: (payloa
       const foundProjectFacebookCreativeTemplate = _.find(projectFacebookCreativeTemplates, (item: ProjectFacebookCreativeTemplate) => item.template_name === creativeTemplate.name)
       setSearchParams({ step: '7', 'project_facebook_creative_template_id': foundProjectFacebookCreativeTemplate?.id });
     } else {
-      createProjectFacebookCreativeTemplate.mutate({ project, creativeTemplate })
+      createProjectFacebookCreativeTemplate.mutate({ project: props.project!, creativeTemplate })
     }
   }
 

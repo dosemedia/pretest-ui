@@ -7,17 +7,18 @@ import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "../../../lib/Error";
 
 import LandingPageTemplates from '../../../landing_page_templates/LandingPageTemplates';
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
 
-const TestLandingPages = observer(({ project }: { project: Project, onSave: (payload: object) => void }) => {
+const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
 
   const landingPagesStore = useContext(ProjectLandingPagesContext)
   const navigate = useNavigate()
 
   const { data: landingPages, isLoading: isLoadingLandingPages } = useQuery({
-    queryKey: ['getLandingPages', project.id],
+    queryKey: ['getLandingPages', props.project?.id],
     retry: false,
     queryFn: () => {
-      return landingPagesStore.fetchLandingPagesByProject({ project })
+      return landingPagesStore.fetchLandingPagesByProject({ project: props.project! })
     },
   })
 
@@ -25,7 +26,7 @@ const TestLandingPages = observer(({ project }: { project: Project, onSave: (pay
     mutationFn: (payload: { project: Project, templateName: string }) => landingPagesStore.createLandingPageFromTemplate(payload),
     onSuccess: (data) => {
       if (data?.id) {
-        navigate(`/project/${project.id}/landing_page/${data.id}`)
+        navigate(`/project/${props.project?.id}/landing_page/${data.id}`)
       }
     }
   })
@@ -41,7 +42,7 @@ const TestLandingPages = observer(({ project }: { project: Project, onSave: (pay
                 <div>{template.description}</div>
                 <button
                   className="btn mt-5 btn-info normal-case text-white"
-                  onClick={() => createLandingPage.mutate({ project, templateName: template.name })}
+                  onClick={() => createLandingPage.mutate({ project: props.project!, templateName: template.name })}
                   disabled={createLandingPage.isLoading}
                 >Customize Template</button>
               </div>
@@ -59,7 +60,7 @@ const TestLandingPages = observer(({ project }: { project: Project, onSave: (pay
           {landingPages && landingPages.map((landingPage) => {
             return (
               <div key={landingPage.id} className="flex flex-col">
-                <Link to={`/project/${project.id}/landing_page/${landingPage.id}`}>
+                <Link to={`/project/${props.project?.id}/landing_page/${landingPage.id}`}>
                   {landingPage.id}
                 </Link>
               </div>

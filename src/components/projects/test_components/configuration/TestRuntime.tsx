@@ -2,10 +2,11 @@ import { observer } from "mobx-react-lite";
 import { Projects as Project } from "../../../../gql/graphql";
 import { ChangeEvent, useEffect, useState } from "react";
 import { DateTime } from "luxon"
-const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
+const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const dateFormat = "yyyy-M-dd'T'T"
-  const [startTime, setStartTime] = useState(DateTime.fromISO(project.start_time || DateTime.now().toISO()).toLocal())
-  const [stopTime, setStopTime] = useState(DateTime.fromISO(project.stop_time || DateTime.now().toISO()).toLocal())
+  const [startTime, setStartTime] = useState(DateTime.fromISO(props.project?.start_time || DateTime.now().toISO()).toLocal())
+  const [stopTime, setStopTime] = useState(DateTime.fromISO(props.project?.stop_time || DateTime.now().toISO()).toLocal())
   interface Runtime {
     label: string,
     value: DateTime
@@ -32,7 +33,9 @@ const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (
 
   useEffect(() => {
     const diff = Math.abs(startTime.diff(stopTime, 'days').days)
-    onSave({ stop_time: diff <= 5 && diff >= 3 ? stopTime.toISO() : null, start_time: startTime.toISO() })
+    if (props.onSave) {
+      props.onSave({ stop_time: diff <= 5 && diff >= 3 ? stopTime.toISO() : null, start_time: startTime.toISO() })
+    }
   }, [startTime, stopTime])
   function selectionCard(item: Runtime) {
     return (

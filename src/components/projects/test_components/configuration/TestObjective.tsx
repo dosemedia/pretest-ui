@@ -1,17 +1,19 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../../gql/graphql";
 import { useEffect, useState } from "react";
 import { TestTypeMenu, testTypeMenu } from "../../../../stores/projects";
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
 
-const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
-  const [name, setName] = useState(project.name || '')
-  const [objective, setObjective] = useState(project.objective || '')
-  const [projectType, setProjectType] = useState(project.project_type || '')
+const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
+  const [name, setName] = useState(props.project?.name || '')
+  const [objective, setObjective] = useState(props.project?.objective || '')
+  const [projectType, setProjectType] = useState(props.project?.project_type || '')
   useEffect(() => {
     if (projectType === 'marketing_communication') {
       setProjectType('marketing_communication_language')
     }
-    onSave({ name, objective, project_type: projectType })
+    if (props.onSave) {
+      props.onSave({ name, objective, project_type: projectType })
+    }
   }, [name, objective, projectType])
 
   function selectionCard(item: TestTypeMenu) {

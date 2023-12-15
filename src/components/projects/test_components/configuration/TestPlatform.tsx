@@ -1,8 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { Projects as Project } from "../../../../gql/graphql";
 import { useEffect, useState } from "react";
-const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
-  const [platform, setPlatform] = useState(project.platform || '')
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
+const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
+  const [platform, setPlatform] = useState(props.project?.platform || '')
   interface Platform {
     label: string,
     value: string,
@@ -29,7 +30,9 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
   ]
 
   useEffect(() => {
-    onSave({ platform })
+    if (props.onSave) {
+      props.onSave({ platform })
+    }
   }, [platform])
   function selectionCard (item: Platform) {
     return (
