@@ -46,9 +46,12 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
   }, 1000)
   return (
     <>
-      {project && React.Children.map(children as ReactElement, (child, index) => ((step - 1 === index) || child.props.alwaysShow) && <div><div className="text-lg configuration-title mb-4">
-        {child.props.title}
-      </div>{React.cloneElement(child, { title: child.props.title, ...child.props, project, onSave, step } as React.FC<PropsWithChildren>)}</div>)}
+      {project && React.Children.map(children as ReactElement, (child, index) => ((step - 1 === index) || child.props.alwaysShow) &&
+        <div>
+          <div className="text-lg configuration-title mb-4">
+            {child.props.title}
+          </div>
+          {React.cloneElement(child, { title: child.props.title, ...child.props, project, onSave, step } as React.FC<PropsWithChildren>)}</div>)}
     </>
   )
   // const setSearchParams = useSearchParams()[1]

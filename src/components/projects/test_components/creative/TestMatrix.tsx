@@ -10,6 +10,7 @@ import { SpinningLoading } from "../../../lib/SpinningLoading";
 import { ToastType } from "../../../../stores/toast";
 import _ from 'lodash'
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
+import { ProjectStatus } from "../../../../stores/projects";
 const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const themesStore = useContext(ThemesContext)
   const anglesStore = useContext(ThemesAnglesContext)
@@ -113,8 +114,8 @@ const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
         <div className="card" style={{ backgroundColor: 'white', padding: 0, width: 'auto' }}>
           <div className="card-body">
             <div className="mb-7">
-              {facebookCreatives && facebookCreatives.length === 0 && <button className="btn btn-info border-none text-white normal-case w-[200px]" onClick={() => generateCreatives()}>Generate Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
-              {facebookCreatives && facebookCreatives.length !== 0 && <button className="btn btn-error border-none text-white normal-case w-[200px]" onClick={() => deleteProjectFacebookCreativesMutation.mutate()}>Remove Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
+              {facebookCreatives && facebookCreatives.length === 0 && <button disabled={props.project?.status === ProjectStatus.REVIEW} className="btn btn-info border-none text-white normal-case w-[200px]" onClick={() => generateCreatives()}>Generate Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
+              {facebookCreatives && facebookCreatives.length !== 0 && <button disabled={props.project?.status === ProjectStatus.REVIEW} className="btn btn-error border-none text-white normal-case w-[200px]" onClick={() => deleteProjectFacebookCreativesMutation.mutate()}>Remove Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
             </div>
             <div className="flex overflow-x-auto">
               {

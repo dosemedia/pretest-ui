@@ -43,3 +43,8 @@
 .card-selected {
   background-color: #F8D8D6 !important;
 }
+.card.disabled {
+  opacity: 0.4;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}

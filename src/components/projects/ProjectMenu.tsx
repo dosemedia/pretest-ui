@@ -6,6 +6,7 @@ import { ProjectFacebookAudienceContext, ProjectsContext } from "../../stores/st
 import _ from "lodash";
 import { ProjectDraftMenu, NextButtonConfig } from "./ProjectDraft";
 import { ProjectStepChildProps } from "./ProjectStepContainer";
+import { ProjectStatus } from "../../stores/projects";
 
 const ProjectMenu: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const projectStore = useContext(ProjectsContext)
@@ -131,6 +132,7 @@ const ProjectMenu: React.FC<ProjectStepChildProps> = observer((props: ProjectSte
   }
   return (
     <>
+      {props?.project?.status === ProjectStatus.REVIEW && <div className="badge block ml-6 mb-4 bg-info text-white border-none">Your project is in review.</div>}
       <div className="badge p-4 ml-6 badge-success text-white">
         last updated: {new Date(props.project?.updated_at).toLocaleString()}
       </div>

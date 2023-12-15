@@ -14,6 +14,7 @@ import TestAudiencePositions from "../test_audience_components/TestAudiencePosit
 import TestAudienceInterests from "../test_audience_components/TestAudienceInterests";
 import { ToastType } from "../../../../stores/toast";
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
+import { ProjectStatus } from "../../../../stores/projects";
 
 const TestAudience:React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
@@ -76,14 +77,14 @@ const TestAudience:React.FC<ProjectStepChildProps> = observer((props: ProjectSte
               <label className="label">
                 <span className="text-sm opacity-60">Name*</span>
               </label>
-              <input type="text" className="input w-10/12" placeholder="Name" value={audienceName} onChange={(e) => { setAudienceName(e.target.value); onUpdate({ name: e.target.value } as FacebookAudience, true) }} />
+              <input type="text" disabled={props.project?.status === ProjectStatus.REVIEW} className="input w-10/12" placeholder="Name" value={audienceName} onChange={(e) => { setAudienceName(e.target.value); onUpdate({ name: e.target.value } as FacebookAudience, true) }} />
             </div>
-            {facebookAudienceData && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {facebookAudienceData && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {facebookAudienceData && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {facebookAudienceData && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
-            {facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} />}
+            {facebookAudienceData && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
+            {facebookAudienceData && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
+            {facebookAudienceData && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
+            {facebookAudienceData && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
+            {facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
+            {facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
           </div>
           {isAudienceComplete && <div>
             <button className="btn mt-5 btn-info normal-case text-white" disabled={projectFacebookAudienceMutation.isLoading} onClick={() => getReachEstimateMutation.mutate()}>Click to get reach estimate<SpinningLoading isLoading={getReachEstimateMutation.isLoading} /></button>

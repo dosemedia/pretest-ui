@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
+import { ProjectStatus } from "../../../../stores/projects";
 const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const [branding, setBranding] = useState(props.project?.branding || '')
   interface Branding {
@@ -32,7 +33,7 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
   function selectionCard (item: Branding) {
     return (
       <div key={item.label} className="flex flex-col" style={{ width: 285 }}>
-        <div className={`card cursor-pointer ${branding === item.value && 'card-selected'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => setBranding(item.value)}>
+        <div className={`card cursor-pointer ${branding === item.value && 'card-selected'} ${props.project?.status === ProjectStatus.REVIEW && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => setBranding(item.value)}>
           <div className="card-body">
             <div className="flex flex-col items-center gap-2 text-center">
               <span className={item.icon} style={{ fontSize: 70 }} />

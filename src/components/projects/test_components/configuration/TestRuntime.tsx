@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../../gql/graphql";
 import { ChangeEvent, useEffect, useState } from "react";
 import { DateTime } from "luxon"
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
+import { ProjectStatus } from "../../../../stores/projects";
 const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const dateFormat = "yyyy-M-dd'T'T"
   const [startTime, setStartTime] = useState(DateTime.fromISO(props.project?.start_time || DateTime.now().toISO()).toLocal())
@@ -39,7 +39,7 @@ const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectSte
   }, [startTime, stopTime])
   function selectionCard(item: Runtime) {
     return (
-      <div key={item.label} className={`card cursor-pointer ${stopTime.day === item.value.day && 'card-selected'}`} style={{ backgroundColor: 'white', padding: '0px 0px', width: 174 }} onClick={() => setStopTime(item.value)}>
+      <div key={item.label} className={`card cursor-pointer ${stopTime.day === item.value.day && 'card-selected'} ${props.project?.status === ProjectStatus.REVIEW && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 0px', width: 174 }} onClick={() => setStopTime(item.value)}>
         <div className="card-body">
           <div className="flex flex-col items-center">
             <span className="text-[42px] font-black text-black">{item.label}<span className="text-base font-bold ml-1">days</span></span>
@@ -56,6 +56,7 @@ const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectSte
             <span className="text-sm opacity-60">Start Time</span>
           </label>
           <input
+            disabled={props.project?.status === ProjectStatus.REVIEW}
             type="datetime-local"
             id="meeting-time"
             className="rounded-lg p-3 mb-5"

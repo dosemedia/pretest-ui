@@ -11,6 +11,7 @@ import _ from 'lodash'
 import { ProjectFacebookCreativesContext } from "../../../../stores/stores";
 import { useMutation } from "@tanstack/react-query";
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
+import { ProjectStatus } from "../../../../stores/projects";
 const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) =>{
   const themes: ProjectTheme[] = props.project!.themes
   const facebookCreativesStore = useContext(ProjectFacebookCreativesContext)
@@ -97,26 +98,26 @@ const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: Proje
                 <label className="label">
                   <span className="text-sm opacity-60">Social copy</span>
                 </label>
-                <textarea className="textarea w-full" value={socialCopy} onChange={(e) => setSocialCopy(e.target.value)} />
+                <textarea disabled={props.project?.status === ProjectStatus.REVIEW} className="textarea w-full" value={socialCopy} onChange={(e) => setSocialCopy(e.target.value)} />
               </div>
               <div>
                 <label className="label">
                   <span className="text-sm opacity-60">CTA text</span>
                 </label>
-                <textarea className="textarea w-full" value={ctaText} onChange={(e) => setCtaText(e.target.value)} />
+                <textarea disabled={props.project?.status === ProjectStatus.REVIEW} className="textarea w-full" value={ctaText} onChange={(e) => setCtaText(e.target.value)} />
               </div>
               <div>
                 <label className="label">
                   <span className="text-sm opacity-60">Button CTA</span>
                 </label>
-                <select className="select w-full max-w-xs" value={ctaType} style={{ backgroundColor: 'white', border: '1px solid #E3E1D9' }} onChange={(e) => setCtaType(e.target.value)}>
+                <select disabled={props.project?.status === ProjectStatus.REVIEW} className="select w-full max-w-xs" value={ctaType} style={{ backgroundColor: 'white', border: '1px solid #E3E1D9' }} onChange={(e) => setCtaType(e.target.value)}>
                   {ctaOptions.map((item) => <option key={item}>{item}</option>)}
                 </select>
               </div>
             </div>
           </div>
           <div className="w-full md:w-5/12">
-            {selectedCreative ? <FacebookPreviewContainer template={selectedCreative} data={selectedCreative.data} socialCopy={socialCopy} ctaText={ctaText} ctaType={ctaType} /> : <div className="alert alert-info text-white"><span>Click on a creative in order to see a preview.</span></div>}
+            {selectedCreative ? <FacebookPreviewContainer disabled={props.project?.status === ProjectStatus.REVIEW} template={selectedCreative} data={selectedCreative.data} socialCopy={socialCopy} ctaText={ctaText} ctaType={ctaType} /> : <div className="alert alert-info text-white"><span>Click on a creative in order to see a preview.</span></div>}
           </div>
         </div>
       }

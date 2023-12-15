@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Facebook_Creatives as FacebookCreative } from "../../gql/graphql";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FacebookPreviewContainer = observer(({ data, template, socialCopy, ctaType, ctaText, editTemplate = true }: { data: any, template: FacebookCreative, socialCopy: string, ctaText: string, ctaType: string, editTemplate?: boolean }) => {
+const FacebookPreviewContainer = observer(({ data, template, socialCopy, ctaType, ctaText, editTemplate = true, disabled = false }: { data: any, template: FacebookCreative, socialCopy: string, ctaText: string, ctaType: string, editTemplate?: boolean, disabled: boolean }) => {
   const navigate = useNavigate()
   const { projectId } = useParams() as { projectId: string }
   return (
@@ -44,7 +44,7 @@ const FacebookPreviewContainer = observer(({ data, template, socialCopy, ctaType
         </div>
       </div>
       <img src="/src/assets/facebook_footer.png" className="w-full" />
-      {editTemplate && <button className="btn btn-info text-white normal-case border-none mt-2" onClick={() => navigate(`/project/${projectId}?step=7&project_facebook_creative_template_id=${template.id}`)}>
+      {editTemplate && <button disabled={disabled} className="btn btn-info text-white normal-case border-none mt-2" onClick={() => navigate(`/project/${projectId}?step=7&project_facebook_creative_template_id=${template.id}`)}>
         Edit Template
       </button>
       }

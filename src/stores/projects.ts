@@ -2,6 +2,12 @@ import { makeAutoObservable } from 'mobx'
 import { client } from '../graphql'
 import { graphql } from '../gql'
 import { Projects as Project, Projects_Set_Input } from "../gql/graphql";
+export enum ProjectStatus {
+  DRAFT = 'draft',
+  REVIEW = 'review',
+  ACTIVE = 'active',
+  COMPLETE = 'complete'
+}
 export interface TestTypeMenu {
   label: string,
   icon: string,
