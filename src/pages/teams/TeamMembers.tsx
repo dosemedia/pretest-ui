@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { Teams as Team, Teams_Users as TeamUser } from "../../gql/graphql";
 import ErrorMessage from "../../components/lib/Error";
 import InviteUser from "../../components/teams/InviteUser";
+import { ToastType } from "../../stores/toast";
 
 const TeamMembers = observer(() => {
   const { teamId } = useParams() as { teamId: string }
@@ -22,10 +23,10 @@ const TeamMembers = observer(() => {
     mutationFn: () => teamStore.leaveTeam(teamId),
     onSuccess: () => {
       (document.getElementById(element_id) as HTMLDialogElement).close()
-      toastsStore.addToast({ message: 'You have successfully left this team', type: 'success' })
+      toastsStore.addToast({ message: 'You have successfully left this team', type: ToastType.SUCCESS })
       navigate(`/teams`)
     },
-    onError: (error: Error) => toastsStore.addToast({ message: error.message, type: 'error' })
+    onError: (error: Error) => toastsStore.addToast({ message: error.message, type: ToastType.ERROR })
   })
 
   function tableRow (teamUser: TeamUser) {

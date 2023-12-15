@@ -19,9 +19,25 @@
   border-image: linear-gradient(351deg, #AB2160 -4.8%, #EF4136 94.68%) 1 100%;
 }
 
+.project-menu-item.disabled a {
+  pointer-events: none;
+  color: grey
+}
+
 .configuration-title {
   color: #030102;
   font-weight: 700;
+}
+.step-parent details summary:hover {
+  background: rgba(184, 173, 134, 0.17);
+  border-radius: 4;
+}
+.step-parent.active details summary {
+  background: rgba(184, 173, 134, 0.17);
+  border-radius: 0 4px 4px 0;
+}
+.step-parent.active details summary::after {
+  display: none;
 }
 
 .card-selected {

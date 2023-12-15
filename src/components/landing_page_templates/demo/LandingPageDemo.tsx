@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AnalyticsContext } from "../../../stores/stores"
 import LandingPageDemoHeader from './LandingPageDemoHeader';
+import {Helmet} from "react-helmet"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LandingPageDemoRender: React.FC<{ landingPageId: string, data: any }> = ({ landingPageId, data }) => {
@@ -20,6 +21,12 @@ const LandingPageDemoRender: React.FC<{ landingPageId: string, data: any }> = ({
 
   return (
     <div>
+      <Helmet>
+        {/* Don't modify page title in landing page editor, only on actual landing page: */}
+        { !location.pathname.includes('project') &&
+          <title>{ data.ctaTitle }</title>
+        }
+      </Helmet>
       { data && 
         <LandingPageDemoHeader ctaTitle={data.ctaTitle} ctaSubtitle={data.ctaSubtitle} ctaColor1={data.ctaColor1} ctaColor2={data.ctaColor2} ctaImageUrl={data.ctaImageUrl} onCtaClick={onCtaClick} />
       }

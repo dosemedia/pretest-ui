@@ -55,7 +55,7 @@ export class Themes {
     return Boolean(result.data?.delete_projects_themes_by_pk?.id)
   }
   
-  async createTheme({ name, projectId }: { name: string, projectId: string }): Promise<ProjectTheme> {
+  async createTheme({ name, projectId, numberOfAngles = 3 }: { name: string, projectId: string, numberOfAngles: number }): Promise<ProjectTheme> {
     const result = await client.mutation(graphql(`
     mutation createTheme($name: String!, $projectId: uuid!) {
       insert_projects_themes_one(object: {name: $name, project_id: $projectId}) {
@@ -68,7 +68,7 @@ export class Themes {
       throw result.error
     }
     const theme = result.data?.insert_projects_themes_one as ProjectTheme
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < numberOfAngles; i++) {
       try {
         const anglesName = angles[Math.round(Math.random() * 7)]
         themesAngles.createAngle({ name: anglesName, themeId: theme.id })

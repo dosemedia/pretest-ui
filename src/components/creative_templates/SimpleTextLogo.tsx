@@ -14,7 +14,9 @@ const SimpleTextLogoRender: React.FC<{ data: any }> = ({ data }) => {
         <div className="flex items-center gap-x-6">
           <img src={data.logoImage} style={{ borderRadius: '100%', width: 60 }} />
           <div>
-            <span className="font-bold">Elisabeth Parker<span className="mdi mdi-check-decagram text-blue-500 ml-2" /></span>
+            <div className="flex items-center">
+            <span className="font-bold text-md">Elisabeth Parker</span><span className="mdi mdi-check-decagram text-blue-500 ml-2" />
+            </div>
             <p className="text-gray-600 text-xxs">
               @elisabethparker
             </p>

@@ -8,6 +8,7 @@ import DeleteModal from "../lib/DeleteModal";
 import CreateProject from "./CreateProject";
 import { Link, useNavigate } from "react-router-dom";
 import ProjectStatus from "../lib/ProjectStatus";
+import { ToastType } from "../../stores/toast";
 
 const ProjectsTable = observer(() => {
   const projectStore = useContext(ProjectsContext)
@@ -31,11 +32,11 @@ const ProjectsTable = observer(() => {
     onSuccess: () => {
       refetch();
       (document.getElementById(deleteModalID) as HTMLDialogElement).close();
-      toastStore.addToast({ message: 'You have successfully deleted this project', type: 'success' })
+      toastStore.addToast({ message: 'You have successfully deleted this project', type: ToastType.SUCCESS })
     },
     mutationFn: () => projectStore.delete({ id: itemToDelete?.id }),
     onError: (error: Error) => {
-      toastStore.addToast({ message: error.message, type: 'error' })
+      toastStore.addToast({ message: error.message, type: ToastType.ERROR })
     }
   })
   function tableRow(project: Project) {

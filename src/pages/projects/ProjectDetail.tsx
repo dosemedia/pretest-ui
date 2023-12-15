@@ -23,7 +23,7 @@ const projectDetail = observer(() => {
       { error && <ErrorMessage message={error.message} />}
       { data &&
         <div>
-          {data.is_draft ? <ProjectDraft project={data} onUpdate={() => refetch()} /> : <div>// TODO Create project landing page</div> }
+          <ProjectDraft project={data} onUpdate={() => refetch()} />
         </div>
       }
     </div>

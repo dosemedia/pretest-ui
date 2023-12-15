@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useState, useContext } from 'react'
 import { TeamsContext, ToastsContext } from "../../stores/stores";
 import { useMutation } from "@tanstack/react-query";
+import { ToastType } from "../../stores/toast";
 const CreateTeam = observer(({ onCreate }: { onCreate: () => void}) => {
   const teamsStore = useContext(TeamsContext)
   const toastsStore = useContext(ToastsContext)
@@ -19,10 +20,10 @@ const CreateTeam = observer(({ onCreate }: { onCreate: () => void}) => {
     onSuccess: () => {
       (document.getElementById(element_id) as HTMLDialogElement).close()
       removeFields()
-      toastsStore.addToast({ message: 'Team successfully created', type: 'success' })
+      toastsStore.addToast({ message: 'Team successfully created', type: ToastType.SUCCESS })
       onCreate()
     },
-    onError: (error: Error) => { toastsStore.addToast({ message: error.message, type: 'error' }) }
+    onError: (error: Error) => { toastsStore.addToast({ message: error.message, type: ToastType.ERROR }) }
   })
   return (
     <>

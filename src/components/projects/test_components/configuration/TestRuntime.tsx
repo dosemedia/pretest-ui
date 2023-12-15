@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../gql/graphql";
+import { Projects as Project } from "../../../../gql/graphql";
 import { ChangeEvent, useEffect, useState } from "react";
 import { DateTime } from "luxon"
 const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
@@ -48,9 +48,6 @@ const TestRuntime = observer(({ project, onSave }: { project: Project, onSave: (
   return (
     <>
       <div>
-        <div className="text-lg configuration-title mb-4">
-          Set your test duration
-        </div>
         <div>
           <label className="label">
             <span className="text-sm opacity-60">Start Time</span>

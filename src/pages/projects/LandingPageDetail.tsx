@@ -44,7 +44,7 @@ const LandingPageDetail = observer(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mutationFn: async (data: any) => {
       console.log('~~ updateLandingPage')
-      await landingPagesStore.updateLandingPage(landingPage?.id, data)
+      await landingPagesStore.updateLandingPage(landingPage?.id, { data })
     },
     onSuccess: () => {
       setDataSaved(true)

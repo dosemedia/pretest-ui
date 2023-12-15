@@ -1,10 +1,10 @@
 import { observer } from "mobx-react-lite";
 import CreativeTemplateRender from "../renders/CreativeTemplateRender";
-import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../gql/graphql";
 import { useNavigate, useParams } from "react-router-dom";
+import { Facebook_Creatives as FacebookCreative } from "../../gql/graphql";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FacebookPreviewContainer = observer(({ data, template }: { data: any, template: ProjectFacebookCreativeTemplate }) => {
+const FacebookPreviewContainer = observer(({ data, template, socialCopy, ctaType, ctaText, editTemplate = true }: { data: any, template: FacebookCreative, socialCopy: string, ctaText: string, ctaType: string, editTemplate?: boolean }) => {
   const navigate = useNavigate()
   const { projectId } = useParams() as { projectId: string }
   return (
@@ -20,7 +20,7 @@ const FacebookPreviewContainer = observer(({ data, template }: { data: any, temp
           </div>
         </div>
         <div className="text-white text-xxs mt-2">
-          Lorem ipsum dolor sit amet consectetur. Velit donec volutpat morbi mattis commodo ac sit consectetur.
+          {socialCopy || 'Lorem ipsum dolor sit amet consectetur. Velit donec volutpat morbi mattis commodo ac sit consectetur.'}
         </div>
       </div>
       <div>
@@ -33,20 +33,21 @@ const FacebookPreviewContainer = observer(({ data, template }: { data: any, temp
               THEURLHERE.COM
             </p>
             <p className="font-bold text-xxs text-white">
-              CTA text to go here
+              {ctaText || 'CTA text to go here'}
             </p>
           </div>
           <div>
             <button className="btn btn-sm normal-case border-none text-white font-bold" style={{ background: '#4E4F50', borderRadius: 2 }}>
-              Learn more
+              {ctaType || 'Learn more'}
             </button>
           </div>
         </div>
       </div>
       <img src="/src/assets/facebook_footer.png" className="w-full" />
-      <button className="btn btn-info text-white normal-case border-none mt-2" onClick={() => navigate(`/project/${projectId}?step=7&project_facebook_creative_template_id=${template.id}`)}>
+      {editTemplate && <button className="btn btn-info text-white normal-case border-none mt-2" onClick={() => navigate(`/project/${projectId}?step=7&project_facebook_creative_template_id=${template.id}`)}>
         Edit Template
       </button>
+      }
     </div>
   )
 })

@@ -2,6 +2,57 @@ import { makeAutoObservable } from 'mobx'
 import { client } from '../graphql'
 import { graphql } from '../gql'
 import { Projects as Project, Projects_Set_Input } from "../gql/graphql";
+export interface TestTypeMenu {
+  label: string,
+  icon: string,
+  value: string,
+  description: string,
+  items: string[]
+}
+export const testTypeMenu: TestTypeMenu[] = [
+  {
+    label: 'Upstream Consumer Behavior',
+    value: 'upstream_consumer_behavior',
+    icon: '/src/assets/magnifying_glass.svg',
+    description: 'Exploratory, Whitespace,\nProblems, Solutions, Innovations',
+    items: [
+      'What product should I create?',
+      'What motivates my consumer',
+      'What problems exist for my brand?',
+      'What is trending in the market?'
+    ]
+  },
+  {
+    label: 'Concept & Product Development',
+    value: 'concept_test',
+    icon: '/src/assets/egg.png',
+    description: 'Ideas, Validations',
+    items: [
+      'Which product idea is best?',
+      'What concept resonates with my consumer?'
+    ]
+  },
+  {
+    label: 'Feature & Benefits',
+    value: 'benefits_claims',
+    icon: '/src/assets/lightbulb.png',
+    description: 'Positioning, Features, Benefits, Claims',
+    items: [
+      'Which product/service features and benefits resonate most?',
+      'Which claim is most compelling to my audience?'
+    ]
+  },
+  {
+    label: 'Marketing Communication',
+    value: 'marketing_communication',
+    icon: '/src/assets/horseshoe.png',
+    description: 'Exploratory, Whitespace,\nProblems, Solutions, Innovations',
+    items: [
+      'How do I talk about and show my product or service?',
+      'What is the best way to bring to life and talk about my product/ service?'
+    ]
+  }
+]
 export class Projects {
   projects: Project[] = []
   constructor() {
@@ -48,7 +99,7 @@ export class Projects {
           branding
           platform
           project_type
-          is_draft
+          status
           updated_at
           start_time
           stop_time
@@ -70,7 +121,7 @@ export class Projects {
           branding
           platform
           project_type
-          is_draft
+          status
           created_at
           updated_at
           start_time
@@ -93,11 +144,23 @@ export class Projects {
           branding
           platform
           project_type
-          is_draft
+          status
           created_at
           updated_at
           start_time
           stop_time
+          name_approved
+          objective_approved
+          project_type_approved
+          brandness_approved
+          platform_approved
+          start_stop_time_approved
+          landing_pages {
+            id
+            template_name
+            data
+            approved
+          }
           facebook_audiences {
             device_platforms
             facebook_positions
@@ -108,6 +171,7 @@ export class Projects {
             max_age
             min_age
             name
+            approved
             publisher_platforms
           }
           project_facebook_creative_templates {
@@ -119,9 +183,18 @@ export class Projects {
           themes {
             name
             id
+            approved
             angles {
               name
               id
+              facebook_creatives {
+                id
+                data
+                template_name
+                social_copy
+                cta_text
+                cta_type
+              }
             }
           }
         }
@@ -138,7 +211,7 @@ export class Projects {
       projects(where: {teams_projects: {team_id: {_eq: $teamId}}}, order_by: {created_at: desc}) {
         name
         id
-        is_draft
+        status
         project_type
         start_time
         stop_time
@@ -150,5 +223,17 @@ export class Projects {
       throw result.error
     }
     return result.data?.projects as Project[]
+  }
+
+  async sendReviewCompleteSlackMessage({ projectId, returnUrl }: { projectId: string, returnUrl: string }): Promise<boolean>{
+    const result = await client.mutation(graphql(`
+      mutation SendReviewCompleteSlackMessage($projectId: uuid!, $returnUrl: String!) {
+        sendSlackAlertForTeamReview(projectId: $projectId, returnUrl: $returnUrl)
+      }
+    `), { projectId, returnUrl })
+    if (result.error) {
+      throw result.error
+    }
+    return true
   }
 }

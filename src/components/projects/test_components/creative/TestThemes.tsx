@@ -7,7 +7,6 @@ import { Projects_Themes as ProjectTheme } from "../../../../gql/graphql";
 import _ from 'lodash'
 import { themes as availableThemes } from "../../../lib/constants/MatrixPreset";
 import { SpinningLoading } from "../../../lib/SpinningLoading";
-import TestMatrix from "./TestMatrix";
 const TestThemes = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
   const themesStore = useContext(ThemesContext)
   const { data: themes, isLoading, refetch } = useQuery({
@@ -18,7 +17,7 @@ const TestThemes = observer(({ project, onSave }: { project: Project, onSave: (p
   const createProjectThemeMutation = useMutation({
     mutationKey: ['createProjectTheme'],
     onSuccess: () => refetch(),
-    mutationFn: (name: string) => themesStore.createTheme({ name, projectId: project.id })
+    mutationFn: (name: string) => themesStore.createTheme({ name, projectId: project.id, numberOfAngles: 3 })
   })
   const deleteProjectThemeMutation = useMutation({
     mutationKey: ['deleteProjectTheme'],
@@ -51,21 +50,15 @@ const TestThemes = observer(({ project, onSave }: { project: Project, onSave: (p
   return (
     <>
       {isLoading && <SpinningLoading isLoading={isLoading} />}
-      {themes?.length !== 3 ?
-        <div>
-          <div className="text-lg configuration-title mb-4">
-            Choose your themes to help<br></br>answer your big questions
-          </div>
-          <p className="my-4">
-            Please choose up to 3 themes
-          </p>
-          <div className="flex flex-wrap gap-x-4 gap-y-4">
-            {availableThemes?.map((item) => selectionCard(item as ProjectTheme))}
-          </div>
+
+      <div>
+        <p className="my-4">
+          Please choose up to 3 themes
+        </p>
+        <div className="flex flex-wrap gap-x-4 gap-y-4">
+          {availableThemes?.map((item) => selectionCard(item as ProjectTheme))}
         </div>
-        :
-        <TestMatrix project={project} onUpdate={() => onSave({})} />
-      }
+      </div>
     </>
   )
 })

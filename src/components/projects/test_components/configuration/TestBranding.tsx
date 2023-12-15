@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../gql/graphql";
+import { Projects as Project } from "../../../../gql/graphql";
 import { useEffect, useState } from "react";
 const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
   const [branding, setBranding] = useState(project.branding || '')
@@ -47,9 +47,6 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
   return (
     <>
       <div>
-        <div className="text-lg configuration-title mb-4">
-          Are you looking for an unbranded or branded test?
-        </div>
         <div className="flex flex-wrap gap-y-10 gap-x-10">
           {items.map((item) => selectionCard(item))}
         </div>

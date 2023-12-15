@@ -6,6 +6,7 @@ import { AuthContext, ToastsContext, authStore } from "../../stores/stores"
 import { useMutation } from "@tanstack/react-query";
 import UserProfilePhotoPicker from "../../components/user/UserProfilePhotoPIcker";
 import { SpinningLoading } from "../../components/lib/SpinningLoading";
+import { ToastType } from "../../stores/toast";
 
 const ProfilePage = observer(() => {
   const auth = useContext(AuthContext)
@@ -32,17 +33,17 @@ const ProfilePage = observer(() => {
     mutationFn: () => auth.destroyUser(destroyPassword),
     onSuccess: () => navigate('/'), 
     onError: (error) => {
-      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: ToastType.ERROR })
     }
   })
 
   const updateDisplayName = useMutation({
     mutationFn: () =>  auth.updateDisplayName(displayName),
     onSuccess: () => {
-      toastStore.addToast({ message: 'You have successfully updated your display name', type: 'success' })
+      toastStore.addToast({ message: 'You have successfully updated your display name', type: ToastType.SUCCESS })
     },
     onError: (error) => {
-      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: ToastType.ERROR })
     }
   })
 
@@ -50,17 +51,17 @@ const ProfilePage = observer(() => {
     mutationFn: () =>  auth.changePassword(oldPassword, newPassword),
     onSuccess: () => { navigate('/auth/login') }, 
     onError: (error) => {
-      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: ToastType.ERROR })
     }
   })
 
   const changeEmail = useMutation({
     mutationFn: () => auth.changeEmail(email, changeEmailPassword),
     onSuccess: () => {
-      toastStore.addToast({ message: 'You have successfully changed your email', type: 'success' })
+      toastStore.addToast({ message: 'You have successfully changed your email', type: ToastType.SUCCESS })
     },
     onError: (error) => {
-      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: ToastType.ERROR })
     }
   })
 

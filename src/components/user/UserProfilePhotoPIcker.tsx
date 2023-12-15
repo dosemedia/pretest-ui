@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import { useContext, useState } from "react"
 import { AuthContext, ToastsContext } from "../../stores/stores"
 import { useMutation } from "@tanstack/react-query"
+import { ToastType } from "../../stores/toast"
 
 const UserProfilePhotoPicker = observer(() => {
   const auth = useContext(AuthContext)
@@ -17,19 +18,19 @@ const UserProfilePhotoPicker = observer(() => {
   const save = useMutation({
     mutationFn: () => auth.updateProfilePicture(profilePic!),
     onSuccess: () => {
-      toastStore.addToast({ message: 'You have successfully added a profile picture', type: 'success' })
+      toastStore.addToast({ message: 'You have successfully added a profile picture', type: ToastType.SUCCESS })
     },
     onError: (error) => {
-      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: ToastType.ERROR })
     }
   })
   const removePhoto = useMutation({
     mutationFn: () => auth.removeProfilePicture(),
     onSuccess: () =>  { 
-      toastStore.addToast({ message: 'You have successfully removed your profile picture', type: 'success' })
+      toastStore.addToast({ message: 'You have successfully removed your profile picture', type: ToastType.SUCCESS })
     },
     onError: (error) => {
-      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: 'error' })
+      toastStore.addToast({ message: 'Error: ' + error!.toString(), type: ToastType.ERROR })
     }
   })
 
