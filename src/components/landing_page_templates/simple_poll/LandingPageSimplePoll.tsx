@@ -57,7 +57,7 @@ function LandingPageSimplePoll({
         className={"p-4 flex items-center justify-center flex-col" + ' '  + pageClasses}
       >
         { headerImageUrl &&
-          <div className={"w-1/2 text-center" + ' ' + headerImageClasses}>
+          <div className={"lg:w-1/2 text-center" + ' ' + headerImageClasses}>
             <img src={headerImageUrl} alt="Header Image" />
           </div>
         }
@@ -66,14 +66,14 @@ function LandingPageSimplePoll({
             <div
               dangerouslySetInnerHTML={parseMarkdown(question.title)}
               style={{color: textColor}}
-              className={"text-lg font-bold pb-4" + ' ' + questionTitleClasses}
+              className={"font-bold pb-4" + ' ' + questionTitleClasses}
             ></div>
             {question.options.map((option) => (
               <div className="flex items-center mb-4 row-span-1">
                 {question.multipleChoice &&
                   <input
                     type="checkbox"
-                    className={"bg-white checkbox checkbox-lg" + ' ' + inputClasses}
+                    className={"bg-white checkbox checkbox-sm" + ' ' + inputClasses}
                     name=""
                     value=""
                     disabled={submitWait || submitted}
@@ -82,7 +82,7 @@ function LandingPageSimplePoll({
                 {!question.multipleChoice &&
                   <input
                     type="radio"
-                    className={"bg-white radio radio-lg" + ' ' + inputClasses}
+                    className={"bg-white radio radio-sm" + ' ' + inputClasses}
                     name=""
                     value=""
                     disabled={submitWait || submitted}
@@ -90,7 +90,7 @@ function LandingPageSimplePoll({
                 }
                 <span
                   style={{color: textColor}}
-                  className={"ml-2 text-lg" + ' ' + optionClasses}
+                  className={"ml-2" + ' ' + optionClasses}
                 >{option}</span>
               </div>
             ))}
@@ -122,7 +122,7 @@ function LandingPageSimplePoll({
         {submitted &&
           <div
             style={{color: textColor}}
-            className={"text-lg" + ' ' + submittedTextClasses }
+            className={"text-lg text-center" + ' ' + submittedTextClasses }
           >
             { submittedText }
           </div>
