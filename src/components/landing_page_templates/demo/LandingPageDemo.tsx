@@ -1,8 +1,9 @@
 import React from 'react';
-import LandingPageTemplate from './LandingPageTemplate'
+import LandingPageTemplate from '../LandingPageTemplate'
 import { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
-import { AnalyticsContext } from "../../stores/stores"
+import { AnalyticsContext } from "../../../stores/stores"
+import LandingPageDemoHeader from './LandingPageDemoHeader';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LandingPageDemoRender: React.FC<{ landingPageId: string, data: any }> = ({ landingPageId, data }) => {
@@ -20,20 +21,8 @@ const LandingPageDemoRender: React.FC<{ landingPageId: string, data: any }> = ({
   return (
     <div>
       { data && 
-        <div className="grid grid-cols-2 gap-4" style={{
-          backgroundImage: 'linear-gradient(to right, ' + data.ctaColor1 + ' , ' + data.ctaColor2 + ')'
-        }}>
-          <div>
-            <div className="text-lg">{ data.ctaTitle }</div>
-            <div>{ data.ctaSubtitle }</div>
-          </div>
-          <div>
-            <img src={data.ctaImageUrl} alt="CTA" className='w-full' />
-          </div>
-        </div>
+        <LandingPageDemoHeader ctaTitle={data.ctaTitle} ctaSubtitle={data.ctaSubtitle} ctaColor1={data.ctaColor1} ctaColor2={data.ctaColor2} ctaImageUrl={data.ctaImageUrl} onCtaClick={onCtaClick} />
       }
-
-      <button className="btn btn-primary" onClick={onCtaClick}>Call to Action</button>
 
       <div>TODO - poll options...</div>
     </div>

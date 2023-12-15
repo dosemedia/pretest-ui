@@ -23,6 +23,15 @@ yarn codegen
 
 Note, edited codegen.ts from urql docs to include .ts and .tsx files.
 
+## Storybook
+
+[Storybook](https://storybook.js.org/) is used to develop some react components (mostly landing page templates).  To start it:
+
+```
+yarn storybook
+```
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

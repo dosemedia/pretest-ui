@@ -1,4 +1,4 @@
-import LandingPageDemo from './LandingPageDemo.tsx';
+import LandingPageDemo from './demo/LandingPageDemo.tsx';
 
 const LandingPageTemplates = [
   LandingPageDemo,
