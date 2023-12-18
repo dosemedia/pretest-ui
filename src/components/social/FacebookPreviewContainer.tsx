@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Facebook_Creatives as FacebookCreative } from "../../gql/graphql";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FacebookPreviewContainer = observer(({ data, template, socialCopy, ctaType, ctaText, editTemplate = true, disabled = false }: { data: any, template: FacebookCreative, socialCopy: string, ctaText: string, ctaType: string, editTemplate?: boolean, disabled: boolean }) => {
+const FacebookPreviewContainer = observer(({ data, template, socialCopy, ctaType, ctaText, editTemplate = true, disabled = false }: { data: any, template: FacebookCreative, socialCopy: string, ctaText: string, ctaType: string, editTemplate?: boolean, disabled?: boolean }) => {
   const navigate = useNavigate()
   const { projectId } = useParams() as { projectId: string }
   return (

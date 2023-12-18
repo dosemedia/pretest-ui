@@ -1,6 +1,6 @@
 import TestObjective from "./test_components/configuration/TestObjective";
 import { useLocation, useSearchParams } from "react-router-dom";
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import '../../css/project_draft.css'
 import ProjectStepContainer from "./ProjectStepContainer";
 import TestPlatform from "./test_components/configuration/TestPlatform";
@@ -15,6 +15,7 @@ import TestMatrix from "./test_components/creative/TestMatrix";
 import TestMatrixEditor from "./test_components/creative/TestMatrixEditor";
 import UserReview from "./test_components/review/UserReview";
 import ProjectMenu from "./ProjectMenu";
+import UserPublish from "./test_components/publish/UserPublish";
 export interface NextButtonConfig {
   name: string,
   onNext: () => void
@@ -24,6 +25,7 @@ export interface ProjectDraftMenu {
   label: string,
   value: string,
   icon: string,
+  disabled?: boolean,
   steps?: number[],
   overrideNext?: NextButtonConfig | null,
   goToStep?: () => number,
@@ -43,29 +45,24 @@ const ProjectDraft = () => {
   }, [location])
   return (
     <>
-      <div className="flex flex-wrap justify-between gap-y-12 gap-x-4">
-        <div className="flex-initial">
-          <ProjectStepContainer step={step}>
-            <ProjectMenu alwaysShow={true} />
-          </ProjectStepContainer>
-        </div>
-        <div className="flex-initial w-full md:w-8/12">
-          <ProjectStepContainer step={step}>
-            <TestObjective title="What type of test are you creating?" />
-            <TestBranding title="Are you looking for an unbranded or branded test?" />
-            <TestPlatform title="Where would you like to test?" />
-            <TestAudience title="Create your own audience" />
-            <TestRuntime title="Set your test duration" />
-            <TestCreatives title="Choose an ad template" />
-            <ProjectFacebookCreativeTemplateDetail title="Edit/Remove your template below" />
-            <TestThemes title="Answer your big questions" />
-            <TestMatrix title="" />
-            <TestMatrixEditor title="Build your test matrix" />
-            <TestLandingPages title="Choose a landing page template" />
-            <UserReview title="Review your test" />
-          </ProjectStepContainer>
-        </div>
-      </div>
+
+      <ProjectStepContainer step={step}>
+        <TestObjective title="What type of test are you creating?" />
+        <TestBranding title="Are you looking for an unbranded or branded test?" />
+        <TestPlatform title="Where would you like to test?" />
+        <TestAudience title="Create your own audience" />
+        <TestRuntime title="Set your test duration" />
+        <TestCreatives title="Choose an ad template" />
+        <ProjectFacebookCreativeTemplateDetail title="Edit/Remove your template below" />
+        <TestThemes title="Answer your big questions" />
+        <TestMatrix title="" />
+        <TestMatrixEditor title="Build your test matrix" />
+        <TestLandingPages title="Choose a landing page template" />
+        <UserReview title="Review your test" />
+        <UserPublish title="Your test is in the queue" />
+      </ProjectStepContainer>
+
+
     </>
   )
 }
