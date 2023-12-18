@@ -44,16 +44,16 @@ const LoginForm = observer(() => {
           <label className="label">
             <span className="text-sm opacity-60">Email</span>
           </label>
-          <input type="text" className="input" placeholder="Email" value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
+          <input id="email" type="text" className="input" placeholder="Email" value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
           <label className="label" style={{ marginTop: 20 }}>
             <span className="text-sm opacity-60">Password</span>
           </label>
-          <input type="password" className="input" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyUp={(e) => {if(e.key === 'Enter'){handleLogin()}}} />
+          <input id="password" type="password" className="input" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyUp={(e) => {if(e.key === 'Enter'){handleLogin()}}} />
           <div className="flex justify-end">
             <Link to='/auth/forgot' className="text-xs" style={{ marginTop: 20 }}>Forgot password?</Link>
           </div>
           <div className="flex" style={{ gap: 16, marginTop: 20 }}>
-            <button className="btn action-button text-base font-bold" onClick={handleLogin} disabled={handleLoginMutation.isLoading}>
+            <button id="login_button" className="btn action-button text-base font-bold" onClick={handleLogin} disabled={handleLoginMutation.isLoading}>
               Log in <SpinningLoading isLoading={handleLoginMutation.isLoading} />
             </button>
             <p className="text-base" style={{ lineHeight: '106%' }}>
