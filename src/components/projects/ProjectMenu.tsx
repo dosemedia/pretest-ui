@@ -5,9 +5,8 @@ import { useSearchParams } from "react-router-dom";
 import { ProjectFacebookAudienceContext, ProjectsContext } from "../../stores/stores";
 import _ from "lodash";
 import { ProjectDraftMenu, NextButtonConfig } from "./ProjectDraft";
-import { ProjectStepChildProps } from "./ProjectStepContainer";
 import { ProjectStatus } from "../../stores/projects";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Projects as Project, Projects_Set_Input } from "../../gql/graphql";
 
 const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: number, project: Project, currentStep: (arg0: ProjectDraftMenu) => void, onSave: (arg0: Projects_Set_Input) => void}) => {

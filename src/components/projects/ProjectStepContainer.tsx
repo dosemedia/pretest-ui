@@ -25,7 +25,7 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
   const { projectId } = useParams() as { projectId: string }
   const skipUpdate = useRef<boolean>()
   const [currentStep, setCurrentStep] = useState<ProjectDraftMenu>()
-  const [searchParams, setSearchParams] = useSearchParams();
+  const setSearchParams = useSearchParams()[1];
   const { data: project, refetch } = useQuery({
     queryKey: ['fetchProject'],
     retry: false,

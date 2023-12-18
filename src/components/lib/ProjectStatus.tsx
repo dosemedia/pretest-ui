@@ -5,7 +5,7 @@ const ProjectStatusView = observer(({ project }: { project: Project }) => {
   const status = () => {
     switch (project.status) {
       case ProjectStatus.DRAFT:
-        return { color: 'rgba(72, 19, 38, 0.30)', label: 'Pending review' }
+        return { color: 'rgba(210, 214, 205, 0.30)', label: 'Draft' }
       case ProjectStatus.REVIEW:
         return { color: 'rgba(72, 19, 38, 0.30)', label: 'Pending review' }
       case ProjectStatus.ACTIVE:
