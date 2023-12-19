@@ -3,7 +3,7 @@ name: Run Test with Pretest-API dependency
 on:
   push:
     branches:
-      - brady-test
+      - 'brady-test'
 
 jobs:
   run-tests:
