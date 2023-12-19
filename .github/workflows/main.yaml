@@ -8,10 +8,22 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+    env:
+      NODE_BASE_URL: ${{ secrets.NODE_BASE_URL }}
+      HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      VITE_HASURA_BASE_URL: ${{ secrets.VITE_HASURA_BASE_URL }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Debug Environment Variables
+        run: |
+          echo "NODE_BASE_URL: $NODE_BASE_URL"
+          echo "HASURA_GRAPHQL_ADMIN_SECRET: $HASURA_GRAPHQL_ADMIN_SECRET"
+          echo "DATABASE_URL: $DATABASE_URL"
+          echo "VITE_HASURA_BASE_URL: $VITE_HASURA_BASE_URL"
 
       - name: Clone server repository
         run: git clone --depth=1 https://github.com/dosemedia/pretest-api.git
