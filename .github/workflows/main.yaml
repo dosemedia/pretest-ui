@@ -1,9 +1,9 @@
-name: Run Tests with Modified Variable and Server Dependency
+name: Run Test with Pretest-API dependency
 
 on:
   push:
     branches:
-      - brady-test
+      - '*'
 
 jobs:
   run-tests:
@@ -20,17 +20,13 @@ jobs:
         run: |
           cd pretest-api
           docker-compose -f ./docker-compose.test.yaml up -d
-        
-      - name: Wait for services to start
-        run: sleep 30
 
       - name: Modify variable and start server
         run: |
-          sed -i 's/DATABASE_URL=postgres://postgres:pgadmin@localhost:5432/postgres?schema=public/NEW_VARIABLE=postgres://postgres:pgadmin@localhost:5433/postgres?schema=public/g' pretest-api/.env
           cd pretest-api
           yarn install
           yarn prisma generate
-          yarn dev
+          yarn start
           
 
       - name: Wait for server to start
