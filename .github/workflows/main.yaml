@@ -7,6 +7,8 @@ on:
 
 jobs:
   run-tests:
+    env:
+      NODE_BASE_URL: ${{ secrets.NODE_BASE_URL }}
     runs-on: ubuntu-latest
 
     steps:
