@@ -26,7 +26,7 @@ jobs:
 
       - name: Modify variable and start server
         run: |
-          sed -i 's/DATABASE_URL=postgres://postgres:pgadmin@localhost:5432/postgres?schema=public/NEW_VARIABLE=postgres://postgres:pgadmin@localhost:5433/postgres?schema=public/g' pretest-api/.env
+          sed -i 's/DATABASE_URL=postgres:\/\/postgres:pgadmin@localhost:5432\/postgres?schema=public/NEW_VARIABLE=postgres:\/\/postgres:pgadmin@localhost:5433\/postgres?schema=public/g' pretest-api/.env
           cd pretest-api
           yarn install
           yarn prisma generate
