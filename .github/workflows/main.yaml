@@ -11,7 +11,7 @@ jobs:
     env:
       NODE_BASE_URL: http://host.docker.internal:3000
       HASURA_GRAPHQL_ADMIN_SECRET: mydevsecret
-      DATABASE_URL: postgres://postgres:pgadmin@localhost:5432/postgres?schema=public
+      DATABASE_URL: postgres://postgres:pgadmin@localhost:5433/postgres?schema=public
       VITE_HASURA_BASE_URL: http://localhost:8081
 
     steps:
