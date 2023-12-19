@@ -1,0 +1,42 @@
+name: Run Tests with Modified Variable and Server Dependency
+
+on:
+  push:
+    branches:
+      - brady-test
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Clone server repository
+        run: git clone --depth=1 https://github.com/dosemedia/pretest-api.git
+
+      - name: Start containers
+        run: |
+          cd pretest-api
+          docker-compose -f ./docker-compose.test.yaml up -d
+        
+      - name: Wait for services to start
+        run: sleep 30
+
+      - name: Modify variable and start server
+        run: |
+          sed -i 's/DATABASE_URL=postgres://postgres:pgadmin@localhost:5432/postgres?schema=public/NEW_VARIABLE=postgres://postgres:pgadmin@localhost:5433/postgres?schema=public/g' pretest-api/.env
+          cd pretest-api
+          yarn install
+          yarn prisma generate
+          yarn dev
+          
+
+      - name: Wait for server to start
+        run: sleep 10 # Adjust this based on the time required for the server to start
+
+      - name: Run yarn test
+        run: |
+          yarn install
+          yarn test
