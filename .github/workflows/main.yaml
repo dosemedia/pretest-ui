@@ -18,8 +18,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Debug NODE_BASE_URL
-        run: echo $NODE_BASE_URL
+      - name: Debug Environment Variables
+        run: |
+          echo "NODE_BASE_URL: $NODE_BASE_URL"
+          echo "HASURA_GRAPHQL_ADMIN_SECRET: $HASURA_GRAPHQL_ADMIN_SECRET"
+          echo "DATABASE_URL: $DATABASE_URL"
+          echo "VITE_HASURA_BASE_URL: $VITE_HASURA_BASE_URL"
 
       - name: Clone server repository
         run: git clone --depth=1 https://github.com/dosemedia/pretest-api.git
