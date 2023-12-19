@@ -13,6 +13,10 @@ export interface FacebookAudienceGeolocation {
   supports_region: boolean,
   type: string
 }
+export interface FacebookAdAccount {
+  name: string,
+  id: number
+}
 export interface FacebookAudienceInterest {
   name: string,
   id: number
@@ -40,6 +44,18 @@ export class Facebook {
       throw result.error
     }
     return result.data?.facebookAPIGet.data as FacebookAudienceEstimatedReach
+  }
+  async getFacebookAdAccount(): Promise<FacebookAdAccount> {
+    const result = await client.mutation(graphql(`
+    mutation FacebookAPIGet($url: String!) {
+      facebookAPIGet(url: $url)
+    }
+    `), { url: `/act_{{FACEBOOK_AD_ACCOUNT_ID}}?fields=name,account_id` })
+    if (result.error) {
+      console.log(result.error)
+      throw result.error
+    }
+    return (result.data?.facebookAPIGet as FacebookAdAccount)
   }
   async getInterests({ search }: { search: string }): Promise<FacebookAudienceInterest[]> {
     if (!search) {

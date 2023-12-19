@@ -29,6 +29,10 @@ export class Auth {
     })
   }
 
+  isSuperadmin () {
+    return this.user?.email?.includes('@orchard-insights.com')
+  }
+
   async removeProfilePicture () : Promise<void> {
       if (this.token) {
         // Update avatar_file_key

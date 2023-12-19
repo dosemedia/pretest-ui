@@ -37,6 +37,8 @@ import ContactPage from './pages/ContactPage.tsx'
 import LoginPage from './pages/auth/LoginPage.tsx'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage.tsx'
 import LandingPage from './pages/LandingPage.tsx'
+import ProjectAdminReviewPage from './pages/projects/ProjectAdminReviewPage.tsx'
+import SuperAdminRoute from './components/auth/SuperAdminRoute.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -50,6 +52,7 @@ const router = createBrowserRouter(
       <Route path="verify-email/:code" element={<VerifyEmailLandingPage />} />
       <Route path="reset-password/:code" element={<ResetPasswordPage />} />
       <Route path="project/:projectId" element={<LoginRequiredRoute><RootLayout><ProjectDetail /></RootLayout></LoginRequiredRoute>} />
+      <Route path="project/:projectId/review" element={<LoginRequiredRoute><SuperAdminRoute><RootLayout><ProjectAdminReviewPage /></RootLayout></SuperAdminRoute></LoginRequiredRoute>} />
       <Route path="project/:projectId/facebook_creative/:facebookCreativeId" element={<LoginRequiredRoute><RootLayout><FacebookCreativeDetail /></RootLayout></LoginRequiredRoute>} />
       <Route path="project/:projectId/landing_page/:landingPageId" element={<LoginRequiredRoute><RootLayout><LandingPageDetail /></RootLayout></LoginRequiredRoute>} />
       <Route path="teams" element={<LoginRequiredRoute><RootLayout><TeamsPage /></RootLayout></LoginRequiredRoute>} />

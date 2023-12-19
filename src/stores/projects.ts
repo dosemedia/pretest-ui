@@ -161,6 +161,11 @@ export class Projects {
           brandness_approved
           platform_approved
           start_stop_time_approved
+          teams_projects {
+            team {
+              name
+            }
+          }
           landing_pages {
             id
             template_name

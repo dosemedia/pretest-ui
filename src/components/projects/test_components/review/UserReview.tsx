@@ -5,7 +5,7 @@ import { testTypeMenu } from "../../../../stores/projects";
 import _ from 'lodash'
 import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql";
 import { useMutation } from "@tanstack/react-query";
-import { ProjectFacebookAudienceContext, ProjectLandingPagesContext, ThemesContext } from "../../../../stores/stores";
+import { AuthContext, ProjectFacebookAudienceContext, ProjectLandingPagesContext, ThemesContext } from "../../../../stores/stores";
 import FacebookPreviewContainer from "../../../social/FacebookPreviewContainer";
 import { Projects_Themes as ProjectTheme } from "../../../../gql/graphql";
 import { DateTime } from "luxon";
@@ -14,6 +14,7 @@ import { ProjectStepChildProps } from "../../ProjectStepContainer";
 const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const facebookAudiencesStore = useContext(ProjectFacebookAudienceContext)
   const landingPagesStore = useContext(ProjectLandingPagesContext)
+  const authStore = useContext(AuthContext)
   const projectThemesStore = useContext(ThemesContext)
   const [nameApproved, setNameApproved] = useState(props.project?.name_approved || false)
   const [objectiveApproved, setObjectiveApproved] = useState(props.project?.objective_approved || false)
@@ -57,7 +58,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
 
   return (
     <>
-      {props.project?.status === 'review' ? <div>Congratulations! Your test has been sent off for review</div> :
+      {props.project?.status === 'review' && !authStore.isSuperadmin() ? <div>Congratulations! Your test has been sent off for review</div> :
         <div>
           {/* Name Approval */}
           <label className="label mb-1">
