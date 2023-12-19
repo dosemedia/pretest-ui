@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql";
 import { useState, useEffect } from "react";
 import _ from 'lodash'
-const TestAudiencePlatforms = observer(({ onUpdate, projectFacebookAudience }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience }) => {
+const TestAudiencePlatforms = observer(({ onUpdate, projectFacebookAudience, disabled }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience, disabled: boolean }) => {
   const [devicePlatforms, setDevicePlatforms] = useState<string[]>([])
   const availableDevicePlatforms = ["mobile", "desktop"]
   const [isUpdated, setIsUpdated] = useState(false)
@@ -24,7 +24,7 @@ const TestAudiencePlatforms = observer(({ onUpdate, projectFacebookAudience }: {
   }
   function selectionCard(item: string) {
     return (
-      <div key={item} className={`card cursor-pointer ${devicePlatforms.includes(item) && 'card-selected'}`} style={{ backgroundColor: 'white', padding: '0px 0px', width: 120 }} onClick={() => handleSelection(item)}>
+      <div key={item} className={`card cursor-pointer ${devicePlatforms.includes(item) && 'card-selected'} ${disabled && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 0px', width: 120 }} onClick={() => handleSelection(item)}>
         <div className="card-body">
           <div className="flex flex-col items-center gap-2">
             <span className="text-md font-bold text-center">{item}</span>

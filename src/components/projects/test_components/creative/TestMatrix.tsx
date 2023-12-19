@@ -6,11 +6,12 @@ import { angles as availableAngles } from "../../../lib/constants/MatrixPreset";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ProjectFacebookCreativeTemplatesContext, ProjectFacebookCreativesContext, ThemesAnglesContext, ThemesContext, toastsStore } from "../../../../stores/stores";
 import { useContext } from "react";
-import { Projects as Project } from "../../../../gql/graphql";
 import { SpinningLoading } from "../../../lib/SpinningLoading";
 import { ToastType } from "../../../../stores/toast";
 import _ from 'lodash'
-const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
+import { ProjectStatus } from "../../../../stores/projects";
+const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const themesStore = useContext(ThemesContext)
   const anglesStore = useContext(ThemesAnglesContext)
   const element_id = 'generate_creatives_modal'
@@ -20,21 +21,21 @@ const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (p
   const { data: projectFacebookCreativeTemplates } = useQuery({
     queryKey: ["projectFacebookCreativeTemplates"],
     retry: false,
-    queryFn: () => projectFacebookCreativeTemplatesStore.fetchProjectFacebookCreativeTemplatesByProject({ project })
+    queryFn: () => projectFacebookCreativeTemplatesStore.fetchProjectFacebookCreativeTemplatesByProject({ project: props.project! })
   })
   const { data: facebookCreatives, refetch: refetchFacebookCreatives } = useQuery({
     queryKey: ['facebookCreatives'],
     retry: false,
-    queryFn: () => projectFacebookCreativesStore.fetchProjectFacebookCreativesByProjectID({ projectId: project.id })
+    queryFn: () => projectFacebookCreativesStore.fetchProjectFacebookCreativesByProjectID({ projectId: props.project?.id })
   })
   const { data: themes, refetch: refetchThemes, isLoading } = useQuery({
     queryKey: ['themes'],
     retry: false,
-    queryFn: () => themesStore.fetchThemes({ projectId: project.id })
+    queryFn: () => themesStore.fetchThemes({ projectId: props.project?.id })
   })
   const createThemeMutation = useMutation({
     mutationKey: ['createTheme'],
-    mutationFn: () => themesStore.createTheme({ name: _.filter(availableThemes, (item) => !themeTaken(item as ProjectTheme))[0].name, projectId: project.id, numberOfAngles: themes![0].angles.length }),
+    mutationFn: () => themesStore.createTheme({ name: _.filter(availableThemes, (item) => !themeTaken(item as ProjectTheme))[0].name, projectId: props.project?.id, numberOfAngles: themes![0].angles.length }),
     onSuccess: () => { toastsStore.addToast({ message: 'Successfully created theme', type: ToastType.SUCCESS }); refetchThemes() }
   })
   const createAnglesMutation = useMutation({
@@ -47,23 +48,23 @@ const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (p
     onMutate: () => (document.getElementById(element_id) as HTMLDialogElement).show(),
     mutationFn: ({ facebookCreativesInput }: { facebookCreativesInput: Facebook_Creatives_Insert_Input[] }) => projectFacebookCreativesStore.createProjectFacebookCreatives({ facebookCreativesInput }),
     onError: (error) => toastsStore.addToast({ message: error as string, type: ToastType.ERROR }),
-    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives(); onSave({}); (document.getElementById(element_id) as HTMLDialogElement).close() }
+    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives(); if(props.onSave) props.onSave({}); (document.getElementById(element_id) as HTMLDialogElement).close() }
   })
   const deleteProjectFacebookCreativesMutation = useMutation({
     mutationKey: ['deleteFacebookCreatives'],
-    mutationFn: () => projectFacebookCreativesStore.deleteProjectFacebookCreativesByProjectID({ projectId: project.id }),
+    mutationFn: () => projectFacebookCreativesStore.deleteProjectFacebookCreativesByProjectID({ projectId: props.project?.id }),
     onError: (error) => toastsStore.addToast({ message: error as string, type: ToastType.ERROR }),
-    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully deleted', type: ToastType.SUCCESS }); onSave({}); refetchFacebookCreatives() }
+    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully deleted', type: ToastType.SUCCESS }); if (props.onSave) props.onSave({}); refetchFacebookCreatives() }
   })
   const updateAngleMutation = useMutation({
     mutationKey: ['updateAngle'],
     mutationFn: ({ name, angleId }: { name: string, angleId: string }) => anglesStore.updateAngle({ id: angleId, payload: { name } as ThemeAngle }),
-    onSuccess: () => { refetchThemes(), onSave({}) }
+    onSuccess: () => { refetchThemes(); if (props.onSave) props.onSave({}) }
   })
   const updateThemeMutation = useMutation({
     mutationKey: ['updateTheme'],
     mutationFn: ({ name, themeId }: { name: string, themeId: string }) => themesStore.updateTheme({ id: themeId, payload: { name } as ProjectTheme }),
-    onSuccess: () => { refetchThemes(), onSave({}) }
+    onSuccess: () => { refetchThemes(); if(props.onSave) props.onSave({}) }
   })
   const handleAngleChange = (value: string, angleId: string) => {
     updateAngleMutation.mutate({ name: value, angleId })
@@ -77,7 +78,7 @@ const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (p
       for (const theme of themes) {
         for (const angle of theme.angles) {
           creatives.push({
-            project_id: project.id,
+            project_id: props.project?.id,
             template_name: projectFacebookCreativeTemplates[0].template_name,
             theme_id: theme.id,
             angle_id: angle.id,
@@ -113,8 +114,8 @@ const TestMatrix = observer(({ project, onSave }: { project: Project, onSave: (p
         <div className="card" style={{ backgroundColor: 'white', padding: 0, width: 'auto' }}>
           <div className="card-body">
             <div className="mb-7">
-              {facebookCreatives && facebookCreatives.length === 0 && <button className="btn btn-info border-none text-white normal-case w-[200px]" onClick={() => generateCreatives()}>Generate Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
-              {facebookCreatives && facebookCreatives.length !== 0 && <button className="btn btn-error border-none text-white normal-case w-[200px]" onClick={() => deleteProjectFacebookCreativesMutation.mutate()}>Remove Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
+              {facebookCreatives && facebookCreatives.length === 0 && <button disabled={props.project?.status === ProjectStatus.REVIEW} className="btn btn-info border-none text-white normal-case w-[200px]" onClick={() => generateCreatives()}>Generate Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
+              {facebookCreatives && facebookCreatives.length !== 0 && <button disabled={props.project?.status === ProjectStatus.REVIEW} className="btn btn-error border-none text-white normal-case w-[200px]" onClick={() => deleteProjectFacebookCreativesMutation.mutate()}>Remove Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
             </div>
             <div className="flex overflow-x-auto">
               {

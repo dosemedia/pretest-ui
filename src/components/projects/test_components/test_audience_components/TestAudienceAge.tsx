@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql";
 import { useState, useEffect } from "react";
 import ErrorMessage from "../../../lib/Error";
-const TestAudienceAge = observer(({ onUpdate, projectFacebookAudience }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience }) => {
+const TestAudienceAge = observer(({ onUpdate, projectFacebookAudience, disabled }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience, disabled: boolean }) => {
   const [ageMin, setAgeMin] = useState<number>(18)
   const [ageMax, setAgeMax] = useState<number>(65)
   const [isUpdated, setIsUpdated] = useState(false)
@@ -38,13 +38,13 @@ const TestAudienceAge = observer(({ onUpdate, projectFacebookAudience }: { onUpd
           <label className="label">
             <span className="text-xs opacity-60">Min</span>
           </label>
-          <input type="number" className="number p-2" value={ageMin} onChange={(e) => { setAgeMin(parseInt(e.target.value)); setIsUpdated(true) }} />
+          <input type="number" disabled={disabled} className="number p-2" value={ageMin} onChange={(e) => { setAgeMin(parseInt(e.target.value)); setIsUpdated(true) }} />
         </div>
         <div className="flex-0">
           <label className="label">
             <span className="text-xs opacity-60">Max</span>
           </label>
-          <input type="number" className="number p-2" value={ageMax} onChange={(e) => { setAgeMax(parseInt(e.target.value)); setIsUpdated(true) }} />
+          <input type="number" disabled={disabled} className="number p-2" value={ageMax} onChange={(e) => { setAgeMax(parseInt(e.target.value)); setIsUpdated(true) }} />
         </div>
       </div>
       {errorMessage() && <div className="mt-2"><ErrorMessage message={errorMessage()} /></div>}

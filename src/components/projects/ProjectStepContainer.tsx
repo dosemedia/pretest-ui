@@ -1,46 +1,112 @@
-import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
-import { ReactElement } from "react";
-import { useSearchParams } from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// import { observer } from "mobx-react-lite";
+import React, { PropsWithChildren, ReactElement, useContext, useEffect, useRef, useState } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { ProjectsContext } from "../../stores/stores";
+import { Projects as Project, Projects_Set_Input } from "../../gql/graphql";
+import _ from 'lodash'
+import ProjectMenu from "./ProjectMenu";
 import { ProjectDraftMenu } from "./ProjectDraft";
-import { SpinningLoading } from "../lib/SpinningLoading";
 
-const ProjectStepContainer: React.FC<{ children: ReactElement, title: string, currentStep: number, currentStepItem: ProjectDraftMenu | null | undefined }> = observer(({ children, title, currentStep, currentStepItem }) => {
-  const setSearchParams = useSearchParams()[1]
-  const [waiting, setIsWaiting] = useState(false)
-  async function executeOnNext () {
-    setIsWaiting(true)
-    try {
-      await currentStepItem?.overrideNext?.onNext()
-    } catch (e) {
-      console.log(e)
+interface Props {
+  step: number
+}
+
+export interface ProjectStepChildProps {
+  project?: Project,
+  title?: string,
+  onSave?: (arg0: Projects_Set_Input) => void
+}
+
+
+const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, children }) => {
+  const projectStore = useContext(ProjectsContext)
+  const { projectId } = useParams() as { projectId: string }
+  const skipUpdate = useRef<boolean>()
+  const [currentStep, setCurrentStep] = useState<ProjectDraftMenu>()
+  const setSearchParams = useSearchParams()[1];
+  const { data: project, refetch } = useQuery({
+    queryKey: ['fetchProject'],
+    retry: false,
+    queryFn: () => projectStore.fetchFullProject({ projectId })
+  })
+  const projectMutation = useMutation({
+    mutationFn: (payload: object) => projectStore.updateProject({ id: projectId, payload: payload as Project }),
+    onSuccess: () => {
+      refetch()
     }
-    setIsWaiting(false)
+  })
+  useEffect(() => {
+    skipUpdate.current = true
+  }, [step])
+  const onSave = _.debounce(async (payload: object) => {
+    if (!skipUpdate.current) {
+      await projectMutation.mutateAsync(payload)
+    }
+    skipUpdate.current = false
+  }, 1000)
+  async function onNext () {
+    await currentStep?.overrideNext?.onNext()
+    refetch()
   }
   return (
     <>
-      <div>
-        <div className="text-lg configuration-title mb-4">
-          {title}
+      <div className="flex flex-wrap justify-between gap-y-12 gap-x-4">
+        <div className="flex-initial">
+          { project && <ProjectMenu project={project} onSave={onSave} step={step} currentStep={(val: ProjectDraftMenu) => setCurrentStep(val)} /> }
         </div>
-        {children}
-        <div>
-          <div className="mt-5 flex gap-4">
-            {currentStep > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setSearchParams({ step: (currentStep - 1).toString() })}>
-              <span className="mdi mdi-chevron-left text-base" /> Go Back
-            </button>
-            }
-            {currentStep < 13 && currentStep != 6 &&
-              <button className="btn action-button text-base" onClick={() => currentStepItem?.overrideNext?.onNext ? executeOnNext() : setSearchParams({ step: (currentStep + 1).toString() })} disabled={!currentStepItem?.isComplete}>
-                {currentStepItem?.overrideNext?.name || 'Next' } { waiting ? <SpinningLoading isLoading={waiting} /> : <span className="mdi mdi-chevron-right text-base" /> }
+        <div className="flex-initial w-full md:w-8/12">
+          {project && React.Children.map(children as ReactElement, (child, index) => ((step - 1 === index) || child.props.alwaysShow) &&
+            <>
+
+              <div className="text-lg configuration-title mb-4">
+                {child.props.title}
+              </div>
+              {React.cloneElement(child, { title: child.props.title, ...child.props, project, onSave, step } as React.FC<PropsWithChildren>)}
+              <div>
+            <div className="mt-5 flex gap-4">
+              {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setSearchParams({ step: (step - 1).toString() })}>
+                <span className="mdi mdi-chevron-left text-base" /> Go Back
               </button>
-            }
+              }
+              {step < 13 && step != 6 && !child.props.alwaysShow &&
+                <button className="btn action-button text-base" onClick={() => currentStep?.overrideNext?.onNext ? onNext() : setSearchParams({ step: (step + 1).toString() })} disabled={!currentStep?.isComplete}>
+                  {currentStep?.overrideNext?.name || 'Next'}
+                </button>
+              }
+            </div>
           </div>
+            </>
+          )}
         </div>
       </div>
-
     </>
   )
-})
+  // const setSearchParams = useSearchParams()[1]
+  // const [waiting, setIsWaiting] = useState(false)
+  // async function executeOnNext () {
+  //   setIsWaiting(true)
+  //   try {
+  //     await currentStepItem?.overrideNext?.onNext()
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  //   setIsWaiting(false)
+  // }
+  // return (
+  //   <>
+  //     <div>
+  //       <div className="text-lg configuration-title mb-4">
+  //         {title}
+  //       </div>
+  //       {children}
+
+  //     </div>
+
+  //   </>
+  // )
+}
 
 export default ProjectStepContainer
+

@@ -4,13 +4,13 @@ import LandingPageSimplePoll from './LandingPageSimplePoll';
 
 const meta: Meta<typeof LandingPageSimplePoll> = {
   component: LandingPageSimplePoll,
+  argTypes: { onSubmit: { action: 'submit' } }
 };
 
 export default meta;
 type Story = StoryObj<typeof LandingPageSimplePoll>;
 
 const commonArgs = {
-  onSubmit: () => {},
   headerImageUrl: 'https://picsum.photos/id/56/600/300',
   pageBackgroundColor: '#C3D8F9',
   textColor: '#000000',

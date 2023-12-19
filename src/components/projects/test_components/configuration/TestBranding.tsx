@@ -1,8 +1,9 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../../gql/graphql";
 import { useEffect, useState } from "react";
-const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
-  const [branding, setBranding] = useState(project.branding || '')
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
+import { ProjectStatus } from "../../../../stores/projects";
+const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
+  const [branding, setBranding] = useState(props.project?.branding || '')
   interface Branding {
     label: string,
     value: string,
@@ -25,12 +26,14 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
   ]
 
   useEffect(() => {
-    onSave({ branding })
+    if (props.onSave) {
+      props.onSave({ branding })
+    }
   }, [branding])
   function selectionCard (item: Branding) {
     return (
       <div key={item.label} className="flex flex-col" style={{ width: 285 }}>
-        <div className={`card cursor-pointer ${branding === item.value && 'card-selected'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => setBranding(item.value)}>
+        <div className={`card cursor-pointer ${branding === item.value && 'card-selected'} ${props.project?.status === ProjectStatus.REVIEW && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => setBranding(item.value)}>
           <div className="card-body">
             <div className="flex flex-col items-center gap-2 text-center">
               <span className={item.icon} style={{ fontSize: 70 }} />

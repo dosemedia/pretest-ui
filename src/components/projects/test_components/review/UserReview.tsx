@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../../gql/graphql";
 import '../../../../css/creative.css'
 import { useContext, useEffect, useState } from "react";
 import { testTypeMenu } from "../../../../stores/projects";
@@ -11,16 +10,17 @@ import FacebookPreviewContainer from "../../../social/FacebookPreviewContainer";
 import { Projects_Themes as ProjectTheme } from "../../../../gql/graphql";
 import { DateTime } from "luxon";
 import { Landing_Pages as LandingPage } from '../../../../gql/graphql';
-const UserReview = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
+const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const facebookAudiencesStore = useContext(ProjectFacebookAudienceContext)
   const landingPagesStore = useContext(ProjectLandingPagesContext)
   const projectThemesStore = useContext(ThemesContext)
-  const [nameApproved, setNameApproved] = useState(project.name_approved || false)
-  const [objectiveApproved, setObjectiveApproved] = useState(project.objective_approved || false)
-  const [projectTypeApproved, setProjectTypeApproved] = useState(project.project_type_approved || false)
-  const [brandnessApproved, setBrandnessApproved] = useState(project.brandness_approved || false)
-  const [platformApproved, setPlatformApproved] = useState(project.platform_approved || false)
-  const [startStopTimeApproved, setStartStopTimeApproved] = useState(project.start_stop_time_approved || false)
+  const [nameApproved, setNameApproved] = useState(props.project?.name_approved || false)
+  const [objectiveApproved, setObjectiveApproved] = useState(props.project?.objective_approved || false)
+  const [projectTypeApproved, setProjectTypeApproved] = useState(props.project?.project_type_approved || false)
+  const [brandnessApproved, setBrandnessApproved] = useState(props.project?.brandness_approved || false)
+  const [platformApproved, setPlatformApproved] = useState(props.project?.platform_approved || false)
+  const [startStopTimeApproved, setStartStopTimeApproved] = useState(props.project?.start_stop_time_approved || false)
   function renderTags(list: string[]) {
     return (
       <div key={list.join(',')} className="flex gap-x-2">
@@ -36,28 +36,28 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
   const updateThemeMutation = useMutation({
     mutationKey: ['UpdateThemeMutation'],
     mutationFn: ({ id, approved }: { id: string, approved: boolean }) => projectThemesStore.updateTheme({ id, payload: { approved } as ProjectTheme }),
-    onSuccess: () => onSave({})
+    onSuccess: () => { if (props.onSave) props.onSave({}) }
   })
 
   const updateLandingPageMutation = useMutation({
     mutationKey: ['UpdateLandingPageMutation'],
     mutationFn: ({ id, approved }: { id: string, approved: boolean }) => landingPagesStore.updateLandingPage(id, { approved } as LandingPage),
-    onSuccess: () => onSave({})
+    onSuccess: () => { if (props.onSave) props.onSave({}) }
   })
 
   const updateFacebookAudiencesApprovalMutation = useMutation({
     mutationKey: ['UpdateFacebookAudiencesApprovalMutation'],
     mutationFn: ({ id, approved }: { id: string, approved: boolean }) => facebookAudiencesStore.updateFacebookAudiencesByID({ id, payload: { approved } as FacebookAudience }),
-    onSuccess: () => onSave({})
+    onSuccess: () => { if (props.onSave) props.onSave({}) }
   })
 
   useEffect(() => {
-    onSave({ name_approved: nameApproved, brandness_approved: brandnessApproved, platform_approved: platformApproved, start_stop_time_approved: startStopTimeApproved, objective_approved: objectiveApproved, project_type_approved: projectTypeApproved })
+    if (props.onSave) props.onSave({ name_approved: nameApproved, brandness_approved: brandnessApproved, platform_approved: platformApproved, start_stop_time_approved: startStopTimeApproved, objective_approved: objectiveApproved, project_type_approved: projectTypeApproved })
   }, [nameApproved, brandnessApproved, platformApproved, startStopTimeApproved, objectiveApproved, projectTypeApproved])
 
   return (
     <>
-      {project.status === 'review' ? <div>Congratulations! Your test has been sent off for review</div> :
+      {props.project?.status === 'review' ? <div>Congratulations! Your test has been sent off for review</div> :
         <div>
           {/* Name Approval */}
           <label className="label mb-1">
@@ -65,7 +65,7 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
           </label>
           <div className="flex items-center gap-x-2">
             <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={nameApproved} onChange={() => setNameApproved((prev) => !prev)} />
-            <span className="font-bold text-md">{project.name}</span>
+            <span className="font-bold text-md">{props.project?.name}</span>
           </div>
 
           {/* Objective Approval */}
@@ -74,7 +74,7 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
           </label>
           <div className="flex items-center gap-x-2">
             <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={objectiveApproved} onChange={() => setObjectiveApproved((prev) => !prev)} />
-            <span className="font-bold text-md">{project.objective}</span>
+            <span className="font-bold text-md">{props.project?.objective}</span>
           </div>
 
           {/* Project Type Approval */}
@@ -83,7 +83,7 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
           </label>
           <div className="flex items-center gap-x-2">
             <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={projectTypeApproved} onChange={() => setProjectTypeApproved((prev) => !prev)} />
-            <span className="font-bold text-md">{_.find(testTypeMenu, (item) => item.value === project.project_type)?.label}</span>
+            <span className="font-bold text-md">{_.find(testTypeMenu, (item) => item.value === props.project?.project_type)?.label}</span>
           </div>
 
           {/* Brandness Approval */}
@@ -92,7 +92,7 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
           </label>
           <div className="flex items-center gap-x-2">
             <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={brandnessApproved} onChange={() => setBrandnessApproved((prev) => !prev)} />
-            <span className="font-bold text-md">{project.branding && (project.branding.charAt(0).toUpperCase() + project.branding.slice(1))}</span>
+            <span className="font-bold text-md">{props.project?.branding && (props.project?.branding.charAt(0).toUpperCase() + props.project?.branding.slice(1))}</span>
           </div>
 
           {/* Location Approval */}
@@ -101,14 +101,14 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
           </label>
           <div className="flex items-center gap-x-2">
             <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={platformApproved} onChange={() => setPlatformApproved((prev) => !prev)} />
-            <span className="font-bold text-md">{project.platform?.split('_').join(' & ')}</span>
+            <span className="font-bold text-md">{props.project?.platform?.split('_').join(' & ')}</span>
           </div>
 
           {/* Audience Approval */}
           <label className="label mb-1 mt-5">
             <span className="text-sm opacity-60">Audiences</span>
           </label>
-          {project.facebook_audiences.map((audience: FacebookAudience) =>
+          {props.project?.facebook_audiences.map((audience: FacebookAudience) =>
             <div key={audience.id}>
               <div className="flex items-center gap-x-2">
                 <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={audience.approved || false} onChange={() => { updateFacebookAudiencesApprovalMutation.mutate({ id: audience.id, approved: !audience.approved }); audience.approved = !audience.approved }} />
@@ -136,7 +136,7 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
           </label>
           <div className="flex items-center gap-x-2">
             <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={startStopTimeApproved} onChange={() => setStartStopTimeApproved((prev) => !prev)} />
-            <span className="font-bold text-md">{DateTime.fromISO(project.stop_time).diff(DateTime.fromISO(project.start_time)).as('days')} days</span>
+            <span className="font-bold text-md">{DateTime.fromISO(props.project?.stop_time).diff(DateTime.fromISO(props.project?.start_time)).as('days')} days</span>
           </div>
 
           {/* Creative Approval */}
@@ -144,7 +144,7 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
             <span className="text-sm opacity-60">Creatives</span>
           </label>
           <div className="flex flex-col gap-y-12">
-            {project.themes.map((theme) =>
+            {props.project?.themes.map((theme) =>
               <div key={theme.id}>
                 <div className="flex items-center gap-x-2">
                   <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={theme.approved || false} onChange={() => { updateThemeMutation.mutate({ id: theme.id, approved: !theme.approved }); theme.approved = !theme.approved }} />
@@ -163,7 +163,7 @@ const UserReview = observer(({ project, onSave }: { project: Project, onSave: (p
             <span className="text-sm opacity-60">Landing Pages</span>
           </label>
           <div className="flex flex-col gap-y-3">
-            {project.landing_pages.map((page) =>
+            {props.project?.landing_pages.map((page) =>
               <div key={page.id}>
                 <div className="flex items-center gap-x-2">
                   <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={page.approved || false} onChange={() => { updateLandingPageMutation.mutate({ id: page.id, approved: !page.approved }); page.approved = !page.approved }} />

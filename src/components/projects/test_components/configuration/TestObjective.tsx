@@ -1,22 +1,24 @@
 import { observer } from "mobx-react-lite";
-import { Projects as Project } from "../../../../gql/graphql";
 import { useEffect, useState } from "react";
-import { TestTypeMenu, testTypeMenu } from "../../../../stores/projects";
+import { ProjectStatus, TestTypeMenu, testTypeMenu } from "../../../../stores/projects";
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
 
-const TestObjective = observer(({ project, onSave }: { project: Project, onSave: (payload: object) => void }) => {
-  const [name, setName] = useState(project.name || '')
-  const [objective, setObjective] = useState(project.objective || '')
-  const [projectType, setProjectType] = useState(project.project_type || '')
+const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
+  const [name, setName] = useState(props.project?.name || '')
+  const [objective, setObjective] = useState(props.project?.objective || '')
+  const [projectType, setProjectType] = useState(props.project?.project_type || '')
   useEffect(() => {
     if (projectType === 'marketing_communication') {
       setProjectType('marketing_communication_language')
     }
-    onSave({ name, objective, project_type: projectType })
+    if (props.onSave) {
+      props.onSave({ name, objective, project_type: projectType })
+    }
   }, [name, objective, projectType])
 
   function selectionCard(item: TestTypeMenu) {
     return (
-      <div key={item.label} className={`card cursor-pointer ${projectType.includes(item.value) && 'card-selected'}`} style={{ backgroundColor: 'white', padding: '0px 10px', width: 285 }} onClick={() => { setProjectType(item.value) }}>
+      <div key={item.label} className={`card cursor-pointer ${projectType.includes(item.value) && 'card-selected'} ${props.project?.status === ProjectStatus.REVIEW && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 10px', width: 285 }} onClick={() => { setProjectType(item.value) }}>
         <div className="card-body">
           <div className="flex flex-col items-center gap-2">
             <img src={item.icon} style={{ width: 58 }} />
@@ -55,11 +57,11 @@ const TestObjective = observer(({ project, onSave }: { project: Project, onSave:
           <label className="label">
             <span className="text-sm">Name of your test</span>
           </label>
-          <input type="text" className="input" placeholder="Enter name of your test here" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="text" className="input" disabled={props.project?.status === ProjectStatus.REVIEW} placeholder="Enter name of your test here" value={name} onChange={(e) => setName(e.target.value)} />
           <label className="label mt-4">
             <span className="text-sm">What are you goals for this test?</span>
           </label>
-          <input type="text" className="input" placeholder="Your goals go here" value={objective} onChange={(e) => setObjective(e.target.value)} />
+          <input type="text" className="input" disabled={props.project?.status === ProjectStatus.REVIEW} placeholder="Your goals go here" value={objective} onChange={(e) => setObjective(e.target.value)} />
           <span className="text-xxs mt-1 ml-1">Example: “I’m using test to narrow in a new message or claim for my product.”</span>
         </div>
       </div>

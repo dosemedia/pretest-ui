@@ -7,7 +7,7 @@ import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql"
 import { SpinningLoading } from "../../../lib/SpinningLoading";
 import { FacebookAudienceInterest } from "../../../../stores/facebook";
 
-const TestAudienceInterests = observer(({ onUpdate, projectFacebookAudience }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience }) => {
+const TestAudienceInterests = observer(({ onUpdate, projectFacebookAudience, disabled }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience, disabled: boolean }) => {
   const facebookStore = useContext(FacebookContext)
   const [search, setSearch] = useState('')
   const [isUpdated, setIsUpdated] = useState(false)
@@ -70,7 +70,7 @@ const TestAudienceInterests = observer(({ onUpdate, projectFacebookAudience }: {
           <span className="text-sm opacity-60">Interests*</span>
         </label>
         <div className="flex items-center">
-          <input type="text" className="input" placeholder="Search for interests..." value={search} onChange={(e) => { setSearch(e.target.value); onSearch(e?.target.value) }} />
+          <input disabled={disabled} type="text" className="input" placeholder="Search for interests..." value={search} onChange={(e) => { setSearch(e.target.value); onSearch(e?.target.value) }} />
           <div className="ml-2">
             {isLoading || isRefetching && <SpinningLoading isLoading={isLoading || isRefetching} size='loading-lg' />}
             {facebookInterestsMutation && facebookInterestsMutation.length > 0 && search && !isLoading && !isRefetching &&
@@ -85,7 +85,7 @@ const TestAudienceInterests = observer(({ onUpdate, projectFacebookAudience }: {
         </div>
         <div className="flex gap-x-2 mt-3">
           {interests.map((item) => (
-            <div style={{ backgroundColor: 'rgba(184, 173, 134, 0.17)' }} key={item.id} className="badge rounded-md p-3 cursor-pointer" onClick={() => removeInterest(item.id)}>{item.name}<span className="mdi mdi-close ml-2" /></div>
+            <div style={{ backgroundColor: 'rgba(184, 173, 134, 0.17)' }} key={item.id} className={`badge rounded-md p-3 cursor-pointer ${disabled && 'pointer-events-none'}`} onClick={() => removeInterest(item.id)}>{item.name}<span className="mdi mdi-close ml-2" /></div>
           )
           )}
         </div>

@@ -1,4 +1,6 @@
+import _, { snakeCase } from 'lodash'
 import { marked } from 'marked'
+import { useState } from 'react'
 
 function LandingPageSimplePoll({ 
     onSubmit,
@@ -14,7 +16,7 @@ function LandingPageSimplePoll({
     submitError,
     submittedText
   }: { 
-    onSubmit: () => void,
+    onSubmit: (selections: {[key: string]: Array<string>}) => void,
     headerImageUrl: string,
     pageBackgroundColor: string,
     textColor: string,
@@ -51,6 +53,45 @@ function LandingPageSimplePoll({
   }
   const submittedTextClasses = ''
 
+  const defaultSelectedOptions : {[key: string]: Array<string>} = {}
+  questions.forEach((question) => {
+    defaultSelectedOptions[snakeCase(question.title)] = []
+  })
+
+  const [selectedOptions, setSelectedOptions] = useState(defaultSelectedOptions)
+
+  const triggerSubmit = () => { 
+    onSubmit(selectedOptions)
+  }
+
+  let completedQuestionsCount = 0
+  _.keys(selectedOptions).forEach((key) => {
+    if (selectedOptions[key].length > 0) {
+      completedQuestionsCount++
+    }
+  })
+  const isComplete = questions.length === completedQuestionsCount
+
+  const updateCheckboxSelections = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newSelectedOptions = {...selectedOptions}
+    if (!newSelectedOptions[e.target.name]) {
+      newSelectedOptions[e.target.name] = []
+    }
+    if (e.target.checked) {
+      newSelectedOptions[e.target.name].push(e.target.value)
+    }
+    else {
+      newSelectedOptions[e.target.name] = newSelectedOptions[e.target.name].filter((option: string) => option !== e.target.value)
+    }
+    setSelectedOptions(newSelectedOptions)
+  }
+
+  const updateRadioSelections = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newSelectedOptions = {...selectedOptions}
+    newSelectedOptions[e.target.name] = [e.target.value]
+    setSelectedOptions(newSelectedOptions)
+  }
+
   return (
       <div
         style={{minHeight: '100vh', backgroundColor: pageBackgroundColor}}
@@ -61,21 +102,23 @@ function LandingPageSimplePoll({
             <img src={headerImageUrl} alt="Header Image" />
           </div>
         }
-        {questions && questions.map((question) => (
-          <div className={"w-full p-4" + ' ' + questionClasses}>
+        {questions && questions.map((question, questionIndex) => (
+          <div className={"w-full p-4" + ' ' + questionClasses} key={questionIndex}>
             <div
               dangerouslySetInnerHTML={parseMarkdown(question.title)}
               style={{color: textColor}}
               className={"font-bold pb-4" + ' ' + questionTitleClasses}
             ></div>
-            {question.options.map((option) => (
-              <div className="flex items-center mb-4 row-span-1">
+            {question.options.map((option, optionIndex) => (
+              <div className="flex items-center mb-4 row-span-1" key={optionIndex}>
                 {question.multipleChoice &&
                   <input
                     type="checkbox"
                     className={"bg-white checkbox checkbox-sm" + ' ' + inputClasses}
-                    name=""
-                    value=""
+                    name={snakeCase(question.title)}
+                    value={option}
+                    checked={selectedOptions[snakeCase(question.title)] && selectedOptions[snakeCase(question.title)].includes(option)}
+                    onChange={updateCheckboxSelections}
                     disabled={submitWait || submitted}
                   />
                 }
@@ -83,8 +126,10 @@ function LandingPageSimplePoll({
                   <input
                     type="radio"
                     className={"bg-white radio radio-sm" + ' ' + inputClasses}
-                    name=""
-                    value=""
+                    name={snakeCase(question.title)}
+                    value={option}
+                    checked={selectedOptions[snakeCase(question.title)] && selectedOptions[snakeCase(question.title)].includes(option)}
+                    onChange={updateRadioSelections}
                     disabled={submitWait || submitted}
                   />
                 }
@@ -107,10 +152,10 @@ function LandingPageSimplePoll({
         
         {!submitted &&
           <button
-            onClick={onSubmit}
-            style={{color: submitButtonTextColor, backgroundColor: submitButtonBackgroundColor}}
+            onClick={triggerSubmit}
+            style={{color: submitButtonTextColor, backgroundColor: (submitWait || submitted || !isComplete) ? '' : submitButtonBackgroundColor}}
             className={"btn" + ' ' + submitButtonClasses}
-            disabled={submitWait || submitted}
+            disabled={submitWait || submitted || !isComplete}
           >
             {/* From flowbite : https://flowbite.com/docs/components/spinner/ */}
             { submitWait &&

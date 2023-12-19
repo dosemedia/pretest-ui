@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LandingPageTemplate from '../LandingPageTemplate'
 import { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -10,19 +10,36 @@ import LandingPageSimplePoll from './LandingPageSimplePoll'
 const LandingPageSimplePollRender: React.FC<{ landingPageId: string, data: any }> = ({ landingPageId, data }) => {
   const analyticsStore = useContext(AnalyticsContext)
   const location = useLocation()
+  const [submitWait, setSubmitWait] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
-  async function onSubmit() {  
+  async function onSubmit(selections: {[key: string]: Array<string>}) {  
     // Don't track events in page editor
     if (location.pathname.startsWith('/project')) {
       return
     }
-    await analyticsStore.trackEvent(landingPageId, 'button_click', 'cta', null, location)
+    setSubmitWait(true)
+    await analyticsStore.trackEvent(landingPageId, 'poll_submit', null, selections, location)
+    setSubmitWait(false)
+    setSubmitted(true)
   }
 
   return (
     <>
       { data && 
-        <LandingPageSimplePoll onSubmit={onSubmit} />
+        <LandingPageSimplePoll 
+        headerImageUrl={data.headerImageUrl}
+        pageBackgroundColor={data.pageBackgroundColor}
+        textColor={data.textColor}
+        questions={data.questions}
+        submitButtonText={data.submitButtonText}
+        submitButtonBackgroundColor={data.submitButtonBackgroundColor}
+        submitButtonTextColor={data.submitButtonTextColor}
+        submitWait={submitWait}
+        submitted={submitted}
+        submitError=''
+        submittedText={data.submittedText}
+        onSubmit={onSubmit} />
       }
     </>
   );

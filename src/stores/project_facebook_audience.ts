@@ -12,7 +12,7 @@ export class ProjectFacebookAudience {
   constructor() {
     makeAutoObservable(this)
   }
-  checkIsAudienceComplete(audience: FacebookAudience): boolean {
+  checkIsAudienceComplete(audience?: FacebookAudience): boolean {
     if (audience) {
       if ((audience.geo_locations?.countries?.length === 0) && Object.keys(audience.geo_locations?.regions).length === 0) {
         return false

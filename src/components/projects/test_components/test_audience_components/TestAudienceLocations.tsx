@@ -8,7 +8,7 @@ import { SpinningLoading } from "../../../lib/SpinningLoading";
 import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql";
 import { ProjectFacebookAudienceGeolocation } from "../../../../stores/project_facebook_audience";
 
-const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience }) => {
+const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience, disabled }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience, disabled: boolean }) => {
   const facebookStore = useContext(FacebookContext)
   const [locationSearch, setLocationSearch] = useState('')
   const [isUpdated, setIsUpdated] = useState(false)
@@ -84,7 +84,7 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
           <span className="text-sm opacity-60">Location*</span>
         </label>
         <div className="flex items-center">
-          <input type="text" className="input w-10/12" placeholder="Search for location..." value={locationSearch} onChange={(e) => { setLocationSearch(e.target.value); onLocationSearch(e?.target.value) }} />
+          <input disabled={disabled} type="text" className="input w-10/12" placeholder="Search for location..." value={locationSearch} onChange={(e) => { setLocationSearch(e.target.value); onLocationSearch(e?.target.value) }} />
           <div className="ml-2">
             {(facebookLocationsIsLoading || facebookLocationsIsRefetching) && <SpinningLoading isLoading={facebookLocationsIsLoading || facebookLocationsIsRefetching} size='loading-lg' />}
             {facebookLocations && facebookLocations.length > 0 && locationSearch && !facebookLocationsIsLoading && !facebookLocationsIsRefetching &&
@@ -99,7 +99,7 @@ const TestAudienceLocations = observer(({ onUpdate, projectFacebookAudience }: {
         </div>
         <div className="flex gap-x-2 mt-3">
           {locations.map((item) => (
-            <div style={{ backgroundColor: 'rgba(184, 173, 134, 0.17)' }} key={item.key} className="badge rounded-md p-3 cursor-pointer" onClick={() => removeLocation(item)}>{item.name}<span className="mdi mdi-close ml-2" /></div>
+            <div style={{ backgroundColor: 'rgba(184, 173, 134, 0.17)' }} key={item.key} className={`badge rounded-md p-3 cursor-pointer ${disabled && 'pointer-events-none'}`} onClick={() => removeLocation(item)}>{item.name}<span className="mdi mdi-close ml-2" /></div>
           )
           )}
         </div>

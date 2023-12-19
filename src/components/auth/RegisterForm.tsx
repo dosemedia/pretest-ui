@@ -69,17 +69,17 @@ const RegisterForm = observer(() => {
         <label className="label">
           <span className="text-sm opacity-60">Email</span>
         </label>
-        <input type="text" className={(emailValid ? '' : 'p-invalid') + ' input'} placeholder="Email" value={email} onChange={handleEmailChange} />
+        <input id="email" type="text" className={(emailValid ? '' : 'p-invalid') + ' input'} placeholder="Email" value={email} onChange={handleEmailChange} />
         <label className="label" style={{ marginTop: 20 }}>
           <span className="text-sm opacity-60">Password</span>
         </label>
-        <input type="password" className={(passwordValid ? '' : 'p-invalid') + ' input'} placeholder="Password" value={password} onChange={handlePasswordChange} onKeyUp={(e) => {if(e.key === 'Enter'){handleRegister()}}} />
+        <input id="password" type="password" className={(passwordValid ? '' : 'p-invalid') + ' input'} placeholder="Password" value={password} onChange={handlePasswordChange} onKeyUp={(e) => {if(e.key === 'Enter'){handleRegister()}}} />
         <div style={{marginTop: 20}}>
-          <input type="checkbox" className="checkbox" style={{ verticalAlign: 'middle', marginRight: 10 }} onChange={() => setTermsAccepted(!termsAccepted)} checked={termsAccepted} />
+          <input id="legal_checkbox" type="checkbox" className="checkbox" style={{ verticalAlign: 'middle', marginRight: 10 }} onChange={() => setTermsAccepted(!termsAccepted)} checked={termsAccepted} />
           <span>I accept the legal stuff!</span>
         </div>
         <div className="flex" style={{ gap: 16, marginTop: 20 }}>
-          <button className="btn action-button text-base font-bold" onClick={handleRegister} disabled={handleRegisterMutation.isLoading || !termsAccepted || !email || !password || !emailValid}>
+          <button id="signup_button" className="btn action-button text-base font-bold" onClick={handleRegister} disabled={handleRegisterMutation.isLoading || !termsAccepted || !email || !password || !emailValid}>
             Sign up <SpinningLoading isLoading={handleRegisterMutation.isLoading} />
           </button>
           <p className="text-base" style={{ lineHeight: '106%' }}>
