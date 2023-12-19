@@ -92,7 +92,7 @@ const RegisterForm = observer(() => {
           By clicking “Sign Up” I agree to Orchards Terms of Use and Privacy Policy and to receive electronic communication about my accounts and services.
         </p>
         { handleRegisterMutation.isError &&
-          <div style={{marginTop: '1em'}}>
+          <div id="error_message" style={{marginTop: '1em'}}>
             <MessageAlert message={(handleRegisterMutation.error as Error).message} type="error" />
           </div>
         }

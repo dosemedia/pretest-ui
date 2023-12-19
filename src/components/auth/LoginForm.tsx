@@ -67,7 +67,7 @@ const LoginForm = observer(() => {
           </p>
         </div>
         { handleLoginMutation.isError &&
-          <div style={{marginTop: 20 }}>
+          <div id="error_message" style={{marginTop: 20 }}>
             <MessageAlert message={(handleLoginMutation.error as Error).message} type="error" />
           </div>
         }
