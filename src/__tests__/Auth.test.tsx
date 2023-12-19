@@ -35,7 +35,7 @@ describe("User register authentication", () => {
     fireEvent.change(emailInput!, { target: { value: userEmail }})
     expect(legalCheckboxInput).not.toBeChecked()
   })
-  it.only("User can register", async () => {
+  it("User can register", async () => {
     const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
     console.log(userEmail)
     const passwordInput = result.container.querySelector('#password')!
