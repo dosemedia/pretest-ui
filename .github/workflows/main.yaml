@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Debug NODE_BASE_URL
-        run: echo "NODE_BASE_URL value: $NODE_BASE_URL"
+        run: echo "$NODE_BASE_URL"
 
       - name: Clone server repository
         run: git clone --depth=1 https://github.com/dosemedia/pretest-api.git
