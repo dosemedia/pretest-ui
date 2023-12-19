@@ -3,6 +3,7 @@ import { useState, useContext } from 'react'
 import { TeamsContext, ToastsContext } from "../../stores/stores";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { ToastType } from "../../stores/toast";
 const InviteUser = observer(() => {
   const teamsStore = useContext(TeamsContext)
   const toastsStore = useContext(ToastsContext)

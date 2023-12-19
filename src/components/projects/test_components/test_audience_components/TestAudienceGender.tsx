@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql";
 import { useState, useEffect } from "react";
 import _ from 'lodash'
-import React from "react";
 const TestAudienceGender = observer(({ onUpdate, projectFacebookAudience, disabled }: { onUpdate: (audience: FacebookAudience, isUpdated: boolean) => void, projectFacebookAudience: FacebookAudience, disabled: boolean }) => {
   const [genders, setGenders] = useState<number[]>([])
   const [isUpdated, setIsUpdated] = useState(false)
