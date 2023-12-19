@@ -27,12 +27,9 @@ jobs:
           yarn install
           yarn prisma generate
           yarn start
-          
-
-      - name: Wait for server to start
-        run: sleep 10 # Adjust this based on the time required for the server to start
 
       - name: Run yarn test
         run: |
           yarn install
+          yarn build
           yarn test
