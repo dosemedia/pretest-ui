@@ -46,7 +46,7 @@ const ProjectDraft = () => {
     <>
 
       <ProjectStepContainer step={step}>
-        <TestObjective title="What type of test are you creating" />
+        <TestObjective title="What type of test are you creating?" />
         <TestBranding title="Are you looking for an unbranded or branded test?" />
         <TestPlatform title="Where would you like to test?" />
         <TestAudience title="Create your own audience" />
