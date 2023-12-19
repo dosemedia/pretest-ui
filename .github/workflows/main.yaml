@@ -9,6 +9,9 @@ jobs:
   run-tests:
     env:
       NODE_BASE_URL: ${{ secrets.NODE_BASE_URL }}
+      HASURA_GRAPHQL_ADMIN_SECRET: ${{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      VITE_HASURA_BASE_URL: ${{ secrets.VITE_HASURA_BASE_URL }}
     runs-on: ubuntu-latest
 
     steps:
