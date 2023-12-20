@@ -11,10 +11,11 @@ import { Projects_Themes as ProjectTheme } from "../../../../gql/graphql";
 import { DateTime } from "luxon";
 import { Landing_Pages as LandingPage } from '../../../../gql/graphql';
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
+import ProjectAdminReview from "../../ProjectAdminReview";
 const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const facebookAudiencesStore = useContext(ProjectFacebookAudienceContext)
   const landingPagesStore = useContext(ProjectLandingPagesContext)
-  const authStore = useContext(AuthContext)
+  const authStore =useContext(AuthContext)
   const projectThemesStore = useContext(ThemesContext)
   const [nameApproved, setNameApproved] = useState(props.project?.name_approved || false)
   const [objectiveApproved, setObjectiveApproved] = useState(props.project?.objective_approved || false)
@@ -60,6 +61,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
     <>
       {props.project?.status === 'review' && !authStore.isSuperadmin() ? <div>Congratulations! Your test has been sent off for review</div> :
         <div>
+          <ProjectAdminReview project={props.project} />
           {/* Name Approval */}
           <label className="label mb-1">
             <span className="text-sm opacity-60">Name of your test</span>
