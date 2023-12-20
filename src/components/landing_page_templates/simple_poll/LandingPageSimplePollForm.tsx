@@ -1,3 +1,5 @@
+import LandingPageImageField from "../LandingPageImageField";
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LandingPageSimplePollForm: React.FC<{ data: {
   version: number,
@@ -13,7 +15,7 @@ const LandingPageSimplePollForm: React.FC<{ data: {
   submitButtonBackgroundColor: string,
   submitButtonTextColor: string,
   submittedText: string
-}, onChange : (newData: any) => void }> = ({ data, onChange }) => {
+}, onChange : (newData: any) => void, projectId: string }> = ({ data, onChange, projectId }) => {
   const formData = data || {
     version: 1,
     headerImageUrl: '',
@@ -33,13 +35,7 @@ const LandingPageSimplePollForm: React.FC<{ data: {
           <label className="label">
             <span className="text-sm">Header Image Url</span>
           </label>
-          <input
-            type="text"
-            className="input"
-            placeholder="Enter header image url"
-            value={formData.headerImageUrl}
-            onChange={(e) => onChange({...formData, headerImageUrl: e.target.value})}
-          />
+          <LandingPageImageField value={formData.headerImageUrl} projectId={projectId} onChange={(headerImageUrl) => onChange({...formData, headerImageUrl})} />
         </div>
 
         <div>

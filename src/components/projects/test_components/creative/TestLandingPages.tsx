@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Projects as Project } from "../../../../gql/graphql";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ProjectLandingPagesContext } from "../../../../stores/stores";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "../../../lib/Error";
@@ -73,7 +73,7 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
                     <LandingPageRender landingPageId={landingPage.id} data={landingPage.data} component={landingPage.template_name} />
                   </div>
                 </Link>
-                <Link className="btn mt-4" to={`/project/${props.project?.id}/landing_page/${landingPage.id}`}>
+                <Link className="btn btn-primary" to={`/project/${props.project?.id}/landing_page/${landingPage.id}`}>
                   Edit Page
                 </Link>
                 
