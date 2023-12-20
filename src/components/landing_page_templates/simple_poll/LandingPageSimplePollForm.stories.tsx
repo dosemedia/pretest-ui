@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 import LandingPageSimplePollForm from './LandingPageSimplePollForm';
 
 const meta: Meta<typeof LandingPageSimplePollForm> = {
@@ -34,10 +37,21 @@ const commonData = {
   submittedText: ''
 }
 
+const queryClient = new QueryClient()
+const decorators = [
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (Story: any) => (
+    <QueryClientProvider client={queryClient}>
+      <Story />
+    </QueryClientProvider>
+  ),
+];
+
 export const Default: Story = {
   args: {
     data: commonData
   },
+  decorators
 };
 
 export const NoQuestions: Story = {
@@ -47,6 +61,7 @@ export const NoQuestions: Story = {
       questions: []
     }
   },
+  decorators
 };
 
 export const NoOptions: Story = {
@@ -62,4 +77,7 @@ export const NoOptions: Story = {
       ],
     }
   },
+  decorators
 };
+
+

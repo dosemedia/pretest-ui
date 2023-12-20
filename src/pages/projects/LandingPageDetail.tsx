@@ -12,7 +12,7 @@ import LandingPageTemplates from '../../components/landing_page_templates/Landin
 
 // Grab each of the possible landing page forms from LandingPageTemplates
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const forms: { [key: string]: React.FC<{ data: any, onChange : (newData: any) => void }> } = {};
+const forms: { [key: string]: React.FC<{ data: any, onChange : (newData: any) => void, projectId: string }> } = {};
 for (const template of LandingPageTemplates) {
   forms[template.name] = template.form;
 }
@@ -82,6 +82,7 @@ const LandingPageDetail = observer(() => {
         <Form
           data={formData}
           onChange={onChange}
+          projectId={projectId}
         />
       }
       { !dataSaved && <div className="my-4">Saving...</div> }
