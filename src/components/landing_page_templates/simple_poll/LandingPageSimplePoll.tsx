@@ -95,7 +95,7 @@ function LandingPageSimplePoll({
   return (
       <div
         style={{minHeight: '100vh', backgroundColor: pageBackgroundColor}}
-        className={"p-4 flex items-center justify-center flex-col" + ' '  + pageClasses}
+        className={"p-4 flex items-center justify-start flex-col" + ' '  + pageClasses}
       >
         { headerImageUrl &&
           <div className={"lg:w-1/2 text-center" + ' ' + headerImageClasses}>

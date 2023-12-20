@@ -45,12 +45,12 @@ const LandingPageSimplePollRender: React.FC<{ landingPageId: string, data: any }
   );
 }
 
-const LandingPageDemo = {
-  name: 'LandingPageDemo',
-  title: 'Landing Page Demo',
-  description: 'This is the description for Landing Page Demo ...',
+const LandingPageSimplePollModule = {
+  name: 'LandingPageSimplePoll',
+  title: 'Poll',
+  description: 'Header image and poll questions.',
   render: LandingPageSimplePollRender,
   form: LandingPageSimplePollForm
 } as LandingPageTemplate;
 
-export default LandingPageDemo;
+export default LandingPageSimplePollModule;

@@ -68,22 +68,24 @@ const LandingPageDetail = observer(() => {
 
   return (
   <>
-    <div className="m-8">
+    <div className="m-4">
+      <Link to={`/project/${projectId}/?step=11`} className="btn btn-neutral mb-4">
+        <span className="mdi mdi-arrow-left"></span>
+        Back to Project
+      </Link>
       { isLoadingProject && <SpinningLoading isLoading={isLoadingProject} /> }
       { projectError && <ErrorMessage message={projectError.message} />}
-      { project && <div>Project : {project.name}</div> }
       
       { isLoadingLandingPage && <SpinningLoading isLoading={isLoadingLandingPage} /> }
       { landingPageError && <ErrorMessage message={landingPageError.message} />}
-      { landingPage && <div>Landing Page : {landingPage.id}</div> }
       { Form && 
         <Form
           data={formData}
           onChange={onChange}
         />
       }
-      { !dataSaved && <div>Saving...</div> }
-      { dataSaved && <div>Saved</div> }
+      { !dataSaved && <div className="my-4">Saving...</div> }
+      { dataSaved && <div className="my-4">Saved</div> }
 
       <hr/>
 

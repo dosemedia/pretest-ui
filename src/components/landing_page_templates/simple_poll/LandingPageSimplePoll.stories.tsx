@@ -11,23 +11,23 @@ export default meta;
 type Story = StoryObj<typeof LandingPageSimplePoll>;
 
 const commonArgs = {
-  headerImageUrl: 'https://picsum.photos/id/56/600/300',
-  pageBackgroundColor: '#C3D8F9',
+  headerImageUrl: 'https://picsum.photos/id/63/600/300',
+  pageBackgroundColor: '#ffd6ca',
   textColor: '#000000',
   questions: [
     {
       title: "Which of the products shown are you most interested in trying?\n\n(Select all that apply)",
       multipleChoice: true,
       options: [
-        "Clear Deodorant Stick",
-        "Skin Tone Matching Deodorant Stick",
-        "Cream",
-        "Underarm Patch",
-        "Serum"
+        "Widget Blaster",
+        "Super Thingy",
+        "That Stuff",
+        "Mystery Item",
+        "Hidden Gem"
       ]
     },
     {
-      title: "How much do you expect the deodorant shown to cost?",
+      title: "How much do you expect the product shown to cost?",
       multipleChoice: false,
       options: [
         "$5-10",
