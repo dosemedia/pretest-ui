@@ -57,7 +57,7 @@ const ProjectsTable = observer(() => {
         error && <ErrorMessage message={error.message} />
       }
       {
-        !teams.activeTeam && !isLoading && !data && <div className="alert alert-info text-white"><span>You are not part of a team yet! Create a team <Link className="underline" to="/teams">here</Link> and start your create your first test today!</span></div>
+        !teams.activeTeam && !isLoading && !data?.length && <div className="alert alert-info text-white"><span>You are not part of a team yet! Create a team <Link className="underline" to="/teams">here</Link> and start your create your first test today!</span></div>
       }
       {data && teams.activeTeam && !isLoading &&
         <>
@@ -71,7 +71,7 @@ const ProjectsTable = observer(() => {
           </div>
           <div className="card" style={{ backgroundColor: "white" }}>
             <div className="card-title text-sm" style={{ opacity: 0.6, color: "#282828" }}>
-              {teams.activeTeam?.name} --- Tests Overview
+              <Link to={`/team/${teams.activeTeam.id}`} className="underline">{teams.activeTeam?.name}</Link> --- Tests Overview
             </div>
             {auth.user?.display_name &&
               <div className="text-lg font-bold">
