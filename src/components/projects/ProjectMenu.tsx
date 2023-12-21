@@ -5,10 +5,10 @@ import { useSearchParams } from "react-router-dom";
 import { ProjectFacebookAudienceContext, ProjectsContext } from "../../stores/stores";
 import _ from "lodash";
 import { ProjectDraftMenu, NextButtonConfig } from "./ProjectDraft";
-import { ProjectStatus } from "../../stores/projects";
 import { useEffect } from "react";
 import { Projects as Project, Projects_Set_Input } from "../../gql/graphql";
 import ProjectStatusView from "../lib/ProjectStatus";
+import { ProjectStatus } from "../../stores/projects";
 
 const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: number, project: Project, currentStep: (arg0: ProjectDraftMenu) => void, onSave: (arg0: Projects_Set_Input) => void}) => {
   const projectStore = useContext(ProjectsContext)
@@ -101,7 +101,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
       steps: [12],
       children: [],
       isComplete: isReviewComplete(),
-      overrideNext: project?.status === 'review' ? null : {
+      overrideNext: project?.status !== ProjectStatus.DRAFT ? null : {
         name: 'Submit for review',
         onNext: async () => sendReviewCompleteMessageMutation.mutateAsync()
       } as NextButtonConfig

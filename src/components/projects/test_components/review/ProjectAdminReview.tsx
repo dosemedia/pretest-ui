@@ -1,15 +1,15 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext, FacebookContext, ProjectsContext, ToastsContext } from "../../stores/stores";
-import { SpinningLoading } from "../lib/SpinningLoading";
-import ErrorMessage from "../lib/Error";
-import { Projects as Project } from "../../gql/graphql";
+import { AuthContext, FacebookContext, ProjectsContext, ToastsContext } from "../../../../stores/stores";
+import { SpinningLoading } from "../../../lib/SpinningLoading";
+import ErrorMessage from "../../../lib/Error";
+import { Projects as Project } from "../../../../gql/graphql";
 import { CombinedError } from "urql";
 import { DateTime } from "luxon";
-import { FacebookAdAccount } from "../../stores/facebook";
-import { ToastType } from "../../stores/toast";
-import { ProjectStatus } from "../../stores/projects";
+import { FacebookAdAccount } from "../../../../stores/facebook";
+import { ToastType } from "../../../../stores/toast";
+import { ProjectStatus } from "../../../../stores/projects";
 
 const ProjectAdminReview = observer(({ project }: { project?: Project }) => {
   const facebookStore = useContext(FacebookContext)

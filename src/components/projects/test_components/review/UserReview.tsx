@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import '../../../../css/creative.css'
 import { useContext, useEffect, useState } from "react";
-import { testTypeMenu } from "../../../../stores/projects";
+import { ProjectStatus, testTypeMenu } from "../../../../stores/projects";
 import _ from 'lodash'
 import { Facebook_Audiences as FacebookAudience } from "../../../../gql/graphql";
 import { useMutation } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ import { Projects_Themes as ProjectTheme } from "../../../../gql/graphql";
 import { DateTime } from "luxon";
 import { Landing_Pages as LandingPage } from '../../../../gql/graphql';
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
-import ProjectAdminReview from "../../ProjectAdminReview";
+import ProjectAdminReview from "./ProjectAdminReview";
 const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const facebookAudiencesStore = useContext(ProjectFacebookAudienceContext)
   const landingPagesStore = useContext(ProjectLandingPagesContext)
@@ -53,6 +53,10 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
     onSuccess: () => { if (props.onSave) props.onSave({}) }
   })
 
+  function isDisabled () {
+    return props.project?.status === ProjectStatus.SUBMITTED
+  }
+
   useEffect(() => {
     if (props.onSave) props.onSave({ name_approved: nameApproved, brandness_approved: brandnessApproved, platform_approved: platformApproved, start_stop_time_approved: startStopTimeApproved, objective_approved: objectiveApproved, project_type_approved: projectTypeApproved })
   }, [nameApproved, brandnessApproved, platformApproved, startStopTimeApproved, objectiveApproved, projectTypeApproved])
@@ -67,7 +71,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             <span className="text-sm opacity-60">Name of your test</span>
           </label>
           <div className="flex items-center gap-x-2">
-            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={nameApproved} onChange={() => setNameApproved((prev) => !prev)} />
+            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={nameApproved} onChange={() => setNameApproved((prev) => !prev)} />
             <span className="font-bold text-md">{props.project?.name}</span>
           </div>
 
@@ -76,7 +80,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             <span className="text-sm opacity-60">Goals for this test</span>
           </label>
           <div className="flex items-center gap-x-2">
-            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={objectiveApproved} onChange={() => setObjectiveApproved((prev) => !prev)} />
+            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={objectiveApproved} onChange={() => setObjectiveApproved((prev) => !prev)} />
             <span className="font-bold text-md">{props.project?.objective}</span>
           </div>
 
@@ -85,7 +89,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             <span className="text-sm opacity-60">Test type</span>
           </label>
           <div className="flex items-center gap-x-2">
-            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={projectTypeApproved} onChange={() => setProjectTypeApproved((prev) => !prev)} />
+            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={projectTypeApproved} onChange={() => setProjectTypeApproved((prev) => !prev)} />
             <span className="font-bold text-md">{_.find(testTypeMenu, (item) => item.value === props.project?.project_type)?.label}</span>
           </div>
 
@@ -94,7 +98,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             <span className="text-sm opacity-60">Brandedness</span>
           </label>
           <div className="flex items-center gap-x-2">
-            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={brandnessApproved} onChange={() => setBrandnessApproved((prev) => !prev)} />
+            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={brandnessApproved} onChange={() => setBrandnessApproved((prev) => !prev)} />
             <span className="font-bold text-md">{props.project?.branding && (props.project?.branding.charAt(0).toUpperCase() + props.project?.branding.slice(1))}</span>
           </div>
 
@@ -103,7 +107,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             <span className="text-sm opacity-60">Test Location</span>
           </label>
           <div className="flex items-center gap-x-2">
-            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={platformApproved} onChange={() => setPlatformApproved((prev) => !prev)} />
+            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={platformApproved} onChange={() => setPlatformApproved((prev) => !prev)} />
             <span className="font-bold text-md">{props.project?.platform?.split('_').join(' & ')}</span>
           </div>
 
@@ -114,7 +118,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
           {props.project?.facebook_audiences.map((audience: FacebookAudience) =>
             <div key={audience.id}>
               <div className="flex items-center gap-x-2">
-                <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={audience.approved || false} onChange={() => { updateFacebookAudiencesApprovalMutation.mutate({ id: audience.id, approved: !audience.approved }); audience.approved = !audience.approved }} />
+                <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={audience.approved || false} onChange={() => { updateFacebookAudiencesApprovalMutation.mutate({ id: audience.id, approved: !audience.approved }); audience.approved = !audience.approved }} />
                 <span className="font-bold text-md">{audience.name}</span>
               </div>
               <div className="mt-3">
@@ -138,7 +142,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             <span className="text-sm opacity-60">Set duration</span>
           </label>
           <div className="flex items-center gap-x-2">
-            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={startStopTimeApproved} onChange={() => setStartStopTimeApproved((prev) => !prev)} />
+            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={startStopTimeApproved} onChange={() => setStartStopTimeApproved((prev) => !prev)} />
             <span className="font-bold text-md">{DateTime.fromISO(props.project?.stop_time).diff(DateTime.fromISO(props.project?.start_time)).as('days')} days</span>
           </div>
 
@@ -150,7 +154,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             {props.project?.themes.map((theme) =>
               <div key={theme.id}>
                 <div className="flex items-center gap-x-2">
-                  <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={theme.approved || false} onChange={() => { updateThemeMutation.mutate({ id: theme.id, approved: !theme.approved }); theme.approved = !theme.approved }} />
+                  <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={theme.approved || false} onChange={() => { updateThemeMutation.mutate({ id: theme.id, approved: !theme.approved }); theme.approved = !theme.approved }} />
                   <span className="font-bold text-md">{theme.name}</span>
                 </div>
                 <div className="flex flex-wrap gap-x-2 gap-y-2 mt-3">
@@ -169,7 +173,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             {props.project?.landing_pages.map((page) =>
               <div key={page.id}>
                 <div className="flex items-center gap-x-2">
-                  <input type="checkbox" className="checkbox checkbox-primary border-gray-200" checked={page.approved || false} onChange={() => { updateLandingPageMutation.mutate({ id: page.id, approved: !page.approved }); page.approved = !page.approved }} />
+                  <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={page.approved || false} onChange={() => { updateLandingPageMutation.mutate({ id: page.id, approved: !page.approved }); page.approved = !page.approved }} />
                   <span className="font-bold text-md">{page.template_name}</span>
                 </div>
               </div>)}
