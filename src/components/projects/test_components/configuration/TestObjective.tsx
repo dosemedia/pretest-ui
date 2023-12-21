@@ -59,7 +59,7 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
           </label>
           <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="Enter name of your test here" value={name} onChange={(e) => setName(e.target.value)} />
           <label className="label mt-4">
-            <span className="text-sm">What are you goals for this test?</span>
+            <span className="text-sm">What are your goals for this test?</span>
           </label>
           <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="Your goals go here" value={objective} onChange={(e) => setObjective(e.target.value)} />
           <span className="text-xxs mt-1 ml-1">Example: “I’m using test to narrow in a new message or claim for my product.”</span>

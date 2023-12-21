@@ -1,16 +1,16 @@
 import { QueryKey, useMutation, useQuery } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
 import { useContext, useState, useEffect, useCallback } from 'react'
-import { ProjectFacebookCreativeTemplatesContext } from "../../stores/stores";
-import { SpinningLoading } from "../../components/lib/SpinningLoading";
+import { ProjectFacebookCreativeTemplatesContext } from "../../../../stores/stores";
+import { SpinningLoading } from "../../../lib/SpinningLoading";
 import { useSearchParams } from 'react-router-dom'
 import _ from 'lodash'
-import CreativeTemplates from "../../components/creative_templates/CreativeTemplates";
-import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../gql/graphql";
-import ErrorMessage from "../../components/lib/Error";
-import CreativeTemplateRender from "../../components/renders/CreativeTemplateRender";
-import { ProjectStepChildProps } from "../../components/projects/ProjectStepContainer";
-import { ProjectStatus } from "../../stores/projects";
+import CreativeTemplates from "../../../creative_templates/CreativeTemplates";
+import { Project_Facebook_Creative_Templates as ProjectFacebookCreativeTemplate } from "../../../../gql/graphql";
+import ErrorMessage from "../../../lib/Error";
+import CreativeTemplateRender from "../../../renders/CreativeTemplateRender";
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
+import { ProjectStatus } from "../../../../stores/projects";
 
 const projectFacebookCreativeTemplateDetail: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const [formData, setFormData] = useState(null);
@@ -44,7 +44,7 @@ const projectFacebookCreativeTemplateDetail: React.FC<ProjectStepChildProps> = o
   const deleteProjectFacebookCreativeTemplateMutation = useMutation({
     mutationKey: ['deleteProjectFacebookCreativeTemplateMutation'],
     mutationFn: () => projectFacebookCreativeTemplateStore.deleteProjectFacebookCreativeTemplate(projectFacebookCreativeTemplateId),
-    onSuccess: () => { searchParams.delete('project_facebook_creative_template_id'); searchParams.set('step', '6'); setSearchParams(searchParams) }
+    onSuccess: () => { searchParams.delete('project_facebook_creative_template_id'); searchParams.set('step', '6'); setSearchParams(searchParams); if (props.onSave) props.onSave({}) }
   })
 
   const updateCreative = useMutation({
@@ -52,7 +52,8 @@ const projectFacebookCreativeTemplateDetail: React.FC<ProjectStepChildProps> = o
     mutationFn: async (data: any) => {
       console.log('~~ updateFacebookCreative')
       return await projectFacebookCreativeTemplateStore.updateProjectFacebookCreativeTemplate(projectFacebookCreativeTemplate?.id, data)
-    }
+    },
+    onSuccess: () => { if (props.onSave) props.onSave({}) }
   })
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

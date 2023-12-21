@@ -56,10 +56,6 @@ const TestAudience:React.FC<ProjectStepChildProps> = observer((props: ProjectSte
   }, 300), [facebookAudienceData])
 
   useEffect(() => {
-    // onAudienceComplete(isAudienceComplete)
-  }, [isAudienceComplete])
-
-  useEffect(() => {
     if (!facebookAudienceData) {
       createProjectFacebookAudienceMutation.mutate()
     }

@@ -8,7 +8,7 @@ import TestBranding from "./test_components/configuration/TestBranding";
 import TestAudience from "./test_components/configuration/TestAudience";
 import TestRuntime from "./test_components/configuration/TestRuntime";
 import TestCreatives from "./test_components/creative/TestCreatives";
-import ProjectFacebookCreativeTemplateDetail from "../../pages/projects/ProjectFacebookCreativeTemplateDetail";
+import ProjectFacebookCreativeTemplateDetail from "./test_components/creative/ProjectFacebookCreativeTemplateDetail";
 import TestThemes from "./test_components/creative/TestThemes";
 import TestLandingPages from "./test_components/creative/TestLandingPages";
 import TestMatrix from "./test_components/creative/TestMatrix";

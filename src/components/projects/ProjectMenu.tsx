@@ -14,8 +14,6 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
   const projectStore = useContext(ProjectsContext)
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
   const setSearchParams = useSearchParams()[1]
-  const [audienceComplete] = useState(projectFacebookAudienceStore.checkIsAudienceComplete(project?.facebook_audiences[0]))
-  const [adTemplateComplete] = useState(project?.project_facebook_creative_templates?.length ? true : false)
   const sendReviewCompleteMessageMutation = useMutation({
     mutationKey: ['sendReviewCompleteMessageMutation'],
     mutationFn: () => projectStore.sendReviewCompleteSlackMessage({ projectId: project?.id, returnUrl: window.location.href }),
@@ -31,7 +29,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
         {
           label: 'Test Objective',
           steps: [1],
-          isComplete: Boolean(project?.name && project?.objective),
+          isComplete: Boolean(project?.name && project?.objective && project?.project_type),
           value: 'test_objective',
           icon: 'mdi mdi-flask-outline'
         },
@@ -53,7 +51,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
           label: 'Audience',
           value: 'audience',
           steps: [4],
-          isComplete: Boolean(audienceComplete),
+          isComplete: projectFacebookAudienceStore.checkIsAudienceComplete(project?.facebook_audiences[0]),
           icon: 'mdi mdi-account-group-outline'
         },
         {
@@ -73,7 +71,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
         {
           label: 'Ad template',
           steps: [6, 7],
-          isComplete: adTemplateComplete,
+          isComplete: Boolean(project?.project_facebook_creative_templates?.length),
           value: 'ad_template',
           icon: 'mdi mdi-image-multiple'
         },
@@ -82,7 +80,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
           value: 'ad_copy_matrix',
           steps: [8, 9, 10],
           goToStep: () => goToAdCopyStep(),
-          isComplete: Boolean(project && project?.themes?.length > 2),
+          isComplete: Boolean(project && ((project?.themes && step === 8) || project?.themes[0]?.angles[0]?.facebook_creatives?.length > 0 )),
           icon: 'mdi mdi-file-document-edit'
         },
         {
@@ -113,7 +111,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
       children: [],
       steps: [13]
     }])
-  }, [project])
+  }, [project, step])
 
   function isCurrentStepComplete(menu: ProjectDraftMenu[]) {
     for (const item of menu) {
@@ -124,6 +122,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
       }
     }
   }
+  
 
   useEffect(() => {
     isCurrentStepComplete([...configurationMenu])
@@ -162,7 +161,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
             {item.steps && item.steps[0] === step && <li className="flex flex-col" style={{ background: 'linear-gradient(351deg, #AB2160 -4.8%, #EF4136 94.68%)', borderRadius: '4px 0px 0px 4px', width: 6 }}><span></span></li>}
             <li className={`w-full step-parent ${item.steps && item.steps[0] === step && 'active'}`} onClick={() => item.children?.length === 0 && setSearchParams({ step: item.steps![0].toString() })}>
               <details open={item.children?.flatMap((item) => item.steps).includes(step!)}>
-                <summary><span className={item.icon}></span>{item.label}</summary>
+                <summary><span className={item.icon}></span>{item.label}{item?.isComplete && <span className="mdi mdi-check-circle text-success" />}</summary>
                 <ul>
                   {item.children?.map((child) =>
                     <li key={child.value} className={`project-menu-item ${child.steps?.includes(step!) && 'active'}`} onClick={() => { setSearchParams({ step: child.goToStep ? child.goToStep().toString() : child.steps![0].toString() }) }} ><a><span className={child.icon}></span>{child.label} {child.isComplete && <span className="mdi mdi-check-circle text-success" />}</a></li>

@@ -66,7 +66,6 @@ export class ProjectFacebookCreatives {
   }
 
   async updateProjectFacebookCreatives({ facebookCreativesUpdates }: { facebookCreativesUpdates: Facebook_Creatives_Updates[] }): Promise<FacebookCreative[]> {
-    console.log(facebookCreativesUpdates)
     const result = await client.mutation(graphql(`
     mutation UpdateFacebookCreatives($facebookCreativesUpdates: [facebook_creatives_updates!]!) {
       update_facebook_creatives_many(updates: $facebookCreativesUpdates) {
