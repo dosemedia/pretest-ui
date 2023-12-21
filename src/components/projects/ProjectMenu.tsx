@@ -2,22 +2,24 @@ import { useMutation } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ProjectFacebookAudienceContext, ProjectsContext } from "../../stores/stores";
+import { ProjectFacebookAudienceContext, ProjectsContext, ToastsContext } from "../../stores/stores";
 import _ from "lodash";
 import { ProjectDraftMenu, NextButtonConfig } from "./ProjectDraft";
 import { useEffect } from "react";
 import { Projects as Project, Projects_Set_Input } from "../../gql/graphql";
 import ProjectStatusView from "../lib/ProjectStatus";
 import { ProjectStatus } from "../../stores/projects";
+import { ToastType } from "../../stores/toast";
 
 const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: number, project: Project, currentStep: (arg0: ProjectDraftMenu) => void, onSave: (arg0: Projects_Set_Input) => void}) => {
   const projectStore = useContext(ProjectsContext)
+  const toastsStore = useContext(ToastsContext)
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
   const setSearchParams = useSearchParams()[1]
   const sendReviewCompleteMessageMutation = useMutation({
     mutationKey: ['sendReviewCompleteMessageMutation'],
     mutationFn: () => projectStore.sendReviewCompleteSlackMessage({ projectId: project?.id, returnUrl: window.location.href }),
-    onSuccess: () => { onSave({}) }
+    onSuccess: () => { onSave({}); toastsStore.addToast({ message: 'Project successfully sent for review!', type: ToastType.SUCCESS })  }
   })
   const [configurationMenu, setConfigurationMenu] = useState<ProjectDraftMenu[]>([])
   useEffect(() => {
@@ -98,7 +100,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
       icon: 'mdi mdi-eye',
       steps: [12],
       children: [],
-      isComplete: isReviewComplete(),
+      isComplete: (project?.status === ProjectStatus.DRAFT && isReviewComplete()) || project?.status === ProjectStatus.REVIEW,
       overrideNext: project?.status !== ProjectStatus.DRAFT ? null : {
         name: 'Submit for review',
         onNext: async () => sendReviewCompleteMessageMutation.mutateAsync()

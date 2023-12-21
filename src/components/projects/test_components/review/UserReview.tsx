@@ -54,7 +54,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
   })
 
   function isDisabled () {
-    return props.project?.status === ProjectStatus.SUBMITTED
+    return props.project?.status === ProjectStatus.SUBMITTED || (props.project?.status === ProjectStatus.REVIEW && !authStore.isSuperadmin())
   }
 
   useEffect(() => {
@@ -63,9 +63,9 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
 
   return (
     <>
-      {props.project?.status === 'review' && !authStore.isSuperadmin() ? <div>Congratulations! Your test has been sent off for review</div> :
+      {props.project?.status === ProjectStatus.REVIEW && !authStore.isSuperadmin() ? <div>Congratulations! Your test has been sent off for review</div> :
         <div>
-          <ProjectAdminReview project={props.project} />
+          { props.project?.status !== ProjectStatus.DRAFT && <ProjectAdminReview project={props.project} /> }
           {/* Name Approval */}
           <label className="label mb-1">
             <span className="text-sm opacity-60">Name of your test</span>
