@@ -100,7 +100,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
       icon: 'mdi mdi-eye',
       steps: [12],
       children: [],
-      isComplete: (project?.status === ProjectStatus.DRAFT && isReviewComplete()) || project?.status === ProjectStatus.REVIEW,
+      isComplete: isReviewComplete(),
       overrideNext: project?.status !== ProjectStatus.DRAFT ? null : {
         name: 'Submit for review',
         onNext: async () => sendReviewCompleteMessageMutation.mutateAsync()
