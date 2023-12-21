@@ -37,7 +37,7 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
   function selectionCard (item: Platform) {
     return (
       <div key={item.label} className="flex flex-col" style={{ width: 285 }}>
-        <div className={`card cursor-pointer ${platform === item.value && 'card-selected'} ${props.project?.status === ProjectStatus.REVIEW && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => setPlatform(item.value)}>
+        <div className={`card cursor-pointer ${platform === item.value && 'card-selected'} ${props.project?.status !== ProjectStatus.DRAFT && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => setPlatform(item.value)}>
           <div className="card-body">
             <div className="flex flex-col items-center gap-2 text-center">
               <div>{item.icons.map((icon, i) => <span key={`${icon}-${i}`} className={icon} style={{ fontSize: 50 }} />)}</div>

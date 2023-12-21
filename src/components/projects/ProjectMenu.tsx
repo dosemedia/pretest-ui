@@ -8,6 +8,7 @@ import { ProjectDraftMenu, NextButtonConfig } from "./ProjectDraft";
 import { ProjectStatus } from "../../stores/projects";
 import { useEffect } from "react";
 import { Projects as Project, Projects_Set_Input } from "../../gql/graphql";
+import ProjectStatusView from "../lib/ProjectStatus";
 
 const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: number, project: Project, currentStep: (arg0: ProjectDraftMenu) => void, onSave: (arg0: Projects_Set_Input) => void}) => {
   const projectStore = useContext(ProjectsContext)
@@ -150,7 +151,8 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
   }
   return (
     <>
-      {project?.status === ProjectStatus.REVIEW && <div className="badge block ml-6 mb-4 bg-info text-white border-none">Your project is in review.</div>}
+      <div className="ml-6 mb-4"><ProjectStatusView project={project} /></div>
+      {/* {project?.status === ProjectStatus.REVIEW && <div className="badge block ml-6 mb-4 bg-info text-white border-none">Your project is in review.</div>} */}
       <div className="badge p-4 ml-6 badge-success text-white">
         last updated: {new Date(project?.updated_at).toLocaleString()}
       </div>

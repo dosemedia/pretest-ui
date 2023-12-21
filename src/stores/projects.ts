@@ -6,7 +6,8 @@ export enum ProjectStatus {
   DRAFT = 'draft',
   REVIEW = 'review',
   ACTIVE = 'active',
-  COMPLETE = 'complete'
+  COMPLETE = 'complete',
+  SUBMITTED = 'submitted'
 }
 export interface TestTypeMenu {
   label: string,
@@ -240,6 +241,22 @@ export class Projects {
     const result = await client.mutation(graphql(`
       mutation SendReviewCompleteSlackMessage($projectId: uuid!, $returnUrl: String!) {
         sendSlackAlertForTeamReview(projectId: $projectId, returnUrl: $returnUrl)
+      }
+    `), { projectId, returnUrl })
+    if (result.error) {
+      throw result.error
+    }
+    return true
+  }
+
+  lockFields ({ project }: { project: Project} ): boolean {
+    return project.status != ProjectStatus.DRAFT
+  }
+
+  async submitForBuild({ projectId, returnUrl }: { projectId: string, returnUrl: string }): Promise<boolean>{
+    const result = await client.mutation(graphql(`
+      mutation SubmitProjectBuild($projectId: uuid!, $returnUrl: String!) {
+        submitBuild(projectId: $projectId, returnUrl: $returnUrl)
       }
     `), { projectId, returnUrl })
     if (result.error) {

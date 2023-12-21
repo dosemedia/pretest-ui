@@ -8,6 +8,8 @@ const ProjectStatusView = observer(({ project }: { project: Project }) => {
         return { color: 'rgba(210, 214, 205, 0.30)', label: 'Draft' }
       case ProjectStatus.REVIEW:
         return { color: 'rgba(72, 19, 38, 0.30)', label: 'Pending review' }
+      case ProjectStatus.SUBMITTED:
+          return { color: 'rgba(72, 19, 38, 0.30)', label: 'Submit complete' }
       case ProjectStatus.ACTIVE:
         return { color: 'rgba(106, 179, 181, 0.30)', label: 'Running' }
       case ProjectStatus.COMPLETE:

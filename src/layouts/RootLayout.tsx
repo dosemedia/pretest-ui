@@ -92,7 +92,7 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
                     <ProfilePicture width="42px" />
                     <p className="text-sm w-28 break-words pl-1">
                       { teamsStore.activeTeam && <span className="font-bold text-base">{teamsStore.activeTeam.name}<br></br></span> }
-                      { auth.user?.display_name || auth.user.email }
+                      { auth.user?.display_name || auth.user?.email }
                     </p>
                   </summary>
                   <ul className="p-2 shadow menu dropdown-content bg-base-100 rounded-box mb-2">

@@ -75,14 +75,14 @@ const projectFacebookCreativeTemplateDetail: React.FC<ProjectStepChildProps> = o
   return (
     <>
       <div className="mb-12">
-        <button disabled={props.project?.status === ProjectStatus.REVIEW} className="btn bg-error text-white normal-case border-none mb-3" onClick={() => deleteProjectFacebookCreativeTemplateMutation.mutate()}><SpinningLoading isLoading={deleteProjectFacebookCreativeTemplateMutation.isLoading} />Stop Using Template</button>
+        <button disabled={props.project?.status !== ProjectStatus.DRAFT} className="btn bg-error text-white normal-case border-none mb-3" onClick={() => deleteProjectFacebookCreativeTemplateMutation.mutate()}><SpinningLoading isLoading={deleteProjectFacebookCreativeTemplateMutation.isLoading} />Stop Using Template</button>
         <div className="flex flex-wrap justify-between items-start">
           <div className="w-6/12">
             {isLoadingFacebookCreative && <SpinningLoading isLoading={isLoadingFacebookCreative} />}
             {facebookCreativeError && <ErrorMessage message={facebookCreativeError.message} />}
             {projectFacebookCreativeTemplate &&
               // We could also use this which is very similar : https://jsonforms.io/docs/integrations/react/
-              <div className={`bg-gray-200 mt-8 rounded-md p-8 ${props.project?.status === ProjectStatus.REVIEW && 'pointer-events-none'}`}>
+              <div className={`bg-gray-200 mt-8 rounded-md p-8 ${props.project?.status !== ProjectStatus.DRAFT && 'pointer-events-none'}`}>
                 <span>Edit this template below or <span className="link" onClick={() => { searchParams.delete('project_facebook_creative_template_id'); setSearchParams({ ...searchParams, step: '6' }) }}>go back to templates</span></span>{updateCreative && <SpinningLoading isLoading={updateCreative.isLoading} size="loading-xs" />}
                 {Form &&
                   <Form

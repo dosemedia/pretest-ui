@@ -2317,6 +2317,8 @@ export type Mutation_Root = {
   sendPasswordResetEmail: Scalars['Boolean']['output'];
   /** Send slack message to alert team that a test is ready to be reviewed by the team. */
   sendSlackAlertForTeamReview: Scalars['Boolean']['output'];
+  /** Submit a board to be built */
+  submitBuild: Scalars['Boolean']['output'];
   /** update data of the table: "contact_form_submissions" */
   update_contact_form_submissions?: Maybe<Contact_Form_Submissions_Mutation_Response>;
   /** update single row of the table: "contact_form_submissions" */
@@ -2885,6 +2887,13 @@ export type Mutation_RootSendPasswordResetEmailArgs = {
 
 /** mutation root */
 export type Mutation_RootSendSlackAlertForTeamReviewArgs = {
+  projectId: Scalars['uuid']['input'];
+  returnUrl: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootSubmitBuildArgs = {
   projectId: Scalars['uuid']['input'];
   returnUrl: Scalars['String']['input'];
 };
@@ -3557,7 +3566,6 @@ export type Projects = {
   creatives: Array<Facebook_Creatives>;
   /** An aggregate relationship */
   creatives_aggregate: Facebook_Creatives_Aggregate;
-  facebook_ad_account?: Maybe<Scalars['String']['output']>;
   /** An array relationship */
   facebook_audiences: Array<Facebook_Audiences>;
   /** An aggregate relationship */
@@ -3746,7 +3754,6 @@ export type Projects_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   creatives?: InputMaybe<Facebook_Creatives_Bool_Exp>;
   creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Bool_Exp>;
-  facebook_ad_account?: InputMaybe<String_Comparison_Exp>;
   facebook_audiences?: InputMaybe<Facebook_Audiences_Bool_Exp>;
   facebook_audiences_aggregate?: InputMaybe<Facebook_Audiences_Aggregate_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -3785,7 +3792,6 @@ export type Projects_Insert_Input = {
   brandness_approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creatives?: InputMaybe<Facebook_Creatives_Arr_Rel_Insert_Input>;
-  facebook_ad_account?: InputMaybe<Scalars['String']['input']>;
   facebook_audiences?: InputMaybe<Facebook_Audiences_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   landing_pages?: InputMaybe<Landing_Pages_Arr_Rel_Insert_Input>;
@@ -3812,7 +3818,6 @@ export type Projects_Max_Fields = {
   __typename?: 'projects_max_fields';
   branding?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
-  facebook_ad_account?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   objective?: Maybe<Scalars['String']['output']>;
@@ -3829,7 +3834,6 @@ export type Projects_Min_Fields = {
   __typename?: 'projects_min_fields';
   branding?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
-  facebook_ad_account?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   objective?: Maybe<Scalars['String']['output']>;
@@ -3870,7 +3874,6 @@ export type Projects_Order_By = {
   brandness_approved?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Order_By>;
-  facebook_ad_account?: InputMaybe<Order_By>;
   facebook_audiences_aggregate?: InputMaybe<Facebook_Audiences_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
   landing_pages_aggregate?: InputMaybe<Landing_Pages_Aggregate_Order_By>;
@@ -3906,8 +3909,6 @@ export enum Projects_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
-  FacebookAdAccount = 'facebook_ad_account',
-  /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
@@ -3942,7 +3943,6 @@ export type Projects_Set_Input = {
   branding?: InputMaybe<Scalars['String']['input']>;
   brandness_approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  facebook_ad_account?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   name_approved?: InputMaybe<Scalars['Boolean']['input']>;
@@ -3972,7 +3972,6 @@ export type Projects_Stream_Cursor_Value_Input = {
   branding?: InputMaybe<Scalars['String']['input']>;
   brandness_approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  facebook_ad_account?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   name_approved?: InputMaybe<Scalars['Boolean']['input']>;
@@ -4316,8 +4315,6 @@ export enum Projects_Update_Column {
   BrandnessApproved = 'brandness_approved',
   /** column name */
   CreatedAt = 'created_at',
-  /** column name */
-  FacebookAdAccount = 'facebook_ad_account',
   /** column name */
   Id = 'id',
   /** column name */
@@ -7086,6 +7083,14 @@ export type SendReviewCompleteSlackMessageMutationVariables = Exact<{
 
 export type SendReviewCompleteSlackMessageMutation = { __typename?: 'mutation_root', sendSlackAlertForTeamReview: boolean };
 
+export type SubmitProjectBuildMutationVariables = Exact<{
+  projectId: Scalars['uuid']['input'];
+  returnUrl: Scalars['String']['input'];
+}>;
+
+
+export type SubmitProjectBuildMutation = { __typename?: 'mutation_root', submitBuild: boolean };
+
 export type InviteUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
   teamId: Scalars['uuid']['input'];
@@ -7204,6 +7209,7 @@ export const FetchProjectDocument = {"kind":"Document","definitions":[{"kind":"O
 export const FetchFullProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFullProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}},{"kind":"Field","name":{"kind":"Name","value":"name_approved"}},{"kind":"Field","name":{"kind":"Name","value":"objective_approved"}},{"kind":"Field","name":{"kind":"Name","value":"project_type_approved"}},{"kind":"Field","name":{"kind":"Name","value":"brandness_approved"}},{"kind":"Field","name":{"kind":"Name","value":"platform_approved"}},{"kind":"Field","name":{"kind":"Name","value":"start_stop_time_approved"}},{"kind":"Field","name":{"kind":"Name","value":"teams_projects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"team"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"landing_pages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}}]}},{"kind":"Field","name":{"kind":"Name","value":"facebook_audiences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"publisher_platforms"}}]}},{"kind":"Field","name":{"kind":"Name","value":"project_facebook_creative_templates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"themes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"angles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_creatives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"social_copy"}},{"kind":"Field","name":{"kind":"Name","value":"cta_text"}},{"kind":"Field","name":{"kind":"Name","value":"cta_type"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<FetchFullProjectQuery, FetchFullProjectQueryVariables>;
 export const FetchProjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchProjects"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"teams_projects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchProjectsQuery, FetchProjectsQueryVariables>;
 export const SendReviewCompleteSlackMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendReviewCompleteSlackMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"returnUrl"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendSlackAlertForTeamReview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"projectId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"Argument","name":{"kind":"Name","value":"returnUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"returnUrl"}}}]}]}}]} as unknown as DocumentNode<SendReviewCompleteSlackMessageMutation, SendReviewCompleteSlackMessageMutationVariables>;
+export const SubmitProjectBuildDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SubmitProjectBuild"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"returnUrl"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"submitBuild"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"projectId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"Argument","name":{"kind":"Name","value":"returnUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"returnUrl"}}}]}]}}]} as unknown as DocumentNode<SubmitProjectBuildMutation, SubmitProjectBuildMutationVariables>;
 export const InviteUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"inviteUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_invitations_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<InviteUserMutation, InviteUserMutationVariables>;
 export const CreateTeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createTeam"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTeam"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}]}}]} as unknown as DocumentNode<CreateTeamMutation, CreateTeamMutationVariables>;
 export const FetchTeamsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchTeams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"teams_users_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"teams_users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]}}]} as unknown as DocumentNode<FetchTeamsQuery, FetchTeamsQueryVariables>;

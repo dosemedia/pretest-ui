@@ -42,7 +42,7 @@ const TestThemes: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
   function selectionCard(item: ProjectTheme) {
     return (
       <div key={item.name} style={{ width: 'auto', height: 86 }}>
-        <div className={`card cursor-pointer ${themes?.map((theme) => theme.name).includes(item.name) ? 'card-selected' : ''} ${props.project?.status === ProjectStatus.REVIEW && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => handleSelectedTheme(item)}>
+        <div className={`card cursor-pointer ${themes?.map((theme) => theme.name).includes(item.name) ? 'card-selected' : ''} ${props.project?.status !== ProjectStatus.DRAFT && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => handleSelectedTheme(item)}>
           <div className="card-body">
             <span className="text-sm font-bold text-center">{item.name}</span>
           </div>

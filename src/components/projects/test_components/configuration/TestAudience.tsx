@@ -77,14 +77,14 @@ const TestAudience:React.FC<ProjectStepChildProps> = observer((props: ProjectSte
               <label className="label">
                 <span className="text-sm opacity-60">Name*</span>
               </label>
-              <input type="text" disabled={props.project?.status === ProjectStatus.REVIEW} className="input w-10/12" placeholder="Name" value={audienceName} onChange={(e) => { setAudienceName(e.target.value); onUpdate({ name: e.target.value } as FacebookAudience, true) }} />
+              <input type="text" disabled={props.project?.status !== ProjectStatus.DRAFT} className="input w-10/12" placeholder="Name" value={audienceName} onChange={(e) => { setAudienceName(e.target.value); onUpdate({ name: e.target.value } as FacebookAudience, true) }} />
             </div>
-            {facebookAudienceData && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
-            {facebookAudienceData && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
-            {facebookAudienceData && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
-            {facebookAudienceData && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
-            {facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
-            {facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status === ProjectStatus.REVIEW} />}
+            {facebookAudienceData && <TestAudienceLocations onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status !== ProjectStatus.DRAFT} />}
+            {facebookAudienceData && <TestAudienceGender onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status !== ProjectStatus.DRAFT} />}
+            {facebookAudienceData && <TestAudienceAge onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status !== ProjectStatus.DRAFT} />}
+            {facebookAudienceData && <TestAudiencePlatforms onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status !== ProjectStatus.DRAFT} />}
+            {facebookAudienceData && <TestAudiencePositions onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status !== ProjectStatus.DRAFT} />}
+            {facebookAudienceData && <TestAudienceInterests onUpdate={onUpdate} projectFacebookAudience={facebookAudienceData} disabled={props.project?.status !== ProjectStatus.DRAFT} />}
           </div>
           {isAudienceComplete && <div>
             <button className="btn mt-5 btn-info normal-case text-white" disabled={projectFacebookAudienceMutation.isLoading} onClick={() => getReachEstimateMutation.mutate()}>Click to get reach estimate<SpinningLoading isLoading={getReachEstimateMutation.isLoading} /></button>
