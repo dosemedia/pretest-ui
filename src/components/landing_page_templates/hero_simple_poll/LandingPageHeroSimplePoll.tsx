@@ -79,7 +79,7 @@ function LandingPageHeroSimplePoll({
 
   return (
       <div
-        style={{minHeight: '100vh'}}
+        style={{minHeight: '100vh', backgroundColor: data.pageBackgroundColor }}
       >
 
         <div className={'grid grid-cols-1 md:grid-cols-2'} style={{ backgroundColor: data.headerBackgroundColor }}>
@@ -107,7 +107,7 @@ function LandingPageHeroSimplePoll({
         }
         </div>
 
-        <div className={"p-4 flex items-center justify-start flex-col" + ' '  + pageClasses} style={{ backgroundColor: data.pageBackgroundColor }}>
+        <div className={"p-4 flex items-center justify-start flex-col" + ' '  + pageClasses} >
           {data.questions && data.questions.map((question, questionIndex) => (
             <div className={"w-full p-4" + ' ' + questionClasses} key={questionIndex}>
               <div
@@ -148,7 +148,6 @@ function LandingPageHeroSimplePoll({
             </div>
           ))}
 
-          {/* From flowbite : https://flowbite.com/docs/components/alerts/ */}
           {submitError &&
             <div role="alert" className="alert alert-error mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -159,11 +158,10 @@ function LandingPageHeroSimplePoll({
           {!submitted &&
             <button
               onClick={triggerSubmit}
-              style={{color: data.submitButtonTextColor, backgroundColor: (submitWait || submitted || !isComplete) ? '' : data.submitButtonBackgroundColor}}
+              style={{color: data.submitButtonTextColor, backgroundColor: (submitWait || submitted || !isComplete) ? '' : data.submitButtonBackgroundColor, borderColor: (submitWait || submitted || !isComplete) ? '' : data.submitButtonBackgroundColor }}
               className={"btn" + ' ' + submitButtonClasses}
               disabled={submitWait || submitted || !isComplete}
             >
-              {/* From flowbite : https://flowbite.com/docs/components/spinner/ */}
               { submitWait &&
                 <span className="loading loading-spinner"></span>
               }
