@@ -2,36 +2,20 @@ import _, { snakeCase } from 'lodash'
 import { marked } from 'marked'
 import { useState } from 'react'
 
+import { LandingPageSimplePollPageData } from './LandingPageSimplePollForm'
+
 function LandingPageSimplePoll({ 
     onSubmit,
-    headerImageUrl,
-    pageBackgroundColor,
-    textColor,
-    questions,
-    submitButtonText,
-    submitButtonBackgroundColor,
-    submitButtonTextColor,
+    data,
     submitWait,
     submitted,
-    submitError,
-    submittedText
+    submitError
   }: { 
     onSubmit: (selections: {[key: string]: Array<string>}) => void,
-    headerImageUrl: string,
-    pageBackgroundColor: string,
-    textColor: string,
-    questions: {
-      title: string,
-      multipleChoice: boolean,
-      options: string[]
-    }[],
-    submitButtonText: string,
-    submitButtonBackgroundColor: string,
-    submitButtonTextColor: string,
+    data: LandingPageSimplePollPageData,
     submitWait: boolean,
     submitted: boolean,
-    submitError: string,
-    submittedText: string
+    submitError: string
   }) {
 
   const parseMarkdown = (questionTitle: string) => {
@@ -54,7 +38,7 @@ function LandingPageSimplePoll({
   const submittedTextClasses = ''
 
   const defaultSelectedOptions : {[key: string]: Array<string>} = {}
-  questions.forEach((question) => {
+  data.questions.forEach((question) => {
     defaultSelectedOptions[snakeCase(question.title)] = []
   })
 
@@ -70,7 +54,7 @@ function LandingPageSimplePoll({
       completedQuestionsCount++
     }
   })
-  const isComplete = questions.length === completedQuestionsCount
+  const isComplete = data.questions.length === completedQuestionsCount
 
   const updateCheckboxSelections = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSelectedOptions = {...selectedOptions}
@@ -94,19 +78,19 @@ function LandingPageSimplePoll({
 
   return (
       <div
-        style={{minHeight: '100vh', backgroundColor: pageBackgroundColor}}
+        style={{minHeight: '100vh', backgroundColor: data.pageBackgroundColor}}
         className={"p-4 flex items-center justify-start flex-col" + ' '  + pageClasses}
       >
-        { headerImageUrl &&
+        { data.headerImageUrl &&
           <div className={"lg:w-1/2 text-center" + ' ' + headerImageClasses}>
-            <img src={headerImageUrl} alt="Header Image" />
+            <img src={data.headerImageUrl} alt="Header Image" />
           </div>
         }
-        {questions && questions.map((question, questionIndex) => (
+        {data.questions && data.questions.map((question, questionIndex) => (
           <div className={"w-full p-4" + ' ' + questionClasses} key={questionIndex}>
             <div
               dangerouslySetInnerHTML={parseMarkdown(question.title)}
-              style={{color: textColor}}
+              style={{color: data.textColor}}
               className={"font-bold pb-4" + ' ' + questionTitleClasses}
             ></div>
             {question.options.map((option, optionIndex) => (
@@ -134,7 +118,7 @@ function LandingPageSimplePoll({
                   />
                 }
                 <span
-                  style={{color: textColor}}
+                  style={{color: data.textColor}}
                   className={"ml-2" + ' ' + optionClasses}
                 >{option}</span>
               </div>
@@ -153,7 +137,7 @@ function LandingPageSimplePoll({
         {!submitted &&
           <button
             onClick={triggerSubmit}
-            style={{color: submitButtonTextColor, backgroundColor: (submitWait || submitted || !isComplete) ? '' : submitButtonBackgroundColor}}
+            style={{color: data.submitButtonTextColor, backgroundColor: (submitWait || submitted || !isComplete) ? '' : data.submitButtonBackgroundColor}}
             className={"btn" + ' ' + submitButtonClasses}
             disabled={submitWait || submitted || !isComplete}
           >
@@ -161,15 +145,15 @@ function LandingPageSimplePoll({
             { submitWait &&
               <span className="loading loading-spinner"></span>
             }
-            { submitButtonText }
+            { data.submitButtonText }
           </button>
         }
         {submitted &&
           <div
-            style={{color: textColor}}
+            style={{color: data.textColor}}
             className={"text-lg text-center" + ' ' + submittedTextClasses }
           >
-            { submittedText }
+            { data.submittedText }
           </div>
         }
       </div>

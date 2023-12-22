@@ -1,8 +1,12 @@
 import LandingPageImageField from "../LandingPageImageField";
 
-export interface LandingPageSimplePollPageData {
+export interface LandingPageHeroSimplePollPageData {
   version?: number,
   headerImageUrl: string,
+  headerTitle: string,
+  headerSubtitle: string,
+  headerTextColor: string,
+  headerBackgroundColor: string,
   pageBackgroundColor: string,
   textColor: string,
   questions: {
@@ -17,10 +21,14 @@ export interface LandingPageSimplePollPageData {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const LandingPageSimplePollForm: React.FC<{ data: LandingPageSimplePollPageData, onChange : (newData: LandingPageSimplePollPageData) => void, projectId: string }> = ({ data, onChange, projectId }) => {
+const LandingPageHeroSimplePollForm: React.FC<{ data: LandingPageHeroSimplePollPageData, onChange : (newData: LandingPageHeroSimplePollPageData) => void, projectId: string }> = ({ data, onChange, projectId }) => {
   const formData = data || {
     version: 1,
     headerImageUrl: '',
+    headerTitle: '',
+    headerSubtitle: '',
+    headerTextColor: '',
+    headerBackgroundColor: '',
     pageBackgroundColor: '',
     textColor: '',
     questions: [],
@@ -38,6 +46,55 @@ const LandingPageSimplePollForm: React.FC<{ data: LandingPageSimplePollPageData,
             <span className="text-sm">Header Image Url</span>
           </label>
           <LandingPageImageField value={formData.headerImageUrl} projectId={projectId} onChange={(headerImageUrl) => onChange({...formData, headerImageUrl})} />
+        </div>
+
+        <div>
+          <label className="label">
+            <span className="text-sm">Header Title</span>
+          </label>
+          <input
+            type="text"
+            className="input"
+            placeholder="Enter page header title"
+            value={formData.headerTitle}
+            onChange={(e) => onChange({...formData, headerTitle: e.target.value})}
+          />
+        </div>
+
+        <div>
+          <label className="label">
+            <span className="text-sm">Header Subtitle</span>
+          </label>
+          <textarea
+            className="input w-full textarea"
+            placeholder="Enter page header subtitle"
+            value={formData.headerSubtitle}
+            onChange={(e) => onChange({...formData, headerSubtitle: e.target.value})}
+          />
+        </div>
+
+        <div>
+          <label className="label">
+            <span className="text-sm">Header Background Color</span>
+          </label>
+          <input
+            type="color"
+            className="input"
+            value={formData.headerBackgroundColor}
+            onChange={(e) => onChange({...formData, headerBackgroundColor: e.target.value})}
+          />
+        </div>
+
+        <div>
+          <label className="label">
+            <span className="text-sm">Header Text Color</span>
+          </label>
+          <input
+            type="color"
+            className="input"
+            value={formData.headerTextColor}
+            onChange={(e) => onChange({...formData, headerTextColor: e.target.value})}
+          />
         </div>
 
         <div>
@@ -71,6 +128,7 @@ const LandingPageSimplePollForm: React.FC<{ data: LandingPageSimplePollPageData,
           <input
             type="text"
             className="input"
+            placeholder="Enter header image url"
             value={formData.submitButtonText}
             onChange={(e) => onChange({...formData, submitButtonText: e.target.value})}
           />
@@ -211,4 +269,4 @@ const LandingPageSimplePollForm: React.FC<{ data: LandingPageSimplePollPageData,
   );
 }
 
-export default LandingPageSimplePollForm
+export default LandingPageHeroSimplePollForm
