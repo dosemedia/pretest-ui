@@ -56,7 +56,7 @@ const ProjectDraft = () => {
         <TestThemes title="Answer your big questions" />
         <TestMatrix title="" />
         <TestMatrixEditor title="Build your test matrix" />
-        <TestLandingPages title="Choose a landing page template" />
+        <TestLandingPages title="Create the landing page" />
         <UserReview title="Review your test" />
         <UserPublish title="Your test is in the queue" />
       </ProjectStepContainer>

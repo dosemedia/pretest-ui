@@ -85,4 +85,17 @@ export class ProjectLandingPages {
       throw result.error
     }
   }
+
+  async deleteLandingPage(landingPageId: string) : Promise<void> {
+    const result = await client.mutation(graphql(`
+    mutation DeleteLandingPage($landingPageId: uuid!) {
+      delete_landing_pages_by_pk(id: $landingPageId) {
+        id
+      }
+    }
+    `), { landingPageId })
+    if (result.error) {
+      throw result.error
+    }
+  }
 }
