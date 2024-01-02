@@ -1,10 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import CreativeTemplate from './CreativeTemplate';
-import axios from 'axios'
-import { AuthContext } from '../../stores/stores';
-import { useMutation } from '@tanstack/react-query';
-import { SpinningLoading } from '../lib/SpinningLoading';
 import { useParams } from 'react-router-dom';
+import FileUploader, { ProjectBucketUpload } from '../FileUpload';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SimpleTextLogoRender: React.FC<{ data: any }> = ({ data }) => {
@@ -15,7 +12,7 @@ const SimpleTextLogoRender: React.FC<{ data: any }> = ({ data }) => {
           <img src={data.logoImage} style={{ borderRadius: '100%', width: 60 }} />
           <div>
             <div className="flex items-center">
-            <span className="font-bold text-md">Elisabeth Parker</span><span className="mdi mdi-check-decagram text-blue-500 ml-2" />
+              <span className="font-bold text-md">Elisabeth Parker</span><span className="mdi mdi-check-decagram text-blue-500 ml-2" />
             </div>
             <p className="text-gray-600 text-xxs">
               @elisabethparker
@@ -32,35 +29,9 @@ const SimpleTextLogoRender: React.FC<{ data: any }> = ({ data }) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void }> = ({ data, onChange }) => {
-  const [busy, setBusy] = useState(false)
-  const authStore = useContext(AuthContext)
   const { projectId } = useParams() as { projectId: string }
-  async function uploadCreativeAsset(file: File | null | undefined) {
-    if (file) {
-      setBusy(true)
-      const form = new FormData()
-      form.append('project_id', projectId)
-      form.append('model', 'project_facebook_creative_template')
-      form.append('project_assets', file)
-      try {
-        const response = await axios.post(authStore.filesBaseUrl + '/files/project-assets', form, {
-          headers: {
-            Authorization: 'Bearer ' + authStore.token
-          }
-        })
-        return response.data
-      } catch (e) {
-        setBusy(false)
-        return new Error(e as string)
-      }
-    }
-  }
 
-  const uploadCreativeAssetMutation = useMutation({
-    mutationFn: (files: FileList | null) => uploadCreativeAsset(files?.item(0)),
-    onSuccess: (data) => { onChange({ ...formData, logoImage: authStore.filesBaseUrl + '/files/project-assets/' + data.key }); setBusy(false) }
-
-  })
+  console.log(data)
 
   const formData = data || {
     background: '#298493',
@@ -87,7 +58,12 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
           <label className="label">
             <span className="text-sm">Logo Image</span>
           </label>
-          {busy ? <SpinningLoading isLoading={uploadCreativeAssetMutation.isLoading} /> : <div>{formData?.logoImage ? <div><img src={formData.logoImage} style={{ width: 150 }} /><button className="btn btn-error text-white mt-3" onClick={() => onChange({ ...formData, logoImage: null })}>Remove</button></div> : <input type="file" className="file-input w-full max-w-xs" onChange={(e) => uploadCreativeAssetMutation.mutate(e.target.files)} />}</div>}
+          <FileUploader uploader={new ProjectBucketUpload({ projectId: projectId, model: 'project_facebook_creative_template' })} onUpload={(e) => onChange({ ...formData, ...e })} />
+          {<div>{formData?.logoImage &&
+            <div>
+              <img src={formData.logoImage} style={{ width: 150 }} />
+              <button className="btn btn-error text-white mt-3" onClick={() => onChange({ ...formData, logoImage: null })}>Remove</button>
+            </div>}</div>}
         </div>
 
       </div>
@@ -100,7 +76,7 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
 const SimpleTextLogo = {
   name: 'SimpleTextLogo',
   title: 'Simple Text and Logo',
-  creatomate_template_id: '114d9542-c437-4bb3-91bd-d4543eeecea8',
+  creatomate_template_id: '6edffee8-c450-470d-a6ae-093af41e1737',
   description: 'This creative contains a main body of text and logo on the right side of the page',
   render: SimpleTextLogoRender,
   form: SimpleTextLogoForm
