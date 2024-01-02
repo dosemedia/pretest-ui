@@ -88,8 +88,8 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
         {
           label: 'Landing page',
           value: 'landing_page',
-          steps: [11],
-          isComplete: false,
+          steps: [11, 12],
+          isComplete: Boolean(project && project.landing_pages.length > 0),
           icon: 'mdi mdi-beaker'
         }
       ]
@@ -98,7 +98,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
       label: 'Review',
       value: 'review',
       icon: 'mdi mdi-eye',
-      steps: [12],
+      steps: [13],
       children: [],
       isComplete: isReviewComplete(),
       overrideNext: project?.status !== ProjectStatus.DRAFT ? null : {
@@ -111,7 +111,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
       value: 'publish',
       icon: 'mdi mdi-send-outline',
       children: [],
-      steps: [13]
+      steps: [14]
     }])
   }, [project, step])
 
@@ -136,7 +136,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
     if (_.find(project?.themes, (theme) => !theme.approved)) {
       return false
     }
-    if (_.find(project?.landing_pages, (page) => !page.approved)) {
+    if (project?.landing_pages.length === 0 || _.find(project?.landing_pages, (page) => !page.approved)) {
       return false
     }
     return true

@@ -3,11 +3,12 @@ import { Projects as Project } from "../../../../gql/graphql";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { ProjectLandingPagesContext } from "../../../../stores/stores";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import ErrorMessage from "../../../lib/Error";
 import LandingPageRender from "../../../renders/LandingPageRender";
 import _ from "lodash";
 import LandingPageTemplates from '../../../landing_page_templates/LandingPageTemplates';
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
 
 // Grab each of the possible landing page forms from LandingPageTemplates
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,17 +17,18 @@ for (const template of LandingPageTemplates) {
   forms[template.name] = template.form;
 }
 
-import { ProjectStepChildProps } from "../../ProjectStepContainer";
 
 const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
 
   const landingPagesStore = useContext(ProjectLandingPagesContext)
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const { data: landingPages, isLoading: isLoadingLandingPages, refetch: refetchLandingPages } = useQuery({
     queryKey: ['getLandingPages', props.project?.id],
     retry: false,
     queryFn: () => {
+      if (props.onSave) props.onSave({})
       return landingPagesStore.fetchLandingPagesByProject({ project: props.project! })
     },
   })
@@ -35,7 +37,8 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
     mutationFn: (payload: { project: Project, templateName: string }) => landingPagesStore.createLandingPageFromTemplate(payload),
     onSuccess: (data) => {
       if (data?.id) {
-        navigate(`/project/${props.project?.id}/landing_page/${data.id}`)
+        setSearchParams({ step: parseInt(searchParams.get('step')) + 1, landing_page_id: data.id })
+        if (props.onSave) props.onSave({})
       }
     }
   })
@@ -73,9 +76,9 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
                     <LandingPageRender landingPageId={landingPage.id} data={landingPage.data} component={landingPage.template_name} />
                   </div>
                 </Link>
-                <Link className="btn btn-primary" to={`/project/${props.project?.id}/landing_page/${landingPage.id}`}>
+                <div className="btn btn-primary" onClick={() => { setSearchParams({ step: parseInt(searchParams.get('step')) + 1, landing_page_id: landingPage.id }) }}>
                   Edit Page
-                </Link>
+                </div>
                 
                 <DeleteLandingPage onDeleted={refetchLandingPages} landingPageId={landingPage.id} />
               </div>

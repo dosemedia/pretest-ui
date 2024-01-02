@@ -15,6 +15,7 @@ import TestMatrix from "./test_components/creative/TestMatrix";
 import TestMatrixEditor from "./test_components/creative/TestMatrixEditor";
 import UserReview from "./test_components/review/UserReview";
 import UserPublish from "./test_components/publish/UserPublish";
+import LandingPageDetail from "./test_components/creative/LandingPageDetail";
 export interface NextButtonConfig {
   name: string,
   onNext: () => void
@@ -57,6 +58,7 @@ const ProjectDraft = () => {
         <TestMatrix title="" />
         <TestMatrixEditor title="Build your test matrix" />
         <TestLandingPages title="Create the landing page" />
+        <LandingPageDetail />
         <UserReview title="Review your test" />
         <UserPublish title="Your test is in the queue" />
       </ProjectStepContainer>
