@@ -31,8 +31,6 @@ const SimpleTextLogoRender: React.FC<{ data: any }> = ({ data }) => {
 const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void }> = ({ data, onChange }) => {
   const { projectId } = useParams() as { projectId: string }
 
-  console.log(data)
-
   const formData = data || {
     background: '#298493',
     logoImage: 'https://creatomate.com/files/assets/d6628425-8e35-4fee-9de8-a18d21309546',
