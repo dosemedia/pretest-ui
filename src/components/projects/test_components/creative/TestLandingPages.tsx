@@ -3,10 +3,9 @@ import { Projects as Project } from "../../../../gql/graphql";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { ProjectLandingPagesContext } from "../../../../stores/stores";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ErrorMessage from "../../../lib/Error";
 import LandingPageRender from "../../../renders/LandingPageRender";
-import _ from "lodash";
 import LandingPageTemplates from '../../../landing_page_templates/LandingPageTemplates';
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
 
@@ -21,7 +20,6 @@ for (const template of LandingPageTemplates) {
 const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
 
   const landingPagesStore = useContext(ProjectLandingPagesContext)
-  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const { data: landingPages, isLoading: isLoadingLandingPages, refetch: refetchLandingPages } = useQuery({
@@ -37,7 +35,7 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
     mutationFn: (payload: { project: Project, templateName: string }) => landingPagesStore.createLandingPageFromTemplate(payload),
     onSuccess: (data) => {
       if (data?.id) {
-        setSearchParams({ step: parseInt(searchParams.get('step')) + 1, landing_page_id: data.id })
+        setSearchParams({ step: (parseInt(searchParams.get('step')!) + 1).toString(), landing_page_id: data.id })
         if (props.onSave) props.onSave({})
       }
     }
@@ -76,7 +74,7 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
                     <LandingPageRender landingPageId={landingPage.id} data={landingPage.data} component={landingPage.template_name} />
                   </div>
                 </Link>
-                <div className="btn btn-primary" onClick={() => { setSearchParams({ step: parseInt(searchParams.get('step')) + 1, landing_page_id: landingPage.id }) }}>
+                <div className="btn btn-primary" onClick={() => { setSearchParams({ step: (parseInt(searchParams.get('step')!) + 1).toString(), landing_page_id: landingPage.id }) }}>
                   Edit Page
                 </div>
                 
@@ -109,7 +107,7 @@ function DeleteLandingPage({
 
   return (
     <>
-      <button className="btn" onClick={()=>(document.getElementById(landingPageId + '_delete_modal') as any).showModal()}>
+      <button className="btn" onClick={()=>(document.getElementById(landingPageId + '_delete_modal') as HTMLDialogElement).showModal()}>
         Delete Page
       </button>
       <dialog id={landingPageId + '_delete_modal'} className="modal">

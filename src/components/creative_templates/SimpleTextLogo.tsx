@@ -57,7 +57,7 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
           <label className="label">
             <span className="text-sm">Logo Image</span>
           </label>
-          <FileUploader uploader={new ProjectBucketUpload({ projectId: projectId, folder: 'project_facebook_creative_template', filePath: authStore.filesBaseUrl + '/files/user-avatar', multerFieldName: 'avatar' })} onUpload={(url) => onChange({ ...formData, logoImage: url })} />
+          <FileUploader uploader={new ProjectBucketUpload({ projectId: projectId, folder: 'project_facebook_creative_template', filePath: authStore.filesBaseUrl + '/files/project-assets', multerFieldName: 'project_assets' })} onUpload={(url) => onChange({ ...formData, logoImage: url })} />
           {<div>{formData?.logoImage &&
             <div>
               <img src={formData.logoImage} style={{ width: 150 }} />
