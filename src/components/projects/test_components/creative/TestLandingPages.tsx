@@ -3,7 +3,7 @@ import { Projects as Project } from "../../../../gql/graphql";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { ProjectLandingPagesContext } from "../../../../stores/stores";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import ErrorMessage from "../../../lib/Error";
 import LandingPageRender from "../../../renders/LandingPageRender";
 import LandingPageTemplates from '../../../landing_page_templates/LandingPageTemplates';
@@ -69,11 +69,11 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
             return (
               <div key={landingPage.id} className="flex flex-col">
 
-                <Link to={`/project/${props.project?.id}/landing_page/${landingPage.id}`}>
+                <div onClick={() => { setSearchParams({ step: (parseInt(searchParams.get('step')!) + 1).toString(), landing_page_id: landingPage.id }) }}>
                   <div style={{zoom: '25%'}}>
                     <LandingPageRender landingPageId={landingPage.id} data={landingPage.data} component={landingPage.template_name} />
                   </div>
-                </Link>
+                </div>
                 <div className="btn btn-primary" onClick={() => { setSearchParams({ step: (parseInt(searchParams.get('step')!) + 1).toString(), landing_page_id: landingPage.id }) }}>
                   Edit Page
                 </div>
