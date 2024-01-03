@@ -1,4 +1,5 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import { fireEvent, waitFor } from '@testing-library/dom'
 import LoginForm from '../components/auth/LoginForm'
 import { authStore } from '../stores/stores'
 
@@ -7,15 +8,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import RegisterForm from '../components/auth/RegisterForm';
 import { DateTime } from 'luxon';
 import { act } from 'react-dom/test-utils';
-import axios from 'axios';
 
 const queryClient = new QueryClient()
 const userEmail = `test_user_${DateTime.now().toMillis()}@user.com`
 
-describe.only("User register authentication", () => {
-  axios.get(import.meta.env.VITE_HASURA_BASE_URL).then((response) => {
-    console.log('~~log', response.status)
-  })
+describe("User register authentication", () => {
   it("User cannot register without email present", async () => {
     let result: ReturnType<typeof render> = render(<div></div>)
     act(() => {
@@ -55,7 +52,7 @@ describe.only("User register authentication", () => {
     })
     expect(legalCheckboxInput).not.toBeChecked()
   })
-  it("User can register", async () => {
+  it.only("User can register", async () => {
     let result: ReturnType<typeof render> = render(<div></div>)
     act(() => {
       result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
@@ -69,9 +66,9 @@ describe.only("User register authentication", () => {
       fireEvent.click(legalCheckboxInput)
     })
 
-    const loginButton = result.container.querySelector('#signup_button')!
+    const registerButton = result.container.querySelector('#signup_button')!
     act(() => {
-      fireEvent.click(loginButton)
+      fireEvent.click(registerButton)
     })
     // await new Promise(resolve => setTimeout(resolve, 2000));
     await waitFor(async () => {
@@ -82,7 +79,7 @@ describe.only("User register authentication", () => {
       })
     })
   })
-  it("User cannot use taken email", async () => {
+  it.only("User cannot use taken email", async () => {
     let result: ReturnType<typeof render> = render(<div></div>)
     act(() => {
       result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
