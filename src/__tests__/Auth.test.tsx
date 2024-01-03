@@ -65,7 +65,7 @@ describe("User register authentication", () => {
       throw new Error('account already exists')
     });
     const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
-    const passwordInput = result.container.querySelector('#passwor')!
+    const passwordInput = result.container.querySelector('#passwordd')!
     const emailInput = result.container.querySelector('#email')!
     const legalCheckboxInput = result.container.querySelector('#legal_checkbox')!
     fireEvent.change(passwordInput, { target: { value: 'foobar' } })
