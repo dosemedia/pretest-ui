@@ -16,5 +16,4 @@ jobs:
       - name: Run yarn test
         run: |
           yarn install
-          yarn codegen
           yarn test
