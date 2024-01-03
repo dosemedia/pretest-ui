@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import LoginForm from '../components/auth/LoginForm'
 import { authStore } from '../stores/stores'
 
@@ -12,17 +12,20 @@ const userEmail = `test_user_${DateTime.now().toMillis()}@user.com`
 
 describe.only("User register authentication", () => {
   it("User cannot register without email present", async () => {
-    console.log('works')
     const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
     const emailInput = result.container.querySelector('#email')
-    fireEvent.change(emailInput!, { target: { value: userEmail } })
+    act(() => {
+      fireEvent.change(emailInput!, { target: { value: userEmail } })
+    })
     const signUpButton = result.container.querySelector('#signup_button')
     expect(signUpButton).toBeDisabled()
   })
   it("User cannot register without password present", async () => {
     const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
     const passwordInput = result.container.querySelector('#password')
-    fireEvent.change(passwordInput!, { target: { value: 'foobar' } })
+    act(() => {
+      fireEvent.change(passwordInput!, { target: { value: 'foobar' } })
+    })
     const signupButton = result.container.querySelector('#signup_button')
     expect(signupButton).toBeDisabled()
   })
@@ -31,8 +34,10 @@ describe.only("User register authentication", () => {
     const passwordInput = result.container.querySelector('#password')
     const emailInput = result.container.querySelector('#email')
     const legalCheckboxInput = result.container.querySelector('#legal_checkbox')
-    fireEvent.change(passwordInput!, { target: { value: 'foobar' } })
-    fireEvent.change(emailInput!, { target: { value: userEmail } })
+    act(() => {
+      fireEvent.change(passwordInput!, { target: { value: 'foobar' } })
+      fireEvent.change(emailInput!, { target: { value: userEmail } })
+    })
     expect(legalCheckboxInput).not.toBeChecked()
   })
   it("User can register", async () => {
@@ -40,11 +45,15 @@ describe.only("User register authentication", () => {
     const passwordInput = result.container.querySelector('#password')!
     const emailInput = result.container.querySelector('#email')!
     const legalCheckboxInput = result.container.querySelector('#legal_checkbox')!
-    fireEvent.change(passwordInput, { target: { value: 'foobar' } })
-    fireEvent.change(emailInput, { target: { value: userEmail } })
-    fireEvent.click(legalCheckboxInput)
+    act(() => {
+      fireEvent.change(passwordInput, { target: { value: 'foobar' } })
+      fireEvent.change(emailInput, { target: { value: userEmail } })
+      fireEvent.click(legalCheckboxInput)
+    })
     const loginButton = result.container.querySelector('#signup_button')!
-    fireEvent.click(loginButton)
+    act(() => {
+      fireEvent.click(loginButton)
+    })
     await new Promise(resolve => setTimeout(resolve, 2000));
     await waitFor(async () => {
       const errorMessage = result.container.querySelector('#error_message')
@@ -57,11 +66,15 @@ describe.only("User register authentication", () => {
     const passwordInput = result.container.querySelector('#password')!
     const emailInput = result.container.querySelector('#email')!
     const legalCheckboxInput = result.container.querySelector('#legal_checkbox')!
-    fireEvent.change(passwordInput, { target: { value: 'foobar' } })
-    fireEvent.change(emailInput, { target: { value: userEmail } })
-    fireEvent.click(legalCheckboxInput)
+    act(() => {
+      fireEvent.change(passwordInput, { target: { value: 'foobar' } })
+      fireEvent.change(emailInput, { target: { value: userEmail } })
+      fireEvent.click(legalCheckboxInput)
+    })
     const loginButton = result.container.querySelector('#signup_button')!
-    fireEvent.click(loginButton)
+    act(() => {
+      fireEvent.click(loginButton)
+    })
     await waitFor(() => {
       const errorMessage = screen.getByText(/already exists/)
       expect(errorMessage).toBeVisible()
