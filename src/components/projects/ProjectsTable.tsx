@@ -4,21 +4,35 @@ import { useContext, useState } from "react";
 import { AuthContext, ProjectsContext, TeamsContext, ToastsContext } from "../../stores/stores";
 import { useQuery, QueryKey, useMutation } from "@tanstack/react-query";
 import ErrorMessage from "../lib/Error";
-import DeleteModal from "../lib/DeleteModal";
 import CreateProject from "./CreateProject";
-import { Link, useNavigate } from "react-router-dom";
-import ProjectStatus from "../lib/ProjectStatus";
+import { Link } from "react-router-dom";
+import ProjectsTableRow from "./ProjectsTableRow";
+import DeleteModal from "../lib/DeleteModal";
+import DownloadReportModal from "./ProjectDownloadReport";
 import { ToastType } from "../../stores/toast";
 
 const ProjectsTable = observer(() => {
   const projectStore = useContext(ProjectsContext)
+  const toastStore = useContext(ToastsContext)
   const teams = useContext(TeamsContext)
   const auth = useContext(AuthContext)
-  const toastStore = useContext(ToastsContext)
-  const navigate = useNavigate()
-  const [itemToDelete, setItemToDelete] = useState<Project | null>(null)
-  const [filter, setFilter] = useState('')
+  const [activeProject, setActiveProject] = useState<Project>()
   const deleteModalID = 'delete_modal'
+  const downloadReportModalID = 'download_report'
+  const [filter, setFilter] = useState('')
+
+  const onDeleteMutation = useMutation({
+    onSuccess: () => {
+      (document.getElementById(deleteModalID) as HTMLDialogElement).close();
+      toastStore.addToast({ message: 'You have successfully deleted this project', type: ToastType.SUCCESS })
+      refetch()
+    },
+    mutationFn: () => projectStore.delete({ id: activeProject?.id }),
+    onError: (error: Error) => {
+      toastStore.addToast({ message: error.message, type: ToastType.ERROR })
+    }
+  })
+
   const { data, error, isLoading, refetch } = useQuery<Promise<Project[] | undefined>, Error, Project[], QueryKey>({
     queryKey: ['fetchProjects', auth.id, teams.activeTeam],
     queryFn: () => {
@@ -28,28 +42,7 @@ const ProjectsTable = observer(() => {
       return Promise.resolve([] as Project[])
     }
   })
-  const onDelete = useMutation({
-    onSuccess: () => {
-      refetch();
-      (document.getElementById(deleteModalID) as HTMLDialogElement).close();
-      toastStore.addToast({ message: 'You have successfully deleted this project', type: ToastType.SUCCESS })
-    },
-    mutationFn: () => projectStore.delete({ id: itemToDelete?.id }),
-    onError: (error: Error) => {
-      toastStore.addToast({ message: error.message, type: ToastType.ERROR })
-    }
-  })
-  function tableRow(project: Project) {
-    return (
-      <tr key={project.id} className="hover:bg-slate-100 cursor-pointer" onClick={() => { navigate(`/project/${project.id}`) }}>
-        <td>{project.name}</td>
-        <th>{project.id}</th>
-        <td>{new Date(project.created_at).toLocaleDateString()}</td>
-        <td><ProjectStatus project={project} /></td>
-        <td><button className="btn btn-circle btn-sm bg-error border-none" onClick={(e) => { e.stopPropagation(); (document.getElementById(deleteModalID) as HTMLDialogElement).showModal(); setItemToDelete(project) }}><span className="mdi mdi-delete text-white"></span></button></td>
-      </tr>
-    )
-  }
+
   return (
     <>
       {isLoading && <div>loading...</div>}
@@ -91,16 +84,18 @@ const ProjectsTable = observer(() => {
                 </thead>
                 <tbody>
                   {
-                    data.filter((item) => filter ? item.name.toLowerCase().includes(filter.toLowerCase()) : true).map((item: Project) => tableRow(item))
+                    data.filter((item) => filter ? item.name.toLowerCase().includes(filter.toLowerCase()) : true).map((item: Project) => <ProjectsTableRow key={item.id} project={item} onModalClicked={(modalId, project) => { (document.getElementById(modalId) as HTMLDialogElement).showModal(); setActiveProject(project) }} />)
                   }
                 </tbody>
               </table>
               {data.length === 0 && <p className="mt-8">You have no projects yet. Launch your first test today!</p>}
             </div>
           </div>
+          <DeleteModal element_id={deleteModalID} model={activeProject as Project} model_type="Project" onDelete={() => onDeleteMutation.mutate()} />
+          <DownloadReportModal element_id={downloadReportModalID} projectId={activeProject?.id} />
         </>
       }
-      <DeleteModal element_id={deleteModalID} model={itemToDelete} model_type="Project" onDelete={() => onDelete.mutate()} />
+
     </>
   )
 })

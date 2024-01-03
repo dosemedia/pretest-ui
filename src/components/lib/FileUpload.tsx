@@ -1,32 +1,35 @@
 import axios from "axios"
-import { SpinningLoading } from "./lib/SpinningLoading"
+import { SpinningLoading } from "./SpinningLoading"
 import { useMutation } from "@tanstack/react-query"
 import { observer } from "mobx-react-lite"
-import { useContext } from "react"
-import { AuthContext, authStore } from "../stores/stores"
+import {  authStore } from "../../stores/stores"
 
 abstract class FileUpload  {
   form: FormData = new FormData()
+  filePath: string = '' // ex. authStore.filesBaseUrl + '/files/project-assets'
+  multerFieldName: string = '' // ex. avatar
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   abstract upload(file: File | null | undefined): Promise<any>
 }
 
 export class ProjectBucketUpload extends FileUpload {
   projectId: string = ''
-  model: string = ''
-  constructor ({ projectId, model }: { projectId: string, model: string }) {
+  folder: string = ''
+  constructor ({ projectId, folder, filePath, multerFieldName }: { projectId: string, folder: string, filePath: string, multerFieldName: string }) {
     super()
     this.projectId = projectId
-    this.model = model
+    this.filePath = filePath
+    this.multerFieldName = multerFieldName
+    this.folder = folder
   }
   async upload(file: File | null | undefined) {
     if (file) {
       this.form.append('project_id', this.projectId)
-      this.form.append('model',this.model)
+      this.form.append('folder',this.folder)
       // form.append('model', 'project_facebook_creative_template')
-      this.form.append('project_assets', file)
+      this.form.append(this.multerFieldName, file)
       try {
-        const response = await axios.post(authStore.filesBaseUrl + '/files/project-assets', this.form, {
+        const response = await axios.post(this.filePath, this.form, {
           headers: {
             Authorization: 'Bearer ' + authStore.token
           }
@@ -39,8 +42,7 @@ export class ProjectBucketUpload extends FileUpload {
   }
 }
 
-const FileUploader = observer(({ uploader, onUpload }: { uploader: FileUpload, onUpload: (arg0: object) => void }) => {
-  const authStore = useContext(AuthContext)
+const FileUploader = observer(({ uploader, onUpload, accept }: { uploader: FileUpload, onUpload: (arg0: string) => void, accept?: string | null }) => {
   async function uploadAsset(file: File | null | undefined) {
     try {
       const fileData = await uploader.upload(file)
@@ -52,11 +54,11 @@ const FileUploader = observer(({ uploader, onUpload }: { uploader: FileUpload, o
 
   const uploadCreativeAssetMutation = useMutation({
     mutationFn: (files: FileList | null) => uploadAsset(files?.item(0)),
-    onSuccess: (data) => { onUpload({ logoImage: authStore.filesBaseUrl + '/files/project-assets/' + data?.key }); }
+    onSuccess: (data) => { onUpload(`${uploader.filePath}/${data?.key}`); }
   })
   return (
   <>
-    {uploadCreativeAssetMutation.isLoading ? <SpinningLoading isLoading={uploadCreativeAssetMutation.isLoading} /> : <input type="file" className="file-input w-full max-w-xs" onChange={(e) => uploadCreativeAssetMutation.mutate(e.target.files)} />}
+    {uploadCreativeAssetMutation.isLoading ? <SpinningLoading isLoading={uploadCreativeAssetMutation.isLoading} /> : <input type="file" accept={accept || 'image/*'} className="file-input w-full max-w-xs" onChange={(e) => uploadCreativeAssetMutation.mutate(e.target.files)} />}
   </>
   )
 })

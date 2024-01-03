@@ -1,7 +1,8 @@
 import React from 'react';
 import CreativeTemplate from './CreativeTemplate';
 import { useParams } from 'react-router-dom';
-import FileUploader, { ProjectBucketUpload } from '../FileUpload';
+import FileUploader, { ProjectBucketUpload } from '../lib/FileUpload';
+import { authStore } from '../../stores/stores';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SimpleTextLogoRender: React.FC<{ data: any }> = ({ data }) => {
@@ -56,7 +57,7 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
           <label className="label">
             <span className="text-sm">Logo Image</span>
           </label>
-          <FileUploader uploader={new ProjectBucketUpload({ projectId: projectId, model: 'project_facebook_creative_template' })} onUpload={(e) => onChange({ ...formData, ...e })} />
+          <FileUploader uploader={new ProjectBucketUpload({ projectId: projectId, folder: 'project_facebook_creative_template', filePath: authStore.filesBaseUrl + '/files/user-avatar', multerFieldName: 'avatar' })} onUpload={(url) => onChange({ ...formData, logoImage: url })} />
           {<div>{formData?.logoImage &&
             <div>
               <img src={formData.logoImage} style={{ width: 150 }} />

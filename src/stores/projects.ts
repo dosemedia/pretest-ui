@@ -127,6 +127,7 @@ export class Projects {
           objective
           branding
           platform
+          final_report_upload_url
           project_type
           status
           created_at
@@ -152,6 +153,7 @@ export class Projects {
           platform
           project_type
           status
+          final_report_upload_url
           created_at
           updated_at
           start_time
@@ -225,6 +227,7 @@ export class Projects {
         id
         status
         project_type
+        final_report_upload_url
         start_time
         stop_time
         created_at
