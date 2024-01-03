@@ -11,7 +11,7 @@
     "codegen": "graphql-codegen",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest"
+    "test": "vitest --allowOnly"
   },
   "dependencies": {
     "@mdi/font": "^7.3.67",

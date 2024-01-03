@@ -41,7 +41,7 @@ jobs:
           yarn start
 
       - name: Sleep
-        run: sleep 30s
+        run: sleep 10s
 
       - name: Run yarn test
         run: |
