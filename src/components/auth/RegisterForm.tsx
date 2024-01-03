@@ -29,7 +29,7 @@ const RegisterForm = observer(() => {
 
   const handleRegisterMutation = useMutation({
     mutationFn: () => auth.register(email, password),
-    onSuccess: () => { 
+    onSuccess: () => {
       if (fromState) {
         navigate(fromState.from.pathname)
       } else {
