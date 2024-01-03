@@ -61,6 +61,7 @@ describe("User register authentication", () => {
   })
   it("User cannot use taken email", async () => {
     vi.spyOn(authStore, 'register').mockImplementation(async () => {
+      console.log('test')
       throw new Error('account already exists')
     });
     const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
