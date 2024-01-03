@@ -13,76 +13,93 @@ const userEmail = `test_user_${DateTime.now().toMillis()}@user.com`
 
 describe.only("User register authentication", () => {
   it("User cannot register without email present", async () => {
+    let result: ReturnType<typeof render> = render(<div></div>)
     act(() => {
-      const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
-      const emailInput = result.container.querySelector('#email')
-      fireEvent.change(emailInput!, { target: { value: userEmail } })
-
-      const signUpButton = result.container.querySelector('#signup_button')
-      expect(signUpButton).toBeDisabled()
+      result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
     })
+    const emailInput = result.container.querySelector('#email')
+    act(() => {
+      fireEvent.change(emailInput!, { target: { value: userEmail } })
+    })
+    const signUpButton = result.container.querySelector('#signup_button')
+    expect(signUpButton).toBeDisabled()
   })
   it("User cannot register without password present", async () => {
+    let result: ReturnType<typeof render> = render(<div></div>)
     act(() => {
-      const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
-      const passwordInput = result.container.querySelector('#password')
-      fireEvent.change(passwordInput!, { target: { value: 'foobar' } })
-      const signupButton = result.container.querySelector('#signup_button')
-      expect(signupButton).toBeDisabled()
+      result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
     })
+    const passwordInput = result.container.querySelector('#password')
+    act(() => {
+      fireEvent.change(passwordInput!, { target: { value: 'foobar' } })
+    })
+    const signupButton = result.container.querySelector('#signup_button')
+    expect(signupButton).toBeDisabled()
+
   })
   it("User cannot register without correct email and password and legal acceptance checked", async () => {
+    let result: ReturnType<typeof render> = render(<div></div>)
     act(() => {
-      const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
-      const passwordInput = result.container.querySelector('#password')
-      const emailInput = result.container.querySelector('#email')
-      const legalCheckboxInput = result.container.querySelector('#legal_checkbox')
+      result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
+    })
+    const passwordInput = result.container.querySelector('#password')
+    const emailInput = result.container.querySelector('#email')
+    const legalCheckboxInput = result.container.querySelector('#legal_checkbox')
+    act(() => {
       fireEvent.change(passwordInput!, { target: { value: 'foobar' } })
       fireEvent.change(emailInput!, { target: { value: userEmail } })
-      expect(legalCheckboxInput).not.toBeChecked()
     })
+    expect(legalCheckboxInput).not.toBeChecked()
   })
   it("User can register", async () => {
-    act(async () => {
-      const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
-      const passwordInput = result.container.querySelector('#password')!
-      const emailInput = result.container.querySelector('#email')!
-      const legalCheckboxInput = result.container.querySelector('#legal_checkbox')!
-
+    let result: ReturnType<typeof render> = render(<div></div>)
+    act(() => {
+      result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
+    })
+    const passwordInput = result.container.querySelector('#password')!
+    const emailInput = result.container.querySelector('#email')!
+    const legalCheckboxInput = result.container.querySelector('#legal_checkbox')!
+    act(() => {
       fireEvent.change(passwordInput, { target: { value: 'foobar' } })
       fireEvent.change(emailInput, { target: { value: userEmail } })
       fireEvent.click(legalCheckboxInput)
+    })
 
-      const loginButton = result.container.querySelector('#signup_button')!
+    const loginButton = result.container.querySelector('#signup_button')!
+    act(() => {
       fireEvent.click(loginButton)
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      await waitFor(async () => {
-        const errorMessage = result.container.querySelector('#error_message')
-        expect(errorMessage).not.toBeInTheDocument()
-        authStore.token = ''
-      })
+    })
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    await waitFor(async () => {
+      const errorMessage = result.container.querySelector('#error_message')
+      expect(errorMessage).not.toBeInTheDocument()
+      authStore.token = ''
     })
   })
   it("User cannot use taken email", async () => {
-    act(async () => {
-      const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
-      const passwordInput = result.container.querySelector('#password')!
-      const emailInput = result.container.querySelector('#email')!
-      const legalCheckboxInput = result.container.querySelector('#legal_checkbox')!
-
+    let result: ReturnType<typeof render> = render(<div></div>)
+    act(() => {
+      result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
+    })
+    const passwordInput = result.container.querySelector('#password')!
+    console.log(passwordInput)
+    const emailInput = result.container.querySelector('#email')!
+    const legalCheckboxInput = result.container.querySelector('#legal_checkbox')!
+    act(() => {
       fireEvent.change(passwordInput, { target: { value: 'foobar' } })
       fireEvent.change(emailInput, { target: { value: userEmail } })
       fireEvent.click(legalCheckboxInput)
-      const loginButton = result.container.querySelector('#signup_button')!
+    })
+    const loginButton = result.container.querySelector('#signup_button')!
+    act(() => {
       fireEvent.click(loginButton)
-      await waitFor(() => {
-        const errorMessage = screen.getByText(/already exists/)
-        expect(errorMessage).toBeVisible()
-      })
+    })
+    await waitFor(() => {
+      const errorMessage = screen.getByText(/already exists/)
+      expect(errorMessage).toBeVisible()
     })
   })
 })
-
 
 describe("User login authentication", async () => {
   it("User cannot login with a password present", async () => {
