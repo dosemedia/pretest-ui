@@ -41,7 +41,7 @@ jobs:
           yarn start
 
       - name: Sleep
-        run: sleep 10s
+        run: sleep 45s
 
       - name: Collect Docker Logs         
         uses: jwalton/gh-docker-logs@v2.2.1
