@@ -7,11 +7,15 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import RegisterForm from '../components/auth/RegisterForm';
 import { DateTime } from 'luxon';
 import { act } from 'react-dom/test-utils';
+import axios from 'axios';
 
 const queryClient = new QueryClient()
 const userEmail = `test_user_${DateTime.now().toMillis()}@user.com`
 
 describe.only("User register authentication", () => {
+  axios.get(import.meta.env.VITE_HASURA_BASE_URL).then((response) => {
+    console.log(response.status)
+  })
   it("User cannot register without email present", async () => {
     let result: ReturnType<typeof render> = render(<div></div>)
     act(() => {
@@ -103,6 +107,7 @@ describe.only("User register authentication", () => {
 })
 
 describe("User login authentication", async () => {
+  authStore.token = ''
   it("User cannot login with a password present", async () => {
     const result = render(<QueryClientProvider client={queryClient}><Router><LoginForm /></Router></QueryClientProvider>)
     const emailInput = result.container.querySelector('#email')
