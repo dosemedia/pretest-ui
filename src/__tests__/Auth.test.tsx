@@ -14,7 +14,7 @@ const userEmail = `test_user_${DateTime.now().toMillis()}@user.com`
 
 describe.only("User register authentication", () => {
   axios.get(import.meta.env.VITE_HASURA_BASE_URL).then((response) => {
-    console.log(response.status)
+    console.log('~~log', response.status)
   })
   it("User cannot register without email present", async () => {
     let result: ReturnType<typeof render> = render(<div></div>)
