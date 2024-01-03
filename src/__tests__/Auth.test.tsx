@@ -69,11 +69,13 @@ describe.only("User register authentication", () => {
     act(() => {
       fireEvent.click(loginButton)
     })
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // await new Promise(resolve => setTimeout(resolve, 2000));
     await waitFor(async () => {
       const errorMessage = result.container.querySelector('#error_message')
       expect(errorMessage).not.toBeInTheDocument()
-      authStore.token = ''
+      act(() => {
+        authStore.token = ''
+      })
     })
   })
   it("User cannot use taken email", async () => {
@@ -82,7 +84,6 @@ describe.only("User register authentication", () => {
       result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
     })
     const passwordInput = result.container.querySelector('#password')!
-    console.log(passwordInput)
     const emailInput = result.container.querySelector('#email')!
     const legalCheckboxInput = result.container.querySelector('#legal_checkbox')!
     act(() => {
