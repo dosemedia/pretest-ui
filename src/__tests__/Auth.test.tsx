@@ -12,6 +12,7 @@ const userEmail = `test_user_${DateTime.now().toMillis()}@user.com`
 
 describe("User register authentication", () => {
   it.only("User cannot register without email present", async () => {
+    console.log('works')
     const result = render(<QueryClientProvider client={queryClient}><Router><RegisterForm /></Router></QueryClientProvider>)
     const emailInput = result.container.querySelector('#email')
     fireEvent.change(emailInput!, { target: { value: userEmail } })
