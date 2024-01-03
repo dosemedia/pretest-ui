@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import LoginForm from '../components/auth/LoginForm'
 import { authStore } from '../stores/stores'
 
@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import RegisterForm from '../components/auth/RegisterForm';
 import { DateTime } from 'luxon';
+import { act } from 'react-dom/test-utils';
 
 const queryClient = new QueryClient()
 const userEmail = `test_user_${DateTime.now().toMillis()}@user.com`
