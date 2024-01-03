@@ -55,7 +55,6 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
   const onSave = _.debounce(async (payload: Projects_Set_Input) => {
   
     if (projectHasChanges(payload)) {
-      console.log('submit')
       payload.updated_at = DateTime.now().toISO()
       await projectMutation.mutateAsync(payload)
     }
