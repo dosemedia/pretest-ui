@@ -194,7 +194,7 @@ export class Projects {
             project_id
             template_name
           }
-          themes {
+          themes(order_by: {name: asc}) {
             name
             id
             approved

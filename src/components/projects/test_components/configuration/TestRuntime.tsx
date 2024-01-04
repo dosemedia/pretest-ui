@@ -4,7 +4,7 @@ import { DateTime } from "luxon"
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
 import { ProjectStatus } from "../../../../stores/projects";
 const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
-  const dateFormat = "yyyy-M-dd'T'T"
+  const dateFormat = "yyyy-MM-dd'T'hh:mm"
   const [startTime, setStartTime] = useState(DateTime.fromISO(props.project?.start_time || DateTime.now().toISO()).toLocal())
   const [stopTime, setStopTime] = useState(DateTime.fromISO(props.project?.stop_time || DateTime.now().toISO()).toLocal())
   interface Runtime {
@@ -28,6 +28,7 @@ const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectSte
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     const date = DateTime.fromFormat(e.target.value, dateFormat)
+    console.log(date)
     setStartTime(date)
   }
 

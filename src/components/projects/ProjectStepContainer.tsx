@@ -83,7 +83,7 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
                     <span className="mdi mdi-chevron-left text-base" /> Go Back
                   </button>
                   }
-                  {step < 13 && step != 6 && !child.props.alwaysShow &&
+                  {step < React.Children.count(children) && step != 6 && !child.props.alwaysShow &&
                     <button className="btn action-button text-base" onClick={() => currentStep?.overrideNext?.onNext ? onNext() : setSearchParams({ step: (step + 1).toString() })} disabled={!currentStep?.isComplete}>
                       {currentStep?.overrideNext?.name || 'Next'}
                     </button>

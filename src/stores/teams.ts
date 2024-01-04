@@ -25,7 +25,7 @@ export class Teams {
 
   isOwner (team: Team) : boolean {
     for (const member of team.teams_users) {
-      if (member.role === 'admin') {
+      if (member.role === 'admin' && member.user_id === authStore.id) {
         return true
       }
     }
@@ -34,8 +34,8 @@ export class Teams {
 
   checkIfOwnsTeam (teams: Team[]) {
     for (const team of teams) {
-      for (const member of team.teams_users) {
-        if (member.role === 'admin') {
+      for (const member of team.teams_users) { 
+        if (member.role === 'admin' && member.user_id === authStore.id) {
           this.setOwnsTeam(true)
           break
         }
@@ -117,6 +117,9 @@ export class Teams {
         }
       }
       `), { teamId })
+    if (!result.data?.teams_by_pk) {
+      throw new Error('You do not have access to this team')
+    }
     if (result.error) {
       throw result.error
     }

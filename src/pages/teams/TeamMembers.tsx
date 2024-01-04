@@ -44,11 +44,11 @@ const TeamMembers = observer(() => {
     <p className="text-lg font-bold">
       Members
     </p>
-    <div className="mt-4"><InviteUser /></div>
     { error && <ErrorMessage message={error.message}/>}
     { isLoading && <div>loading...</div>}
     { data && 
       <div>
+        <div className="mt-4"><InviteUser /></div>
         <table className="table mt-8">
           <thead>
             <tr>

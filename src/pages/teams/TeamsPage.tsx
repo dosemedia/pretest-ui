@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const TeamsPage = observer(() => {
   const teamsStore = useContext(TeamsContext)
   const auth = useContext(AuthContext)
+  const ownsTeam = teamsStore.ownsTeam
   const navigate = useNavigate()
   const { data, error, refetch } = useQuery<Promise<Team[]>, Error, Team[], QueryKey>({
     queryKey: ['fetchTeams', auth.id],
@@ -19,7 +20,7 @@ const TeamsPage = observer(() => {
   function tableRow (team: Team) {
     
     return (
-      <tr key={team.id} onClick={() => navigate(`/team/${team.id}`)} className="hover:bg-slate-100 cursor-pointer">
+      <tr key={team.id} onClick={() => { teamsStore.isOwner(team) ? navigate(`/team/${team.id}`) : null }} className={`hover:bg-slate-100 ${teamsStore.isOwner(team) ? 'cursor-pointer' : ''}`}>
         <td>{team.name}</td>
         <th>{team.id}</th>
         <td>{new Date(team.created_at).toLocaleDateString()}</td>
@@ -37,7 +38,7 @@ const TeamsPage = observer(() => {
           These are the teams that you are a member of
         </p>
       </div>
-      { !teamsStore.ownsTeam &&
+      { !ownsTeam &&
         <div className="mt-4">
           <CreateTeam onCreate={() => refetch()} />
         </div>
