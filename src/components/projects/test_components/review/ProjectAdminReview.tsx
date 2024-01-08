@@ -36,7 +36,7 @@ const ProjectAdminReview = observer(({ project }: { project?: Project }) => {
   }, [project])
   return (
     <>
-      {authStore.isSuperadmin() &&
+      {authStore.superadmin &&
         <div>
           {<SpinningLoading isLoading={[facebookAdAccountLoading]} />}
 

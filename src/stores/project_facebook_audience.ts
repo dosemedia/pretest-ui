@@ -30,6 +30,7 @@ export class ProjectFacebookAudience {
     return false
   }
   async updateFacebookAudiencesByID({ id, payload }: { id: string, payload: FacebookAudience }): Promise<FacebookAudience> {
+    console.log(id, payload)
     const result = await client.mutation(graphql(`
       mutation UpdateFacebookAudiencesByProjectID($id: uuid!, $updates: facebook_audiences_set_input) {
         update_facebook_audiences_by_pk(pk_columns: {id: $id}, _set: $updates) {
@@ -47,6 +48,7 @@ export class ProjectFacebookAudience {
         }
       }
     `), { id, updates: payload as Facebook_Audiences_Set_Input})
+    console.log(result.data)
     if (result.error) {
       throw result.error
     }

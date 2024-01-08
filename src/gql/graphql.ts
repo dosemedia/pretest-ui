@@ -133,6 +133,157 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Users with administrative privileges */
+export type Admins = {
+  __typename?: 'admins';
+  created_at: Scalars['timestamptz']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "admins" */
+export type Admins_Aggregate = {
+  __typename?: 'admins_aggregate';
+  aggregate?: Maybe<Admins_Aggregate_Fields>;
+  nodes: Array<Admins>;
+};
+
+/** aggregate fields of "admins" */
+export type Admins_Aggregate_Fields = {
+  __typename?: 'admins_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Admins_Max_Fields>;
+  min?: Maybe<Admins_Min_Fields>;
+};
+
+
+/** aggregate fields of "admins" */
+export type Admins_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Admins_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "admins". All fields are combined with a logical 'AND'. */
+export type Admins_Bool_Exp = {
+  _and?: InputMaybe<Array<Admins_Bool_Exp>>;
+  _not?: InputMaybe<Admins_Bool_Exp>;
+  _or?: InputMaybe<Array<Admins_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "admins" */
+export enum Admins_Constraint {
+  /** unique or primary key constraint on columns "user_id" */
+  AdminsPkey = 'admins_pkey'
+}
+
+/** input type for inserting data into table "admins" */
+export type Admins_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Admins_Max_Fields = {
+  __typename?: 'admins_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregate min on columns */
+export type Admins_Min_Fields = {
+  __typename?: 'admins_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** response of any mutation on the table "admins" */
+export type Admins_Mutation_Response = {
+  __typename?: 'admins_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Admins>;
+};
+
+/** on_conflict condition type for table "admins" */
+export type Admins_On_Conflict = {
+  constraint: Admins_Constraint;
+  update_columns?: Array<Admins_Update_Column>;
+  where?: InputMaybe<Admins_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "admins". */
+export type Admins_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: admins */
+export type Admins_Pk_Columns_Input = {
+  user_id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "admins" */
+export enum Admins_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "admins" */
+export type Admins_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "admins" */
+export type Admins_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Admins_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Admins_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "admins" */
+export enum Admins_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Admins_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Admins_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Admins_Bool_Exp;
+};
+
 /** columns and relationships of "contact_form_submissions" */
 export type Contact_Form_Submissions = {
   __typename?: 'contact_form_submissions';
@@ -2184,6 +2335,10 @@ export type Mutation_Root = {
   /** Create a new project. */
   createProject?: Maybe<ProjectOutput>;
   createTeam: Scalars['Boolean']['output'];
+  /** delete data from the table: "admins" */
+  delete_admins?: Maybe<Admins_Mutation_Response>;
+  /** delete single row from the table: "admins" */
+  delete_admins_by_pk?: Maybe<Admins>;
   /** delete data from the table: "contact_form_submissions" */
   delete_contact_form_submissions?: Maybe<Contact_Form_Submissions_Mutation_Response>;
   /** delete single row from the table: "contact_form_submissions" */
@@ -2246,6 +2401,10 @@ export type Mutation_Root = {
   delete_users_by_pk?: Maybe<Users>;
   destroyUser: Scalars['Boolean']['output'];
   facebookAPIGet: Scalars['json']['output'];
+  /** insert data into the table: "admins" */
+  insert_admins?: Maybe<Admins_Mutation_Response>;
+  /** insert a single row into the table: "admins" */
+  insert_admins_one?: Maybe<Admins>;
   /** insert data into the table: "contact_form_submissions" */
   insert_contact_form_submissions?: Maybe<Contact_Form_Submissions_Mutation_Response>;
   /** insert a single row into the table: "contact_form_submissions" */
@@ -2306,6 +2465,8 @@ export type Mutation_Root = {
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
+  /** Check to see if user has superadmin capability */
+  isSuperadmin: Scalars['Boolean']['output'];
   /** Note that an invitation must exist with the user's email before they can join the team. */
   joinTeam: Scalars['Boolean']['output'];
   leaveTeam: Scalars['Boolean']['output'];
@@ -2319,6 +2480,12 @@ export type Mutation_Root = {
   sendSlackAlertForTeamReview: Scalars['Boolean']['output'];
   /** Submit a board to be built */
   submitBuild: Scalars['Boolean']['output'];
+  /** update data of the table: "admins" */
+  update_admins?: Maybe<Admins_Mutation_Response>;
+  /** update single row of the table: "admins" */
+  update_admins_by_pk?: Maybe<Admins>;
+  /** update multiples rows of table: "admins" */
+  update_admins_many?: Maybe<Array<Maybe<Admins_Mutation_Response>>>;
   /** update data of the table: "contact_form_submissions" */
   update_contact_form_submissions?: Maybe<Contact_Form_Submissions_Mutation_Response>;
   /** update single row of the table: "contact_form_submissions" */
@@ -2437,6 +2604,18 @@ export type Mutation_RootCreateProjectArgs = {
 /** mutation root */
 export type Mutation_RootCreateTeamArgs = {
   name: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_AdminsArgs = {
+  where: Admins_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Admins_By_PkArgs = {
+  user_id: Scalars['uuid']['input'];
 };
 
 
@@ -2632,6 +2811,20 @@ export type Mutation_RootDestroyUserArgs = {
 /** mutation root */
 export type Mutation_RootFacebookApiGetArgs = {
   url: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_AdminsArgs = {
+  objects: Array<Admins_Insert_Input>;
+  on_conflict?: InputMaybe<Admins_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Admins_OneArgs = {
+  object: Admins_Insert_Input;
+  on_conflict?: InputMaybe<Admins_On_Conflict>;
 };
 
 
@@ -2896,6 +3089,26 @@ export type Mutation_RootSendSlackAlertForTeamReviewArgs = {
 export type Mutation_RootSubmitBuildArgs = {
   projectId: Scalars['uuid']['input'];
   returnUrl: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AdminsArgs = {
+  _set?: InputMaybe<Admins_Set_Input>;
+  where: Admins_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Admins_By_PkArgs = {
+  _set?: InputMaybe<Admins_Set_Input>;
+  pk_columns: Admins_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Admins_ManyArgs = {
+  updates: Array<Admins_Updates>;
 };
 
 
@@ -4366,6 +4579,12 @@ export type Projects_Updates = {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "admins" */
+  admins: Array<Admins>;
+  /** fetch aggregated fields from the table: "admins" */
+  admins_aggregate: Admins_Aggregate;
+  /** fetch data from the table: "admins" using primary key columns */
+  admins_by_pk?: Maybe<Admins>;
   /** An array relationship */
   contact_form_submissions: Array<Contact_Form_Submissions>;
   /** An aggregate relationship */
@@ -4456,6 +4675,29 @@ export type Query_Root = {
   users_aggregate: Users_Aggregate;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+};
+
+
+export type Query_RootAdminsArgs = {
+  distinct_on?: InputMaybe<Array<Admins_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Admins_Order_By>>;
+  where?: InputMaybe<Admins_Bool_Exp>;
+};
+
+
+export type Query_RootAdmins_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Admins_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Admins_Order_By>>;
+  where?: InputMaybe<Admins_Bool_Exp>;
+};
+
+
+export type Query_RootAdmins_By_PkArgs = {
+  user_id: Scalars['uuid']['input'];
 };
 
 
@@ -4808,6 +5050,14 @@ export type Query_RootUsers_By_PkArgs = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "admins" */
+  admins: Array<Admins>;
+  /** fetch aggregated fields from the table: "admins" */
+  admins_aggregate: Admins_Aggregate;
+  /** fetch data from the table: "admins" using primary key columns */
+  admins_by_pk?: Maybe<Admins>;
+  /** fetch data from the table in a streaming manner: "admins" */
+  admins_stream: Array<Admins>;
   /** An array relationship */
   contact_form_submissions: Array<Contact_Form_Submissions>;
   /** An aggregate relationship */
@@ -4928,6 +5178,36 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
   /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
+};
+
+
+export type Subscription_RootAdminsArgs = {
+  distinct_on?: InputMaybe<Array<Admins_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Admins_Order_By>>;
+  where?: InputMaybe<Admins_Bool_Exp>;
+};
+
+
+export type Subscription_RootAdmins_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Admins_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Admins_Order_By>>;
+  where?: InputMaybe<Admins_Bool_Exp>;
+};
+
+
+export type Subscription_RootAdmins_By_PkArgs = {
+  user_id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootAdmins_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Admins_Stream_Cursor_Input>>;
+  where?: InputMaybe<Admins_Bool_Exp>;
 };
 
 
@@ -5845,7 +6125,9 @@ export enum Teams_Roles_Constraint {
 
 export enum Teams_Roles_Enum {
   /** Full control over team. */
-  Admin = 'admin'
+  Admin = 'admin',
+  /** A user with read only access rights */
+  Member = 'member'
 }
 
 /** Boolean expression to compare columns of type "teams_roles_enum". All fields are combined with logical 'AND'. */
@@ -6829,6 +7111,11 @@ export type CreateAngleMutationVariables = Exact<{
 
 export type CreateAngleMutation = { __typename?: 'mutation_root', insert_themes_angles_one?: { __typename?: 'themes_angles', name: string, id: any } | null };
 
+export type IsSuperuserMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IsSuperuserMutation = { __typename?: 'mutation_root', isSuperadmin: boolean };
+
 export type UpdateDisplayNameMutationVariables = Exact<{
   id: Scalars['uuid']['input'];
   avatar_file_key?: InputMaybe<Scalars['String']['input']>;
@@ -7193,6 +7480,7 @@ export type CreateThemeMutation = { __typename?: 'mutation_root', insert_project
 export const UpdateAngleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateAngle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"themes_angles_set_input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_themes_angles_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateAngleMutation, UpdateAngleMutationVariables>;
 export const CreateMultipleAnglesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMultipleAngles"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"angleObjects"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"themes_angles_insert_input"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_themes_angles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"angleObjects"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<CreateMultipleAnglesMutation, CreateMultipleAnglesMutationVariables>;
 export const CreateAngleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createAngle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"themeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_themes_angles_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"theme_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"themeId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateAngleMutation, CreateAngleMutationVariables>;
+export const IsSuperuserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"IsSuperuser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSuperadmin"}}]}}]} as unknown as DocumentNode<IsSuperuserMutation, IsSuperuserMutationVariables>;
 export const UpdateDisplayNameDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDisplayName"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"avatar_file_key"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_users_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"avatar_file_key"},"value":{"kind":"Variable","name":{"kind":"Name","value":"avatar_file_key"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar_file_key"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"display_name"}}]}}]}}]} as unknown as DocumentNode<UpdateDisplayNameMutation, UpdateDisplayNameMutationVariables>;
 export const DestroyUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DestroyUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"destroyUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}]}}]} as unknown as DocumentNode<DestroyUserMutation, DestroyUserMutationVariables>;
 export const ChangePasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ChangePassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"oldPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changePassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"oldPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"oldPassword"}}},{"kind":"Argument","name":{"kind":"Name","value":"newPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}}}]}]}}]} as unknown as DocumentNode<ChangePasswordMutation, ChangePasswordMutationVariables>;

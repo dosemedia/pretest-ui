@@ -50,7 +50,7 @@ const TestCreatives: React.FC<ProjectStepChildProps> = observer((props: ProjectS
             return (
               <div key={template.name} className="flex flex-col cursor-pointer" style={{ width: 174, position: 'relative' }} onClick={() => goToProjectFacebookCreativeTemplate(template)}>
              
-                <img className="creative-template-list-item" src={`https://creatomate.com/files/previews/${template.creatomate_template_id}?v=1683746204094`}/>
+                <img className="creative-template-list-item" alt="creative preview image" src={`https://creatomate.com/files/previews/14274b18-58d0-425b-8c83-da593faac659?v=1699974514496`}/>
                 <div className="text-md font-bold mt-3">
                   {template.title}
                 </div>

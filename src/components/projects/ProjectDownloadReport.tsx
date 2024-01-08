@@ -31,12 +31,12 @@ function DownloadReportModal({ element_id, projectId }: { element_id: string, pr
               <p className="text-lg font-bold my-6">
                 {project?.name}
               </p>
-              {authStore.isSuperadmin() && <div>
+              {authStore.superadmin && <div>
                 <div className="text-sm opacity-60">Upload Final Report Here</div>
                 <FileUploader uploader={new ProjectBucketUpload({ projectId: project.id, folder: 'report', filePath: authStore.filesBaseUrl + '/files/project-assets', multerFieldName: 'project_assets' })} onUpload={(e) => updateProjectMutation.mutate({ final_report_upload_url: e })} accept=".pptx" />
               </div>}
               {
-                authStore.isSuperadmin() && project.final_report_upload_url && <button className="btn btn-primary mr-3 normal-case" onClick={() => updateProjectMutation.mutate({ final_report_upload_url: null })}>Remove Report</button>
+                authStore.superadmin && project.final_report_upload_url && <button className="btn btn-primary mr-3 normal-case" onClick={() => updateProjectMutation.mutate({ final_report_upload_url: null })}>Remove Report</button>
               }
               {
                 project.final_report_upload_url && <a className="btn gradient-background text-white normal-case mt-6" href={project.final_report_upload_url}>Download Final Report</a>

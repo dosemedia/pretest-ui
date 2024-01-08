@@ -16,6 +16,7 @@ const documents = {
     "\n    mutation updateAngle($id: uuid!, $updates: themes_angles_set_input) {\n      update_themes_angles_by_pk(pk_columns: {id: $id}, _set: $updates) {\n        id\n      }\n    }\n    ": types.UpdateAngleDocument,
     "\n    mutation CreateMultipleAngles($angleObjects: [themes_angles_insert_input!]!) {\n      insert_themes_angles(objects: $angleObjects) {\n        returning {\n          id\n          name\n        }\n      }\n    }\n    ": types.CreateMultipleAnglesDocument,
     "\n    mutation createAngle($name: String!, $themeId: uuid!) {\n      insert_themes_angles_one(object: {name: $name, theme_id: $themeId}) {\n        name\n        id\n      }\n    }\n    ": types.CreateAngleDocument,
+    "\n    mutation IsSuperuser {\n      isSuperadmin\n    }\n    ": types.IsSuperuserDocument,
     "mutation UpdateDisplayName($id: uuid!, $avatar_file_key: String) {\n          update_users_by_pk(pk_columns: {id: $id}, _set: {avatar_file_key: $avatar_file_key}) {\n            avatar_file_key\n            email\n            display_name\n          }\n        }": types.UpdateDisplayNameDocument,
     "\n    mutation DestroyUser($password: String!) {\n      destroyUser(password: $password)\n    }\n    ": types.DestroyUserDocument,
     "\n    mutation ChangePassword($oldPassword: String!, $newPassword: String!) {\n      changePassword(oldPassword: $oldPassword, newPassword: $newPassword)\n    }\n    ": types.ChangePasswordDocument,
@@ -92,6 +93,10 @@ export function graphql(source: "\n    mutation CreateMultipleAngles($angleObjec
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    mutation createAngle($name: String!, $themeId: uuid!) {\n      insert_themes_angles_one(object: {name: $name, theme_id: $themeId}) {\n        name\n        id\n      }\n    }\n    "): (typeof documents)["\n    mutation createAngle($name: String!, $themeId: uuid!) {\n      insert_themes_angles_one(object: {name: $name, theme_id: $themeId}) {\n        name\n        id\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation IsSuperuser {\n      isSuperadmin\n    }\n    "): (typeof documents)["\n    mutation IsSuperuser {\n      isSuperadmin\n    }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
