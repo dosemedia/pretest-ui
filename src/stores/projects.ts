@@ -175,7 +175,7 @@ export class Projects {
             data
             approved
           }
-          facebook_audiences {
+          facebook_audiences(order_by: {created_at:desc }) {
             device_platforms
             facebook_positions
             genders

@@ -53,7 +53,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
           label: 'Audience',
           value: 'audience',
           steps: [4],
-          isComplete: projectFacebookAudienceStore.checkIsAudienceComplete(project?.facebook_audiences[0]),
+          isComplete: project.facebook_audiences.length > 0 && !project.facebook_audiences.find((item) => !projectFacebookAudienceStore.checkIsAudienceComplete(item)),
           icon: 'mdi mdi-account-group-outline'
         },
         {

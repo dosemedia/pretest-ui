@@ -14,6 +14,7 @@ export class ProjectFacebookAudience {
   }
   checkIsAudienceComplete(audience?: FacebookAudience): boolean {
     if (audience) {
+
       if ((audience.geo_locations?.countries?.length === 0) && Object.keys(audience.geo_locations?.regions).length === 0) {
         return false
       } else if (audience.genders?.length === 0) {
@@ -48,12 +49,24 @@ export class ProjectFacebookAudience {
         }
       }
     `), { id, updates: payload as Facebook_Audiences_Set_Input})
-    console.log(result.data)
     if (result.error) {
       throw result.error
     }
     return result.data?.update_facebook_audiences_by_pk as FacebookAudience
 
+  }
+  async deleteFacebookAudience({ audienceId }: { audienceId: string }): Promise<boolean> {
+    const result = await client.mutation(graphql(`
+      mutation DeleteFacebookAudience($audienceId: uuid!) {
+        delete_facebook_audiences_by_pk(id: $audienceId) {
+          id
+        }
+      }
+    `), { audienceId })
+    if (result.error) {
+      throw result.error
+    }
+    return true
   }
   async createFacebookAudience({ project, name, geo_locations = { countries: ['US'], regions: {} } }: { project: Project, name: string, geo_locations?: object }): Promise<FacebookAudience | null> {
     if (this.creatingAudience) {

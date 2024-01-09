@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
+import { ProjectStepChildProps } from "../../ProjectStepContainer";
 
-const UserPublish = observer(() => {
+const UserPublish:React.FC<ProjectStepChildProps> = observer(() => {
   return (
     <>
       <div className="text-sm">
