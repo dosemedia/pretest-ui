@@ -105,6 +105,7 @@ export class Projects {
           objective
           branding
           platform
+          product_description
           project_type
           status
           updated_at
@@ -126,6 +127,7 @@ export class Projects {
           name
           objective
           branding
+          product_description
           platform
           final_report_upload_url
           project_type
@@ -152,6 +154,7 @@ export class Projects {
           branding
           platform
           project_type
+          product_description
           status
           final_report_upload_url
           created_at

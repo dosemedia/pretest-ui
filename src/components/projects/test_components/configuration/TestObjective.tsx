@@ -6,15 +6,16 @@ import { ProjectStepChildProps } from "../../ProjectStepContainer";
 const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const [name, setName] = useState(props.project?.name || '')
   const [objective, setObjective] = useState(props.project?.objective || '')
+  const [productDescription, setProductDescription] = useState(props.project?.product_description || '')
   const [projectType, setProjectType] = useState(props.project?.project_type || '')
   useEffect(() => {
     if (projectType === 'marketing_communication') {
       setProjectType('marketing_communication_language')
     }
     if (props.onSave) {
-      props.onSave({ name, objective, project_type: projectType })
+      props.onSave({ name, objective, project_type: projectType, product_description: productDescription })
     }
-  }, [name, objective, projectType])
+  }, [name, objective, projectType, productDescription])
 
   function selectionCard(item: TestTypeMenu) {
     return (
@@ -59,10 +60,15 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
           </label>
           <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="Enter name of your test here" value={name} onChange={(e) => setName(e.target.value)} />
           <label className="label mt-4">
-            <span className="text-sm">What are your goals for this test?</span>
+            <span className="text-sm">Type of a product or service</span>
           </label>
-          <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="Your goals go here" value={objective} onChange={(e) => setObjective(e.target.value)} />
-          <span className="text-xxs mt-1 ml-1">Example: “I’m using test to narrow in a new message or claim for my product.”</span>
+          <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="For a ___ brand/service/product. " value={productDescription} onChange={(e) => setProductDescription(e.target.value)} />
+          <span className="text-xxs mt-1 ml-1">Examples: Athletic clothing brand, household cleaning product, financial management service. </span>
+          <label className="label mt-4">
+            <span className="text-sm">What type of test are you creating?</span>
+          </label>
+          <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="Describe briefly what test objective is" value={objective} onChange={(e) => setObjective(e.target.value)} />
+          <span className="text-xxs mt-1 ml-1">Example: “Test the message or claim for this product that best resonates with the audience.”</span>
         </div>
       </div>
       <div>
