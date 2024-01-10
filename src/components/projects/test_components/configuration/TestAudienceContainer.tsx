@@ -18,7 +18,7 @@ const TestAudienceContainer: React.FC<ProjectStepChildProps> = observer((props: 
   const createProjectFacebookAudienceMutation = useMutation({
     mutationKey: ['createProjectFacebookAudienceMutation'],
     mutationFn: () => projectFacebookAudienceStore.createFacebookAudience({ project: props.project!, name: `Audience ${(props.project?.facebook_audiences.length || 0) + 1}` }),
-    onSuccess: () => { if (props.onSave) props.onSave({}); toastsStore.addToast({ message: 'Successfully created a new audience', type: ToastType.SUCCESS }) },
+    onSuccess: () => { if (props.saveProject) props.saveProject({}); toastsStore.addToast({ message: 'Successfully created a new audience', type: ToastType.SUCCESS }) },
     onError: (error: Error) => { toastsStore.addToast({ message: error.toString(), type: ToastType.ERROR }) },
   })
   return (

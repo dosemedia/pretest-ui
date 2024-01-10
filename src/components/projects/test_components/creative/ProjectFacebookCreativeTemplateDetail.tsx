@@ -44,7 +44,7 @@ const projectFacebookCreativeTemplateDetail: React.FC<ProjectStepChildProps> = o
   const deleteProjectFacebookCreativeTemplateMutation = useMutation({
     mutationKey: ['deleteProjectFacebookCreativeTemplateMutation'],
     mutationFn: () => projectFacebookCreativeTemplateStore.deleteProjectFacebookCreativeTemplate(projectFacebookCreativeTemplateId),
-    onSuccess: () => { searchParams.delete('project_facebook_creative_template_id'); searchParams.set('step', '6'); setSearchParams(searchParams); if (props.onSave) props.onSave({}) }
+    onSuccess: () => { searchParams.delete('project_facebook_creative_template_id'); searchParams.set('step', '6'); setSearchParams(searchParams); if (props.saveProject) props.saveProject({}) }
   })
 
   const updateCreative = useMutation({
@@ -53,7 +53,7 @@ const projectFacebookCreativeTemplateDetail: React.FC<ProjectStepChildProps> = o
       console.log('~~ updateFacebookCreative')
       return await projectFacebookCreativeTemplateStore.updateProjectFacebookCreativeTemplate(projectFacebookCreativeTemplate?.id, data)
     },
-    onSuccess: () => { if (props.onSave) props.onSave({}) }
+    onSuccess: () => { if (props.saveProject) props.saveProject({}) }
   })
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

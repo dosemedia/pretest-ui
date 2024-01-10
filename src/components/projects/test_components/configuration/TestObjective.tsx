@@ -12,8 +12,8 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
     if (projectType === 'marketing_communication') {
       setProjectType('marketing_communication_language')
     }
-    if (props.onSave) {
-      props.onSave({ name, objective, project_type: projectType, product_description: productDescription })
+    if (props.saveProject) {
+      props.saveProject({ name, objective, project_type: projectType, product_description: productDescription })
     }
   }, [name, objective, projectType, productDescription])
 

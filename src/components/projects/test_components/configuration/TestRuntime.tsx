@@ -34,8 +34,8 @@ const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectSte
 
   useEffect(() => {
     const diff = Math.abs(startTime.diff(stopTime, 'days').days)
-    if (props.onSave) {
-      props.onSave({ stop_time: diff <= 5 && diff >= 3 ? stopTime.toISO() : null, start_time: startTime.toISO() })
+    if (props.saveProject) {
+      props.saveProject({ stop_time: diff <= 5 && diff >= 3 ? stopTime.toISO() : null, start_time: startTime.toISO() })
     }
   }, [startTime, stopTime])
   function selectionCard(item: Runtime) {

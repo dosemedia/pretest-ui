@@ -43,18 +43,18 @@ const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
     onMutate: () => (document.getElementById(element_id) as HTMLDialogElement).show(),
     mutationFn: ({ facebookCreativesInput }: { facebookCreativesInput: Facebook_Creatives_Insert_Input[] }) => projectFacebookCreativesStore.createProjectFacebookCreatives({ facebookCreativesInput }),
     onError: (error) => toastsStore.addToast({ message: error as string, type: ToastType.ERROR }),
-    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives(); if (props.onSave) props.onSave({}); (document.getElementById(element_id) as HTMLDialogElement).close() }
+    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives(); if (props.saveProject) props.saveProject({}); (document.getElementById(element_id) as HTMLDialogElement).close() }
   })
   const deleteProjectFacebookCreativesMutation = useMutation({
     mutationKey: ['deleteFacebookCreatives'],
     mutationFn: () => projectFacebookCreativesStore.deleteProjectFacebookCreativesByProjectID({ projectId: props.project?.id }),
     onError: (error) => toastsStore.addToast({ message: error as string, type: ToastType.ERROR }),
-    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully deleted', type: ToastType.SUCCESS }); if (props.onSave) props.onSave({}); refetchFacebookCreatives() }
+    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully deleted', type: ToastType.SUCCESS }); if (props.saveProject) props.saveProject({}); refetchFacebookCreatives() }
   })
   const updateThemeMutation = useMutation({
     mutationKey: ['updateTheme'],
     mutationFn: ({ name, themeId }: { name: string, themeId: string }) => themesStore.updateTheme({ id: themeId, payload: { name } as ProjectTheme }),
-    onSuccess: async (data: ProjectTheme) => { await updateAngles({ theme: data }); refetchThemes(); if (props.onSave) props.onSave({}) }
+    onSuccess: async (data: ProjectTheme) => { await updateAngles({ theme: data }); refetchThemes(); if (props.saveProject) props.saveProject({}) }
   })
   async function updateAngles({ theme }: { theme: ProjectTheme }) {
     try {

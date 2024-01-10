@@ -38,19 +38,19 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
   const updateThemeMutation = useMutation({
     mutationKey: ['UpdateThemeMutation'],
     mutationFn: ({ id, approved }: { id: string, approved: boolean }) => projectThemesStore.updateTheme({ id, payload: { approved } as ProjectTheme }),
-    onSuccess: () => { if (props.onSave) props.onSave({}) }
+    onSuccess: () => { if (props.saveProject) props.saveProject({}) }
   })
 
   const updateLandingPageMutation = useMutation({
     mutationKey: ['UpdateLandingPageMutation'],
     mutationFn: ({ id, approved }: { id: string, approved: boolean }) => landingPagesStore.updateLandingPage(id, { approved } as LandingPage),
-    onSuccess: () => { if (props.onSave) props.onSave({}) }
+    onSuccess: () => { if (props.saveProject) props.saveProject({}) }
   })
 
   const updateFacebookAudiencesApprovalMutation = useMutation({
     mutationKey: ['UpdateFacebookAudiencesApprovalMutation'],
     mutationFn: ({ id, approved }: { id: string, approved: boolean }) => facebookAudiencesStore.updateFacebookAudiencesByID({ id, payload: { approved } as FacebookAudience }),
-    onSuccess: () => { if (props.onSave) props.onSave({}) }
+    onSuccess: () => { if (props.saveProject) props.saveProject({}) }
   })
 
   function isDisabled () {
@@ -58,7 +58,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
   }
 
   useEffect(() => {
-    if (props.onSave) props.onSave({ name_approved: nameApproved, brandness_approved: brandnessApproved, platform_approved: platformApproved, start_stop_time_approved: startStopTimeApproved, objective_approved: objectiveApproved, project_type_approved: projectTypeApproved })
+    if (props.saveProject) props.saveProject({ name_approved: nameApproved, brandness_approved: brandnessApproved, platform_approved: platformApproved, start_stop_time_approved: startStopTimeApproved, objective_approved: objectiveApproved, project_type_approved: projectTypeApproved })
   }, [nameApproved, brandnessApproved, platformApproved, startStopTimeApproved, objectiveApproved, projectTypeApproved])
 
   return (

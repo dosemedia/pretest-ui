@@ -33,8 +33,8 @@ const TestThemes: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
       } else if (themes && themes.length < 3) {
         await createProjectThemeMutation.mutateAsync(availableTheme.name)
       }
-      if (props.onSave) {
-        props.onSave({})
+      if (props.saveProject) {
+        props.saveProject({})
       }
     }
   }

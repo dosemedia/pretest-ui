@@ -17,7 +17,7 @@ interface Props {
 export interface ProjectStepChildProps {
   project?: Project,
   title?: string,
-  onSave?: (arg0: Projects_Set_Input) => void
+  saveProject?: (arg0: Projects_Set_Input) => void
 }
 
 
@@ -52,7 +52,7 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
     }
     return false
   }
-  const onSave = _.debounce(async (payload: Projects_Set_Input) => {
+  const saveProject = _.debounce(async (payload: Projects_Set_Input) => {
   
     if (projectHasChanges(payload)) {
       payload.updated_at = DateTime.now().toISO()
@@ -67,7 +67,7 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
     <>
       <div className="flex flex-wrap justify-between gap-y-12 gap-x-4">
         <div className="flex-initial">
-          {project && <ProjectMenu project={project} onSave={onSave} step={step} currentStep={(val: ProjectDraftMenu) => setCurrentStep(val)} />}
+          {project && <ProjectMenu project={project} saveProject={saveProject} step={step} currentStep={(val: ProjectDraftMenu) => setCurrentStep(val)} />}
         </div>
         <div className="flex-initial w-full md:w-8/12">
           {project && React.Children.map(children as ReactElement, (child, index) => ((step - 1 === index) || child.props.alwaysShow) &&
@@ -76,7 +76,7 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
               <div className="text-lg configuration-title mb-4">
                 {child.props.title}
               </div>
-              {React.cloneElement(child, { title: child.props.title, ...child.props, project, onSave, step } as React.FC<PropsWithChildren>)}
+              {React.cloneElement(child, { title: child.props.title, ...child.props, project, saveProject, step } as React.FC<PropsWithChildren>)}
               <div>
                 <div className="mt-5 flex gap-4">
                   {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setSearchParams({ step: (step - 1).toString() })}>
@@ -96,29 +96,6 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
       </div>
     </>
   )
-  // const setSearchParams = useSearchParams()[1]
-  // const [waiting, setIsWaiting] = useState(false)
-  // async function executeOnNext () {
-  //   setIsWaiting(true)
-  //   try {
-  //     await currentStepItem?.overrideNext?.onNext()
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-  //   setIsWaiting(false)
-  // }
-  // return (
-  //   <>
-  //     <div>
-  //       <div className="text-lg configuration-title mb-4">
-  //         {title}
-  //       </div>
-  //       {children}
-
-  //     </div>
-
-  //   </>
-  // )
 }
 
 export default ProjectStepContainer

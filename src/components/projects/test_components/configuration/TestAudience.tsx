@@ -36,7 +36,7 @@ const TestAudience = observer(({ audience, props }: { audience: FacebookAudience
     mutationKey: ['deleteFacebookAudience'],
     mutationFn: () => projectFacebookAudienceStore.deleteFacebookAudience({ audienceId: audience.id }),
     onMutate: () => { (document.getElementById(deleteAudienceModalID) as HTMLDialogElement).close() },
-    onSuccess: () => { if (props.onSave) props.onSave({}); toastsStore.addToast({ message: 'Successfully deleted audience', type: ToastType.SUCCESS }) }
+    onSuccess: () => { if (props.saveProject) props.saveProject({}); toastsStore.addToast({ message: 'Successfully deleted audience', type: ToastType.SUCCESS }) }
   })
   const projectFacebookAudienceMutation = useMutation({
     mutationKey: ['projectFacebookAudienceMutation'],
@@ -49,8 +49,8 @@ const TestAudience = observer(({ audience, props }: { audience: FacebookAudience
     if (audience && isUpdated) {
       await projectFacebookAudienceMutation.mutateAsync({ payload })
       setIsAudienceComplete(projectFacebookAudienceStore.checkIsAudienceComplete({ ...audience, ...payload }))
-      if (props.onSave) {
-        props.onSave({})
+      if (props.saveProject) {
+        props.saveProject({})
       }
     }
   }, 300), [audience])

@@ -26,8 +26,8 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
   ]
 
   useEffect(() => {
-    if (props.onSave) {
-      props.onSave({ branding })
+    if (props.saveProject) {
+      props.saveProject({ branding })
     }
   }, [branding])
   function selectionCard (item: Branding) {

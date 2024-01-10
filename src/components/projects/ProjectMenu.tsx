@@ -11,7 +11,7 @@ import ProjectStatusView from "../lib/ProjectStatus";
 import { ProjectStatus } from "../../stores/projects";
 import { ToastType } from "../../stores/toast";
 
-const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: number, project: Project, currentStep: (arg0: ProjectDraftMenu) => void, onSave: (arg0: Projects_Set_Input) => void}) => {
+const ProjectMenu = observer(({ step, project, currentStep, saveProject }: { step: number, project: Project, currentStep: (arg0: ProjectDraftMenu) => void, saveProject: (arg0: Projects_Set_Input) => void}) => {
   const projectStore = useContext(ProjectsContext)
   const toastsStore = useContext(ToastsContext)
   const projectFacebookAudienceStore = useContext(ProjectFacebookAudienceContext)
@@ -19,7 +19,7 @@ const ProjectMenu = observer(({ step, project, currentStep, onSave }: { step: nu
   const sendReviewCompleteMessageMutation = useMutation({
     mutationKey: ['sendReviewCompleteMessageMutation'],
     mutationFn: () => projectStore.sendReviewCompleteSlackMessage({ projectId: project?.id, returnUrl: window.location.href }),
-    onSuccess: () => { onSave({}); toastsStore.addToast({ message: 'Project successfully sent for review!', type: ToastType.SUCCESS })  }
+    onSuccess: () => { saveProject({}); toastsStore.addToast({ message: 'Project successfully sent for review!', type: ToastType.SUCCESS })  }
   })
   const [configurationMenu, setConfigurationMenu] = useState<ProjectDraftMenu[]>([])
   useEffect(() => {

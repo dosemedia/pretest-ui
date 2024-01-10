@@ -26,7 +26,7 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
     queryKey: ['getLandingPages', props.project?.id],
     retry: false,
     queryFn: () => {
-      if (props.onSave) props.onSave({})
+      if (props.saveProject) props.saveProject({})
       return landingPagesStore.fetchLandingPagesByProject({ project: props.project! })
     },
   })
@@ -36,7 +36,7 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
     onSuccess: (data) => {
       if (data?.id) {
         setSearchParams({ step: (parseInt(searchParams.get('step')!) + 1).toString(), landing_page_id: data.id })
-        if (props.onSave) props.onSave({})
+        if (props.saveProject) props.saveProject({})
       }
     }
   })

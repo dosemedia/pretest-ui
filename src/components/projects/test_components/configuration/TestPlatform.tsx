@@ -30,8 +30,8 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
   ]
 
   useEffect(() => {
-    if (props.onSave) {
-      props.onSave({ platform })
+    if (props.saveProject) {
+      props.saveProject({ platform })
     }
   }, [platform])
   function selectionCard (item: Platform) {
