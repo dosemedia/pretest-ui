@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n    mutation updateAngles($updates: [themes_angles_updates!]!) {\n      update_themes_angles_many(updates: $updates) {\n        returning {\n          name\n        }\n      }\n    }\n    ": types.UpdateAnglesDocument,
     "\n    mutation updateAngle($id: uuid!, $updates: themes_angles_set_input) {\n      update_themes_angles_by_pk(pk_columns: {id: $id}, _set: $updates) {\n        id\n      }\n    }\n    ": types.UpdateAngleDocument,
     "\n    mutation CreateMultipleAngles($angleObjects: [themes_angles_insert_input!]!) {\n      insert_themes_angles(objects: $angleObjects) {\n        returning {\n          id\n          name\n        }\n      }\n    }\n    ": types.CreateMultipleAnglesDocument,
     "\n    mutation createAngle($name: String!, $themeId: uuid!) {\n      insert_themes_angles_one(object: {name: $name, theme_id: $themeId}) {\n        name\n        id\n      }\n    }\n    ": types.CreateAngleDocument,
@@ -63,7 +64,7 @@ const documents = {
     "\n      mutation leaveTeam($teamId: uuid!) {\n        leaveTeam(teamId: $teamId)\n      }\n      ": types.LeaveTeamDocument,
     "\n      mutation joinTeam($teamId: uuid!) {\n        joinTeam(teamId: $teamId)\n      }\n      ": types.JoinTeamDocument,
     "\n    query fetchThemes($projectId: uuid!) {\n      projects_themes(where: {project_id: {_eq: $projectId}}, order_by: {id: desc}) {\n        id\n        name\n        angles(order_by: {id: desc}) {\n          id\n          name\n        }\n      }\n    }\n    ": types.FetchThemesDocument,
-    "\n    mutation updateTheme($id: uuid!, $updates: projects_themes_set_input) {\n      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: $updates) {\n        id\n      }\n    }\n    ": types.UpdateThemeDocument,
+    "\n    mutation updateTheme($id: uuid!, $updates: projects_themes_set_input) {\n      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: $updates) {\n        id\n        name\n        angles {\n          id\n          name\n        }\n      }\n    }\n    ": types.UpdateThemeDocument,
     "\n    mutation deleteTheme($id: uuid!) {\n      delete_projects_themes_by_pk(id: $id) {\n        id\n      }\n    }\n    ": types.DeleteThemeDocument,
     "\n    mutation createTheme($name: String!, $projectId: uuid!) {\n      insert_projects_themes_one(object: {name: $name, project_id: $projectId}) {\n        name\n        id\n      }\n    }\n    ": types.CreateThemeDocument,
 };
@@ -82,6 +83,10 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation updateAngles($updates: [themes_angles_updates!]!) {\n      update_themes_angles_many(updates: $updates) {\n        returning {\n          name\n        }\n      }\n    }\n    "): (typeof documents)["\n    mutation updateAngles($updates: [themes_angles_updates!]!) {\n      update_themes_angles_many(updates: $updates) {\n        returning {\n          name\n        }\n      }\n    }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -285,7 +290,7 @@ export function graphql(source: "\n    query fetchThemes($projectId: uuid!) {\n 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation updateTheme($id: uuid!, $updates: projects_themes_set_input) {\n      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: $updates) {\n        id\n      }\n    }\n    "): (typeof documents)["\n    mutation updateTheme($id: uuid!, $updates: projects_themes_set_input) {\n      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: $updates) {\n        id\n      }\n    }\n    "];
+export function graphql(source: "\n    mutation updateTheme($id: uuid!, $updates: projects_themes_set_input) {\n      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: $updates) {\n        id\n        name\n        angles {\n          id\n          name\n        }\n      }\n    }\n    "): (typeof documents)["\n    mutation updateTheme($id: uuid!, $updates: projects_themes_set_input) {\n      update_projects_themes_by_pk(pk_columns: {id: $id}, _set: $updates) {\n        id\n        name\n        angles {\n          id\n          name\n        }\n      }\n    }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

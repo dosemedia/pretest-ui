@@ -2,9 +2,8 @@ import { observer } from "mobx-react-lite";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useContext } from 'react'
 import { ThemesContext } from "../../../../stores/stores";
-import { Projects_Themes as ProjectTheme } from "../../../../gql/graphql";
 import _ from 'lodash'
-import { themes as availableThemes } from "../../../lib/constants/MatrixPreset";
+import { PresetTheme, themes as availableThemes } from "../../../lib/constants/MatrixPreset";
 import { SpinningLoading } from "../../../lib/SpinningLoading";
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
 import { ProjectStatus } from "../../../../stores/projects";
@@ -18,7 +17,7 @@ const TestThemes: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
   const createProjectThemeMutation = useMutation({
     mutationKey: ['createProjectTheme'],
     onSuccess: () => refetch(),
-    mutationFn: (name: string) => themesStore.createTheme({ name, projectId: props.project?.id, numberOfAngles: 3 })
+    mutationFn: (name: string) => themesStore.createTheme({ name, projectId: props.project?.id })
   })
   const deleteProjectThemeMutation = useMutation({
     mutationKey: ['deleteProjectTheme'],
@@ -26,7 +25,7 @@ const TestThemes: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
     mutationFn: (id: string) => themesStore.deleteTheme({ id })
   })
 
-  async function handleSelectedTheme(availableTheme: ProjectTheme) {
+  async function handleSelectedTheme(availableTheme: PresetTheme) {
     if (!createProjectThemeMutation.isLoading) {
       const selectedTheme = _.find(themes, (item) => availableTheme.name === item.name)
       if (selectedTheme) {
@@ -39,7 +38,7 @@ const TestThemes: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
       }
     }
   }
-  function selectionCard(item: ProjectTheme) {
+  function selectionCard(item: PresetTheme) {
     return (
       <div key={item.name} style={{ width: 'auto', height: 86 }}>
         <div className={`card cursor-pointer ${themes?.map((theme) => theme.name).includes(item.name) ? 'card-selected' : ''} ${props.project?.status !== ProjectStatus.DRAFT && 'disabled'}`} style={{ backgroundColor: 'white', padding: '0px 10px' }} onClick={() => handleSelectedTheme(item)}>
@@ -59,7 +58,7 @@ const TestThemes: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
           Please choose up to 3 themes
         </p>
         <div className="flex flex-wrap gap-x-4 gap-y-4">
-          {availableThemes?.map((item) => selectionCard(item as ProjectTheme))}
+          {availableThemes?.map((item) => selectionCard(item))}
         </div>
       </div>
     </>

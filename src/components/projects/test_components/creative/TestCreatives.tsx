@@ -48,9 +48,8 @@ const TestCreatives: React.FC<ProjectStepChildProps> = observer((props: ProjectS
         <div className="flex gap-x-4">
           {CreativeTemplates.map((template) => {
             return (
-              <div key={template.name} className="flex flex-col cursor-pointer" style={{ width: 174, position: 'relative' }} onClick={() => goToProjectFacebookCreativeTemplate(template)}>
-             
-                <img className="creative-template-list-item" alt="creative preview image" src={`https://creatomate.com/files/previews/14274b18-58d0-425b-8c83-da593faac659?v=1699974514496`}/>
+              <div key={template.name} className="flex flex-col cursor-pointer" style={{ width: 174, position: 'relative' }} onClick={() => goToProjectFacebookCreativeTemplate(template)}> 
+                <img className="creative-template-list-item" alt="creative preview image" src={`https://cdn.creatomate.com/files/previews/${template.creatomate_template_id}`}/>
                 <div className="text-md font-bold mt-3">
                   {template.title}
                 </div>

@@ -1,16 +1,16 @@
 import { observer } from "mobx-react-lite";
-import { Facebook_Creatives_Insert_Input, Projects_Themes as ProjectTheme, Themes_Angles_Insert_Input } from "../../../../gql/graphql";
+import { Facebook_Creatives_Insert_Input, Projects_Themes as ProjectTheme, Themes_Angles_Updates } from "../../../../gql/graphql";
 import { Themes_Angles as ThemeAngle } from "../../../../gql/graphql";
-import { themes as availableThemes } from "../../../lib/constants/MatrixPreset";
-import { angles as availableAngles } from "../../../lib/constants/MatrixPreset";
+import { PresetTheme, themes as availableThemesWithAngles } from "../../../lib/constants/MatrixPreset";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ProjectFacebookCreativeTemplatesContext, ProjectFacebookCreativesContext, ThemesAnglesContext, ThemesContext, toastsStore } from "../../../../stores/stores";
 import { useContext } from "react";
 import { SpinningLoading } from "../../../lib/SpinningLoading";
 import { ToastType } from "../../../../stores/toast";
-import _ from 'lodash'
+// import _ from 'lodash'
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
 import { ProjectStatus } from "../../../../stores/projects";
+import _ from "lodash";
 const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const themesStore = useContext(ThemesContext)
   const anglesStore = useContext(ThemesAnglesContext)
@@ -35,20 +35,15 @@ const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
   })
   const createThemeMutation = useMutation({
     mutationKey: ['createTheme'],
-    mutationFn: () => themesStore.createTheme({ name: _.filter(availableThemes, (item) => !themeTaken(item as ProjectTheme))[0].name, projectId: props.project?.id, numberOfAngles: themes![0].angles.length }),
+    mutationFn: () => themesStore.createTheme({ name: availableThemesWithAngles.filter((item) => !themes?.map((theme) => theme.name).includes(item.name))[0].name, projectId: props.project?.id }),
     onSuccess: () => { toastsStore.addToast({ message: 'Successfully created theme', type: ToastType.SUCCESS }); refetchThemes() }
-  })
-  const createAnglesMutation = useMutation({
-    mutationKey: ['createAngles'],
-    mutationFn: () => anglesStore.createMultipleAngles({ angleObjects: themes?.map((item) => { return { theme_id: item.id, name: availableAngles[Math.floor(Math.random() * availableAngles.length)] } }) as Themes_Angles_Insert_Input }),
-    onSuccess: () => { toastsStore.addToast({ message: 'Successfully created angles', type: ToastType.SUCCESS }); refetchThemes() }
   })
   const projectFacebookCreativesMutation = useMutation({
     mutationKey: ['createFacebookCreatives'],
     onMutate: () => (document.getElementById(element_id) as HTMLDialogElement).show(),
     mutationFn: ({ facebookCreativesInput }: { facebookCreativesInput: Facebook_Creatives_Insert_Input[] }) => projectFacebookCreativesStore.createProjectFacebookCreatives({ facebookCreativesInput }),
     onError: (error) => toastsStore.addToast({ message: error as string, type: ToastType.ERROR }),
-    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives(); if(props.onSave) props.onSave({}); (document.getElementById(element_id) as HTMLDialogElement).close() }
+    onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully created', type: ToastType.SUCCESS }); refetchFacebookCreatives(); if (props.onSave) props.onSave({}); (document.getElementById(element_id) as HTMLDialogElement).close() }
   })
   const deleteProjectFacebookCreativesMutation = useMutation({
     mutationKey: ['deleteFacebookCreatives'],
@@ -56,18 +51,20 @@ const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
     onError: (error) => toastsStore.addToast({ message: error as string, type: ToastType.ERROR }),
     onSuccess: () => { toastsStore.addToast({ message: 'Creatives successfully deleted', type: ToastType.SUCCESS }); if (props.onSave) props.onSave({}); refetchFacebookCreatives() }
   })
-  const updateAngleMutation = useMutation({
-    mutationKey: ['updateAngle'],
-    mutationFn: ({ name, angleId }: { name: string, angleId: string }) => anglesStore.updateAngle({ id: angleId, payload: { name } as ThemeAngle }),
-    onSuccess: () => { refetchThemes(); if (props.onSave) props.onSave({}) }
-  })
   const updateThemeMutation = useMutation({
     mutationKey: ['updateTheme'],
     mutationFn: ({ name, themeId }: { name: string, themeId: string }) => themesStore.updateTheme({ id: themeId, payload: { name } as ProjectTheme }),
-    onSuccess: () => { refetchThemes(); if(props.onSave) props.onSave({}) }
+    onSuccess: async (data: ProjectTheme) => { await updateAngles({ theme: data }); refetchThemes(); if (props.onSave) props.onSave({}) }
   })
-  const handleAngleChange = (value: string, angleId: string) => {
-    updateAngleMutation.mutate({ name: value, angleId })
+  async function updateAngles({ theme }: { theme: ProjectTheme }) {
+    try {
+      const presetTheme = _.find(availableThemesWithAngles, (item: PresetTheme) => item.name === theme.name)
+      if (presetTheme) {
+        await anglesStore.updateAngles({ updates: theme.angles.map((angle: ThemeAngle) => { return { where: { theme_id: { _eq: theme.id }, id: { _eq: angle.id } }, _set: { name: presetTheme.angles[theme.angles.indexOf(angle)].name } } }) as Themes_Angles_Updates[] })
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
   const handleThemeChange = (value: string, themeId: string) => {
     updateThemeMutation.mutate({ name: value, themeId })
@@ -89,20 +86,20 @@ const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
     }
     projectFacebookCreativesMutation.mutate({ facebookCreativesInput: creatives })
   }
-  function themeTaken(theme: ProjectTheme) {
-    return Boolean(_.find(themes, (item) => theme.name === item.name))
-  }
-  function matrixCell(item: ProjectTheme | ThemeAngle, isTheme?: boolean, isLastTheme?: boolean, isLastAngle?: boolean) {
+  function matrixCell(item: ProjectTheme) {
     return (
       <>
+        {
+          <div className="flex flex-col" style={{ borderRight: '1px solid rgba(0,0,0,.14)' }} >
+            <select disabled={facebookCreatives?.length !== 0} value={item.name} onChange={(e) => handleThemeChange(e.target.value, item.id)} className='rounded-none select bg-transparent w-full hover:bg-gray-100 focus:outline-none max-w-xs text-md font-bold' style={{ width: 230, height: 80, borderBottom: '1px solid rgba(0,0,0,.14)' }}>
+              {availableThemesWithAngles.map((availableTheme) => <option disabled={themes?.find((theme) => theme.name === availableTheme.name) != undefined} key={availableTheme.name} className={`${themes?.find((theme) => theme.name === availableTheme.name) ? 'bg-gray-200' : 'bg-white'} font-bold text-xxs`}>{availableTheme.name}</option>)}
+            </select>
+            {item.angles.map((angle) =>
+              <div className='flex pl-4 items-center w-full max-w-xs text-xxs font-bold' style={{ width: 230, height: 80, borderBottom: '1px solid rgba(0,0,0,.14)' }}>
+                <span>{angle.name}</span>
+              </div>)}
 
-        {isTheme ?
-          <select disabled={facebookCreatives?.length !== 0} value={item.name} onChange={(e) => handleThemeChange(e.target.value, item.id)} className='select bg-transparent w-full hover:bg-gray-100 focus:outline-none max-w-xs text-md font-bold' style={{ borderRadius: '0', borderRight: !isLastTheme ? '1px solid rgba(0,0,0,.14)' : "", borderBottom: '1px solid rgba(0,0,0,.14)', width: 230, height: 80 }}>
-            {availableThemes.map((availableTheme) => <option disabled={themeTaken(availableTheme as ProjectTheme)} key={availableTheme.name} className="bg-white font-bold text-xxs">{availableTheme.name}</option>)}
-          </select>  :
-          <select disabled={facebookCreatives?.length !== 0} value={item.name} onChange={(e) => handleAngleChange(e.target.value, item.id)} className='select bg-transparent w-full hover:bg-gray-100 focus:outline-none max-w-xs' style={{ borderRadius: '0', borderRight: !isLastTheme ? '1px solid rgba(0,0,0,.14)' : "", borderBottom: !isLastAngle ? '1px solid rgba(0,0,0,.14)' : '', width: 230, height: 80 }}>
-            {availableAngles.map((availableAngle) => <option key={availableAngle} className="bg-white font-bold text-xxs">{availableAngle}</option>)}
-          </select>
+          </div>
         }
       </>
     )
@@ -119,15 +116,15 @@ const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             </div>
             <div className="flex overflow-x-auto">
               {
-                themes?.map((theme) => <div key={theme.id}>{matrixCell(theme, true, themes.indexOf(theme) === themes.length - 1)}<div className="flex flex-col">{theme.angles.map((angle) => <div key={angle.id}>{matrixCell(angle, false, themes.indexOf(theme) === themes.length - 1, theme.angles.indexOf(angle) === theme.angles.length - 1)}</div>)}</div></div>)
+                themes?.map((theme) => <div key={theme.id}>{matrixCell(theme)}</div>)
               }
               <div className="flex flex-col">
                 {themes.length < MAX_THEMES && <button className="btn flex-1 bg-white rounded-none ml-5" onClick={() => createThemeMutation.mutate()}><span className="mdi mdi-plus" /></button>}
               </div>
             </div>
-            <div className={`flex ${themes?.length === 3 ? 'w-8/12': 'w-11/12'} mt-3`}>
+            {/* <div className={`flex ${themes?.length === 3 ? 'w-8/12' : 'w-11/12'} mt-3`}>
               {<button disabled={facebookCreatives && facebookCreatives.length > 0} className="btn flex-1 bg-white rounded-none" onClick={() => createAnglesMutation.mutate()}><span className="mdi mdi-plus" /></button>}
-            </div>
+            </div> */}
           </div>
         </div>
       }
