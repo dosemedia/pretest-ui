@@ -75,7 +75,7 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
 const SimpleTextLogo = {
   name: 'SimpleTextLogo',
   title: 'Simple Text and Logo',
-  creatomate_template_id: '6edffee8-c450-470d-a6ae-093af41e1737',
+  creatomate_template_id: '14274b18-58d0-425b-8c83-da593faac659',
   description: 'This creative contains a main body of text and logo on the right side of the page',
   render: SimpleTextLogoRender,
   form: SimpleTextLogoForm
