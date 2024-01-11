@@ -7,7 +7,6 @@ export class ThemesAngles {
     makeAutoObservable(this)
   }
   async updateAngles({ updates }: { updates: Themes_Angles_Updates[] }): Promise<void> {
-    console.log(updates)
     const result = await client.mutation(graphql(`
     mutation updateAngles($updates: [themes_angles_updates!]!) {
       update_themes_angles_many(updates: $updates) {

@@ -27,7 +27,6 @@ export class ProjectFacebookCreatives {
   }
 
   async fetchProjectFacebookCreativesByProjectID({ projectId, requestPolicy = 'cache-first' }: { projectId: string, requestPolicy?: RequestPolicy }): Promise<FacebookCreative[]> {
-    console.log('refetch')
     const result = await client.query(graphql(`
     query FetchFacebookCreativesByProjectID($projectId: uuid!) {
       facebook_creatives(where: { project_id: {_eq: $projectId }}) {

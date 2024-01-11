@@ -28,7 +28,6 @@ const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectSte
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     const date = DateTime.fromFormat(e.target.value, dateFormat)
-    console.log(date)
     setStartTime(date)
   }
 
