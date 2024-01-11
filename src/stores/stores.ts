@@ -12,6 +12,7 @@ import { ProjectFacebookCreatives } from './project_facebook_creatives'
 import { ProjectFacebookCreativeTemplates } from './project_facebook_creative_templates'
 import { ProjectLandingPages } from './project_landing_pages'
 import { Analytics } from './analytics'
+import { CopyConfigurationStore } from './copy_configuration'
 
 export const authStore = new Auth()
 export const AuthContext = createContext<Auth>(authStore)
@@ -51,3 +52,6 @@ export const ProjectLandingPagesContext = createContext<ProjectLandingPages>(pro
 
 export const analytics = new Analytics()
 export const AnalyticsContext = createContext<Analytics>(analytics)
+
+export const copyConfiguration = new CopyConfigurationStore()
+export const CopyConfigurationContext = createContext<CopyConfigurationStore>(copyConfiguration)

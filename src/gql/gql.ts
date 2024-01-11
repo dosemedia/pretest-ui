@@ -29,6 +29,9 @@ const documents = {
     "\n    mutation VerifyEmail($code: String!) {\n      verifyEmail(code: $code)\n    }": types.VerifyEmailDocument,
     "\n    mutation ResetPassword($code: String!, $email: String!, $newPassword: String!) {\n      resetPassword(code: $code, email: $email, newPassword: $newPassword)\n    }": types.ResetPasswordDocument,
     "\n    mutation SubmitContactForm($name: String!, $email: String!, $message: String!) {\n      insert_contact_form_submissions(objects: {email: $email, message: $message, name: $name}) {\n        affected_rows\n      }\n    }\n    ": types.SubmitContactFormDocument,
+    "\n      query FetchCopyConfiguration($projectId: uuid!) {\n        copy_configurations_by_pk(project_id: $projectId) {\n          brand_tone\n          character_count\n          perspective\n          project_id\n          template_type\n          tone\n        }\n      }\n    ": types.FetchCopyConfigurationDocument,
+    "\n      mutation CreateCopyConfiguration($projectId: uuid!) {\n        insert_copy_configurations_one(object: { project_id: $projectId }) {\n          project_id\n        }\n      }\n    ": types.CreateCopyConfigurationDocument,
+    "\n      mutation UpdateCopyConfiguration($projectId: uuid!, $updates: copy_configurations_set_input!) {\n        update_copy_configurations_by_pk(pk_columns: { project_id: $projectId }, _set: $updates) {\n          project_id\n        }\n      }\n    ": types.UpdateCopyConfigurationDocument,
     "\n    mutation FacebookAPIGet($url: String!) {\n      facebookAPIGet(url: $url)\n    }\n    ": types.FacebookApiGetDocument,
     "\n      mutation UpdateFacebookAudiencesByProjectID($id: uuid!, $updates: facebook_audiences_set_input) {\n        update_facebook_audiences_by_pk(pk_columns: {id: $id}, _set: $updates) {\n          id\n          name\n          geo_locations\n          genders\n          interests\n          device_platforms\n          facebook_positions\n          min_age\n          max_age\n          approved\n          updated_at\n        }\n      }\n    ": types.UpdateFacebookAudiencesByProjectIdDocument,
     "\n      mutation DeleteFacebookAudience($audienceId: uuid!) {\n        delete_facebook_audiences_by_pk(id: $audienceId) {\n          id\n        }\n      }\n    ": types.DeleteFacebookAudienceDocument,
@@ -147,6 +150,18 @@ export function graphql(source: "\n    mutation ResetPassword($code: String!, $e
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    mutation SubmitContactForm($name: String!, $email: String!, $message: String!) {\n      insert_contact_form_submissions(objects: {email: $email, message: $message, name: $name}) {\n        affected_rows\n      }\n    }\n    "): (typeof documents)["\n    mutation SubmitContactForm($name: String!, $email: String!, $message: String!) {\n      insert_contact_form_submissions(objects: {email: $email, message: $message, name: $name}) {\n        affected_rows\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      query FetchCopyConfiguration($projectId: uuid!) {\n        copy_configurations_by_pk(project_id: $projectId) {\n          brand_tone\n          character_count\n          perspective\n          project_id\n          template_type\n          tone\n        }\n      }\n    "): (typeof documents)["\n      query FetchCopyConfiguration($projectId: uuid!) {\n        copy_configurations_by_pk(project_id: $projectId) {\n          brand_tone\n          character_count\n          perspective\n          project_id\n          template_type\n          tone\n        }\n      }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      mutation CreateCopyConfiguration($projectId: uuid!) {\n        insert_copy_configurations_one(object: { project_id: $projectId }) {\n          project_id\n        }\n      }\n    "): (typeof documents)["\n      mutation CreateCopyConfiguration($projectId: uuid!) {\n        insert_copy_configurations_one(object: { project_id: $projectId }) {\n          project_id\n        }\n      }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      mutation UpdateCopyConfiguration($projectId: uuid!, $updates: copy_configurations_set_input!) {\n        update_copy_configurations_by_pk(pk_columns: { project_id: $projectId }, _set: $updates) {\n          project_id\n        }\n      }\n    "): (typeof documents)["\n      mutation UpdateCopyConfiguration($projectId: uuid!, $updates: copy_configurations_set_input!) {\n        update_copy_configurations_by_pk(pk_columns: { project_id: $projectId }, _set: $updates) {\n          project_id\n        }\n      }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

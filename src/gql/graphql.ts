@@ -530,6 +530,280 @@ export type Contact_Form_Submissions_Updates = {
   where: Contact_Form_Submissions_Bool_Exp;
 };
 
+/** Additional fields necessary to configure the copy generator */
+export type Copy_Configurations = {
+  __typename?: 'copy_configurations';
+  brand_tone?: Maybe<Scalars['String']['output']>;
+  character_count?: Maybe<Scalars['Int']['output']>;
+  created_at: Scalars['timestamptz']['output'];
+  perspective?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  project: Projects;
+  project_id: Scalars['uuid']['output'];
+  template_type?: Maybe<Scalars['String']['output']>;
+  tone?: Maybe<Scalars['String']['output']>;
+  updated_at: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "copy_configurations" */
+export type Copy_Configurations_Aggregate = {
+  __typename?: 'copy_configurations_aggregate';
+  aggregate?: Maybe<Copy_Configurations_Aggregate_Fields>;
+  nodes: Array<Copy_Configurations>;
+};
+
+/** aggregate fields of "copy_configurations" */
+export type Copy_Configurations_Aggregate_Fields = {
+  __typename?: 'copy_configurations_aggregate_fields';
+  avg?: Maybe<Copy_Configurations_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Copy_Configurations_Max_Fields>;
+  min?: Maybe<Copy_Configurations_Min_Fields>;
+  stddev?: Maybe<Copy_Configurations_Stddev_Fields>;
+  stddev_pop?: Maybe<Copy_Configurations_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Copy_Configurations_Stddev_Samp_Fields>;
+  sum?: Maybe<Copy_Configurations_Sum_Fields>;
+  var_pop?: Maybe<Copy_Configurations_Var_Pop_Fields>;
+  var_samp?: Maybe<Copy_Configurations_Var_Samp_Fields>;
+  variance?: Maybe<Copy_Configurations_Variance_Fields>;
+};
+
+
+/** aggregate fields of "copy_configurations" */
+export type Copy_Configurations_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Copy_Configurations_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Copy_Configurations_Avg_Fields = {
+  __typename?: 'copy_configurations_avg_fields';
+  character_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "copy_configurations". All fields are combined with a logical 'AND'. */
+export type Copy_Configurations_Bool_Exp = {
+  _and?: InputMaybe<Array<Copy_Configurations_Bool_Exp>>;
+  _not?: InputMaybe<Copy_Configurations_Bool_Exp>;
+  _or?: InputMaybe<Array<Copy_Configurations_Bool_Exp>>;
+  brand_tone?: InputMaybe<String_Comparison_Exp>;
+  character_count?: InputMaybe<Int_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  perspective?: InputMaybe<String_Comparison_Exp>;
+  project?: InputMaybe<Projects_Bool_Exp>;
+  project_id?: InputMaybe<Uuid_Comparison_Exp>;
+  template_type?: InputMaybe<String_Comparison_Exp>;
+  tone?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "copy_configurations" */
+export enum Copy_Configurations_Constraint {
+  /** unique or primary key constraint on columns "project_id" */
+  CopyConfigurationsPkey = 'copy_configurations_pkey'
+}
+
+/** input type for incrementing numeric columns in table "copy_configurations" */
+export type Copy_Configurations_Inc_Input = {
+  character_count?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "copy_configurations" */
+export type Copy_Configurations_Insert_Input = {
+  brand_tone?: InputMaybe<Scalars['String']['input']>;
+  character_count?: InputMaybe<Scalars['Int']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  perspective?: InputMaybe<Scalars['String']['input']>;
+  project?: InputMaybe<Projects_Obj_Rel_Insert_Input>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  template_type?: InputMaybe<Scalars['String']['input']>;
+  tone?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Copy_Configurations_Max_Fields = {
+  __typename?: 'copy_configurations_max_fields';
+  brand_tone?: Maybe<Scalars['String']['output']>;
+  character_count?: Maybe<Scalars['Int']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  perspective?: Maybe<Scalars['String']['output']>;
+  project_id?: Maybe<Scalars['uuid']['output']>;
+  template_type?: Maybe<Scalars['String']['output']>;
+  tone?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Copy_Configurations_Min_Fields = {
+  __typename?: 'copy_configurations_min_fields';
+  brand_tone?: Maybe<Scalars['String']['output']>;
+  character_count?: Maybe<Scalars['Int']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  perspective?: Maybe<Scalars['String']['output']>;
+  project_id?: Maybe<Scalars['uuid']['output']>;
+  template_type?: Maybe<Scalars['String']['output']>;
+  tone?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** response of any mutation on the table "copy_configurations" */
+export type Copy_Configurations_Mutation_Response = {
+  __typename?: 'copy_configurations_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Copy_Configurations>;
+};
+
+/** on_conflict condition type for table "copy_configurations" */
+export type Copy_Configurations_On_Conflict = {
+  constraint: Copy_Configurations_Constraint;
+  update_columns?: Array<Copy_Configurations_Update_Column>;
+  where?: InputMaybe<Copy_Configurations_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "copy_configurations". */
+export type Copy_Configurations_Order_By = {
+  brand_tone?: InputMaybe<Order_By>;
+  character_count?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  perspective?: InputMaybe<Order_By>;
+  project?: InputMaybe<Projects_Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  template_type?: InputMaybe<Order_By>;
+  tone?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: copy_configurations */
+export type Copy_Configurations_Pk_Columns_Input = {
+  project_id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "copy_configurations" */
+export enum Copy_Configurations_Select_Column {
+  /** column name */
+  BrandTone = 'brand_tone',
+  /** column name */
+  CharacterCount = 'character_count',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Perspective = 'perspective',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  TemplateType = 'template_type',
+  /** column name */
+  Tone = 'tone',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "copy_configurations" */
+export type Copy_Configurations_Set_Input = {
+  brand_tone?: InputMaybe<Scalars['String']['input']>;
+  character_count?: InputMaybe<Scalars['Int']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  perspective?: InputMaybe<Scalars['String']['input']>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  template_type?: InputMaybe<Scalars['String']['input']>;
+  tone?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Copy_Configurations_Stddev_Fields = {
+  __typename?: 'copy_configurations_stddev_fields';
+  character_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Copy_Configurations_Stddev_Pop_Fields = {
+  __typename?: 'copy_configurations_stddev_pop_fields';
+  character_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Copy_Configurations_Stddev_Samp_Fields = {
+  __typename?: 'copy_configurations_stddev_samp_fields';
+  character_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "copy_configurations" */
+export type Copy_Configurations_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Copy_Configurations_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Copy_Configurations_Stream_Cursor_Value_Input = {
+  brand_tone?: InputMaybe<Scalars['String']['input']>;
+  character_count?: InputMaybe<Scalars['Int']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  perspective?: InputMaybe<Scalars['String']['input']>;
+  project_id?: InputMaybe<Scalars['uuid']['input']>;
+  template_type?: InputMaybe<Scalars['String']['input']>;
+  tone?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Copy_Configurations_Sum_Fields = {
+  __typename?: 'copy_configurations_sum_fields';
+  character_count?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "copy_configurations" */
+export enum Copy_Configurations_Update_Column {
+  /** column name */
+  BrandTone = 'brand_tone',
+  /** column name */
+  CharacterCount = 'character_count',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Perspective = 'perspective',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  TemplateType = 'template_type',
+  /** column name */
+  Tone = 'tone',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Copy_Configurations_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Copy_Configurations_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Copy_Configurations_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Copy_Configurations_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Copy_Configurations_Var_Pop_Fields = {
+  __typename?: 'copy_configurations_var_pop_fields';
+  character_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Copy_Configurations_Var_Samp_Fields = {
+  __typename?: 'copy_configurations_var_samp_fields';
+  character_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Copy_Configurations_Variance_Fields = {
+  __typename?: 'copy_configurations_variance_fields';
+  character_count?: Maybe<Scalars['Float']['output']>;
+};
+
 /** ordering argument of a cursor */
 export enum Cursor_Ordering {
   /** ascending ordering of the cursor */
@@ -2343,6 +2617,10 @@ export type Mutation_Root = {
   delete_contact_form_submissions?: Maybe<Contact_Form_Submissions_Mutation_Response>;
   /** delete single row from the table: "contact_form_submissions" */
   delete_contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
+  /** delete data from the table: "copy_configurations" */
+  delete_copy_configurations?: Maybe<Copy_Configurations_Mutation_Response>;
+  /** delete single row from the table: "copy_configurations" */
+  delete_copy_configurations_by_pk?: Maybe<Copy_Configurations>;
   /** delete data from the table: "facebook_audiences" */
   delete_facebook_audiences?: Maybe<Facebook_Audiences_Mutation_Response>;
   /** delete single row from the table: "facebook_audiences" */
@@ -2409,6 +2687,10 @@ export type Mutation_Root = {
   insert_contact_form_submissions?: Maybe<Contact_Form_Submissions_Mutation_Response>;
   /** insert a single row into the table: "contact_form_submissions" */
   insert_contact_form_submissions_one?: Maybe<Contact_Form_Submissions>;
+  /** insert data into the table: "copy_configurations" */
+  insert_copy_configurations?: Maybe<Copy_Configurations_Mutation_Response>;
+  /** insert a single row into the table: "copy_configurations" */
+  insert_copy_configurations_one?: Maybe<Copy_Configurations>;
   /** insert data into the table: "facebook_audiences" */
   insert_facebook_audiences?: Maybe<Facebook_Audiences_Mutation_Response>;
   /** insert a single row into the table: "facebook_audiences" */
@@ -2492,6 +2774,12 @@ export type Mutation_Root = {
   update_contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
   /** update multiples rows of table: "contact_form_submissions" */
   update_contact_form_submissions_many?: Maybe<Array<Maybe<Contact_Form_Submissions_Mutation_Response>>>;
+  /** update data of the table: "copy_configurations" */
+  update_copy_configurations?: Maybe<Copy_Configurations_Mutation_Response>;
+  /** update single row of the table: "copy_configurations" */
+  update_copy_configurations_by_pk?: Maybe<Copy_Configurations>;
+  /** update multiples rows of table: "copy_configurations" */
+  update_copy_configurations_many?: Maybe<Array<Maybe<Copy_Configurations_Mutation_Response>>>;
   /** update data of the table: "facebook_audiences" */
   update_facebook_audiences?: Maybe<Facebook_Audiences_Mutation_Response>;
   /** update single row of the table: "facebook_audiences" */
@@ -2628,6 +2916,18 @@ export type Mutation_RootDelete_Contact_Form_SubmissionsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Contact_Form_Submissions_By_PkArgs = {
   id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Copy_ConfigurationsArgs = {
+  where: Copy_Configurations_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Copy_Configurations_By_PkArgs = {
+  project_id: Scalars['uuid']['input'];
 };
 
 
@@ -2839,6 +3139,20 @@ export type Mutation_RootInsert_Contact_Form_SubmissionsArgs = {
 export type Mutation_RootInsert_Contact_Form_Submissions_OneArgs = {
   object: Contact_Form_Submissions_Insert_Input;
   on_conflict?: InputMaybe<Contact_Form_Submissions_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Copy_ConfigurationsArgs = {
+  objects: Array<Copy_Configurations_Insert_Input>;
+  on_conflict?: InputMaybe<Copy_Configurations_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Copy_Configurations_OneArgs = {
+  object: Copy_Configurations_Insert_Input;
+  on_conflict?: InputMaybe<Copy_Configurations_On_Conflict>;
 };
 
 
@@ -3129,6 +3443,28 @@ export type Mutation_RootUpdate_Contact_Form_Submissions_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Contact_Form_Submissions_ManyArgs = {
   updates: Array<Contact_Form_Submissions_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Copy_ConfigurationsArgs = {
+  _inc?: InputMaybe<Copy_Configurations_Inc_Input>;
+  _set?: InputMaybe<Copy_Configurations_Set_Input>;
+  where: Copy_Configurations_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Copy_Configurations_By_PkArgs = {
+  _inc?: InputMaybe<Copy_Configurations_Inc_Input>;
+  _set?: InputMaybe<Copy_Configurations_Set_Input>;
+  pk_columns: Copy_Configurations_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Copy_Configurations_ManyArgs = {
+  updates: Array<Copy_Configurations_Updates>;
 };
 
 
@@ -4603,6 +4939,12 @@ export type Query_Root = {
   contact_form_submissions_aggregate: Contact_Form_Submissions_Aggregate;
   /** fetch data from the table: "contact_form_submissions" using primary key columns */
   contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
+  /** fetch data from the table: "copy_configurations" */
+  copy_configurations: Array<Copy_Configurations>;
+  /** fetch aggregated fields from the table: "copy_configurations" */
+  copy_configurations_aggregate: Copy_Configurations_Aggregate;
+  /** fetch data from the table: "copy_configurations" using primary key columns */
+  copy_configurations_by_pk?: Maybe<Copy_Configurations>;
   /** An array relationship */
   facebook_audiences: Array<Facebook_Audiences>;
   /** An aggregate relationship */
@@ -4733,6 +5075,29 @@ export type Query_RootContact_Form_Submissions_AggregateArgs = {
 
 export type Query_RootContact_Form_Submissions_By_PkArgs = {
   id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootCopy_ConfigurationsArgs = {
+  distinct_on?: InputMaybe<Array<Copy_Configurations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Copy_Configurations_Order_By>>;
+  where?: InputMaybe<Copy_Configurations_Bool_Exp>;
+};
+
+
+export type Query_RootCopy_Configurations_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Copy_Configurations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Copy_Configurations_Order_By>>;
+  where?: InputMaybe<Copy_Configurations_Bool_Exp>;
+};
+
+
+export type Query_RootCopy_Configurations_By_PkArgs = {
+  project_id: Scalars['uuid']['input'];
 };
 
 
@@ -5078,6 +5443,14 @@ export type Subscription_Root = {
   contact_form_submissions_by_pk?: Maybe<Contact_Form_Submissions>;
   /** fetch data from the table in a streaming manner: "contact_form_submissions" */
   contact_form_submissions_stream: Array<Contact_Form_Submissions>;
+  /** fetch data from the table: "copy_configurations" */
+  copy_configurations: Array<Copy_Configurations>;
+  /** fetch aggregated fields from the table: "copy_configurations" */
+  copy_configurations_aggregate: Copy_Configurations_Aggregate;
+  /** fetch data from the table: "copy_configurations" using primary key columns */
+  copy_configurations_by_pk?: Maybe<Copy_Configurations>;
+  /** fetch data from the table in a streaming manner: "copy_configurations" */
+  copy_configurations_stream: Array<Copy_Configurations>;
   /** An array relationship */
   facebook_audiences: Array<Facebook_Audiences>;
   /** An aggregate relationship */
@@ -5250,6 +5623,36 @@ export type Subscription_RootContact_Form_Submissions_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Contact_Form_Submissions_Stream_Cursor_Input>>;
   where?: InputMaybe<Contact_Form_Submissions_Bool_Exp>;
+};
+
+
+export type Subscription_RootCopy_ConfigurationsArgs = {
+  distinct_on?: InputMaybe<Array<Copy_Configurations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Copy_Configurations_Order_By>>;
+  where?: InputMaybe<Copy_Configurations_Bool_Exp>;
+};
+
+
+export type Subscription_RootCopy_Configurations_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Copy_Configurations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Copy_Configurations_Order_By>>;
+  where?: InputMaybe<Copy_Configurations_Bool_Exp>;
+};
+
+
+export type Subscription_RootCopy_Configurations_By_PkArgs = {
+  project_id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootCopy_Configurations_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Copy_Configurations_Stream_Cursor_Input>>;
+  where?: InputMaybe<Copy_Configurations_Bool_Exp>;
 };
 
 
@@ -7222,6 +7625,28 @@ export type SubmitContactFormMutationVariables = Exact<{
 
 export type SubmitContactFormMutation = { __typename?: 'mutation_root', insert_contact_form_submissions?: { __typename?: 'contact_form_submissions_mutation_response', affected_rows: number } | null };
 
+export type FetchCopyConfigurationQueryVariables = Exact<{
+  projectId: Scalars['uuid']['input'];
+}>;
+
+
+export type FetchCopyConfigurationQuery = { __typename?: 'query_root', copy_configurations_by_pk?: { __typename?: 'copy_configurations', brand_tone?: string | null, character_count?: number | null, perspective?: string | null, project_id: any, template_type?: string | null, tone?: string | null } | null };
+
+export type CreateCopyConfigurationMutationVariables = Exact<{
+  projectId: Scalars['uuid']['input'];
+}>;
+
+
+export type CreateCopyConfigurationMutation = { __typename?: 'mutation_root', insert_copy_configurations_one?: { __typename?: 'copy_configurations', project_id: any } | null };
+
+export type UpdateCopyConfigurationMutationVariables = Exact<{
+  projectId: Scalars['uuid']['input'];
+  updates: Copy_Configurations_Set_Input;
+}>;
+
+
+export type UpdateCopyConfigurationMutation = { __typename?: 'mutation_root', update_copy_configurations_by_pk?: { __typename?: 'copy_configurations', project_id: any } | null };
+
 export type FacebookApiGetMutationVariables = Exact<{
   url: Scalars['String']['input'];
 }>;
@@ -7519,6 +7944,9 @@ export const SendPasswordResetEmailDocument = {"kind":"Document","definitions":[
 export const VerifyEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}}]}]}}]} as unknown as DocumentNode<VerifyEmailMutation, VerifyEmailMutationVariables>;
 export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"code"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"code"},"value":{"kind":"Variable","name":{"kind":"Name","value":"code"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"newPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}}}]}]}}]} as unknown as DocumentNode<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const SubmitContactFormDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SubmitContactForm"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"message"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_contact_form_submissions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"message"},"value":{"kind":"Variable","name":{"kind":"Name","value":"message"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<SubmitContactFormMutation, SubmitContactFormMutationVariables>;
+export const FetchCopyConfigurationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchCopyConfiguration"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"copy_configurations_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"brand_tone"}},{"kind":"Field","name":{"kind":"Name","value":"character_count"}},{"kind":"Field","name":{"kind":"Name","value":"perspective"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_type"}},{"kind":"Field","name":{"kind":"Name","value":"tone"}}]}}]}}]} as unknown as DocumentNode<FetchCopyConfigurationQuery, FetchCopyConfigurationQueryVariables>;
+export const CreateCopyConfigurationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCopyConfiguration"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_copy_configurations_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project_id"}}]}}]}}]} as unknown as DocumentNode<CreateCopyConfigurationMutation, CreateCopyConfigurationMutationVariables>;
+export const UpdateCopyConfigurationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCopyConfiguration"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"copy_configurations_set_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_copy_configurations_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"project_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project_id"}}]}}]}}]} as unknown as DocumentNode<UpdateCopyConfigurationMutation, UpdateCopyConfigurationMutationVariables>;
 export const FacebookApiGetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FacebookAPIGet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"url"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"facebookAPIGet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"url"},"value":{"kind":"Variable","name":{"kind":"Name","value":"url"}}}]}]}}]} as unknown as DocumentNode<FacebookApiGetMutation, FacebookApiGetMutationVariables>;
 export const UpdateFacebookAudiencesByProjectIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateFacebookAudiencesByProjectID"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"facebook_audiences_set_input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_facebook_audiences_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<UpdateFacebookAudiencesByProjectIdMutation, UpdateFacebookAudiencesByProjectIdMutationVariables>;
 export const DeleteFacebookAudienceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteFacebookAudience"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"audienceId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_facebook_audiences_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"audienceId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteFacebookAudienceMutation, DeleteFacebookAudienceMutationVariables>;

@@ -11,6 +11,7 @@ import { ToastType } from "../../../../stores/toast";
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
 import { ProjectStatus } from "../../../../stores/projects";
 import _ from "lodash";
+import CopyConfigurationView from "./CopyConfigurationView";
 const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const themesStore = useContext(ThemesContext)
   const anglesStore = useContext(ThemesAnglesContext)
@@ -91,11 +92,11 @@ const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
       <>
         {
           <div className="flex flex-col" style={{ borderRight: '1px solid rgba(0,0,0,.14)' }} >
-            <select disabled={facebookCreatives?.length !== 0} value={item.name} onChange={(e) => handleThemeChange(e.target.value, item.id)} className='rounded-none select bg-transparent w-full hover:bg-gray-100 focus:outline-none max-w-xs text-md font-bold' style={{ width: 230, height: 80, borderBottom: '1px solid rgba(0,0,0,.14)' }}>
+            <select disabled={facebookCreatives?.length !== 0} value={item.name} onChange={(e) => handleThemeChange(e.target.value, item.id)} className='rounded-none select bg-transparent w-full hover:bg-gray-100 focus:outline-none max-w-xs text-md font-bold' style={{ width: 230, height: 80, borderRadius: '0', borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderBottom: '1px solid rgba(0,0,0,.14)' }}>
               {availableThemesWithAngles.map((availableTheme) => <option disabled={themes?.find((theme) => theme.name === availableTheme.name) != undefined} key={availableTheme.name} className={`${themes?.find((theme) => theme.name === availableTheme.name) ? 'bg-gray-200' : 'bg-white'} font-bold text-xxs`}>{availableTheme.name}</option>)}
             </select>
             {item.angles.map((angle) =>
-              <div className='flex pl-4 items-center w-full max-w-xs text-xxs font-bold' style={{ width: 230, height: 80, borderBottom: '1px solid rgba(0,0,0,.14)' }}>
+              <div key={angle.id} className='flex pl-4 items-center w-full max-w-xs text-xxs font-bold' style={{ width: 230, height: 80, borderBottom: '1px solid rgba(0,0,0,.14)' }}>
                 <span>{angle.name}</span>
               </div>)}
 
@@ -122,9 +123,9 @@ const TestMatrix: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
                 {themes.length < MAX_THEMES && <button className="btn flex-1 bg-white rounded-none ml-5" onClick={() => createThemeMutation.mutate()}><span className="mdi mdi-plus" /></button>}
               </div>
             </div>
-            {/* <div className={`flex ${themes?.length === 3 ? 'w-8/12' : 'w-11/12'} mt-3`}>
-              {<button disabled={facebookCreatives && facebookCreatives.length > 0} className="btn flex-1 bg-white rounded-none" onClick={() => createAnglesMutation.mutate()}><span className="mdi mdi-plus" /></button>}
-            </div> */}
+          </div>
+          <div className="px-6 pb-8">
+            <CopyConfigurationView {...props} />
           </div>
         </div>
       }
