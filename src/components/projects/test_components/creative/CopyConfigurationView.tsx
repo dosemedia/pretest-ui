@@ -7,6 +7,7 @@ import { ProjectStatus } from "../../../../stores/projects";
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
 import { Copy_Configurations as CopyConfiguration } from "../../../../gql/graphql";
 import _ from "lodash";
+import GenerateCreativesButton from "./GenerateCreativesButton";
 
 const CopyConfigurationView: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const copyConfigurationStore = useContext(CopyConfigurationContext)
@@ -16,6 +17,7 @@ const CopyConfigurationView: React.FC<ProjectStepChildProps> = observer((props: 
   const templateTypeOptions = ['list', 'statement', 'rhetorical', 'product review', 'tweet']
   const toneOptions = ['humorous', 'factual', 'emotional', 'motivational', 'aspirational', 'functional']
   const [characterCount, setCharacterCount] = useState(100)
+  const [updatedAt, setUpdatedAt] = useState('')
   const [brandTone, setBrandTone] = useState('')
   const [perspective, setPerspective] = useState('')
   const [templateType, setTemplateType] = useState('')
@@ -33,7 +35,7 @@ const CopyConfigurationView: React.FC<ProjectStepChildProps> = observer((props: 
   const saveCopyConfigurationMutation = useMutation({
     mutationKey: ['saveCopyConfiguration'],
     mutationFn: (updates: CopyConfiguration) => copyConfigurationStore.saveCopyConfiguration({ projectId, updates }),
-    onSuccess: () => { if (props.saveProject) props.saveProject({}) }
+    onSuccess: (data) => { setUpdatedAt(data.updated_at); if (props.saveProject) props.saveProject({}) }
   })
   useEffect(() => {
     const configuration = { brand_tone: brandTone, perspective, character_count: characterCount, template_type: templateType, tone } as CopyConfiguration
@@ -43,13 +45,15 @@ const CopyConfigurationView: React.FC<ProjectStepChildProps> = observer((props: 
     if (copyConfiguration === null) {
       createCopyConfigurationMutation.mutate()
     }
-    console.log(copyConfiguration)
     setBrandTone(copyConfiguration?.brand_tone || '')
     setPerspective(copyConfiguration?.perspective || '')
     setCharacterCount(copyConfiguration?.character_count || 100)
     setTemplateType(copyConfiguration?.template_type || '')
     setTone(copyConfiguration?.tone || '')
   }, [copyConfiguration])
+  function hasGeneratedCreatives () {
+    return (props.project?.creatives_aggregate.aggregate && props.project?.creatives_aggregate.aggregate?.count > 0) || false
+  }
   return (
     <>
       <hr />
@@ -62,13 +66,13 @@ const CopyConfigurationView: React.FC<ProjectStepChildProps> = observer((props: 
             <label className="label">
               <span className="text-sm">What is the voice and tone of your brand?</span>
             </label>
-            <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="1-5 word answer describing brand's tone" value={brandTone} onChange={(e) => setBrandTone(e.target.value)} />
+            <input type="text" className="input w-full md:w-6/12" disabled={props.project?.status !== ProjectStatus.DRAFT || hasGeneratedCreatives() } placeholder="1-5 word answer describing brand's tone" value={brandTone} onChange={(e) => setBrandTone(e.target.value)} />
           </div>
           <div>
             <label className="label">
               <span className="text-sm">Will this copy be written from 1st, 2nd, or 3rd person?</span>
             </label>
-            <select value={perspective} className="select" onChange={(e) => setPerspective(e.target.value)}>
+            <select value={perspective} className="select" disabled={props.project?.status !== ProjectStatus.DRAFT || hasGeneratedCreatives() } onChange={(e) => setPerspective(e.target.value)}>
               {perspectiveOptions.map((option: string) => <option key={option} value={option}>{option}</option>)}
             </select>
           </div>
@@ -76,7 +80,7 @@ const CopyConfigurationView: React.FC<ProjectStepChildProps> = observer((props: 
             <label className="label">
               <span className="text-sm">What is your ideal character count for the messaging?</span>
             </label>
-            <select value={characterCount} className="select" onChange={(e) => setCharacterCount(parseInt(e.target.value))}>
+            <select value={characterCount} className="select" disabled={props.project?.status !== ProjectStatus.DRAFT || hasGeneratedCreatives() } onChange={(e) => setCharacterCount(parseInt(e.target.value))}>
               {characterCountOptions.map((option: number) => <option key={option} value={option}>{option}</option>)}
             </select>
           </div>
@@ -84,7 +88,7 @@ const CopyConfigurationView: React.FC<ProjectStepChildProps> = observer((props: 
             <label className="label">
               <span className="text-sm">What type of copy style would you like?</span>
             </label>
-            <select value={templateType} className="select" onChange={(e) => setTemplateType(e.target.value)}>
+            <select value={templateType} className="select" disabled={props.project?.status !== ProjectStatus.DRAFT || hasGeneratedCreatives() } onChange={(e) => setTemplateType(e.target.value)}>
               {templateTypeOptions.map((option: string) => <option key={option} value={option}>{option}</option>)}
             </select>
           </div>
@@ -92,12 +96,14 @@ const CopyConfigurationView: React.FC<ProjectStepChildProps> = observer((props: 
             <label className="label">
               <span className="text-sm">How would you like this copy expressed to your audience?</span>
             </label>
-            <select value={tone} className="select" onChange={(e) => setTone(e.target.value)}>
+            <select value={tone} className="select" disabled={props.project?.status !== ProjectStatus.DRAFT || hasGeneratedCreatives() } onChange={(e) => setTone(e.target.value)}>
               {toneOptions.map((option: string) => <option key={option} value={option}>{option}</option>)}
             </select>
           </div>
         </div>
-        {/* <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="Will this copy be written from 1st, 2nd, or 3rd person? e" value={brandTone} onChange={(e) => setBrandTone(e.target.value)} /> */}
+        <div className="mt-5">
+          <GenerateCreativesButton key={updatedAt} {...props} />
+        </div>
       </div>
     </>
   )

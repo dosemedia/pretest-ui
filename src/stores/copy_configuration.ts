@@ -14,6 +14,7 @@ export class CopyConfigurationStore {
           character_count
           perspective
           project_id
+          updated_at
           template_type
           tone
         }
@@ -40,11 +41,11 @@ export class CopyConfigurationStore {
   }
 
   async saveCopyConfiguration({ projectId, updates }: { projectId: string, updates: Copy_Configurations_Set_Input }): Promise<CopyConfiguration> {
-    console.log(updates)
     const result = await client.mutation(graphql(`
       mutation UpdateCopyConfiguration($projectId: uuid!, $updates: copy_configurations_set_input!) {
         update_copy_configurations_by_pk(pk_columns: { project_id: $projectId }, _set: $updates) {
           project_id
+          updated_at
         }
       }
     `), { projectId, updates })

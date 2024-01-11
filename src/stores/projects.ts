@@ -197,6 +197,11 @@ export class Projects {
             project_id
             template_name
           }
+          creatives_aggregate {
+            aggregate {
+              count
+            }
+          }
           themes(order_by: {name: asc}) {
             name
             id
