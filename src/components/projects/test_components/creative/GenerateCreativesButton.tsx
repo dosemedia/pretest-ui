@@ -28,7 +28,7 @@ const GenerateCreativesButton: React.FC<ProjectStepChildProps> = observer((props
   })
   const { data: facebookCreatives, refetch: refetchFacebookCreatives } = useQuery({
     queryKey: ['facebookCreatives'],
-    queryFn: () => projectFacebookCreativesStore.fetchProjectFacebookCreativesByProjectID({ projectId: props.project?.id, requestPolicy: 'cache-and-network' })
+    queryFn: () => projectFacebookCreativesStore.fetchProjectFacebookCreativesByProjectID({ projectId: props.project?.id })
   })
   const { data: copyConfiguration } = useQuery({
     queryKey: ['copyConfiguration'],

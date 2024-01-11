@@ -11,7 +11,6 @@ const TestThemes: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
   const themesStore = useContext(ThemesContext)
   const { data: themes, isLoading, refetch } = useQuery({
     queryKey: ['themes'],
-    retry: false,
     queryFn: () => themesStore.fetchThemes({ projectId: props.project?.id })
   })
   const createProjectThemeMutation = useMutation({

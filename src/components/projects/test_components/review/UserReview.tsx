@@ -159,7 +159,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
                 </div>
                 <div className="flex flex-wrap gap-x-2 gap-y-2 mt-3">
                   {theme.angles.map((angle) => <div key={angle.id} className="w-[340px]">
-                    <FacebookPreviewContainer editTemplate={false} socialCopy={angle.facebook_creatives[0].social_copy || ''} data={angle.facebook_creatives[0].data} ctaText={angle.facebook_creatives[0].cta_text || ''} ctaType={angle.facebook_creatives[0].cta_type || ''} template={angle.facebook_creatives[0]} />
+                    { angle.facebook_creatives[0] && <FacebookPreviewContainer editTemplate={false} socialCopy={angle.facebook_creatives[0].social_copy || ''} data={angle.facebook_creatives[0].data} ctaText={angle.facebook_creatives[0].cta_text || ''} ctaType={angle.facebook_creatives[0].cta_type || ''} template={angle.facebook_creatives[0]} /> }
                   </div>)}
                 </div>
               </div>)}

@@ -3,7 +3,6 @@ import { Facebook_Creatives_Insert_Input, Facebook_Creatives_Updates } from '../
 import { Facebook_Creatives as FacebookCreative } from '../gql/graphql';
 import { client } from '../graphql'
 import { graphql } from '../gql'
-import { RequestPolicy } from 'urql';
 export class ProjectFacebookCreatives {
 
   constructor() {
@@ -26,7 +25,7 @@ export class ProjectFacebookCreatives {
     return true
   }
 
-  async fetchProjectFacebookCreativesByProjectID({ projectId, requestPolicy = 'cache-first' }: { projectId: string, requestPolicy?: RequestPolicy }): Promise<FacebookCreative[]> {
+  async fetchProjectFacebookCreativesByProjectID({ projectId }: { projectId: string }): Promise<FacebookCreative[]> {
     const result = await client.query(graphql(`
     query FetchFacebookCreativesByProjectID($projectId: uuid!) {
       facebook_creatives(where: { project_id: {_eq: $projectId }}) {
@@ -38,7 +37,7 @@ export class ProjectFacebookCreatives {
         updated_at
       }
     }
-    `), { projectId }, { requestPolicy })
+    `), { projectId })
     if (result.error) {
       throw result.error
     }

@@ -82,7 +82,7 @@ const ProjectMenu = observer(({ step, project, currentStep, saveProject }: { ste
           value: 'ad_copy_matrix',
           steps: [8, 9, 10],
           goToStep: () => goToAdCopyStep(),
-          isComplete: Boolean(project && ((project?.themes && step === 8) || project?.themes[0]?.angles[0]?.facebook_creatives?.length > 0 )),
+          isComplete: Boolean(project && ((project?.themes && step === 8 && project?.themes.length > 2) || project?.themes[0]?.angles[0]?.facebook_creatives?.length > 0 )),
           icon: 'mdi mdi-file-document-edit'
         },
         {
