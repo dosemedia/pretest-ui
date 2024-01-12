@@ -55,7 +55,17 @@ const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: Proje
     if (selectedAngle) {
       setSelectedCreative(selectedAngle.facebook_creatives[0])
     }
-  }, [selectedAngle])
+  }, [selectedAngle, props.project])
+  useEffect(() => {
+    if (selectedAngle) {
+      for (const theme of props.project!.themes) {
+        const angle = theme.angles.find((item) => item.id === selectedAngle.id)
+        if (angle) {
+          setSelectedAngle({ ...angle })
+        }
+      }
+    }
+  }, [props.project])
   useEffect(() => {
     debouncedSave({ socialCopy, ctaText, ctaType })
   }, [socialCopy, ctaText, ctaType])
@@ -125,11 +135,12 @@ const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: Proje
             </div>
           </div>
           <div className="w-full md:w-5/12">
+
             {selectedCreative ? <FacebookPreviewContainer disabled={props.project?.status !== ProjectStatus.DRAFT} template={selectedCreative} data={selectedCreative.data} socialCopy={socialCopy} ctaText={ctaText} ctaType={ctaType} /> : <div className="alert alert-info text-white"><span>Click on a creative in order to see a preview.</span></div>}
           </div>
         </div>
       }
-      <CopyEditModal props={props} element_id={copyEditModalId} creative={{...selectedCreative} as FacebookCreative} />
+      <CopyEditModal key={selectedCreative?.updated_at} props={props} element_id={copyEditModalId} creative={{ ...selectedCreative } as FacebookCreative} />
     </>
   )
 })
