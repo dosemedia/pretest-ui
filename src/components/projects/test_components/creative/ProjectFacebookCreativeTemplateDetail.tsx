@@ -27,7 +27,6 @@ const projectFacebookCreativeTemplateDetail: React.FC<ProjectStepChildProps> = o
     queryKey: ['fetchProjectFacebookCreativeTemplate'],
     queryFn: async () => {
       const creative = await projectFacebookCreativeTemplateStore.fetchProjectFacebookCreativeTemplateWithTemplate(projectFacebookCreativeTemplateId)
-      // Prevent save trigger from this initial load
       setFormData(creative?.data)
       return creative
     }
@@ -84,6 +83,9 @@ const projectFacebookCreativeTemplateDetail: React.FC<ProjectStepChildProps> = o
             {projectFacebookCreativeTemplate &&
               // We could also use this which is very similar : https://jsonforms.io/docs/integrations/react/
               <div className={`bg-gray-200 mt-8 rounded-md p-8 ${props.project?.status !== ProjectStatus.DRAFT && 'pointer-events-none'}`}>
+                <p className="mb-2 text-lg font-bold">
+                  {projectFacebookCreativeTemplate?.template_name}
+                </p>
                 <span>Edit this template below or <span className="link" onClick={() => { searchParams.delete('project_facebook_creative_template_id'); setSearchParams({ ...searchParams, step: '6' }) }}>go back to templates</span></span>{updateCreative && <SpinningLoading isLoading={updateCreative.isLoading} size="loading-xs" />}
                 {Form &&
                   <Form

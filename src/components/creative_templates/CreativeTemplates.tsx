@@ -1,7 +1,11 @@
-import SimpleLogoText from './SimpleTextLogo.tsx';
+import LifestyleTemplate from './LifestyleTemplate.tsx';
+import ProductTemplate from './ProductTemplate.tsx';
+import TweetTemplate from './TweetTemplate.tsx';
 
 const CreativeTemplates = [
-  SimpleLogoText,
+  TweetTemplate,
+  LifestyleTemplate,
+  ProductTemplate
 ]
 
 export default CreativeTemplates;

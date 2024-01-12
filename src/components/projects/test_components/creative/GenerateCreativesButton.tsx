@@ -104,7 +104,7 @@ const GenerateCreativesButton: React.FC<ProjectStepChildProps> = observer((props
                 template_name: projectFacebookCreativeTemplates[0].template_name,
                 theme_id: theme.id,
                 angle_id: angle.id,
-                data: { ...projectFacebookCreativeTemplates[0].data, mainCopy: content }
+                data: { ...projectFacebookCreativeTemplates[0].data, mainCopy: content.replace(/^"|"$/g, '') }
               })
             }
           } catch (e) {

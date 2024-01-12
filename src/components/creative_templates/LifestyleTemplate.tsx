@@ -5,37 +5,29 @@ import FileUploader, { ProjectBucketUpload } from '../lib/FileUpload';
 import { authStore } from '../../stores/stores';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SimpleTextLogoRender: React.FC<{ data: any }> = ({ data }) => {
+const LifestyleTemplateRender: React.FC<{ data: any }> = ({ data }) => {
   return (
-    <div className="flex items-center justify-center" style={{ backgroundColor: data.background, width: '100%', height: 400 }}>
-      <div className="bg-white rounded-xl w-10/12 p-8">
-        <div className="flex items-center gap-x-6">
-          <img src={data.logoImage} style={{ borderRadius: '100%', width: 60 }} />
-          <div>
-            <div className="flex items-center">
-              <span className="font-bold text-md">Elisabeth Parker</span><span className="mdi mdi-check-decagram text-blue-500 ml-2" />
-            </div>
-            <p className="text-gray-600 text-xxs">
-              @elisabethparker
-            </p>
-          </div>
-        </div>
-        <div className="mt-6">
-          {data.mainCopy}
-        </div>
+    <div className="flex items-center" style={{ backgroundColor: data.background, width: '100%', position: 'relative', height: 400 }}>
+      <img src={data.logoImage} style={{ position: 'absolute', top: '4%', right: '5%', width: 120 }} />
+      <img src="/src/assets/creative_template_assets/smiley_face.png" style={{ position: 'absolute', bottom: 0, right: '20%', width: 180 }} />
+      <img src="/src/assets/creative_template_assets/balloon.png" style={{ position: 'absolute', bottom: '42%', right: '12%', width: 100 }} />
+      <div className="font-black ml-4 mb-10" style={{ width: '50%', textWrap: 'wrap', textOverflow: 'ellipsis' }}>
+        <p style={{ maxWidth: '100%', fontSize: '2.5rem', color: '#00a86d', lineHeight: '35px' }}>
+          { data.mainCopy }
+        </p>
       </div>
     </div>
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void }> = ({ data, onChange }) => {
+const LifestyleTemplateForm: React.FC<{ data: any, onChange: (newData: any) => void }> = ({ data, onChange }) => {
   const { projectId } = useParams() as { projectId: string }
 
   const formData = data || {
-    background: '#298493',
-    logoImage: 'https://creatomate.com/files/assets/d6628425-8e35-4fee-9de8-a18d21309546',
-    mainCopy: 'Cultivate an optimistic mind, use your imagination, always consider alternatives, and dare to believe that you can make possible what others think is impossible.'
+    background: '#e8faec',
+    logoImage: null,
+    mainCopy: 'Balance your screentime.'
   };
 
   return (
@@ -72,13 +64,13 @@ const SimpleTextLogoForm: React.FC<{ data: any, onChange: (newData: any) => void
   );
 }
 
-const SimpleTextLogo = {
-  name: 'SimpleTextLogo',
-  title: 'Simple Text and Logo',
-  creatomate_template_id: '14274b18-58d0-425b-8c83-da593faac659',
-  description: 'This creative contains a main body of text and logo on the right side of the page',
-  render: SimpleTextLogoRender,
-  form: SimpleTextLogoForm
+const LifestyleTemplate = {
+  name: 'LifestyleTemplate',
+  title: 'Lifestyle',
+  creatomate_template_id: '46baa2fa-d8ae-4e4e-9ad0-1f83116f9e01',
+  description: 'This creative contains a lifestyle style ad template with a logo image and a background color',
+  render: LifestyleTemplateRender,
+  form: LifestyleTemplateForm
 } as CreativeTemplate;
 
-export default SimpleTextLogo;
+export default LifestyleTemplate;
