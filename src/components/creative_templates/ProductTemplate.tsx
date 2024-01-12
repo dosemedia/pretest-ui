@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import CreativeTemplate from './CreativeTemplate';
 import { useParams } from 'react-router-dom';
 import FileUploader, { ProjectBucketUpload } from '../lib/FileUpload';
