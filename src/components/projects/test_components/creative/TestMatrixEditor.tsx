@@ -12,8 +12,10 @@ import { ProjectFacebookCreativesContext } from "../../../../stores/stores";
 import { useMutation } from "@tanstack/react-query";
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
 import { ProjectStatus } from "../../../../stores/projects";
-const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) =>{
+import CopyEditModal from "./CopyEditModal";
+const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: ProjectStepChildProps) => {
   const themes: ProjectTheme[] = props.project!.themes
+  const copyEditModalId = 'edit_copy_modal_id'
   const facebookCreativesStore = useContext(ProjectFacebookCreativesContext)
   const [searchParams, setSearchParams] = useSearchParams()
   const [selectedAngle, setSelectedAngle] = useState<ThemeAngle | null>(themes[0]?.angles[0])
@@ -75,6 +77,12 @@ const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: Proje
               <div>
                 {creative.data[key]}
               </div>
+              {key === 'mainCopy' && <div className="flex-1 text-end">
+                <button className="btn btn-xs btn-circle" onClick={() => (document.getElementById(copyEditModalId) as HTMLDialogElement).show()}>
+                  <span className="mdi mdi-pencil"></span>
+                </button>
+              </div>
+              }
             </div>)
             )
             }
@@ -121,6 +129,7 @@ const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: Proje
           </div>
         </div>
       }
+      <CopyEditModal props={props} element_id={copyEditModalId} creative={{...selectedCreative} as FacebookCreative} />
     </>
   )
 })
