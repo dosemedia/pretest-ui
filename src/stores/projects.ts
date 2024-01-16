@@ -65,6 +65,21 @@ export class Projects {
   constructor() {
     makeAutoObservable(this)
   }
+  async createTemplateProject({ templateName, teamId }: { templateName: string, teamId: string }): Promise<Project | undefined> {
+    const result = await client.mutation(graphql(`
+    mutation CreateTemplateProject($templateName: String!, $teamId: uuid!) {
+      createTemplateProject(templateName: $templateName, team_id: $teamId) {
+        id
+        name
+        team_id
+      }
+    }
+    `), { templateName, teamId })
+    if (result.error) {
+      throw result.error
+    }
+    return result.data?.createTemplateProject as Project | undefined
+  }
   async createProject({ name, team_id }: { team_id: string, name: string }): Promise<Project | undefined> {
     if (!name) {
       throw new Error('Name is required')

@@ -51,6 +51,7 @@ const documents = {
     "\n    query FetchLandingPageWithTemplate($landingPageId: uuid!) {\n      landing_pages_by_pk(id: $landingPageId) {\n        created_at\n        data\n        id\n        project_id\n        template_name\n        updated_at\n      }\n    }\n    ": types.FetchLandingPageWithTemplateDocument,
     "\n    mutation UpdateLandingPage($landingPageId: uuid!, $data: landing_pages_set_input!) {\n      update_landing_pages_by_pk(pk_columns: {id: $landingPageId}, _set: $data) {\n        id\n        data\n      }\n    }\n    ": types.UpdateLandingPageDocument,
     "\n    mutation DeleteLandingPage($landingPageId: uuid!) {\n      delete_landing_pages_by_pk(id: $landingPageId) {\n        id\n      }\n    }\n    ": types.DeleteLandingPageDocument,
+    "\n    mutation CreateTemplateProject($templateName: String!, $teamId: uuid!) {\n      createTemplateProject(templateName: $templateName, team_id: $teamId) {\n        id\n        name\n        team_id\n      }\n    }\n    ": types.CreateTemplateProjectDocument,
     "\n    mutation CreateProject($name: String!, $team_id: uuid!) {\n      createProject(team_id: $team_id, name: $name) {\n        id\n        name\n        team_id\n      }\n    }\n    ": types.CreateProjectDocument,
     "\n    mutation DeleteProject($id: uuid!) {\n      delete_projects_by_pk(id: $id) {\n        id\n      }\n    }\n    ": types.DeleteProjectDocument,
     "\n      mutation UpdateProject($id: uuid!, $updates: projects_set_input) {\n        update_projects_by_pk(pk_columns: {id: $id}, _set: $updates) {\n          name\n          objective\n          branding\n          platform\n          product_description\n          project_type\n          status\n          updated_at\n          start_time\n          stop_time\n        }\n      }\n      ": types.UpdateProjectDocument,
@@ -238,6 +239,10 @@ export function graphql(source: "\n    mutation UpdateLandingPage($landingPageId
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n    mutation DeleteLandingPage($landingPageId: uuid!) {\n      delete_landing_pages_by_pk(id: $landingPageId) {\n        id\n      }\n    }\n    "): (typeof documents)["\n    mutation DeleteLandingPage($landingPageId: uuid!) {\n      delete_landing_pages_by_pk(id: $landingPageId) {\n        id\n      }\n    }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    mutation CreateTemplateProject($templateName: String!, $teamId: uuid!) {\n      createTemplateProject(templateName: $templateName, team_id: $teamId) {\n        id\n        name\n        team_id\n      }\n    }\n    "): (typeof documents)["\n    mutation CreateTemplateProject($templateName: String!, $teamId: uuid!) {\n      createTemplateProject(templateName: $templateName, team_id: $teamId) {\n        id\n        name\n        team_id\n      }\n    }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

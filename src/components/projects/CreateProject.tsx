@@ -4,6 +4,8 @@ import { useContext, useState } from "react";
 import { ProjectsContext, TeamsContext, ToastsContext } from "../../stores/stores";
 import { useNavigate } from "react-router-dom";
 import { ToastType } from "../../stores/toast";
+import { Projects as Project } from "../../gql/graphql";
+import { SpinningLoading } from "../lib/SpinningLoading";
 
 const createProject = observer(() => {
   const projects = useContext(ProjectsContext)
@@ -12,24 +14,32 @@ const createProject = observer(() => {
   const navigate = useNavigate()
   const element_id = "create_project_modal"
   const [name, setName] = useState('')
-  function removeFields () {
+  function removeFields() {
     setName('')
   }
+  const createTemplateProjectMutation = useMutation({
+    mutationKey: ['createTemplateProject'],
+    mutationFn: () => projects.createTemplateProject({ templateName: 'demo', teamId: teams.activeTeam?.id }),
+    onSuccess: onSuccessfulProjectCreate,
+    onError: (error: Error) => { toasts.addToast({ message: error.message, type: ToastType.ERROR }) }
+  })
   const createProject = useMutation({
     mutationKey: ['createProject'],
     mutationFn: () => {
       return projects.createProject({ name, team_id: teams.activeTeam?.id })
     },
-    onSuccess: (data) => {
-      (document.getElementById(element_id) as HTMLDialogElement).close()
-      removeFields()
-      toasts.addToast({ message: 'Project successfully created', type: ToastType.SUCCESS })
-      if (data?.id) {
-        navigate(`/project/${data.id}`)
-      }
-    },
+    onSuccess: onSuccessfulProjectCreate,
     onError: (error: Error) => { toasts.addToast({ message: error.message, type: ToastType.ERROR }) }
   })
+
+  function onSuccessfulProjectCreate(data: Project | undefined) {
+    (document.getElementById(element_id) as HTMLDialogElement).close()
+    removeFields()
+    toasts.addToast({ message: 'Project successfully created', type: ToastType.SUCCESS })
+    if (data?.id) {
+      navigate(`/project/${data.id}`)
+    }
+  }
   return (
     <>
       <div>
@@ -41,6 +51,19 @@ const createProject = observer(() => {
             <p className="text-lg font-bold">
               Create New Project
             </p>
+            <p className="mb-8">
+              Select a template below or start from scatch
+            </p>
+            <button className="btn mb-4 gradient-background text-white normal-case border-none" onClick={() => createTemplateProjectMutation.mutate()}>
+              Demo Template <SpinningLoading isLoading={createTemplateProjectMutation.isLoading} />
+            </button>
+            <div className="flex items-center gap-x-5">
+              <hr className="flex-1" />
+              <p className="text-gray-400">
+                or
+              </p>
+              <hr className="flex-1" />
+            </div>
             <div>
               <label className="label mt-2">
                 <span className="text-sm opacity-60">Name</span>

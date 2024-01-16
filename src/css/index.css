@@ -54,6 +54,10 @@ a.active {
   border: 1px solid #E3E1D9;
 }
 
+.input:focus {
+  outline: none;
+}
+
 .select {
   border-radius: 10px;
   opacity: 0.9;
