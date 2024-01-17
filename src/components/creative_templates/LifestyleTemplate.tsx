@@ -7,12 +7,12 @@ import { authStore } from '../../stores/stores';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LifestyleTemplateRender: React.FC<{ data: any }> = ({ data }) => {
   return (
-    <div className="flex items-center" style={{ backgroundColor: data.background, width: '100%', position: 'relative', height: 400 }}>
+    <div className="flex items-center" style={{ backgroundColor: data.background, aspectRatio: '4/5', position: 'relative', height: 400, width: '100%' }}>
       <img src={data.logoImage} style={{ position: 'absolute', top: '4%', right: '5%', width: 120 }} />
       <img src="/src/assets/creative_template_assets/smiley_face.png" style={{ position: 'absolute', bottom: 0, right: '20%', width: 180 }} />
       <img src="/src/assets/creative_template_assets/balloon.png" style={{ position: 'absolute', bottom: '42%', right: '12%', width: 100 }} />
       <div className="font-black ml-4 mb-10" style={{ width: '50%', textWrap: 'wrap', textOverflow: 'ellipsis' }}>
-        <p style={{ maxWidth: '100%', fontSize: '2.5rem', color: '#00a86d', lineHeight: '35px' }}>
+        <p style={{ maxWidth: '100%', fontSize: 'clamp(20px, 30px, 2.3vw)', color: '#00a86d', lineHeight: '35px' }}>
           { data.mainCopy }
         </p>
       </div>

@@ -65,14 +65,13 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
   }
   return (
     <>
-      <div className="flex flex-wrap justify-between gap-y-12 gap-x-4">
-        <div className="flex-initial">
+      <div className="flex flex-wrap gap-y-12 gap-x-28">
+        <div>
           {project && <ProjectMenu project={project} saveProject={saveProject} step={step} currentStep={(val: ProjectDraftMenu) => setCurrentStep(val)} />}
         </div>
-        <div className="flex-initial w-full md:w-8/12">
+        <div className="flex-1">
           {project && React.Children.map(children as ReactElement, (child, index) => ((step - 1 === index) || child.props.alwaysShow) &&
             <>
-
               <div className="text-lg configuration-title mb-4">
                 {child.props.title}
               </div>
