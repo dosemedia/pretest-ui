@@ -58,7 +58,7 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
       payload.updated_at = DateTime.now().toISO()
       await projectMutation.mutateAsync(payload)
     }
-  }, 1000)
+  }, 400)
   async function onNext() {
     await currentStep?.overrideNext?.onNext()
     refetch()

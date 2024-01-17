@@ -3651,6 +3651,7 @@ export type Mutation_RootUpdate_Project_Facebook_Creative_Templates_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_ProjectsArgs = {
+  _inc?: InputMaybe<Projects_Inc_Input>;
   _set?: InputMaybe<Projects_Set_Input>;
   where: Projects_Bool_Exp;
 };
@@ -3658,6 +3659,7 @@ export type Mutation_RootUpdate_ProjectsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Projects_By_PkArgs = {
+  _inc?: InputMaybe<Projects_Inc_Input>;
   _set?: InputMaybe<Projects_Set_Input>;
   pk_columns: Projects_Pk_Columns_Input;
 };
@@ -4124,6 +4126,8 @@ export type Projects = {
   creatives: Array<Facebook_Creatives>;
   /** An aggregate relationship */
   creatives_aggregate: Facebook_Creatives_Aggregate;
+  duration?: Maybe<Scalars['Int']['output']>;
+  duration_approved?: Maybe<Scalars['Boolean']['output']>;
   /** An array relationship */
   facebook_audiences: Array<Facebook_Audiences>;
   /** An aggregate relationship */
@@ -4147,7 +4151,6 @@ export type Projects = {
   project_facebook_creative_templates_aggregate: Project_Facebook_Creative_Templates_Aggregate;
   project_type?: Maybe<Scalars['String']['output']>;
   project_type_approved?: Maybe<Scalars['Boolean']['output']>;
-  start_stop_time_approved?: Maybe<Scalars['Boolean']['output']>;
   start_time?: Maybe<Scalars['timestamptz']['output']>;
   status: Scalars['String']['output'];
   stop_time?: Maybe<Scalars['timestamptz']['output']>;
@@ -4292,9 +4295,17 @@ export type Projects_Aggregate = {
 /** aggregate fields of "projects" */
 export type Projects_Aggregate_Fields = {
   __typename?: 'projects_aggregate_fields';
+  avg?: Maybe<Projects_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Projects_Max_Fields>;
   min?: Maybe<Projects_Min_Fields>;
+  stddev?: Maybe<Projects_Stddev_Fields>;
+  stddev_pop?: Maybe<Projects_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Projects_Stddev_Samp_Fields>;
+  sum?: Maybe<Projects_Sum_Fields>;
+  var_pop?: Maybe<Projects_Var_Pop_Fields>;
+  var_samp?: Maybe<Projects_Var_Samp_Fields>;
+  variance?: Maybe<Projects_Variance_Fields>;
 };
 
 
@@ -4302,6 +4313,12 @@ export type Projects_Aggregate_Fields = {
 export type Projects_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Projects_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Projects_Avg_Fields = {
+  __typename?: 'projects_avg_fields';
+  duration?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "projects". All fields are combined with a logical 'AND'. */
@@ -4314,6 +4331,8 @@ export type Projects_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   creatives?: InputMaybe<Facebook_Creatives_Bool_Exp>;
   creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Bool_Exp>;
+  duration?: InputMaybe<Int_Comparison_Exp>;
+  duration_approved?: InputMaybe<Boolean_Comparison_Exp>;
   facebook_audiences?: InputMaybe<Facebook_Audiences_Bool_Exp>;
   facebook_audiences_aggregate?: InputMaybe<Facebook_Audiences_Aggregate_Bool_Exp>;
   final_report_upload_url?: InputMaybe<String_Comparison_Exp>;
@@ -4331,7 +4350,6 @@ export type Projects_Bool_Exp = {
   project_facebook_creative_templates_aggregate?: InputMaybe<Project_Facebook_Creative_Templates_Aggregate_Bool_Exp>;
   project_type?: InputMaybe<String_Comparison_Exp>;
   project_type_approved?: InputMaybe<Boolean_Comparison_Exp>;
-  start_stop_time_approved?: InputMaybe<Boolean_Comparison_Exp>;
   start_time?: InputMaybe<Timestamptz_Comparison_Exp>;
   status?: InputMaybe<String_Comparison_Exp>;
   stop_time?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -4348,12 +4366,19 @@ export enum Projects_Constraint {
   ProjectsPkey = 'projects_pkey'
 }
 
+/** input type for incrementing numeric columns in table "projects" */
+export type Projects_Inc_Input = {
+  duration?: InputMaybe<Scalars['Int']['input']>;
+};
+
 /** input type for inserting data into table "projects" */
 export type Projects_Insert_Input = {
   branding?: InputMaybe<Scalars['String']['input']>;
   brandness_approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creatives?: InputMaybe<Facebook_Creatives_Arr_Rel_Insert_Input>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
+  duration_approved?: InputMaybe<Scalars['Boolean']['input']>;
   facebook_audiences?: InputMaybe<Facebook_Audiences_Arr_Rel_Insert_Input>;
   final_report_upload_url?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -4368,7 +4393,6 @@ export type Projects_Insert_Input = {
   project_facebook_creative_templates?: InputMaybe<Project_Facebook_Creative_Templates_Arr_Rel_Insert_Input>;
   project_type?: InputMaybe<Scalars['String']['input']>;
   project_type_approved?: InputMaybe<Scalars['Boolean']['input']>;
-  start_stop_time_approved?: InputMaybe<Scalars['Boolean']['input']>;
   start_time?: InputMaybe<Scalars['timestamptz']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   stop_time?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -4382,6 +4406,7 @@ export type Projects_Max_Fields = {
   __typename?: 'projects_max_fields';
   branding?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
+  duration?: Maybe<Scalars['Int']['output']>;
   final_report_upload_url?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -4400,6 +4425,7 @@ export type Projects_Min_Fields = {
   __typename?: 'projects_min_fields';
   branding?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
+  duration?: Maybe<Scalars['Int']['output']>;
   final_report_upload_url?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -4442,6 +4468,8 @@ export type Projects_Order_By = {
   brandness_approved?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   creatives_aggregate?: InputMaybe<Facebook_Creatives_Aggregate_Order_By>;
+  duration?: InputMaybe<Order_By>;
+  duration_approved?: InputMaybe<Order_By>;
   facebook_audiences_aggregate?: InputMaybe<Facebook_Audiences_Aggregate_Order_By>;
   final_report_upload_url?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
@@ -4456,7 +4484,6 @@ export type Projects_Order_By = {
   project_facebook_creative_templates_aggregate?: InputMaybe<Project_Facebook_Creative_Templates_Aggregate_Order_By>;
   project_type?: InputMaybe<Order_By>;
   project_type_approved?: InputMaybe<Order_By>;
-  start_stop_time_approved?: InputMaybe<Order_By>;
   start_time?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   stop_time?: InputMaybe<Order_By>;
@@ -4478,6 +4505,10 @@ export enum Projects_Select_Column {
   BrandnessApproved = 'brandness_approved',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Duration = 'duration',
+  /** column name */
+  DurationApproved = 'duration_approved',
   /** column name */
   FinalReportUploadUrl = 'final_report_upload_url',
   /** column name */
@@ -4501,8 +4532,6 @@ export enum Projects_Select_Column {
   /** column name */
   ProjectTypeApproved = 'project_type_approved',
   /** column name */
-  StartStopTimeApproved = 'start_stop_time_approved',
-  /** column name */
   StartTime = 'start_time',
   /** column name */
   Status = 'status',
@@ -4517,6 +4546,8 @@ export type Projects_Set_Input = {
   branding?: InputMaybe<Scalars['String']['input']>;
   brandness_approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
+  duration_approved?: InputMaybe<Scalars['Boolean']['input']>;
   final_report_upload_url?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -4528,11 +4559,28 @@ export type Projects_Set_Input = {
   product_description?: InputMaybe<Scalars['String']['input']>;
   project_type?: InputMaybe<Scalars['String']['input']>;
   project_type_approved?: InputMaybe<Scalars['Boolean']['input']>;
-  start_stop_time_approved?: InputMaybe<Scalars['Boolean']['input']>;
   start_time?: InputMaybe<Scalars['timestamptz']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   stop_time?: InputMaybe<Scalars['timestamptz']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Projects_Stddev_Fields = {
+  __typename?: 'projects_stddev_fields';
+  duration?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Projects_Stddev_Pop_Fields = {
+  __typename?: 'projects_stddev_pop_fields';
+  duration?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Projects_Stddev_Samp_Fields = {
+  __typename?: 'projects_stddev_samp_fields';
+  duration?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Streaming cursor of the table "projects" */
@@ -4548,6 +4596,8 @@ export type Projects_Stream_Cursor_Value_Input = {
   branding?: InputMaybe<Scalars['String']['input']>;
   brandness_approved?: InputMaybe<Scalars['Boolean']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  duration?: InputMaybe<Scalars['Int']['input']>;
+  duration_approved?: InputMaybe<Scalars['Boolean']['input']>;
   final_report_upload_url?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -4559,11 +4609,16 @@ export type Projects_Stream_Cursor_Value_Input = {
   product_description?: InputMaybe<Scalars['String']['input']>;
   project_type?: InputMaybe<Scalars['String']['input']>;
   project_type_approved?: InputMaybe<Scalars['Boolean']['input']>;
-  start_stop_time_approved?: InputMaybe<Scalars['Boolean']['input']>;
   start_time?: InputMaybe<Scalars['timestamptz']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   stop_time?: InputMaybe<Scalars['timestamptz']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Projects_Sum_Fields = {
+  __typename?: 'projects_sum_fields';
+  duration?: Maybe<Scalars['Int']['output']>;
 };
 
 /** Themes associated with a project */
@@ -4894,6 +4949,10 @@ export enum Projects_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  Duration = 'duration',
+  /** column name */
+  DurationApproved = 'duration_approved',
+  /** column name */
   FinalReportUploadUrl = 'final_report_upload_url',
   /** column name */
   Id = 'id',
@@ -4916,8 +4975,6 @@ export enum Projects_Update_Column {
   /** column name */
   ProjectTypeApproved = 'project_type_approved',
   /** column name */
-  StartStopTimeApproved = 'start_stop_time_approved',
-  /** column name */
   StartTime = 'start_time',
   /** column name */
   Status = 'status',
@@ -4928,10 +4985,30 @@ export enum Projects_Update_Column {
 }
 
 export type Projects_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Projects_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Projects_Set_Input>;
   /** filter the rows which have to be updated */
   where: Projects_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Projects_Var_Pop_Fields = {
+  __typename?: 'projects_var_pop_fields';
+  duration?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Projects_Var_Samp_Fields = {
+  __typename?: 'projects_var_samp_fields';
+  duration?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Projects_Variance_Fields = {
+  __typename?: 'projects_variance_fields';
+  duration?: Maybe<Scalars['Float']['output']>;
 };
 
 export type Query_Root = {
@@ -7826,7 +7903,7 @@ export type UpdateProjectMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProjectMutation = { __typename?: 'mutation_root', update_projects_by_pk?: { __typename?: 'projects', name: string, objective?: string | null, branding?: string | null, platform?: string | null, product_description?: string | null, project_type?: string | null, status: string, updated_at: any, start_time?: any | null, stop_time?: any | null } | null };
+export type UpdateProjectMutation = { __typename?: 'mutation_root', update_projects_by_pk?: { __typename?: 'projects', name: string, objective?: string | null, branding?: string | null, platform?: string | null, product_description?: string | null, project_type?: string | null, status: string, updated_at: any, start_time?: any | null, stop_time?: any | null, duration?: number | null } | null };
 
 export type FetchProjectQueryVariables = Exact<{
   projectId: Scalars['uuid']['input'];
@@ -7840,7 +7917,7 @@ export type FetchFullProjectQueryVariables = Exact<{
 }>;
 
 
-export type FetchFullProjectQuery = { __typename?: 'query_root', projects_by_pk?: { __typename?: 'projects', id: any, name: string, objective?: string | null, branding?: string | null, platform?: string | null, project_type?: string | null, product_description?: string | null, status: string, final_report_upload_url?: string | null, created_at: any, updated_at: any, start_time?: any | null, stop_time?: any | null, name_approved?: boolean | null, objective_approved?: boolean | null, project_type_approved?: boolean | null, brandness_approved?: boolean | null, platform_approved?: boolean | null, start_stop_time_approved?: boolean | null, teams_projects: Array<{ __typename?: 'teams_projects', team: { __typename?: 'teams', name: string } }>, landing_pages: Array<{ __typename?: 'landing_pages', id: any, template_name: string, data?: any | null, approved?: boolean | null }>, facebook_audiences: Array<{ __typename?: 'facebook_audiences', device_platforms: Array<string>, facebook_positions: Array<string>, genders?: Array<number> | null, geo_locations: any, id: any, interests?: any | null, max_age?: any | null, min_age?: any | null, name?: string | null, approved?: boolean | null, publisher_platforms: Array<string> }>, project_facebook_creative_templates: Array<{ __typename?: 'project_facebook_creative_templates', id: any, data?: any | null, project_id: any, template_name: string }>, creatives_aggregate: { __typename?: 'facebook_creatives_aggregate', aggregate?: { __typename?: 'facebook_creatives_aggregate_fields', count: number } | null }, themes: Array<{ __typename?: 'projects_themes', name: string, id: any, approved?: boolean | null, angles: Array<{ __typename?: 'themes_angles', name: string, id: any, facebook_creatives: Array<{ __typename?: 'facebook_creatives', id: any, data?: any | null, template_name: string, social_copy?: string | null, cta_text?: string | null, cta_type?: string | null }> }> }> } | null };
+export type FetchFullProjectQuery = { __typename?: 'query_root', projects_by_pk?: { __typename?: 'projects', id: any, name: string, objective?: string | null, branding?: string | null, platform?: string | null, project_type?: string | null, product_description?: string | null, status: string, final_report_upload_url?: string | null, created_at: any, updated_at: any, start_time?: any | null, stop_time?: any | null, duration?: number | null, name_approved?: boolean | null, objective_approved?: boolean | null, project_type_approved?: boolean | null, brandness_approved?: boolean | null, platform_approved?: boolean | null, duration_approved?: boolean | null, teams_projects: Array<{ __typename?: 'teams_projects', team: { __typename?: 'teams', name: string } }>, landing_pages: Array<{ __typename?: 'landing_pages', id: any, template_name: string, data?: any | null, approved?: boolean | null }>, facebook_audiences: Array<{ __typename?: 'facebook_audiences', device_platforms: Array<string>, facebook_positions: Array<string>, genders?: Array<number> | null, geo_locations: any, id: any, interests?: any | null, max_age?: any | null, min_age?: any | null, name?: string | null, approved?: boolean | null, publisher_platforms: Array<string> }>, project_facebook_creative_templates: Array<{ __typename?: 'project_facebook_creative_templates', id: any, data?: any | null, project_id: any, template_name: string }>, creatives_aggregate: { __typename?: 'facebook_creatives_aggregate', aggregate?: { __typename?: 'facebook_creatives_aggregate_fields', count: number } | null }, themes: Array<{ __typename?: 'projects_themes', name: string, id: any, approved?: boolean | null, angles: Array<{ __typename?: 'themes_angles', name: string, id: any, facebook_creatives: Array<{ __typename?: 'facebook_creatives', id: any, data?: any | null, template_name: string, social_copy?: string | null, cta_text?: string | null, cta_type?: string | null }> }> }> } | null };
 
 export type FetchProjectsQueryVariables = Exact<{
   teamId: Scalars['uuid']['input'];
@@ -7986,9 +8063,9 @@ export const UpdateLandingPageDocument = {"kind":"Document","definitions":[{"kin
 export const DeleteLandingPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteLandingPage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"landingPageId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_landing_pages_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"landingPageId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteLandingPageMutation, DeleteLandingPageMutationVariables>;
 export const CreateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"team_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"team_id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"team_id"}}]}}]}}]} as unknown as DocumentNode<CreateProjectMutation, CreateProjectMutationVariables>;
 export const DeleteProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteProjectMutation, DeleteProjectMutationVariables>;
-export const UpdateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"projects_set_input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"product_description"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}}]}}]}}]} as unknown as DocumentNode<UpdateProjectMutation, UpdateProjectMutationVariables>;
+export const UpdateProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"projects_set_input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"product_description"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}}]}}]}}]} as unknown as DocumentNode<UpdateProjectMutation, UpdateProjectMutationVariables>;
 export const FetchProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"product_description"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"final_report_upload_url"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}}]}}]}}]} as unknown as DocumentNode<FetchProjectQuery, FetchProjectQueryVariables>;
-export const FetchFullProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFullProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"product_description"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"final_report_upload_url"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}},{"kind":"Field","name":{"kind":"Name","value":"name_approved"}},{"kind":"Field","name":{"kind":"Name","value":"objective_approved"}},{"kind":"Field","name":{"kind":"Name","value":"project_type_approved"}},{"kind":"Field","name":{"kind":"Name","value":"brandness_approved"}},{"kind":"Field","name":{"kind":"Name","value":"platform_approved"}},{"kind":"Field","name":{"kind":"Name","value":"start_stop_time_approved"}},{"kind":"Field","name":{"kind":"Name","value":"teams_projects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"team"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"landing_pages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}}]}},{"kind":"Field","name":{"kind":"Name","value":"facebook_audiences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"publisher_platforms"}}]}},{"kind":"Field","name":{"kind":"Name","value":"project_facebook_creative_templates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"creatives_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"themes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"angles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_creatives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"social_copy"}},{"kind":"Field","name":{"kind":"Name","value":"cta_text"}},{"kind":"Field","name":{"kind":"Name","value":"cta_type"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<FetchFullProjectQuery, FetchFullProjectQueryVariables>;
+export const FetchFullProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FetchFullProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"objective"}},{"kind":"Field","name":{"kind":"Name","value":"branding"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"product_description"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"final_report_upload_url"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"name_approved"}},{"kind":"Field","name":{"kind":"Name","value":"objective_approved"}},{"kind":"Field","name":{"kind":"Name","value":"project_type_approved"}},{"kind":"Field","name":{"kind":"Name","value":"brandness_approved"}},{"kind":"Field","name":{"kind":"Name","value":"platform_approved"}},{"kind":"Field","name":{"kind":"Name","value":"duration_approved"}},{"kind":"Field","name":{"kind":"Name","value":"teams_projects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"team"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"landing_pages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}}]}},{"kind":"Field","name":{"kind":"Name","value":"facebook_audiences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"device_platforms"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_positions"}},{"kind":"Field","name":{"kind":"Name","value":"genders"}},{"kind":"Field","name":{"kind":"Name","value":"geo_locations"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"interests"}},{"kind":"Field","name":{"kind":"Name","value":"max_age"}},{"kind":"Field","name":{"kind":"Name","value":"min_age"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"publisher_platforms"}}]}},{"kind":"Field","name":{"kind":"Name","value":"project_facebook_creative_templates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"project_id"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"creatives_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"themes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"approved"}},{"kind":"Field","name":{"kind":"Name","value":"angles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"facebook_creatives"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"template_name"}},{"kind":"Field","name":{"kind":"Name","value":"social_copy"}},{"kind":"Field","name":{"kind":"Name","value":"cta_text"}},{"kind":"Field","name":{"kind":"Name","value":"cta_type"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<FetchFullProjectQuery, FetchFullProjectQueryVariables>;
 export const FetchProjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchProjects"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"projects"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"teams_projects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"team_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"teamId"}}}]}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"project_type"}},{"kind":"Field","name":{"kind":"Name","value":"final_report_upload_url"}},{"kind":"Field","name":{"kind":"Name","value":"start_time"}},{"kind":"Field","name":{"kind":"Name","value":"stop_time"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}}]}}]} as unknown as DocumentNode<FetchProjectsQuery, FetchProjectsQueryVariables>;
 export const SendReviewCompleteSlackMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendReviewCompleteSlackMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"returnUrl"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendSlackAlertForTeamReview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"projectId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"Argument","name":{"kind":"Name","value":"returnUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"returnUrl"}}}]}]}}]} as unknown as DocumentNode<SendReviewCompleteSlackMessageMutation, SendReviewCompleteSlackMessageMutationVariables>;
 export const SubmitProjectBuildDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SubmitProjectBuild"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"returnUrl"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"submitBuild"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"projectId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"projectId"}}},{"kind":"Argument","name":{"kind":"Name","value":"returnUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"returnUrl"}}}]}]}}]} as unknown as DocumentNode<SubmitProjectBuildMutation, SubmitProjectBuildMutationVariables>;

@@ -8,7 +8,6 @@ import { useMutation } from "@tanstack/react-query";
 import { AuthContext, ProjectFacebookAudienceContext, ProjectLandingPagesContext, ThemesContext } from "../../../../stores/stores";
 import FacebookPreviewContainer from "../../../social/FacebookPreviewContainer";
 import { Projects_Themes as ProjectTheme } from "../../../../gql/graphql";
-import { DateTime } from "luxon";
 import { Landing_Pages as LandingPage } from '../../../../gql/graphql';
 import { ProjectStepChildProps } from "../../ProjectStepContainer";
 import ProjectAdminReview from "./ProjectAdminReview";
@@ -22,7 +21,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
   const [projectTypeApproved, setProjectTypeApproved] = useState(props.project?.project_type_approved || false)
   const [brandnessApproved, setBrandnessApproved] = useState(props.project?.brandness_approved || false)
   const [platformApproved, setPlatformApproved] = useState(props.project?.platform_approved || false)
-  const [startStopTimeApproved, setStartStopTimeApproved] = useState(props.project?.start_stop_time_approved || false)
+  const [durationApproved, setDurationApproved] = useState(props.project?.duration_approved || false)
   function renderTags(list: string[]) {
     return (
       <div key={list.join(',')} className="flex gap-x-2">
@@ -58,14 +57,14 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
   }
 
   useEffect(() => {
-    if (props.saveProject) props.saveProject({ name_approved: nameApproved, brandness_approved: brandnessApproved, platform_approved: platformApproved, start_stop_time_approved: startStopTimeApproved, objective_approved: objectiveApproved, project_type_approved: projectTypeApproved })
-  }, [nameApproved, brandnessApproved, platformApproved, startStopTimeApproved, objectiveApproved, projectTypeApproved])
+    if (props.saveProject) props.saveProject({ name_approved: nameApproved, brandness_approved: brandnessApproved, platform_approved: platformApproved, duration_approved: durationApproved, objective_approved: objectiveApproved, project_type_approved: projectTypeApproved })
+  }, [nameApproved, brandnessApproved, platformApproved, durationApproved, objectiveApproved, projectTypeApproved])
 
   return (
     <>
       {props.project?.status === ProjectStatus.REVIEW && !authStore.superadmin ? <div>Congratulations! Your test has been sent off for review</div> :
         <div>
-          { props.project?.status !== ProjectStatus.DRAFT && <ProjectAdminReview project={props.project} /> }
+          { props.project?.status !== ProjectStatus.DRAFT && <ProjectAdminReview {...props}/> }
           {/* Name Approval */}
           <label className="label mb-1">
             <span className="text-sm opacity-60">Name of your test</span>
@@ -142,8 +141,8 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             <span className="text-sm opacity-60">Set duration</span>
           </label>
           <div className="flex items-center gap-x-2">
-            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={startStopTimeApproved} onChange={() => setStartStopTimeApproved((prev) => !prev)} />
-            <span className="font-bold text-md">{DateTime.fromISO(props.project?.stop_time).diff(DateTime.fromISO(props.project?.start_time)).as('days')} days</span>
+            <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={durationApproved} onChange={() => setDurationApproved((prev) => !prev)} />
+            <span className="font-bold text-md">{props.project?.duration} days</span>
           </div>
 
           {/* Creative Approval */}

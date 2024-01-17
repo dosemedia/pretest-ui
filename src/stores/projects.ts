@@ -111,6 +111,7 @@ export class Projects {
           updated_at
           start_time
           stop_time
+          duration
         }
       }
       `), { id, updates: payload as Projects_Set_Input })
@@ -161,12 +162,13 @@ export class Projects {
           updated_at
           start_time
           stop_time
+          duration
           name_approved
           objective_approved
           project_type_approved
           brandness_approved
           platform_approved
-          start_stop_time_approved
+          duration_approved
           teams_projects {
             team {
               name
