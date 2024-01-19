@@ -45,7 +45,6 @@ const ProjectDraft = () => {
   }, [location])
   return (
     <>
-
       <ProjectStepContainer step={step}>
         <TestObjective title="What type of test are you creating" />
         <TestBranding title="Are you looking for an unbranded or branded test?" />
@@ -62,8 +61,6 @@ const ProjectDraft = () => {
         <UserReview title="Review your test" />
         <UserPublish title="Your test is in the queue" />
       </ProjectStepContainer>
-
-
     </>
   )
 }

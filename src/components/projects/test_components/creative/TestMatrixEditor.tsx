@@ -42,7 +42,7 @@ const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: Proje
   function creativeContainer(angle: ThemeAngle) {
     const creative = angle.facebook_creatives[0]
     return (
-      <div key={angle.id} className="bg-white px-6" style={{ minWidth: 320, borderTop: '1px solid red' }}>
+      <div key={angle.id} className="bg-white px-6" style={{ borderTop: '1px solid red' }}>
         <p className="text-md font-bold mt-6 mb-3">{angle.name}</p><FacebookPreviewContainer editTemplate={false} disabled={props.project?.status !== ProjectStatus.DRAFT} template={creative} data={creative?.data} socialCopy={socialCopy} ctaText={ctaText} ctaType={ctaType} />
         <CopyEditModal props={props} angle={angle} />
       </div>
@@ -62,43 +62,11 @@ const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: Proje
   useEffect(() => {
     debouncedSave({ socialCopy, ctaText, ctaType })
   }, [socialCopy, ctaText, ctaType])
-  // function angleContainer(angle: ThemeAngle, index: number) {
-  //   const creative: FacebookCreative = angle.facebook_creatives[0] // There is only one creative associated with an angle
-  //   return (
-  //     <div key={angle.id} className="flex">
-  //       {selectedAngle?.id === angle.id && <div className="angle-container-border" />}
-  //       <div className={`angle-container ${selectedAngle?.id === angle.id && 'selected'} ${index % 2 === 0 ? 'bg-white' : 'bg-transparent'} p-4 cursor-pointer w-full`} onClick={() => { setSelectedAngle(angle) }}>
-  //         <div className="text-md">
-  //           {angle.name}
-  //         </div>
-  //         <div className="opacity-60 text-xxs mx-5 mt-2">
-  //           {Object.keys(creative.data).map((key) =>
-  //           (<div key={key} className="flex gap-x-8">
-  //             <div className="font-bold w-[40px]">
-  //               {key}
-  //             </div>
-  //             <div>
-  //               {creative.data[key]}
-  //             </div>
-  //             {key === 'mainCopy' && <div className="flex-1 text-end">
-  //               <button className="btn btn-xs btn-circle" onClick={() => (document.getElementById(copyEditModalId) as HTMLDialogElement).show()}>
-  //                 <span className="mdi mdi-pencil"></span>
-  //               </button>
-  //             </div>
-  //             }
-  //           </div>)
-  //           )
-  //           }
-  //         </div>
-  //       </div>
-  //     </div>
-  //   )
-  // }
   return (
     <>
       {themes && themes[0].angles[0].facebook_creatives?.length === 0 ? <div className="alert alert-warning"><span>You must <span className="link" onClick={() => setSearchParams({ step: (parseInt(searchParams.get('step')!) - 1).toString() })}>generate</span> creatives before moving on to this step</span></div> :
         <div>
-          <div className="flex justify-between gap-x-5">
+          <div className="flex gap-x-5" style={{ overflowX: 'auto' }}>
             {themes?.map((item: ProjectTheme) =>
               <div key={item.id}>
                 <p className="text-xxs opacity-60">Theme {themes.indexOf(item) + 1}</p>

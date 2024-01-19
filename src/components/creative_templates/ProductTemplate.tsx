@@ -7,7 +7,7 @@ import { authStore } from '../../stores/stores';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ProductTemplateRender: React.FC<{ data: any }> = ({ data }) => {
   return (
-    <div className="flex items-center justify-evenly" style={{ backgroundColor: data.background, width: '100%', position: 'relative', height: 400 }}>
+    <div className="flex items-center justify-evenly" style={{ backgroundColor: data.background, width: '100%', position: 'relative', aspectRatio: '1', height: 400 }}>
       <img src="/src/assets/creative_template_assets/pattern.png" style={{ objectFit: 'cover', position: 'absolute', width: '100%', height: '100%', zIndex: 1 }} />
       <div style={{ width: '50%', textWrap: 'wrap', textOverflow: 'ellipsis', position: 'relative', zIndex: 2 }}>
         <p className="text-center font-black" style={{ maxWidth: '100%', color: 'black', fontSize: '2.0rem', lineHeight: '40px' }}>
