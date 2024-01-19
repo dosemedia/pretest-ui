@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { Facebook_Creatives_Insert_Input, Facebook_Creatives_Updates } from '../gql/graphql';
+import { Facebook_Creatives_Insert_Input, Facebook_Creatives_Set_Input, Facebook_Creatives_Updates } from '../gql/graphql';
 import { Facebook_Creatives as FacebookCreative } from '../gql/graphql';
 import { client } from '../graphql'
 import { graphql } from '../gql'
@@ -63,6 +63,25 @@ export class ProjectFacebookCreatives {
       throw result.error
     }
     return result.data?.insert_facebook_creatives?.returning as FacebookCreative[]
+  }
+
+  async updateProjectFacebookCreativeByPk({ creativeId, facebookCreativeUpdate }: { creativeId: string, facebookCreativeUpdate: Facebook_Creatives_Set_Input }): Promise<FacebookCreative> {
+    const result = await client.mutation(graphql(`
+    mutation UpdateFacebookCreative($creativeId: uuid!, $facebookCreativeUpdate: facebook_creatives_set_input!) {
+      update_facebook_creatives_by_pk(pk_columns: {id: $creativeId}, _set: $facebookCreativeUpdate) { 
+          id
+          created_at
+          data
+          project_id
+          template_name
+          updated_at
+        }
+    }
+    `), { facebookCreativeUpdate, creativeId })
+    if (result.error) {
+      throw result.error
+    }
+    return result.data?.update_facebook_creatives_by_pk as FacebookCreative
   }
 
   async updateProjectFacebookCreatives({ facebookCreativesUpdates }: { facebookCreativesUpdates: Facebook_Creatives_Updates[] }): Promise<FacebookCreative[]> {

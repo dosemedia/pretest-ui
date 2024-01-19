@@ -130,7 +130,7 @@ const ProjectMenu = observer(({ step, project, currentStep, saveProject }: { ste
     isCurrentStepComplete([...configurationMenu])
   }, [configurationMenu, step])
   function isReviewComplete() {
-    if (!project?.name_approved || !project?.platform_approved || !project?.brandness_approved || !project?.project_type_approved || !project?.start_stop_time_approved || !project?.objective_approved) {
+    if (!project?.name_approved || !project?.platform_approved || !project?.brandness_approved || !project?.project_type_approved || !project?.duration_approved || !project?.objective_approved) {
       return false
     }
     if (_.find(project?.themes, (theme) => !theme.approved)) {
