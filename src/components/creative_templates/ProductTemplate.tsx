@@ -8,12 +8,13 @@ import { authStore } from '../../stores/stores';
 const ProductTemplateRender: React.FC<{ data: any }> = ({ data }) => {
   return (
     <div className="flex items-center justify-evenly" style={{ backgroundColor: data.background, width: '100%', position: 'relative', height: 400 }}>
-      <div style={{ width: '50%', textWrap: 'wrap', textOverflow: 'ellipsis' }}>
-        <p className="text-center font-bold" style={{ maxWidth: '100%', color: 'white', fontSize: '2.5rem', lineHeight: '45px' }}>
+      <img src="/src/assets/creative_template_assets/pattern.png" style={{ objectFit: 'cover', position: 'absolute', width: '100%', height: '100%', zIndex: 1 }} />
+      <div style={{ width: '50%', textWrap: 'wrap', textOverflow: 'ellipsis', position: 'relative', zIndex: 2 }}>
+        <p className="text-center font-black" style={{ maxWidth: '100%', color: 'black', fontSize: '2.0rem', lineHeight: '40px' }}>
           {data.mainCopy}
         </p>
       </div>
-      {data.productImage ? <img src={data.productImage}  style={{ width: 150 }} /> : <img src="/src/assets/creative_template_assets/shimmer.png" style={{ width: 180 }} />}
+      <div style={{ zIndex: 2 }}>{data.productImage ? <img src={data.productImage} style={{ width: 150 }} /> : <img src="/src/assets/creative_template_assets/package.png" style={{ width: 150 }} />}</div>
     </div>
   );
 }
@@ -23,9 +24,9 @@ const ProductTemplateForm: React.FC<{ data: any, onChange: (newData: any) => voi
   const { projectId } = useParams() as { projectId: string }
 
   const formData = data || {
-    background: '#f858ab',
+    background: '#dce9be',
     productImage: null,
-    mainCopy: 'New Shimmer Cleaning Paste'
+    mainCopy: 'Find the perfect on-the-go snack at your local bakery.'
   };
 
 
@@ -66,7 +67,7 @@ const ProductTemplateForm: React.FC<{ data: any, onChange: (newData: any) => voi
 const ProductTemplate = {
   name: 'ProductTemplate',
   title: 'Product',
-  creatomate_template_id: 'd7c3146c-63cd-4348-b49d-2e496ae11976',
+  creatomate_template_id: '55914b02-3eb5-4f1c-92e4-d8bc2c43cd5d',
   description: 'This creative contains a lifestyle style ad template with a logo image and a background color',
   render: ProductTemplateRender,
   form: ProductTemplateForm

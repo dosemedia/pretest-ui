@@ -21,7 +21,7 @@ const ProjectStatusView = observer(({ project }: { project: Project }) => {
   }
   return (
     <>
-      <div className="badge border-none p-3" style={{ color: '#47463D', backgroundColor: status().color }}>
+      <div className="border-none rounded-full py-1 text-center" style={{ color: '#47463D', backgroundColor: status().color, width: 130 }}>
         {status().label}
       </div>
     </>

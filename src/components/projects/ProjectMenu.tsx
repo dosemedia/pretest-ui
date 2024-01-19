@@ -60,7 +60,7 @@ const ProjectMenu = observer(({ step, project, currentStep, saveProject }: { ste
           label: 'Runtime',
           value: 'runtime',
           steps: [5],
-          isComplete: Boolean(project?.start_time && project?.stop_time),
+          isComplete: Boolean(project?.duration),
           icon: 'mdi mdi-clock-outline'
         }
       ]

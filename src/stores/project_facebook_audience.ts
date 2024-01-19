@@ -19,8 +19,6 @@ export class ProjectFacebookAudience {
         return false
       } else if (audience.genders?.length === 0) {
         return false
-      } else if (!audience.interests || Object.keys(audience.interests).length === 0) {
-        return false
       } else if (audience.device_platforms.length === 0) {
         return false
       } else if (!audience.name) {

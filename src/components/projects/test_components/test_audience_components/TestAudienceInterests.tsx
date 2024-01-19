@@ -67,7 +67,7 @@ const TestAudienceInterests = observer(({ onUpdate, projectFacebookAudience, dis
     <div>
       <div className="form-control">
         <label className="label">
-          <span className="text-sm opacity-60">Interests*</span>
+          <span className="text-sm opacity-60">Interests</span>
         </label>
         <div className="flex items-center">
           <input disabled={disabled} type="text" className="input" placeholder="Search for interests..." value={search} onChange={(e) => { setSearch(e.target.value); onSearch(e?.target.value) }} />
