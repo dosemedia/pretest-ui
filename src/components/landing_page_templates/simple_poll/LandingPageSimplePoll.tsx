@@ -82,8 +82,8 @@ function LandingPageSimplePoll({
         className={"p-4 flex items-center justify-start flex-col" + ' '  + pageClasses}
       >
         { data.headerImageUrl &&
-          <div className={"lg:w-1/2 text-center" + ' ' + headerImageClasses}>
-            <img src={data.headerImageUrl} alt="Header Image" />
+          <div className={"lg:w-1/2 text-center flex justify-center" + ' ' + headerImageClasses}>
+            <img src={data.headerImageUrl} alt="Header Image" style={{ maxWidth: 200 }} />
           </div>
         }
         {data.questions && data.questions.map((question, questionIndex) => (

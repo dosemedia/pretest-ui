@@ -14,7 +14,7 @@ const ProductTemplateRender: React.FC<{ data: any }> = ({ data }) => {
           {data.mainCopy}
         </p>
       </div>
-      <div style={{ zIndex: 2 }}>{data.productImage ? <img src={data.productImage} style={{ width: 150 }} /> : <img src="/src/assets/creative_template_assets/package.png" style={{ width: 150 }} />}</div>
+      <div style={{ zIndex: 2 }}>{data.productImage ? <img src={data.productImage} style={{ width: 85 }} /> : <img src="/src/assets/creative_template_assets/package.png" style={{ width: 150 }} />}</div>
     </div>
   );
 }
