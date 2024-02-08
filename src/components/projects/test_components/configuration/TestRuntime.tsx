@@ -44,7 +44,7 @@ const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectSte
           {items.map((item) => selectionCard(item))}
         </div>
         <div className="text-xxs opacity-60 font-medium mt-4">
-          Orchard recommends a campaign run time to be <br></br> between 3 to 5 days. Standard run time is 3 days.
+          Orchard recommends a campaign run time to be <br></br> between 3 to 5 days. Standard run time is 5 days.
         </div>
       </div>
     </>

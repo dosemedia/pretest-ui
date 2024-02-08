@@ -67,7 +67,7 @@ const ProductTemplateForm: React.FC<{ data: any, onChange: (newData: any) => voi
 const ProductTemplate = {
   name: 'ProductTemplate',
   title: 'Product',
-  creatomate_template_id: '55914b02-3eb5-4f1c-92e4-d8bc2c43cd5d',
+  creatomate_template_id: '49285584-cc00-4707-b3d3-4d78bbd53d13',
   description: 'This creative contains a lifestyle style ad template with a logo image and a background color',
   render: ProductTemplateRender,
   form: ProductTemplateForm

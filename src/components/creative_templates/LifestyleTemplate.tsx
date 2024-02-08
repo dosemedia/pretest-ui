@@ -67,7 +67,7 @@ const LifestyleTemplateForm: React.FC<{ data: any, onChange: (newData: any) => v
 const LifestyleTemplate = {
   name: 'LifestyleTemplate',
   title: 'Lifestyle',
-  creatomate_template_id: '46baa2fa-d8ae-4e4e-9ad0-1f83116f9e01',
+  creatomate_template_id: '4cdbe458-121e-4fb6-bfd7-c41aaac67c89',
   description: 'This creative contains a lifestyle style ad template with a logo image and a background color',
   render: LifestyleTemplateRender,
   form: LifestyleTemplateForm
