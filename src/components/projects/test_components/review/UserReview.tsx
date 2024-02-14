@@ -115,7 +115,7 @@ const UserReview: React.FC<ProjectStepChildProps> = observer((props: ProjectStep
             <span className="text-sm opacity-60">Audiences</span>
           </label>
           {props.project?.facebook_audiences.map((audience: FacebookAudience) =>
-            <div key={audience.id}>
+            <div key={audience.id} className="mb-4">
               <div className="flex items-center gap-x-2">
                 <input type="checkbox" className="checkbox checkbox-primary border-gray-200" disabled={isDisabled()} checked={audience.approved || false} onChange={() => { updateFacebookAudiencesApprovalMutation.mutate({ id: audience.id, approved: !audience.approved }); audience.approved = !audience.approved }} />
                 <span className="font-bold text-md">{audience.name}</span>

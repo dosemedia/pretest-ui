@@ -118,14 +118,14 @@ const GenerateCreativesButton: React.FC<ProjectStepChildProps> = observer((props
   }
   return (
     <>
-      {showPromptPreview && themes && <div className="bg-gray-100 p-3 rounded-md mb-5">
+      {/* {showPromptPreview && themes && <div className="bg-gray-100 p-3 rounded-md mb-5">
         <p className="text-base font-bold mb-3">
           Prompt Preview <i className="text-xs font-normal">This is an example of the prompt that will be sent to OpenAI for copy generation</i>
         </p>
         {prompt({ column: themes[0].name, angle: themes[0].angles[0].name })}
       </div>}
       {facebookCreatives && facebookCreatives.length === 0 && <button disabled={props.project?.status !== ProjectStatus.DRAFT} className="btn btn-info border-none text-white normal-case w-[200px]" onClick={() => generateCreatives()}>Generate Creatives<SpinningLoading isLoading={[projectFacebookCreativesMutation.isLoading, generating]} /></button>}
-      {facebookCreatives && facebookCreatives.length !== 0 && <button disabled={props.project?.status !== ProjectStatus.DRAFT} className="btn btn-error border-none text-white normal-case w-[200px]" onClick={() => deleteProjectFacebookCreativesMutation.mutate()}>Remove Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>}
+      {facebookCreatives && facebookCreatives.length !== 0 && <button disabled={props.project?.status !== ProjectStatus.DRAFT} className="btn btn-error border-none text-white normal-case w-[200px]" onClick={() => deleteProjectFacebookCreativesMutation.mutate()}>Remove Creatives<SpinningLoading isLoading={projectFacebookCreativesMutation.isLoading} /></button>} */}
     </>
   )
 })

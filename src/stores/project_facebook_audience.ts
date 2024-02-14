@@ -94,7 +94,7 @@ export class ProjectFacebookAudience {
   async getFacebookAudiencesByProjectID({ project }: { project: Project }): Promise<FacebookAudience | null> {
     const result = await client.query(graphql(`
       query GetFacebookAudiencesByProjectID($projectId: uuid!) {
-        facebook_audiences(where: {project_id: {_eq: $projectId}}) {
+        facebook_audiences(where: {project_id: {_eq: $projectId}}, order_by: { name: asc }) {
           id
           name
           geo_locations
