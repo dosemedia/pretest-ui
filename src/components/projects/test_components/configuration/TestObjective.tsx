@@ -56,7 +56,7 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
       <div>
         <div className="form-control" style={{ marginTop: 20 }}>
           <label className="label">
-            <span className="text-sm">Name of your test</span>
+            <span className="text-sm">Name your test</span>
           </label>
           <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="Enter name of your test here" value={name} onChange={(e) => setName(e.target.value)} />
           <label className="label mt-4">
@@ -65,15 +65,15 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
           <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="For a ___ brand/service/product. " value={productDescription} onChange={(e) => setProductDescription(e.target.value)} />
           <span className="text-xxs mt-1 ml-1">Examples: Athletic clothing brand, household cleaning product, financial management service. </span>
           <label className="label mt-4">
-            <span className="text-sm">What type of test are you creating?</span>
+            <span className="text-sm">What are your goals for this test?</span>
           </label>
-          <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} placeholder="Describe briefly what test objective is" value={objective} onChange={(e) => setObjective(e.target.value)} />
+          <input type="text" className="input" disabled={props.project?.status !== ProjectStatus.DRAFT} value={objective} onChange={(e) => setObjective(e.target.value)} />
           <span className="text-xxs mt-1 ml-1">Example: “Test the message or claim for this product that best resonates with the audience.”</span>
         </div>
       </div>
       <div>
         <label className="label mt-8">
-          <span className="text-sm">Select your test type</span>
+          <span className="text-sm">Choose your test type</span>
         </label>
         <div className="flex flex-wrap gap-y-10 gap-x-10">
           {testTypeMenu.map((item) => selectionCard(item))}

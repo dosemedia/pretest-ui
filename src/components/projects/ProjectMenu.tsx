@@ -102,7 +102,7 @@ const ProjectMenu = observer(({ step, project, currentStep, saveProject }: { ste
       children: [],
       isComplete: isReviewComplete(),
       overrideNext: project?.status !== ProjectStatus.DRAFT ? null : {
-        name: 'Submit for review',
+        name: 'submit for review',
         onNext: async () => sendReviewCompleteMessageMutation.mutateAsync()
       } as NextButtonConfig
     },

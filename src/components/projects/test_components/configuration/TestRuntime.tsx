@@ -26,17 +26,6 @@ const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectSte
   return (
     <>
       <div>
-        <div>
-          {/* <input
-            disabled={props.project?.status !== ProjectStatus.DRAFT}
-            type="datetime-local"
-            id="meeting-time"
-            className="rounded-lg p-3 mb-5"
-            style={{ border: '1px solid grey' }}
-            name="meeting-time"
-            value={startTime.toFormat(dateFormat)}
-            onChange={onChange} /> */}
-        </div>
         <label className="label">
           <span className="text-sm opacity-60">Duration</span>
         </label>
@@ -44,7 +33,7 @@ const TestRuntime: React.FC<ProjectStepChildProps> = observer((props: ProjectSte
           {items.map((item) => selectionCard(item))}
         </div>
         <div className="text-xxs opacity-60 font-medium mt-4">
-          Orchard recommends a campaign run time to be <br></br> between 3 to 5 days. Standard run time is 5 days.
+          Most Orchard tests run for 5 days, but results can be still be significant in as few as 3.
         </div>
       </div>
     </>

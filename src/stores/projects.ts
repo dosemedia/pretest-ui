@@ -13,7 +13,7 @@ export interface TestTypeMenu {
   label: string,
   icon: string,
   value: string,
-  description: string,
+  description?: string,
   items: string[]
 }
 export const testTypeMenu: TestTypeMenu[] = [
@@ -33,7 +33,6 @@ export const testTypeMenu: TestTypeMenu[] = [
     label: 'Concept & Product Development',
     value: 'concept_test',
     icon: '/src/assets/egg.png',
-    description: 'Ideas, Validations',
     items: [
       'Which product idea is best?',
       'What concept resonates with my consumer?'
@@ -43,20 +42,18 @@ export const testTypeMenu: TestTypeMenu[] = [
     label: 'Feature & Benefits',
     value: 'benefits_claims',
     icon: '/src/assets/lightbulb.png',
-    description: 'Positioning, Features, Benefits, Claims',
     items: [
       'Which product/service features and benefits resonate most?',
       'Which claim is most compelling to my audience?'
     ]
   },
   {
-    label: 'Marketing Communication',
+    label: 'Branding & Messaging',
     value: 'marketing_communication',
     icon: '/src/assets/horseshoe.png',
-    description: 'Exploratory, Whitespace,\nProblems, Solutions, Innovations',
     items: [
-      'How do I talk about and show my product or service?',
-      'What is the best way to bring to life and talk about my product/ service?'
+      'What\'s the best way to position my product?',
+      'How should I talk about or show my product so that it resonates best?'
     ]
   }
 ]

@@ -44,18 +44,18 @@ const createProject = observer(() => {
     <>
       <div>
         <button className="btn btn-sm gradient-background text-white normal-case border-0 rounded-full" style={{ fontSize: 18, fontWeight: '500' }} onClick={() => (document.getElementById(element_id) as HTMLDialogElement).show()}>
-          Launch a test <span className="mdi mdi-chevron-up text-base" />
+          launch a test <span className="mdi mdi-chevron-up text-base" />
         </button>
         <dialog id={element_id} className="modal">
           <div className="modal-box">
             <p className="text-lg font-bold">
-              Create New Project
+              create new project
             </p>
             <p className="mb-8">
               Select a template below or start from scatch
             </p>
-            <button className="btn mb-4 gradient-background text-white normal-case border-none" onClick={() => createTemplateProjectMutation.mutate()}>
-              Demo Template <SpinningLoading isLoading={createTemplateProjectMutation.isLoading} />
+            <button className="btn mb-4 gradient-background text-white normal-case border-none font-bold" onClick={() => createTemplateProjectMutation.mutate()}>
+              demo template <SpinningLoading isLoading={createTemplateProjectMutation.isLoading} />
             </button>
             <div className="flex items-center gap-x-5">
               <hr className="flex-1" />

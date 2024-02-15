@@ -79,12 +79,12 @@ const ProjectStepContainer: React.FC<PropsWithChildren<Props>> = ({ step, childr
               <div>
                 <div className="mt-5 flex gap-4">
                   {step > 1 && <button className="btn action-button secondary text-base text-black" onClick={() => setSearchParams({ step: (step - 1).toString() })}>
-                    <span className="mdi mdi-chevron-left text-base" /> Go Back
+                    <span className="mdi mdi-chevron-left text-base font-bold" /> go back
                   </button>
                   }
                   {step < React.Children.count(children) && step != 6 && !child.props.alwaysShow &&
-                    <button className="btn action-button text-base" onClick={() => currentStep?.overrideNext?.onNext ? onNext() : setSearchParams({ step: (step + 1).toString() })} disabled={!currentStep?.isComplete}>
-                      {currentStep?.overrideNext?.name || 'Next'}
+                    <button className="btn action-button text-base font-bold" onClick={() => currentStep?.overrideNext?.onNext ? onNext() : setSearchParams({ step: (step + 1).toString() })} disabled={!currentStep?.isComplete}>
+                      {currentStep?.overrideNext?.name || 'next'}
                     </button>
                   }
                 </div>

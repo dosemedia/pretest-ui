@@ -76,7 +76,7 @@ const TweetTemplate = {
   name: 'TweetTemplate',
   title: 'Tweet',
   creatomate_template_id: '14274b18-58d0-425b-8c83-da593faac659',
-  description: 'This creative contains a tweet style ad template with an avatar image and a background color',
+  description: 'Highlights specific aspects of your product from the perspective of the consumer',
   render: TweetTemplateRender,
   form: TweetTemplateForm
 } as CreativeTemplate;

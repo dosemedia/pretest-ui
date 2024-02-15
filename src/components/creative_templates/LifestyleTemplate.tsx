@@ -68,7 +68,7 @@ const LifestyleTemplate = {
   name: 'LifestyleTemplate',
   title: 'Lifestyle',
   creatomate_template_id: '4cdbe458-121e-4fb6-bfd7-c41aaac67c89',
-  description: 'This creative contains a lifestyle style ad template with a logo image and a background color',
+  description: 'More traditional ad style that features your product in a context consumers can imagine themselves in.',
   render: LifestyleTemplateRender,
   form: LifestyleTemplateForm
 } as CreativeTemplate;

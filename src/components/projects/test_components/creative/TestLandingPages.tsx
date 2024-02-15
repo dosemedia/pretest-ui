@@ -44,7 +44,7 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
   return (
     <>
       <div>
-        { landingPages && landingPages.length == 0 &&
+        { landingPages && landingPages.length > 0 &&
           <div className="grid grid-cols-3 gap-4">
             {LandingPageTemplates.map((template) => {
               return (
@@ -74,11 +74,14 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
                     <LandingPageRender landingPageId={landingPage.id} data={landingPage.data} component={landingPage.template_name} />
                   </div>
                 </div>
-                <div className="btn btn-primary" onClick={() => { setSearchParams({ step: (parseInt(searchParams.get('step')!) + 1).toString(), landing_page_id: landingPage.id }) }}>
-                  Edit Page
+
+                <div className="flex gap-x-4 mt-4">
+                  <div className="btn btn-gray lowercase font-bold" onClick={() => { setSearchParams({ step: (parseInt(searchParams.get('step')!) + 1).toString(), landing_page_id: landingPage.id }) }}>
+                    Edit Page
+                  </div>
+                  
+                  <DeleteLandingPage onDeleted={refetchLandingPages} landingPageId={landingPage.id} />
                 </div>
-                
-                <DeleteLandingPage onDeleted={refetchLandingPages} landingPageId={landingPage.id} />
               </div>
             )
           })}
@@ -107,7 +110,7 @@ function DeleteLandingPage({
 
   return (
     <>
-      <button className="btn" onClick={()=>(document.getElementById(landingPageId + '_delete_modal') as HTMLDialogElement).showModal()}>
+      <button className="btn btn-error text-white lowercase font-bold" onClick={()=>(document.getElementById(landingPageId + '_delete_modal') as HTMLDialogElement).showModal()}>
         Delete Page
       </button>
       <dialog id={landingPageId + '_delete_modal'} className="modal">

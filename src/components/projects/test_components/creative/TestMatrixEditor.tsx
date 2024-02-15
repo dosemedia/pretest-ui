@@ -83,13 +83,13 @@ const TestMatrixEditor: React.FC<ProjectStepChildProps> = observer((props: Proje
           <div className="flex flex-col gap-y-6 mt-4 w-full md:w-5/12">
             <div>
               <label className="label">
-                <span className="text-sm opacity-60">Social copy</span>
+                <span className="text-sm opacity-60">Social Caption</span>
               </label>
               <textarea disabled={props.project?.status !== ProjectStatus.DRAFT} className="textarea w-full" value={socialCopy} onChange={(e) => setSocialCopy(e.target.value)} />
             </div>
             <div>
               <label className="label">
-                <span className="text-sm opacity-60">CTA text</span>
+                <span className="text-sm opacity-60">CTA Bumber</span>
               </label>
               <textarea disabled={props.project?.status !== ProjectStatus.DRAFT} className="textarea w-full" value={ctaText} onChange={(e) => setCtaText(e.target.value)} />
             </div>

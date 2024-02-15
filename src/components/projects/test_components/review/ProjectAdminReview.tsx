@@ -83,7 +83,7 @@ const ProjectAdminReview: React.FC<ProjectStepChildProps> = observer((props: Pro
                   {facebookAdAccount && renderField('Facebook Ad Account:', facebookAdAccount?.name)}
                 </div>
                 <button disabled={props.project?.status === ProjectStatus.SUBMITTED || submitForBuildMutation.data} className="btn gradient-background normal-case rounded-full text-white" onClick={() => submitForBuildMutation.mutate()}>
-                  Submit For Build <SpinningLoading isLoading={submitForBuildMutation.isLoading} />
+                  submit for build <SpinningLoading isLoading={submitForBuildMutation.isLoading} />
                 </button>
               </div>
             </div>

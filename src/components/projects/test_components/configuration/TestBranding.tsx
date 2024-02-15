@@ -15,13 +15,13 @@ const TestObjective: React.FC<ProjectStepChildProps> = observer((props: ProjectS
       label: 'Unbranded',
       icon: 'mdi mdi-decagram-outline',
       value: 'unbranded',
-      description: 'Unbranded tests are created with no brand associated. This is usually chosen when test is upper funnel.'
+      description: 'Unbranded tests separate your company\'s identity from the test. Choose this if you don\'t want familiarity with your brand influencing your audience\'s perception.'
     },
     {
       label: 'Branded',
       icon: 'mdi mdi-check-decagram-outline',
       value: 'branded',
-      description: 'Branded tests are created with brand guidelines (color, font, logo, etc.). This is usually chosen when test is lower funnel.'
+      description: 'Choose a branded test if it\'s important that the audience knows this is a product from your brand.'
     }
   ]
 

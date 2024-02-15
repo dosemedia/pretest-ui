@@ -46,20 +46,20 @@ const ProjectDraft = () => {
   return (
     <>
       <ProjectStepContainer step={step}>
-        <TestObjective title="What type of test are you creating" />
-        <TestBranding title="Are you looking for an unbranded or branded test?" />
-        <TestPlatform title="Where would you like to test?" />
-        <TestAudienceContainer title="Create your own audience" />
-        <TestRuntime title="Set your test duration" />
-        <TestCreatives title="Choose an ad template" />
-        <ProjectFacebookCreativeTemplateDetail title="Edit/Remove your template below" />
-        <TestThemes title="Answer your big questions" />
-        <TestMatrix title="" />
-        <TestMatrixEditor title="Build your test matrix" />
-        <TestLandingPages title="Create the landing page" />
+        <TestObjective title="what kind of test do you want to run?" />
+        <TestBranding title="do you want to include your company's branding?" />
+        <TestPlatform title="where would you like to test?" />
+        <TestAudienceContainer title="build an audience" />
+        <TestRuntime title="how long do you want your test to run?" />
+        <TestCreatives title="select an ad style" />
+        <ProjectFacebookCreativeTemplateDetail title="edit/remove your template below" />
+        <TestThemes title="which theme(s) helps answer your big question?" />
+        <TestMatrix title="create your theme messaging" />
+        <TestMatrixEditor title="create your test structure" />
+        <TestLandingPages title="build your landing page" />
         <LandingPageDetail />
-        <UserReview title="Review your test" />
-        <UserPublish title="Your test is in the queue" />
+        <UserReview title="review your test" />
+        <UserPublish title="your test is in the queue" />
       </ProjectStepContainer>
     </>
   )

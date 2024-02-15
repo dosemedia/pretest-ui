@@ -34,7 +34,7 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
 
   const toolbarStart = (
     <>
-      <div className="font-bold" style={{ fontSize: 26, color: '#000' }}>Demo</div> <span className="ml-4" style={{ color: '#030102', fontSize: 16, verticalAlign: 'middle' }}>Welcome to the Orchard Self Serve Demo</span>
+      <div className="font-bold" style={{ fontSize: 26, color: '#000' }}>demo</div> <span className="ml-4" style={{ color: '#030102', fontSize: 16, verticalAlign: 'middle' }}>welcome to the orchard self-serve demo</span>
     </>
   )
   const toolbarEnd = (
@@ -45,7 +45,7 @@ const RootLayout = observer(({ children }: PropsWithChildren) => {
       </label>
     </div> 
     <div className="hidden md:block">
-      <Link to={`/contact`} style={{marginRight: 25}}>Contact</Link>
+      <Link to={`/contact`} style={{marginRight: 25}}>contact</Link>
       { !auth.isAuthenticated &&
         <>
           <Link to={`/auth/login`}>Login</Link>
