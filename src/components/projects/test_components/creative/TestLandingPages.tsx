@@ -44,7 +44,7 @@ const TestLandingPages: React.FC<ProjectStepChildProps> = observer((props: Proje
   return (
     <>
       <div>
-        { landingPages && landingPages.length > 0 &&
+        { landingPages && landingPages.length === 0 &&
           <div className="grid grid-cols-3 gap-4">
             {LandingPageTemplates.map((template) => {
               return (
